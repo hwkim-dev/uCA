@@ -1,12 +1,21 @@
 site_name: uCA documentation
-site_dir: site    # build result for web
+site_dir: site
 
 theme:
   name: material
   palette:
     scheme: slate
+    primary: black      
+    accent: white       
+  font: false           
+  features:
+    - navigation.top    
+    - header.autohide   
 
-# left menu bar 
+
+extra_css:
+  - stylesheets/custom.css
+
 nav:
   - HOME: index.md
   - Architecture: Architecture/Architecture.md 
