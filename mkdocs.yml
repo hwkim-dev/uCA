@@ -4,31 +4,23 @@ site_dir: site
 theme:
   name: material
   palette:
-    # --- dark mode ---
-    - scheme: default
+    # 다크 모드를 가장 위로 올려서 기본값으로 설정
+    - scheme: slate
       primary: black
-      accent: blue         # 사용자가 선호하는 파란색 (#2997ff)
+      accent: blue
       toggle:
         icon: material/brightness-4
-        name: To lightmode
-    # --- light mode ---
-    - scheme: slate
+        name: 라이트 모드로 전환
+    - scheme: default
       primary: white
-      accent: light-green  # 안드로이드 녹색 (#14a275)
+      accent: light-green
       toggle:
         icon: material/brightness-7
-        name: To darkmode
-  font: false           # 구글 폰트 로드 안 함 (시스템 폰트 사용)
+        name: 다크 모드로 전환
+  font: false
   features:
-    - navigation.top    # 위로 가기 버튼
-    - navigation.tabs   # 상단 탭 내비게이션 (안드로이드 스타일과 유사)
+    - navigation.top
+    # navigation.tabs를 제거하여 메뉴를 왼쪽 사이드바로 고정
 
-# 커스텀 CSS 연결
 extra_css:
   - stylesheets/custom.css
-
-nav:
-  - HOME: index.md
-  - Architecture: Architecture/Architecture.md 
-  - Devices: Devices/Devices.md
-  - Drivers: Drivers/Drivers.md
