@@ -1,0 +1,40 @@
+/* 전체 배경 및 기본 텍스트 색상 강제 지정 (완전한 블랙에 가까운 다크 모드) */
+[data-md-color-scheme="slate"] {
+    --md-default-bg-color: #000000;
+    --md-default-fg-color: #f5f5f7;
+    --md-text-color: #f5f5f7;
+    --md-primary-fg-color: #1d1d1f;
+    --md-typeset-a-color: #2997ff;
+    /* 애플 특유의 링크 파란색 */
+}
+
+/* 폰트를 구글 폰트(Roboto)에서 애플/윈도우 시스템 기본 폰트로 변경 */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Helvetica, Arial, sans-serif;
+    letter-spacing: -0.015em;
+}
+
+/* 상단 헤더 스타일 (그림자 제거, 반투명 + 블러 효과) */
+.md-header {
+    box-shadow: none !important;
+    background-color: rgba(0, 0, 0, 0.7) !important;
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid #333336;
+}
+
+/* 좌측/우측 사이드바 배경 동기화 및 테두리 */
+.md-sidebar {
+    background-color: #000000;
+}
+
+/* 본문 영역 위쪽 여백 살짝 추가해서 답답함 해소 */
+.md-main__inner {
+    margin-top: 1.5rem;
+}
+
+/* 코드 블록(터미널 창) 스타일을 조금 더 다크하게 */
+.md-typeset pre>code {
+    background-color: #1d1d1f;
+    border-radius: 8px;
+}
