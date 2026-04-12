@@ -1,23 +1,46 @@
-/* 안드로이드 스타일: 완벽한 1줄 헤더 & 다크모드 최적화 */
+/* 안드로이드 개발자 문서 완벽 복제 (1줄 헤더, 라이트/다크 분리) */
 
 :root {
-    /* 헤더 높이를 48px로 아주 얇게 고정 */
-    --md-header-height: 48px;
+    /* 헤더 높이를 44px로 더 좁게! */
+    --md-header-height: 44px;
 }
 
 body {
-    background-color: #121212 !important;
     letter-spacing: -0.015em;
 }
 
-/* -------------------------------------------
-   1. 헤더 (1줄 고정 및 하얀색 실선)
-------------------------------------------- */
+/* =========================================
+   1. 라이트 / 다크 모드 색상 완벽 분리
+   ========================================= */
+/* 다크 모드 */
+[data-md-color-scheme="slate"] {
+    --md-default-bg-color: #121212 !important;
+    --md-header-bg-color: #121212 !important;
+    --md-tabs-text-color: rgba(255, 255, 255, 0.6);
+    --md-tabs-active-color: #3ddc84;
+    /* 안드로이드 다크 그린 */
+    --md-border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* 라이트 모드 (이제 글씨 잘 보일 거임!) */
+[data-md-color-scheme="default"] {
+    --md-default-bg-color: #ffffff !important;
+    --md-header-bg-color: #ffffff !important;
+    --md-tabs-text-color: rgba(0, 0, 0, 0.6);
+    --md-tabs-active-color: #008577;
+    /* 안드로이드 라이트 그린 */
+    --md-border-color: rgba(0, 0, 0, 0.12);
+}
+
+/* =========================================
+   2. 헤더 공통 스타일 (1줄 & 하단 실선)
+   ========================================= */
 .md-header {
-    background-color: #121212 !important;
+    height: var(--md-header-height) !important;
+    background-color: var(--md-header-bg-color) !important;
     box-shadow: none !important;
-    /* 안드로이드 스타일 하얀색 반투명 실선 */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-bottom: 1px solid var(--md-border-color) !important;
+    /* 헤더 1줄 밑에 실선 */
 }
 
 .md-header__inner {
@@ -25,26 +48,29 @@ body {
     padding: 0 1rem !important;
 }
 
-/* 다크/라이트 모드 전환 아이콘(달/해)이 잘 보이도록 하얀색 강제 적용 */
-.md-header__option {
-    color: #ffffff !important;
+/* 로고와 제목 사이즈 튜닝 */
+.md-logo img,
+.md-logo svg {
+    height: 1.1rem !important;
 }
 
-/* -------------------------------------------
-   2. [마법] 상단 메뉴를 헤더 1줄로 끌어올리기
-------------------------------------------- */
+.md-header__topic {
+    line-height: var(--md-header-height) !important;
+}
+
+/* =========================================
+   3. [핵심] 상단 폴더 메뉴를 헤더 1줄로 강제 삽입
+   ========================================= */
 @media screen and (min-width: 76.25em) {
     .md-tabs {
         position: absolute;
         top: 0;
-        /* 로고와 "uCA documentation" 제목 글씨 너비만큼 띄우기 */
-        /* 만약 메뉴가 제목이랑 겹치면 이 숫자를 280px, 300px로 늘려! */
-        left: 260px;
-        height: var(--md-header-height);
+        left: 240px;
+        /* 제목 옆에 바로 메뉴 붙이기 (글씨 겹치면 이 숫자를 280px 등으로 늘려) */
+        height: var(--md-header-height) !important;
         background: transparent !important;
         border-bottom: none !important;
-        z-index: 3;
-        /* 헤더 위로 올리기 */
+        z-index: 10;
     }
 
     .md-tabs__list {
@@ -56,51 +82,54 @@ body {
         height: var(--md-header-height);
     }
 
-    /* 호버(Hover) 효과 및 글씨 세팅 */
+    /* 안드로이드 메뉴 호버 및 액티브 디테일 */
     .md-tabs__link {
         height: var(--md-header-height);
         line-height: var(--md-header-height);
-        padding: 0 1rem;
+        padding: 0 1.2rem;
         margin: 0;
         font-size: 0.85rem;
         font-weight: 500;
-        color: rgba(255, 255, 255, 0.6) !important;
-        /* 평소엔 살짝 어둡게 */
+        color: var(--md-tabs-text-color) !important;
         transition: color 0.2s;
+        border-bottom: 3px solid transparent;
+        /* 평소엔 투명한 밑줄 */
     }
 
+    /* 마우스 올리면 글씨 진해짐 */
     .md-tabs__link:hover {
-        color: #ffffff !important;
-        /* 마우스 올리면 완전한 흰색 */
+        color: var(--md-tabs-active-color) !important;
     }
 
+    /* 현재 있는 탭은 밑에 안드로이드 초록색 줄 긋기! */
     .md-tabs__link--active {
-        color: var(--md-accent-fg-color) !important;
-        /* 현재 메뉴는 파란색 */
+        color: var(--md-tabs-active-color) !important;
+        border-bottom: 3px solid var(--md-tabs-active-color) !important;
     }
 
-    /* 두 줄이던 걸 한 줄로 합쳤으니, 메인 본문이 너무 아래로 안 밀리게 조절 */
+    /* 메인 여백 보정 */
     .md-main {
         padding-top: var(--md-header-height) !important;
     }
 }
 
-/* -------------------------------------------
-   3. 검색창 & 사이드바
-------------------------------------------- */
+/* =========================================
+   4. 검색창 & 사이드바
+   ========================================= */
 .md-sidebar {
-    background-color: #121212 !important;
+    background-color: var(--md-default-bg-color) !important;
 }
 
+/* 검색창을 안드로이드 스타일로 */
 .md-search__input {
-    background-color: rgba(255, 255, 255, 0.08) !important;
+    background-color: rgba(128, 128, 128, 0.15) !important;
     border-radius: 4px;
-    height: 32px !important;
+    height: 30px !important;
     font-size: 0.8rem;
 }
 
-/* 코드 블록 스타일 */
+/* 코드 블록 */
 .md-typeset pre>code {
-    background-color: #1e1e1e;
+    background-color: rgba(128, 128, 128, 0.05);
     border-radius: 4px;
 }
