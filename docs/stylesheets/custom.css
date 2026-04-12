@@ -1,7 +1,6 @@
-/* 안드로이드 개발자 문서 완벽 복제 (1줄 헤더, 라이트/다크 분리) */
+/* uCA Documentation - Android Style Final Fix */
 
 :root {
-    /* 헤더 높이를 44px로 좁게 */
     --md-header-height: 44px;
 }
 
@@ -9,9 +8,7 @@ body {
     letter-spacing: -0.015em;
 }
 
-/* =========================================
-   1. 라이트 / 다크 모드 색상 
-   ========================================= */
+/* 1. 라이트 / 다크 모드 색상 */
 [data-md-color-scheme="slate"] {
     --md-default-bg-color: #121212 !important;
     --md-header-bg-color: #121212 !important;
@@ -28,14 +25,14 @@ body {
     --md-border-color: rgba(0, 0, 0, 0.12);
 }
 
-/* =========================================
-   2. 헤더 공통 스타일 & 세로 중앙 정렬 (수정완료)
-   ========================================= */
+/* 2. 헤더 레이어 정상화 */
 .md-header {
     height: var(--md-header-height) !important;
     background-color: var(--md-header-bg-color) !important;
     box-shadow: none !important;
     border-bottom: 1px solid var(--md-border-color) !important;
+    z-index: 100 !important;
+    /* 헤더 자체를 높은 우선순위로 */
 }
 
 .md-header__inner {
@@ -43,113 +40,96 @@ body {
     padding: 0 1rem !important;
     display: flex !important;
     align-items: center !important;
+    pointer-events: auto !important;
+    /* 클릭 차단 방지 */
 }
 
-/* 로고 숨기기 */
+/* 로고 숨기기 및 제목 정렬 */
 .md-header__button.md-logo {
     display: none !important;
 }
 
-/* 자식 요소의 중앙 정렬을 위한 기준점 설정 */
 .md-header__title {
     height: var(--md-header-height) !important;
     margin-left: 0 !important;
     position: relative !important;
     display: block !important;
+    z-index: 101 !important;
 }
 
-/* [해결 2] 글씨가 위로 쏠리는 현상 완벽 해결 */
 .md-header__topic {
     position: absolute !important;
     top: 50% !important;
     transform: translateY(-50%) !important;
-    /* 수학적으로 완벽한 세로 중앙 */
     margin: 0 !important;
     padding: 0 !important;
     line-height: 1 !important;
-    display: flex !important;
-    align-items: center !important;
 }
 
-/* 스크롤 시 나타나는 두 번째 타이틀 애니메이션 무력화 */
-.md-header__topic:nth-child(2) {
+/* 스크롤 시 생기는 유령 타이틀 제거 */
+.md-header__topic:nth-child(n+2) {
     display: none !important;
 }
 
-/* =========================================
-   3. 상단 폴더 메뉴 데스크톱 표시 (수정완료)
-   ========================================= */
+/* 3. 클릭 방해 요소 제거 및 메뉴 고정 */
 @media screen and (min-width: 60em) {
-    .md-tabs {
-        /* [해결 1] absolute 대신 fixed 사용해서 스크롤/숨김 현상 원천 차단 */
-        position: fixed !important;
-        top: 0 !important;
-        left: 220px !important;
-        height: var(--md-header-height) !important;
-        background: transparent !important;
-        border-bottom: none !important;
-        z-index: 99 !important;
+
+    /* MkDocs의 기본 탭 컨테이너가 가리는 현상 방지 */
+    .md-container>.md-tabs {
+        display: none !important;
+    }
+
+    /* 우리가 만든 진짜 메뉴 탭 */
+    .md-header__inner .md-tabs {
+        position: static !important;
+        /* 헤더 안으로 직접 삽입 */
         display: flex !important;
+        margin-left: 40px !important;
+        /* 제목과의 간격 */
+        background: transparent !important;
         visibility: visible !important;
         opacity: 1 !important;
-        pointer-events: auto !important;
-        transform: none !important;
-        /* MkDocs 자동 숨김 애니메이션 무효화 */
+        z-index: 110 !important;
     }
 
     .md-tabs__list {
-        margin: 0;
-        padding: 0;
-        display: flex;
-        height: 100%;
+        display: flex !important;
+        flex-direction: row !important;
+        height: var(--md-header-height) !important;
+        margin: 0 !important;
     }
 
     .md-tabs__item {
-        height: var(--md-header-height);
+        display: flex !important;
+        align-items: center !important;
     }
 
     .md-tabs__link {
-        height: var(--md-header-height);
-        line-height: var(--md-header-height);
-        padding: 0 1.2rem;
-        margin: 0;
-        font-size: 0.85rem;
-        font-weight: 500;
+        padding: 0 1.2rem !important;
+        font-size: 0.85rem !important;
+        font-weight: 500 !important;
         color: var(--md-tabs-text-color) !important;
-        transition: color 0.2s;
-        border-bottom: 3px solid transparent;
-        display: block;
-    }
-
-    .md-tabs__link:hover {
-        color: var(--md-tabs-active-color) !important;
+        border-bottom: 3px solid transparent !important;
+        transition: none !important;
+        line-height: var(--md-header-height) !important;
+        display: inline-block !important;
     }
 
     .md-tabs__link--active {
         color: var(--md-tabs-active-color) !important;
         border-bottom: 3px solid var(--md-tabs-active-color) !important;
     }
-
-    .md-main {
-        padding-top: var(--md-header-height) !important;
-    }
 }
 
-/* =========================================
-   4. 검색창 & 사이드바
-   ========================================= */
-.md-sidebar {
-    background-color: var(--md-default-bg-color) !important;
+/* 4. 다크모드 버튼/검색창 클릭 영역 보장 */
+.md-header__option,
+.md-search {
+    z-index: 120 !important;
+    pointer-events: auto !important;
 }
 
+/* 검색창 스타일 튜닝 */
 .md-search__input {
-    background-color: rgba(128, 128, 128, 0.15) !important;
-    border-radius: 4px;
-    height: 30px !important;
-    font-size: 0.8rem;
-}
-
-.md-typeset pre>code {
-    background-color: rgba(128, 128, 128, 0.05);
+    background-color: rgba(128, 128, 128, 0.1) !important;
     border-radius: 4px;
 }
