@@ -1,90 +1,53 @@
-/* 안드로이드 문서 스타일 오버라이드 (라이트 & 다크 모드) */
+/* 상단 헤더 높이 극소화 및 안드로이드 스타일 정밀 튜닝 */
 
-/* 공통 스타일 */
-body {
-    letter-spacing: -0.015em;
+:root {
+    /* 머티리얼 테마 기본 헤더 높이 변수 조절 */
+    --md-header-height: 40px;
 }
 
-/* 코드 블록 (모서리 둥글게 감소, 그림자 제거) */
-.md-typeset pre>code {
-    border-radius: 4px;
-    box-shadow: none !important;
-}
-
-/* 상단 헤더 바 (높이 감소, 그림자 제거, 테두리 추가) */
+/* 헤더 높이 및 라인 높이 강제 조정 */
 .md-header {
-    box-shadow: none !important;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    height: var(--md-header-height) !important;
 }
 
-/* 헤더 안쪽 여백 줄이기 (높이 감소 효과) */
 .md-header__inner {
-    padding: 0 0.5rem;
-    /* 좌우 여백 감소 */
+    height: var(--md-header-height) !important;
+    padding: 0 0.8rem !important;
+    display: flex;
+    align-items: center;
 }
 
-.md-header__button {
-    padding: 0 0.25rem;
-    /* 버튼 여백 감소 */
+/* 로고와 제목 크기 및 정렬 조절 */
+.md-logo img,
+.md-logo svg {
+    height: 1.2rem !important;
 }
 
-/* 로고 크기 조정 */
-.md-logo {
-    height: 1.5rem;
+.md-header__topic {
+    font-size: 0.85rem !important;
+    font-weight: 600;
+    line-height: var(--md-header-height) !important;
 }
 
-/* 검색창 스타일 조정 (플랫하게) */
-.md-search {
-    padding: 0.25rem;
-}
-
+/* 검색창 높이 조절 */
 .md-search__input {
-    border-radius: 4px;
-    background-color: rgba(0, 0, 0, 0.05) !important;
+    height: 28px !important;
+    font-size: 0.75rem !important;
 }
 
-/* 좌측/우측 사이드바 테두리 */
+/* 메인 컨텐츠 영역 시작 지점 조정 (헤더가 좁아진 만큼 위로 올림) */
+.md-main {
+    padding-top: var(--md-header-height) !important;
+}
+
+/* 사이드바 위치 조정 */
 .md-sidebar {
-    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    top: var(--md-header-height) !important;
+    height: calc(100% - var(--md-header-height)) !important;
 }
 
-.md-sidebar--secondary {
-    border-right: none;
-    border-left: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-/* 팔레트 기반 색상 정의 */
-
-/* --- 라이트 모드 --- */
-[data-md-color-scheme="default"] {
-    /* 안드로이드 라이트 모드 색상 */
-    --md-default-bg-color: #FFFFFF;
-    --md-default-fg-color: #000000;
-    --md-text-color: #000000;
-    --md-primary-fg-color: #FFFFFF;
-    /* 안드로이드 녹색 (#14a275) */
-    --md-accent-fg-color: #14a275;
-}
-
-/* --- 다크 모드 --- */
+/* 다크 모드 배경색을 안드로이드 다크(#121212)보다 더 깊은 블랙으로 조정 */
 [data-md-color-scheme="slate"] {
-    /* 안드로이드 다크 모드 색상 */
-    --md-default-bg-color: #121212;
-    --md-default-fg-color: #E0E0E0;
-    --md-text-color: #E0E0E0;
-    --md-primary-fg-color: #121212;
-    /* 사용자가 선호하는 파란색 (#2997ff) */
-    --md-accent-fg-color: #2997ff;
-}
-
-/* 다크 모드 헤더 바 블러 효과 제거 */
-.md-header[data-md-color-scheme="slate"] {
-    background-color: #121212 !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-}
-
-/* 다크 모드 사이드바 및 테두리 색상 조정 */
-.md-sidebar[data-md-color-scheme="slate"] {
-    border-color: rgba(255, 255, 255, 0.1);
+    --md-default-bg-color: #0d1117;
+    --md-default-fg-color: #c9d1d9;
 }
