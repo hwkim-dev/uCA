@@ -1,7 +1,7 @@
-/* 안드로이드 개발자 문서 완벽 복제 (1줄 헤더, 라이트/다크 분리) */
+/* 안드로이드 스타일 완벽 적용 */
 
 :root {
-    /* 헤더 높이를 44px로 더 좁게! */
+    /* 상단바 더 좁게 (44px) */
     --md-header-height: 44px;
 }
 
@@ -10,79 +10,89 @@ body {
 }
 
 /* =========================================
-   1. 라이트 / 다크 모드 색상 완벽 분리
+   1. 라이트 / 다크 모드 색상 
    ========================================= */
-/* 다크 모드 */
 [data-md-color-scheme="slate"] {
     --md-default-bg-color: #121212 !important;
     --md-header-bg-color: #121212 !important;
     --md-tabs-text-color: rgba(255, 255, 255, 0.6);
     --md-tabs-active-color: #3ddc84;
-    /* 안드로이드 다크 그린 */
     --md-border-color: rgba(255, 255, 255, 0.15);
 }
 
-/* 라이트 모드 (이제 글씨 잘 보일 거임!) */
 [data-md-color-scheme="default"] {
     --md-default-bg-color: #ffffff !important;
     --md-header-bg-color: #ffffff !important;
     --md-tabs-text-color: rgba(0, 0, 0, 0.6);
     --md-tabs-active-color: #008577;
-    /* 안드로이드 라이트 그린 */
     --md-border-color: rgba(0, 0, 0, 0.12);
 }
 
 /* =========================================
-   2. 헤더 공통 스타일 (1줄 & 하단 실선)
+   2. 헤더 공통 스타일 & 세로 중앙 정렬
    ========================================= */
 .md-header {
     height: var(--md-header-height) !important;
     background-color: var(--md-header-bg-color) !important;
     box-shadow: none !important;
     border-bottom: 1px solid var(--md-border-color) !important;
-    /* 헤더 1줄 밑에 실선 */
 }
 
 .md-header__inner {
     height: var(--md-header-height) !important;
     padding: 0 1rem !important;
+    display: flex !important;
+    align-items: center !important;
+    /* 글자 세로 기준 완벽한 중앙 정렬 */
 }
 
-/* 로고와 제목 사이즈 튜닝 */
-.md-logo img,
-.md-logo svg {
-    height: 1.1rem !important;
+/* 로고 숨기기 */
+.md-header__button.md-logo {
+    display: none !important;
+}
+
+/* 로고가 사라진 빈 공간만큼 제목 당기기 및 중앙 정렬 */
+.md-header__title {
+    height: var(--md-header-height) !important;
+    display: flex !important;
+    align-items: center !important;
+    margin-left: 0 !important;
 }
 
 .md-header__topic {
-    line-height: var(--md-header-height) !important;
+    line-height: normal !important;
+    display: inline-block;
 }
 
 /* =========================================
-   3. [핵심] 상단 폴더 메뉴를 헤더 1줄로 강제 삽입
+   3. 상단 폴더 메뉴 강제 표시 (숨김 방지)
    ========================================= */
-@media screen and (min-width: 76.25em) {
+/* 화면이 약간 좁아도 상단 메뉴가 억지로라도 보이게 브레이크포인트 완화 */
+@media screen and (min-width: 60em) {
     .md-tabs {
         position: absolute;
         top: 0;
-        left: 240px;
-        /* 제목 옆에 바로 메뉴 붙이기 (글씨 겹치면 이 숫자를 280px 등으로 늘려) */
+        left: 220px;
+        /* uCA Documentation 글씨 바로 옆부터 메뉴 시작 */
         height: var(--md-header-height) !important;
         background: transparent !important;
         border-bottom: none !important;
         z-index: 10;
+        display: flex !important;
+        /* MkDocs가 숨겨도 강제로 표시 */
+        opacity: 1 !important;
     }
 
     .md-tabs__list {
         margin: 0;
         padding: 0;
+        display: flex;
     }
 
     .md-tabs__item {
         height: var(--md-header-height);
     }
 
-    /* 안드로이드 메뉴 호버 및 액티브 디테일 */
     .md-tabs__link {
         height: var(--md-header-height);
         line-height: var(--md-header-height);
@@ -93,21 +103,18 @@ body {
         color: var(--md-tabs-text-color) !important;
         transition: color 0.2s;
         border-bottom: 3px solid transparent;
-        /* 평소엔 투명한 밑줄 */
+        display: block;
     }
 
-    /* 마우스 올리면 글씨 진해짐 */
     .md-tabs__link:hover {
         color: var(--md-tabs-active-color) !important;
     }
 
-    /* 현재 있는 탭은 밑에 안드로이드 초록색 줄 긋기! */
     .md-tabs__link--active {
         color: var(--md-tabs-active-color) !important;
         border-bottom: 3px solid var(--md-tabs-active-color) !important;
     }
 
-    /* 메인 여백 보정 */
     .md-main {
         padding-top: var(--md-header-height) !important;
     }
@@ -120,7 +127,6 @@ body {
     background-color: var(--md-default-bg-color) !important;
 }
 
-/* 검색창을 안드로이드 스타일로 */
 .md-search__input {
     background-color: rgba(128, 128, 128, 0.15) !important;
     border-radius: 4px;
@@ -128,7 +134,6 @@ body {
     font-size: 0.8rem;
 }
 
-/* 코드 블록 */
 .md-typeset pre>code {
     background-color: rgba(128, 128, 128, 0.05);
     border-radius: 4px;

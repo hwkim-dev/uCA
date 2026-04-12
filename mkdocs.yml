@@ -1,18 +1,18 @@
-site_name: uCA documentation
+site_name: uCA Documentation
 site_dir: site
 
 theme:
   name: material
   font: false
   features:
-    - navigation.tabs          # 상단바에 폴더(Architecture 등) 띄우기
-    - navigation.expand        # 왼쪽 사이드바 접기/펼치기 활성화
+    - navigation.tabs          
+    - navigation.expand        
     - navigation.top
   palette:
     # 다크 모드
     - scheme: slate
       primary: black
-      accent: green            # 안드로이드 메인 컬러 적용
+      accent: green            
       toggle:
         icon: material/weather-night
         name: 라이트 모드로 전환
@@ -27,13 +27,12 @@ theme:
 extra_css:
   - stylesheets/custom.css
 
-# [핵심] 이렇게 들여쓰기를 해야 상단=폴더, 왼쪽=문서 이름이 돼!
+# [핵심] 사이드바에 뜰 "파일 이름"을 직접 지정해 줌
 nav:
   - HOME: index.md
   - Architecture: 
-      - Overview: Architecture/Architecture.md
-      # 다른 문서가 생기면 여기에 계속 추가하면 됨
+      - Architecture: Architecture/Architecture.md
   - Devices: 
-      - Overview: Devices/Devices.md
+      - Devices: Devices/Devices.md
   - Drivers: 
-      - Overview: Drivers/Drivers.md
+      - Drivers: Drivers/Drivers.md
