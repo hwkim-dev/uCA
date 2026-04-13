@@ -5,6 +5,7 @@ theme:
   name: material
   font: false
   features:
+    - navigation.tabs
     - navigation.sections
     - navigation.top
   palette:
@@ -21,14 +22,17 @@ theme:
         icon: material/weather-sunny
         name: Switch to Dark Mode
 
-extra:
-  alternate:
-    - name: English
-      link: /
-      lang: en
-    - name: Korean
-      link: /ko/
-      lang: ko
+plugins:
+  - search
+  - i18n:
+      default_language: en
+      languages:
+        en:
+          name: English
+          build: true
+        ko:
+          name: Korean
+          build: true
 
 markdown_extensions:
   - pymdownx.highlight:

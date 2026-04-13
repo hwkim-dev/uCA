@@ -1,4 +1,34 @@
-# NPU Runtime Agents (Task Dispatchers)
+<div style="font-family: Arial, sans-serif; margin-bottom: 24px;">
+    <!-- Breadcrumb area -->
+    <div style="font-size: 14px; color: #0068b5; margin-bottom: 15px;">
+        <a href="" style="color: #0068b5; text-decoration: none;">Agents</a> / 
+        <b>NPU Runtime Agents</b>
+    </div>
+
+    <!-- Blue Hero Banner -->
+    <div style="background-color: #0068b5; color: white; padding: 40px; margin: 0 -20px 30px -20px;">
+        <h1 style="color: white; margin-top: 0; font-size: 2.2em; font-weight: 300;">NPU Runtime Agents (Task Dispatchers)</h1>
+        
+        <div style="display: flex; flex-wrap: wrap; gap: 40px; margin-top: 30px; font-size: 14px;">
+            <div>
+                <div style="opacity: 0.8; margin-bottom: 5px;">ID</div>
+                <div style="font-size: 16px; font-weight: bold;">UCA-AGT-V1</div>
+            </div>
+            <div>
+                <div style="opacity: 0.8; margin-bottom: 5px;">Date</div>
+                <div style="font-size: 16px; font-weight: bold;">04/13/2026</div>
+            </div>
+            <div>
+                <div style="opacity: 0.8; margin-bottom: 5px;">Version</div>
+                <div style="font-size: 16px; font-weight: bold;">v001 (Archived)</div>
+            </div>
+            <div>
+                <div style="opacity: 0.8; margin-bottom: 5px;">Visibility</div>
+                <div style="font-size: 16px; font-weight: bold;">Public</div>
+            </div>
+        </div>
+    </div>
+</div>
 
 This document describes the autonomous control and dispatch routines within the v001 architecture pipeline. To maximize performance and minimize bottlenecks, the uXC NPU moves away from simple sequential processing. It utilizes a **distributed and decoupled pipeline pattern where each execution unit operates independently as a 'Mini Agent'**.
 
@@ -38,9 +68,3 @@ Once the local dispatcher confirms a command in its FIFO queue, it initiates the
 ### B. CVO (Complex Vector Operations) Dispatcher
 The mathematical function engines (CORDIC/SFU) are independent of the matrix engine counterparts. Although utilizing the L2 Cache resident spaces, they negotiate zero resources with and face zero interference from the matrix units.
 Functioning with a 2048-deep queue, the sequence activates its phase independently when the Activation Output and `e_max` metrics arrive from the upstream computations.
-
----
-
-> [!TIP]
-> **Why adopt this Agent structural paradigm?** <br/>
-> Standard sequential hardware experiences holistic pipeline stalls triggering bubble pipelines whenever specific arithmetic pauses. However, the decoupled paradigm allows the host to buffer operations much like DMA streams to a GPU. By ensuring that the lower vertical units (micro-agents) work entirely isolated based on condition dependencies, the 1.2M DSP capability ceiling is unlocked seamlessly.
