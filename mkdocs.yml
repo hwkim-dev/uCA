@@ -25,12 +25,13 @@ theme:
 plugins:
   - search
   - i18n:
+      docs_structure: suffix
       default_language: en
       languages:
-        en:
+        - locale: en
           name: English
           build: true
-        ko:
+        - locale: ko
           name: Korean
           build: true
 
