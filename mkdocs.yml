@@ -4,25 +4,17 @@ site_dir: site
 theme:
   name: material
   font: false
-  theme:
-  name: material
   features:
-    - navigation.tabs # 핵심! 이 줄을 추가해야 메뉴가 위로 올라감
-    - navigation.sections # 탭 아래 하위 메뉴들을 섹션별로 묶어줌
-    - navigation.top # 추가하면 스크롤 내릴 때 위로가기 버튼 생김
-#  features:
-#    - navigation.tabs          
-#    - navigation.expand        
-#    - navigation.top
+    - navigation.tabs # 메뉴를 상단으로 올림
+    - navigation.sections # 하위 메뉴를 묶어줌
+    - navigation.top # 위로가기 버튼
   palette:
-    # 다크 모드
     - scheme: slate
       primary: black
       accent: green            
       toggle:
         icon: material/weather-night
         name: 라이트 모드로 전환
-    # 라이트 모드
     - scheme: default
       primary: white
       accent: green
@@ -36,9 +28,9 @@ extra_css:
 nav:
   - HOME: index.md
   - Architecture: 
-      - Overview: architecture/index.md 
-      - ISA Spec: architecture/isa.md
+      - Overview: Architecture/index.md 
+      - ISA Spec: Architecture/v001/v001_isa.md
   - Devices:
-      - KV260: devices/kv260.md
+      - KV260: Devices/kv260.md
   - Drivers:
-      - API: drivers/api.md
+      - API: Drivers/API.md

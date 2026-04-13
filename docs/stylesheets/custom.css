@@ -77,48 +77,21 @@ body {
     /* MkDocs의 기본 탭 컨테이너가 가리는 현상 방지 */
     .md-container>.md-tabs {
         display: none !important;
+        /* <--- 이게 탭을 죽이고 있던 진짜 범인!!! */
     }
 
     /* 우리가 만든 진짜 메뉴 탭 */
     .md-header__inner .md-tabs {
         position: static !important;
-        /* 헤더 안으로 직접 삽입 */
         display: flex !important;
         margin-left: 40px !important;
-        /* 제목과의 간격 */
         background: transparent !important;
         visibility: visible !important;
         opacity: 1 !important;
         z-index: 110 !important;
     }
 
-    .md-tabs__list {
-        display: flex !important;
-        flex-direction: row !important;
-        height: var(--md-header-height) !important;
-        margin: 0 !important;
-    }
-
-    .md-tabs__item {
-        display: flex !important;
-        align-items: center !important;
-    }
-
-    .md-tabs__link {
-        padding: 0 1.2rem !important;
-        font-size: 0.85rem !important;
-        font-weight: 500 !important;
-        color: var(--md-tabs-text-color) !important;
-        border-bottom: 3px solid transparent !important;
-        transition: none !important;
-        line-height: var(--md-header-height) !important;
-        display: inline-block !important;
-    }
-
-    .md-tabs__link--active {
-        color: var(--md-tabs-active-color) !important;
-        border-bottom: 3px solid var(--md-tabs-active-color) !important;
-    }
+    /* ... 이 아래 .md-tabs__list, .md-tabs__item 등등 다 지우기 ... */
 }
 
 /* 4. 다크모드 버튼/검색창 클릭 영역 보장 */
