@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <url>
+        <loc>None./</loc>
+        <lastmod>2026-04-13</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="None"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="Noneko/"/>
+    </url>
+    <url>
+        <loc>NoneDevices/kv260/</loc>
+        <lastmod>2026-04-13</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="NoneDevices/kv260/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="Noneko/Devices/kv260/"/>
+    </url>
+    <url>
+        <loc>Nonearchive/experimental_v001/</loc>
+        <lastmod>2026-04-13</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Nonearchive/experimental_v001/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="Noneko/archive/experimental_v001/"/>
+    </url>
+    <url>
+        <loc>Nonearchive/experimental_v001/Architecture/v001_architecture/</loc>
+        <lastmod>2026-04-13</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Nonearchive/experimental_v001/Architecture/v001_architecture/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="Noneko/archive/experimental_v001/Architecture/v001_architecture/"/>
+    </url>
+    <url>
+        <loc>Nonearchive/experimental_v001/Drivers/ISA/</loc>
+        <lastmod>2026-04-13</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Nonearchive/experimental_v001/Drivers/ISA/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="Noneko/archive/experimental_v001/Drivers/ISA/"/>
+    </url>
+    <url>
+        <loc>Nonearchive/experimental_v001/Drivers/ISA_Spreadsheet/</loc>
+        <lastmod>2026-04-13</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Nonearchive/experimental_v001/Drivers/ISA_Spreadsheet/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="Noneko/archive/experimental_v001/Drivers/ISA_Spreadsheet/"/>
+    </url>
+    <url>
+        <loc>Nonearchive/experimental_v001/Drivers/v001_API/</loc>
+        <lastmod>2026-04-13</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Nonearchive/experimental_v001/Drivers/v001_API/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="Noneko/archive/experimental_v001/Drivers/v001_API/"/>
+    </url>
+    <url>
+        <loc>Nonev002/v002_isa/</loc>
+        <lastmod>2026-04-13</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Nonev002/v002_isa/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="Noneko/v002/v002_isa/"/>
+    </url>
+    <url>
+        <loc>Nonev002/Architecture/v002_architecture/</loc>
+        <lastmod>2026-04-13</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Nonev002/Architecture/v002_architecture/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="Noneko/v002/Architecture/v002_architecture/"/>
+    </url>
+    <url>
+        <loc>Nonev002/Drivers/v002_driver/</loc>
+        <lastmod>2026-04-13</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Nonev002/Drivers/v002_driver/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="Noneko/v002/Drivers/v002_driver/"/>
+    </url>
+    <url>
+        <loc>Noneko/</loc>
+        <lastmod>2026-04-13</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ko" href="Noneko/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="None"/>
+    </url>
+    <url>
+        <loc>Noneko/Devices/kv260/</loc>
+        <lastmod>2026-04-13</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ko" href="Noneko/Devices/kv260/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="NoneDevices/kv260/"/>
+    </url>
+    <url>
+        <loc>Noneko/archive/experimental_v001/</loc>
+        <lastmod>2026-04-13</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ko" href="Noneko/archive/experimental_v001/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Nonearchive/experimental_v001/"/>
+    </url>
+    <url>
+        <loc>Noneko/archive/experimental_v001/Architecture/v001_architecture/</loc>
+        <lastmod>2026-04-13</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ko" href="Noneko/archive/experimental_v001/Architecture/v001_architecture/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Nonearchive/experimental_v001/Architecture/v001_architecture/"/>
+    </url>
+    <url>
+        <loc>Noneko/archive/experimental_v001/Drivers/ISA/</loc>
+        <lastmod>2026-04-13</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ko" href="Noneko/archive/experimental_v001/Drivers/ISA/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Nonearchive/experimental_v001/Drivers/ISA/"/>
+    </url>
+    <url>
+        <loc>Noneko/archive/experimental_v001/Drivers/ISA_Spreadsheet/</loc>
+        <lastmod>2026-04-13</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ko" href="Noneko/archive/experimental_v001/Drivers/ISA_Spreadsheet/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Nonearchive/experimental_v001/Drivers/ISA_Spreadsheet/"/>
+    </url>
+    <url>
+        <loc>Noneko/archive/experimental_v001/Drivers/v001_API/</loc>
+        <lastmod>2026-04-13</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ko" href="Noneko/archive/experimental_v001/Drivers/v001_API/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Nonearchive/experimental_v001/Drivers/v001_API/"/>
+    </url>
+    <url>
+        <loc>Noneko/v002/v002_isa/</loc>
+        <lastmod>2026-04-13</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ko" href="Noneko/v002/v002_isa/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Nonev002/v002_isa/"/>
+    </url>
+    <url>
+        <loc>Noneko/v002/Architecture/v002_architecture/</loc>
+        <lastmod>2026-04-13</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ko" href="Noneko/v002/Architecture/v002_architecture/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Nonev002/Architecture/v002_architecture/"/>
+    </url>
+    <url>
+        <loc>Noneko/v002/Drivers/v002_driver/</loc>
+        <lastmod>2026-04-13</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ko" href="Noneko/v002/Drivers/v002_driver/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Nonev002/Drivers/v002_driver/"/>
+    </url>
+</urlset>

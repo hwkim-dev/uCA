@@ -1,0 +1,108 @@
+/* uCA Documentation - Android Style Final Fix */
+
+:root {
+    --md-header-height: 44px;
+}
+
+body {
+    letter-spacing: -0.015em;
+}
+
+/* 1. 라이트 / 다크 모드 색상 */
+[data-md-color-scheme="slate"] {
+    --md-default-bg-color: #121212 !important;
+    --md-header-bg-color: #121212 !important;
+    --md-tabs-text-color: rgba(255, 255, 255, 0.6);
+    --md-tabs-active-color: #3ddc84;
+    --md-border-color: rgba(255, 255, 255, 0.15);
+}
+
+[data-md-color-scheme="default"] {
+    --md-default-bg-color: #ffffff !important;
+    --md-header-bg-color: #ffffff !important;
+    --md-tabs-text-color: rgba(0, 0, 0, 0.6);
+    --md-tabs-active-color: #008577;
+    --md-border-color: rgba(0, 0, 0, 0.12);
+}
+
+/* 2. 헤더 레이어 정상화 */
+.md-header {
+    height: var(--md-header-height) !important;
+    background-color: var(--md-header-bg-color) !important;
+    box-shadow: none !important;
+    border-bottom: 1px solid var(--md-border-color) !important;
+    z-index: 100 !important;
+    /* 헤더 자체를 높은 우선순위로 */
+}
+
+.md-header__inner {
+    height: var(--md-header-height) !important;
+    padding: 0 1rem !important;
+    display: flex !important;
+    align-items: center !important;
+    pointer-events: auto !important;
+    /* 클릭 차단 방지 */
+}
+
+/* 로고 숨기기 및 제목 정렬 */
+.md-header__button.md-logo {
+    display: none !important;
+}
+
+.md-header__title {
+    height: var(--md-header-height) !important;
+    margin-left: 0 !important;
+    position: relative !important;
+    display: block !important;
+    z-index: 101 !important;
+}
+
+.md-header__topic {
+    position: absolute !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+}
+
+/* 스크롤 시 생기는 유령 타이틀 제거 */
+.md-header__topic:nth-child(n+2) {
+    display: none !important;
+}
+
+/* 3. 클릭 방해 요소 제거 및 메뉴 고정 */
+@media screen and (min-width: 60em) {
+
+    /* MkDocs의 기본 탭 컨테이너가 가리는 현상 방지 */
+    .md-container>.md-tabs {
+        display: none !important;
+        /* <--- 이게 탭을 죽이고 있던 진짜 범인!!! */
+    }
+
+    /* 우리가 만든 진짜 메뉴 탭 */
+    .md-header__inner .md-tabs {
+        position: static !important;
+        display: flex !important;
+        margin-left: 40px !important;
+        background: transparent !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        z-index: 110 !important;
+    }
+
+    /* ... 이 아래 .md-tabs__list, .md-tabs__item 등등 다 지우기 ... */
+}
+
+/* 4. 다크모드 버튼/검색창 클릭 영역 보장 */
+.md-header__option,
+.md-search {
+    z-index: 120 !important;
+    pointer-events: auto !important;
+}
+
+/* 검색창 스타일 튜닝 */
+.md-search__input {
+    background-color: rgba(128, 128, 128, 0.1) !important;
+    border-radius: 4px;
+}
