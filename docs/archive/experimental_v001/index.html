@@ -1,15 +1,15 @@
 <!doctype html>
-<html class="no-js" lang="en" data-content_root="./">
+<html class="no-js" lang="en" data-content_root="../../../">
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html">
+<link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
-        <title>uCA Documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=acfd86a5" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
+        <title>Archive: v001 Experimental Architecture - uCA Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=acfd86a5" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
     
     
 
@@ -161,7 +161,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="#"><div class="brand">uCA Documentation</div></a>
+      <a href="../../../index.html"><div class="brand">uCA Documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -180,11 +180,11 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand" href="#">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../index.html">
   
   <span class="sidebar-brand-text">uCA Documentation</span>
   
-</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+</a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
@@ -209,7 +209,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="_sources/index.rst.txt" title="View this page">
+  <a class="muted-link" href="../../../_sources/docs/archive/experimental_v001/index.rst.txt" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -227,18 +227,209 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="uca-navigation">
-<h1>uCA Navigation<a class="headerlink" href="#uca-navigation" title="Link to this heading">¶</a></h1>
-<p>Welcome to the <strong>uCA</strong> Sphinx documentation network!</p>
-<div class="toctree-wrapper compound">
-</div>
-<section id="indices-and-tables">
-<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading">¶</a></h2>
+          <section id="archive-v001-experimental-architecture">
+<h1>Archive: v001 Experimental Architecture<a class="headerlink" href="#archive-v001-experimental-architecture" title="Link to this heading">¶</a></h1>
+<blockquote>
+<div><p>[!WARNING] This architecture is a preliminary (v001) experimental
+design. Although structurally superior, it was engineered with a
+heavy inclination toward GEMM (Matrix) computations. Because local
+LLM environments are predominantly bound by GEMV (Vector) operations,
+this branch has been currently archived in favor of an optimized
+structure.</p>
+</div></blockquote>
+<p><img alt="Status Archived" src="https://img.shields.io/badge/Status-Archived-red" /> <img alt="SystemVerilog RTL" src="https://img.shields.io/badge/RTL-SystemVerilog-green" /> <img alt="Target Hardware" src="https://img.shields.io/badge/Target-Kria_KV260-orange" /> <img alt="Quantization Precision" src="https://img.shields.io/badge/Precision-W4A16_BF16-green" /></p>
+<hr class="docutils" />
+<section id="project-overview">
+<h2>Project Overview<a class="headerlink" href="#project-overview" title="Link to this heading">¶</a></h2>
+<p><strong>uXC</strong> is a customized SystemVerilog-based Neural Processing Unit (NPU)
+engineered fundamentally from the ground up to accelerate the quantized
+<strong>Gemma 3N E4B</strong> Large Language Model on the bare-metal Xilinx Kria
+KV260 FPGA (400 MHz). The architecture is meticulously designed to push
+the absolute physical constraints of the KV260 platform, exploiting its
+1,248 DSP48E2 slices and 144 BRAMs to their functional ceiling.</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+<li><p><strong>Software Baseline</strong>:
+<a class="reference external" href="https://github.com/hwkim-dev/llm-lite">llm-lite</a> (x64 CPU
+reference implementation)</p></li>
+<li><p><strong>Full-Stack Co-Design</strong>: Hardware accelerator (SystemVerilog),
+Trace-Driven validation model (Python), and an AXI DMA memory
+pipeline.</p></li>
 </ul>
+</section>
+<hr class="docutils" />
+<section id="quick-menu">
+<h2>Quick Menu<a class="headerlink" href="#quick-menu" title="Link to this heading">¶</a></h2>
+<div class="grid cards docutils container">
+<ul>
+<li><p><a class="reference external" href="Architecture/v001_architecture.md">Architecture Overview</a></p>
+<p>Illustrates the internal NPU architecture, the 3-tier core system
+decoupled model, and the memory transition layer layout.</p>
+</li>
+<li><p><a class="reference external" href="Drivers/ISA.md">ISA Specification</a></p>
+<p>Explains the 64-bit VLIW core, Opcode routing design, register
+mappings, and pipeline scheduling methodologies.</p>
+</li>
+<li><p><a class="reference external" href="Drivers/ISA_Spreadsheet.md">ISA Spreadsheet</a></p>
+<p>Provides an internal spreadsheet-view breakdown of the overall
+modular ISA structure.</p>
+</li>
+<li><p><a class="reference external" href="Drivers/v001_API.md">C API Detail</a></p>
+<p>Focuses on the primary wrapping interfaces of <code class="docutils literal notranslate"><span class="pre">uCA_v1_api.c</span></code> and
+<code class="docutils literal notranslate"><span class="pre">uCA_v1_api.h</span></code> targeting the active NPU host controller.</p>
+</li>
+<li><p><a class="reference external" href="agents.md">Agents Architecture</a></p>
+<p>Concept logic on the autonomous agent micro-scheduling model
+operating inside the decoupled dataflow pipeline.</p>
+</li>
+</ul>
+</div>
+</section>
+<hr class="docutils" />
+<section id="quantization-strategy-w4a16-with-bf16-activations">
+<h2>Quantization Strategy: W4A16 with BF16 Activations<a class="headerlink" href="#quantization-strategy-w4a16-with-bf16-activations" title="Link to this heading">¶</a></h2>
+<p>The primary core computational path operates strictly at <strong>W4A16
+precision</strong>:</p>
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Data</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Width</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Weight</strong></p></td>
+<td><p>INT4</p></td>
+<td><p>4-bit</p></td>
+<td><p>Streamed through
+HP Ports and
+consumed purely
+as an INT4 layer</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Feature
+Map</strong></p></td>
+<td><p>BF16</p></td>
+<td><p>16-bit</p></td>
+<td><p>Undergoes
+conversion from
+BF16
+:ma
+th:<cite>rightarrow</cite>
+27-bit
+Fixed-Point for
+native MAC
+arithmetic</p></td>
+</tr>
+<tr class="row-even"><td><p>**
+Accumulator**</p></td>
+<td><p>INT48</p></td>
+<td><p>48-bit</p></td>
+<td><p>Accumulated
+recursively
+through the
+P-Register of
+the DSP48E2
+blocks</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>SFU I/O</strong></p></td>
+<td><p>BF16</p></td>
+<td><p>16-bit</p></td>
+<td><p>Reconstructed as
+BF16
+Po
+st-Normalization
+heading for
+Non-Linear
+operations</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<section id="precision-promotion-flow">
+<h3>Precision Promotion Flow<a class="headerlink" href="#precision-promotion-flow" title="Link to this heading">¶</a></h3>
+<div class="highlight-mermaid notranslate"><div class="highlight"><pre><span></span>graph TD
+    A[Weight: INT4] --&gt; MAC[DSP48E2 MAC]
+    B[FMap: BF16 → 27-bit fixed-pt] --&gt; MAC
+    MAC --&gt;|Accumulator| C[INT48]
+    C --&gt;|Barrel Shift + LOD| D[Normalization: BF16]
+    D --&gt;|SFU / CORDIC| E[Non-Linear Ops: exp, RMSNorm, Softmax...]
+    E --&gt; F[Output: BF16 to next layer]
+</pre></div>
+</div>
+<p>At the transition segment toward the Non-Linear operations loop (Complex
+Vector Operation), the computation elevates precisely into <strong>BF16</strong>.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="compute-engines">
+<h2>Compute Engines<a class="headerlink" href="#compute-engines" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Engine</p></th>
+<th class="head"><p>Operation</p></th>
+<th class="head"><p>Weights
+Input</p></th>
+<th class="head"><p>Activation
+Fetch</p></th>
+<th class="head"><p>Ac
+cumulator
+Unit</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Matrix
+Core</strong></p></td>
+<td><p>GEMM (prefill,
+projections)</p></td>
+<td><p>HP0/1 (32
+INT4/clk)</p></td>
+<td><p>BF16
+:math:`
+rightarrow`
+27-bit
+fixed-pt</p></td>
+<td><p>INT48
+(DSP48E2)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Vector
+Core</strong></p></td>
+<td><p>GEMV
+(
+autoregressive
+decode)</p></td>
+<td><p>HP2/3 (32
+INT4/clk
+each)</p></td>
+<td><p>BF16
+:math:`
+rightarrow`
+27-bit
+fixed-pt</p></td>
+<td><p>INT48
+(DSP48E2)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>CVO
+Core</strong></p></td>
+<td><p>Non-linear ops
+(Softmax,
+GELU, RoPE)</p></td>
+<td><p>N/A</p></td>
+<td><p>BF16 Stream
+via L2</p></td>
+<td><p>BF16</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<div><p>Applying a structural <strong>Decoupled Dataflow</strong> design principle ensures
+operation instructions execute asynchronously. Distributed from the
+Global Pipeline across distinct modules, it completely prevents
+architectural stalling and pushes mathematical hardware throughput to
+its peak.</p>
+</div></blockquote>
 </section>
 </section>
 
@@ -279,8 +470,14 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">uCA Navigation</a><ul>
-<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+<li><a class="reference internal" href="#">Archive: v001 Experimental Architecture</a><ul>
+<li><a class="reference internal" href="#project-overview">Project Overview</a></li>
+<li><a class="reference internal" href="#quick-menu">Quick Menu</a></li>
+<li><a class="reference internal" href="#quantization-strategy-w4a16-with-bf16-activations">Quantization Strategy: W4A16 with BF16 Activations</a><ul>
+<li><a class="reference internal" href="#precision-promotion-flow">Precision Promotion Flow</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#compute-engines">Compute Engines</a></li>
 </ul>
 </li>
 </ul>
@@ -292,9 +489,9 @@
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=b86f8f95"></script>
-    <script src="_static/doctools.js?v=fd6eb6e6"></script>
-    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
-    <script src="_static/scripts/furo.js?v=46bd48cc"></script>
+</div><script src="../../../_static/documentation_options.js?v=b86f8f95"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/scripts/furo.js?v=46bd48cc"></script>
     </body>
 </html>
