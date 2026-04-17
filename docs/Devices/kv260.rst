@@ -1,2 +1,8 @@
-pccx: Parallel Compute Core eXecutor
-=====================================
+Target Hardware: Xilinx Kria KV260
+==================================
+
+.. note::
+
+   The KV260 device overview page is under construction. For hardware
+   constraints and resource budgets that shaped the v002 architecture,
+   see :doc:`/docs/v002/Architecture/rationale`.
