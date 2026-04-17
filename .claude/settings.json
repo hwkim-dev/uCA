@@ -3,7 +3,9 @@
     "allow": [
       "Bash(sphinx-build -b html -q . _build/html/en)",
       "Bash(sphinx-build -b html -q ko _build/html/ko)",
-      "Bash(echo \"EXIT: $?\")"
+      "Bash(echo \"EXIT: $?\")",
+      "Bash(python3 -c ' *)",
+      "Bash(identify -format \"%f: mode=%[colorspace] alpha=%A\\\\n\" assets/images/Architecture/v002/architecture_v002.png assets/images/Architecture/v002/DataFlow_GEMM_v002.png assets/images/Architecture/v002/Processing_Elements_GEMM_1_v002.png)"
     ]
   }
 }

@@ -6,3 +6,4 @@ venv/
 _build/
 .claudesignore
 CLAUDE.md
+codes/v002/
