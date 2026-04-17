@@ -1,0 +1,1166 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>NPU Controller Modules &#8212; pccx Documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=7f76b32a3354e82990f2" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=7f76b32a3354e82990f2" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/language-switcher.css?v=5ec28b56" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mermaid-theme.css?v=36ae3483" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/image-lightbox.css?v=884c9d5a" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../_static/scripts/fontawesome.js?digest=7f76b32a3354e82990f2"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=7f76b32a3354e82990f2" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=7f76b32a3354e82990f2" />
+
+    <script src="../../../_static/documentation_options.js?v=dfc80500"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/v002/RTL/controller';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script src="../../../_static/language-switcher.js?v=e91f783c"></script>
+    <script src="../../../_static/image-lightbox.js?v=dec353f8"></script>
+    <script src="../../../_static/mermaid-theme.js?v=7333a321"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Devices" href="../../Devices/index.html" />
+    <link rel="prev" title="Compute Core Modules" href="compute_cores.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../../_static/searchtools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search pccx docs..."
+         aria-label="Search pccx docs..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">pccx</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../index.html">
+    pccx: Parallel Compute Core eXecutor
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    pccx v002 Architecture
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../Devices/index.html">
+    Devices
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../archive/index.html">
+    Archive
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hwkim-dev/pccx" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://hwkim-dev.github.io/hwkim-dev/" title="Personal Site" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-solid fa-user fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Personal Site</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../index.html">
+    pccx: Parallel Compute Core eXecutor
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    pccx v002 Architecture
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../Devices/index.html">
+    Devices
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../archive/index.html">
+    Archive
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hwkim-dev/pccx" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://hwkim-dev.github.io/hwkim-dev/" title="Personal Site" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-solid fa-user fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Personal Site</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar"><svg class="pst-icon svg-inline--fa" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Hardware Architecture</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Architecture/index.html">Hardware Architecture</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Architecture/rationale.html">Design Rationale: v001 → v002</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Architecture/top_level.html">Top-Level Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Architecture/floorplan.html">Physical Floorplan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Architecture/memory_hierarchy.html">Memory Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Architecture/kv_cache.html">KV Cache Optimization Strategy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Architecture/gemm_core.html">GEMM Core (Systolic Array)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Architecture/gemv_core.html">GEMV Core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Architecture/sfu_core.html">SFU Core (Complex Vector Operations)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Architecture/dsp48e2_w4a8.html">DSP48E2 W4A8 Bit Packing and Sign Recovery</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Instruction Set Architecture (ISA)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ISA/index.html">Instruction Set Architecture (ISA)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ISA/encoding.html">Instruction Encoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ISA/instructions.html">Per-Instruction Encoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ISA/dataflow.html">Per-Instruction Dataflow</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Software Stack</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Drivers/index.html">Software Stack</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Drivers/api.html">C API Overview</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Target Models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Models/index.html">Target Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Models/gemma3n_overview.html">Gemma 3N E4B — Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Models/gemma3n_pipeline.html">Gemma 3N E4B — Operator-Level Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Models/gemma3n_attention_rope.html">Gemma 3N — Attention and RoPE Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Models/gemma3n_ple_laurel.html">Gemma 3N — LAuReL and PLE Calibration Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Models/gemma3n_ffn_sparsity.html">Gemma 3N — FFN Gaussian Top-K Sparsity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Models/gemma3n_execution.html">Gemma 3N E4B on pccx v002 — Execution and Scheduling</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">RTL Source</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">RTL Source Reference (v002)</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="isa_pkg.html">ISA Type Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="npu_top.html">NPU Top-Level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compute_cores.html">Compute Core Modules</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">NPU Controller Modules</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">pccx v002 Architecture</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">RTL Source Reference (v002)</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">NPU Controller Modules</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="npu-controller-modules">
+<h1>NPU Controller Modules<a class="headerlink" href="#npu-controller-modules" title="Link to this heading">#</a></h1>
+<section id="controller-top">
+<h2>1. Controller Top<a class="headerlink" href="#controller-top" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">npu_controller_top.sv</span></code> integrates the AXI-Lite frontend, instruction
+decoder, dispatcher, and global scheduler into a single unit.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">hw/rtl/NPU_Controller/npu_controller_top.sv</span><a class="headerlink" href="#id1" title="Link to this code">#</a></div>
+<div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="no">`timescale</span><span class="w"> </span><span class="mi">1</span><span class="n">ns</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1</span><span class="n">ps</span>
+
+<span class="no">`include</span><span class="w"> </span><span class="s">&quot;GLOBAL_CONST.svh&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">isa_pkg::*</span><span class="p">;</span>
+
+<span class="c1">// ===| NPU Controller Top |======================================================</span>
+<span class="c1">// Wraps the AXI-Lite frontend and the opcode decoder.</span>
+<span class="c1">// Outputs one valid pulse per instruction type along with the raw 60-bit body.</span>
+<span class="c1">// ===============================================================================</span>
+
+<span class="k">module</span><span class="w"> </span><span class="n">npu_controller_top</span><span class="w"> </span><span class="p">#()</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span>
+<span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">rst_n</span><span class="p">,</span>
+<span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">i_clear</span><span class="p">,</span>
+
+<span class="w">    </span><span class="c1">// ===| AXI4-Lite Slave : PS &lt;-&gt; NPU control plane |=========================</span>
+<span class="w">    </span><span class="n">axil_if</span><span class="p">.</span><span class="n">slave</span><span class="w"> </span><span class="n">S_AXIL_CTRL</span><span class="p">,</span>
+
+<span class="w">    </span><span class="c1">// ===| Decoded Instruction Valids |=========================================</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">OUT_GEMV_op_x64_valid</span><span class="p">,</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">OUT_GEMM_op_x64_valid</span><span class="p">,</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">OUT_memcpy_op_x64_valid</span><span class="p">,</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">OUT_memset_op_x64_valid</span><span class="p">,</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">OUT_cvo_op_x64_valid</span><span class="p">,</span>
+
+<span class="w">    </span><span class="c1">// ===| Raw Instruction Body (60-bit, opcode stripped) |=====================</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="n">instruction_op_x64_t</span><span class="w"> </span><span class="n">OUT_op_x64</span>
+<span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// ===| Internal Wires |========================================================</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="no">`ISA_WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">raw_instruction</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w">                  </span><span class="n">raw_instruction_pop_valid</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w">                  </span><span class="n">fetch_PC_ready</span><span class="p">;</span>
+
+<span class="w">  </span><span class="c1">// ===| Frontend : AXI-Lite CMD/STAT |==========================================</span>
+<span class="w">  </span><span class="n">ctrl_npu_frontend</span><span class="w"> </span><span class="p">#()</span><span class="w"> </span><span class="n">u_npu_frontend</span><span class="w"> </span><span class="p">(</span>
+<span class="w">      </span><span class="p">.</span><span class="n">clk</span><span class="w">     </span><span class="p">(</span><span class="n">clk</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">rst_n</span><span class="w">   </span><span class="p">(</span><span class="n">rst_n</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_clear</span><span class="p">(</span><span class="n">i_clear</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">S_AXIL_CTRL</span><span class="p">(</span><span class="n">S_AXIL_CTRL</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_RAW_instruction</span><span class="p">(</span><span class="n">raw_instruction</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_kick</span><span class="w">           </span><span class="p">(</span><span class="n">raw_instruction_pop_valid</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">IN_enc_stat</span><span class="w"> </span><span class="p">(</span><span class="m">&#39;0</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_enc_valid</span><span class="p">(</span><span class="mb">1&#39;b0</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">IN_fetch_ready</span><span class="p">(</span><span class="n">fetch_PC_ready</span><span class="p">)</span>
+<span class="w">  </span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// ===| Decoder : Opcode -&gt; Engine FIFOs |======================================</span>
+<span class="w">  </span><span class="n">ctrl_npu_decoder</span><span class="w"> </span><span class="n">u_decoder</span><span class="w"> </span><span class="p">(</span>
+<span class="w">      </span><span class="p">.</span><span class="n">clk</span><span class="w">                    </span><span class="p">(</span><span class="n">clk</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">rst_n</span><span class="w">                  </span><span class="p">(</span><span class="n">rst_n</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_raw_instruction</span><span class="w">     </span><span class="p">(</span><span class="n">raw_instruction</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">raw_instruction_pop_valid</span><span class="p">(</span><span class="n">raw_instruction_pop_valid</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_fetch_PC_ready</span><span class="w">     </span><span class="p">(</span><span class="n">fetch_PC_ready</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_GEMV_op_x64_valid</span><span class="w">  </span><span class="p">(</span><span class="n">OUT_GEMV_op_x64_valid</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_GEMM_op_x64_valid</span><span class="w">  </span><span class="p">(</span><span class="n">OUT_GEMM_op_x64_valid</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_memcpy_op_x64_valid</span><span class="p">(</span><span class="n">OUT_memcpy_op_x64_valid</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_memset_op_x64_valid</span><span class="p">(</span><span class="n">OUT_memset_op_x64_valid</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_cvo_op_x64_valid</span><span class="w">   </span><span class="p">(</span><span class="n">OUT_cvo_op_x64_valid</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_op_x64</span><span class="p">(</span><span class="n">OUT_op_x64</span><span class="p">)</span>
+<span class="w">  </span><span class="p">);</span>
+
+<span class="k">endmodule</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="instruction-decoder">
+<h2>2. Instruction Decoder<a class="headerlink" href="#instruction-decoder" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">ctrl_npu_decoder.sv</span></code> parses the 64-bit VLIW instruction word: strips
+the 4-bit opcode and routes the 60-bit body into the appropriate
+typed struct (<code class="docutils literal notranslate"><span class="pre">GEMV_op_x64_t</span></code>, <code class="docutils literal notranslate"><span class="pre">memcpy_op_x64_t</span></code>, etc.).</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">hw/rtl/NPU_Controller/NPU_Control_Unit/ctrl_npu_decoder.sv</span><a class="headerlink" href="#id2" title="Link to this code">#</a></div>
+<div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="no">`timescale</span><span class="w"> </span><span class="mi">1</span><span class="n">ns</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1</span><span class="n">ps</span>
+<span class="no">`include</span><span class="w"> </span><span class="s">&quot;GLOBAL_CONST.svh&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">isa_pkg::*</span><span class="p">;</span>
+
+<span class="c1">// ===| NPU Opcode Decoder |======================================================</span>
+<span class="c1">// Receives raw 64-bit VLIW instructions from the frontend FIFO.</span>
+<span class="c1">// Strips the 4-bit opcode, asserts the matching valid pulse for one cycle,</span>
+<span class="c1">// and forwards the 60-bit body to the Global Scheduler.</span>
+<span class="c1">// ===============================================================================</span>
+
+<span class="k">module</span><span class="w"> </span><span class="n">ctrl_npu_decoder</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span>
+<span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">rst_n</span><span class="p">,</span>
+
+<span class="w">    </span><span class="c1">// ===| From Frontend |=======================================================</span>
+<span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="no">`ISA_WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">IN_raw_instruction</span><span class="p">,</span>
+<span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w">                  </span><span class="n">raw_instruction_pop_valid</span><span class="p">,</span>
+
+<span class="w">    </span><span class="c1">// ===| Flow Control |========================================================</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">OUT_fetch_PC_ready</span><span class="p">,</span>
+
+<span class="w">    </span><span class="c1">// ===| Decoded Valid Pulses (one-hot, one cycle) |===========================</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">OUT_GEMV_op_x64_valid</span><span class="p">,</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">OUT_GEMM_op_x64_valid</span><span class="p">,</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">OUT_memcpy_op_x64_valid</span><span class="p">,</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">OUT_memset_op_x64_valid</span><span class="p">,</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">OUT_cvo_op_x64_valid</span><span class="p">,</span>
+
+<span class="w">    </span><span class="c1">// ===| Instruction Body (60-bit, opcode stripped) |=========================</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="n">instruction_op_x64_t</span><span class="w"> </span><span class="n">OUT_op_x64</span>
+<span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// ===| Internal |==============================================================</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">OUT_valid</span><span class="p">;</span>
+<span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">OUT_GEMV_op_x64_valid</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">OUT_valid</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">OUT_GEMM_op_x64_valid</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">OUT_valid</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">OUT_memcpy_op_x64_valid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OUT_valid</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">OUT_memset_op_x64_valid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OUT_valid</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+<span class="w">  </span><span class="c1">// CVO valid uses a separate FF (5th opcode)</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">cvo_valid_ff</span><span class="p">;</span>
+<span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">OUT_cvo_op_x64_valid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cvo_valid_ff</span><span class="p">;</span>
+
+<span class="w">  </span><span class="c1">// ===| Opcode Decoder |========================================================</span>
+<span class="w">  </span><span class="c1">// Top 4 bits are the opcode; bottom 60 bits are the instruction body.</span>
+<span class="w">  </span><span class="k">always_ff</span><span class="w"> </span><span class="p">@(</span><span class="k">posedge</span><span class="w"> </span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">rst_n</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">      </span><span class="n">OUT_valid</span><span class="w">        </span><span class="o">&lt;=</span><span class="w"> </span><span class="mb">4&#39;b0000</span><span class="p">;</span>
+<span class="w">      </span><span class="n">cvo_valid_ff</span><span class="w">     </span><span class="o">&lt;=</span><span class="w"> </span><span class="mb">1&#39;b0</span><span class="p">;</span>
+<span class="w">      </span><span class="n">OUT_fetch_PC_ready</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="no">`TRUE</span><span class="p">;</span>
+<span class="w">      </span><span class="n">OUT_op_x64</span><span class="w">       </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">&#39;0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">      </span><span class="n">OUT_valid</span><span class="w">      </span><span class="o">&lt;=</span><span class="w"> </span><span class="mb">4&#39;b0000</span><span class="p">;</span>
+<span class="w">      </span><span class="n">cvo_valid_ff</span><span class="w">   </span><span class="o">&lt;=</span><span class="w"> </span><span class="mb">1&#39;b0</span><span class="p">;</span>
+
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">raw_instruction_pop_valid</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">        </span><span class="c1">// Body: bits [59:0] (opcode at [63:60] already stripped by slicing)</span>
+<span class="w">        </span><span class="n">OUT_op_x64</span><span class="p">.</span><span class="n">instruction</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">IN_raw_instruction</span><span class="p">[</span><span class="no">`ISA_BODY_WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">];</span>
+
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="n">IN_raw_instruction</span><span class="p">[</span><span class="no">`ISA_WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="no">`ISA_WIDTH</span><span class="o">-</span><span class="no">`ISA_OPCODE_WIDTH</span><span class="p">])</span>
+<span class="w">          </span><span class="nl">OP_GEMV:</span><span class="w">   </span><span class="n">OUT_valid</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mb">4&#39;b0001</span><span class="p">;</span>
+<span class="w">          </span><span class="nl">OP_GEMM:</span><span class="w">   </span><span class="n">OUT_valid</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mb">4&#39;b0010</span><span class="p">;</span>
+<span class="w">          </span><span class="nl">OP_MEMCPY:</span><span class="w"> </span><span class="n">OUT_valid</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mb">4&#39;b0100</span><span class="p">;</span>
+<span class="w">          </span><span class="nl">OP_MEMSET:</span><span class="w"> </span><span class="n">OUT_valid</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mb">4&#39;b1000</span><span class="p">;</span>
+<span class="w">          </span><span class="nl">OP_CVO:</span><span class="w">    </span><span class="n">cvo_valid_ff</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mb">1&#39;b1</span><span class="p">;</span>
+<span class="w">          </span><span class="k">default</span><span class="o">:</span><span class="w">   </span><span class="p">;</span><span class="w">  </span><span class="c1">// unknown opcode: drop silently</span>
+<span class="w">        </span><span class="k">endcase</span>
+<span class="w">      </span><span class="k">end</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">  </span><span class="k">end</span>
+
+<span class="w">  </span><span class="c1">// ===| Backpressure |==========================================================</span>
+<span class="w">  </span><span class="c1">// Always ready — the frontend FIFO provides buffering; the decoder is single-cycle.</span>
+<span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">OUT_fetch_PC_ready</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mb">1&#39;b1</span><span class="p">;</span>
+
+<span class="k">endmodule</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="instruction-dispatcher">
+<h2>3. Instruction Dispatcher<a class="headerlink" href="#instruction-dispatcher" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">ctrl_npu_dispatcher.sv</span></code> resolves Constant Cache pointer lookups
+(shape / size / scale), checks for address and resource hazards, and
+issues per-core control μops to GEMM, GEMV, CVO, and mem_dispatcher.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">hw/rtl/NPU_Controller/NPU_Control_Unit/ctrl_npu_dispatcher.sv</span><a class="headerlink" href="#id3" title="Link to this code">#</a></div>
+<div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// `timeOUT_scale 1ns / 1ps</span>
+<span class="c1">// `include &quot;GEMM_Array.svh&quot;</span>
+<span class="c1">// `include &quot;npu_interfaces.svh&quot;</span>
+<span class="c1">// `include &quot;GLOBAL_CONST.svh&quot;</span>
+
+<span class="c1">// import isa_pkg::*;</span>
+
+<span class="c1">// module cu_npu_dispatcher (</span>
+<span class="c1">//     input  logic         clk,</span>
+<span class="c1">//     input  logic         rst_n,</span>
+<span class="c1">//     input  instruction_t IN_inst,</span>
+<span class="c1">//     input  logic         IN_valid,</span>
+<span class="c1">//     output logic         o_valid,</span>
+
+
+<span class="c1">//     // GEMV / GEMM controls</span>
+<span class="c1">//     output logic [3:0] OUT_activate_top,</span>
+<span class="c1">//     output logic [3:0] OUT_activate_lane,</span>
+<span class="c1">//     output logic       OUT_result_emax_align,</span>
+<span class="c1">//     output logic       OUT_result_accm,</span>
+<span class="c1">//     output logic       OUT_result_scale,</span>
+
+
+<span class="c1">//     // memcpy</span>
+<span class="c1">//     output memory_uop_t OUT_memcpy_cmd,</span>
+
+<span class="c1">//     // if INT group size?</span>
+<span class="c1">// );</span>
+
+<span class="c1">//   /*─────────────────────────────────────────────</span>
+<span class="c1">//   Lane activation bitmask</span>
+<span class="c1">//   bit[0]=lane1, bit[1]=lane2 ...</span>
+<span class="c1">//   ─────────────────────────────────────────────*/</span>
+<span class="c1">//   localparam logic [3:0] LANE_1 = 4&#39;b0001;</span>
+<span class="c1">//   localparam logic [3:0] LANE_2 = 4&#39;b0010;</span>
+<span class="c1">//   localparam logic [3:0] LANE_3 = 4&#39;b0100;</span>
+<span class="c1">//   localparam logic [3:0] LANE_4 = 4&#39;b1000;</span>
+
+<span class="c1">//   always_ff @(posedge clk) begin</span>
+<span class="c1">//     if (!rst_n) begin</span>
+<span class="c1">//       o_valid           &lt;= 1&#39;b0;</span>
+<span class="c1">//       OUT_activate_lane     &lt;= &#39;0;</span>
+<span class="c1">//       OUT_result_emax_align        &lt;= 1&#39;b0;</span>
+<span class="c1">//       OUT_result_accm              &lt;= 1&#39;b0;</span>
+<span class="c1">//       OUT_result_scale             &lt;= 1&#39;b0;</span>
+<span class="c1">//       OUT_memcpy_destination_queue &lt;= &#39;0;</span>
+<span class="c1">//       for (int i = 0; i &lt; `MAX_MATRIX_DIM; i++) OUT_memcpy_matrix_shape[i] &lt;= &#39;0;</span>
+<span class="c1">//     end else begin</span>
+
+<span class="c1">//       o_valid &lt;= 1&#39;b0;  // default : deassert every cycle</span>
+
+<span class="c1">//       if (IN_valid) begin</span>
+<span class="c1">//         case (IN_inst.opcode)</span>
+
+<span class="c1">//           OP_GEMV: begin</span>
+<span class="c1">//             o_valid &lt;= 1&#39;b1;</span>
+
+<span class="c1">//             if (IN_inst.cmd_chaining) begin</span>
+<span class="c1">//               // TODO: chaining logic</span>
+<span class="c1">//             end</span>
+<span class="c1">//             if (IN_inst.override) begin</span>
+<span class="c1">//               // TODO: override logic</span>
+<span class="c1">//             end</span>
+
+<span class="c1">//             // lane activation (OR mask, cumulative)</span>
+<span class="c1">//             case (IN_inst.payload.dotm.lane_idq)</span>
+<span class="c1">//               2&#39;b00: OUT_activate_lane &lt;= LANE_1;</span>
+<span class="c1">//               2&#39;b01: OUT_activate_lane &lt;= LANE_1 | LANE_2;</span>
+<span class="c1">//               2&#39;b10: OUT_activate_lane &lt;= LANE_1 | LANE_2 | LANE_3;</span>
+<span class="c1">//               2&#39;b11: OUT_activate_lane &lt;= LANE_1 | LANE_2 | LANE_3 | LANE_4;</span>
+<span class="c1">//               default: begin</span>
+<span class="c1">//                 o_valid &lt;= 1&#39;b0;  // unknown → drop + TODO: interrupt</span>
+<span class="c1">//               end</span>
+<span class="c1">//             endcase</span>
+
+<span class="c1">//             OUT_result_emax_align &lt;= IN_inst.payload.dotm.find_emax_align;</span>
+<span class="c1">//             OUT_result_accm       &lt;= IN_inst.payload.dotm.OUT_result_accm;</span>
+<span class="c1">//             // activate when added to ISA</span>
+<span class="c1">//             // OUT_result_scale      &lt;= IN_inst.payload.dotm.OUT_result_scale;</span>
+<span class="c1">//             OUT_activate_top[`TOP_GEMV] &lt;= `TRUE;</span>
+<span class="c1">//           end</span>
+
+<span class="c1">//           OP_GEMM: begin</span>
+<span class="c1">//             if (IN_inst.override) begin</span>
+<span class="c1">//               if (IN_inst.cmd_chaining) begin</span>
+<span class="c1">//                 // TODO</span>
+<span class="c1">//               end else begin</span>
+<span class="c1">//                 // TODO</span>
+<span class="c1">//               end</span>
+<span class="c1">//             end else begin</span>
+<span class="c1">//               if (IN_inst.cmd_chaining) begin</span>
+<span class="c1">//                 // TODO</span>
+<span class="c1">//               end else begin</span>
+<span class="c1">//                 o_valid &lt;= 1&#39;b1;</span>
+
+<span class="c1">//                 OUT_result_emax_align &lt;= IN_inst.payload.dotm.align;</span>
+<span class="c1">//                 OUT_result_accm       &lt;= IN_inst.payload.dotm.OUT_result_accm;</span>
+<span class="c1">//                 OUT_activate_top[`TOP_GEMV] &lt;= `TRUE;</span>
+<span class="c1">//               end</span>
+<span class="c1">//             end</span>
+
+<span class="c1">//           end</span>
+
+<span class="c1">//           OP_MEMCPY: begin</span>
+<span class="c1">//             if (IN_inst.override) begin</span>
+<span class="c1">//               if (IN_inst.cmd_chaining) begin</span>
+<span class="c1">//                 // accumulate matrix shape across chained instructions</span>
+<span class="c1">//                 OUT_memcpy_matrix_shape[IN_inst.payload.memcpy.dim_xyz]</span>
+<span class="c1">//                     &lt;= IN_inst.payload.memcpy.dim_x;</span>
+
+
+<span class="c1">//               end else begin</span>
+<span class="c1">//                 // chaining end → dispatch memcpy</span>
+<span class="c1">//                 o_valid           &lt;= 1&#39;b1;</span>
+<span class="c1">//                 OUT_memcpy_destination_queue &lt;= IN_inst.payload.memcpy.dest_queue;</span>
+
+<span class="c1">//                 case (IN_inst.payload.memcpy.dest_queue[3:2])</span>
+<span class="c1">//                   `MASKING_WEIGHT: begin</span>
+<span class="c1">//                     // TODO: → weight buffer</span>
+<span class="c1">//                   end</span>
+<span class="c1">//                   `MASKING_OUT_scale: begin</span>
+<span class="c1">//                     // TODO: ACP → OUT_result_scale cache</span>
+<span class="c1">//                   end</span>
+<span class="c1">//                   `MASKING_FMAP: begin</span>
+<span class="c1">//                     // TODO: ACP → find emax &amp; align → cache</span>
+<span class="c1">//                   end</span>
+<span class="c1">//                   default: o_valid &lt;= 1&#39;b0;  // undefined</span>
+<span class="c1">//                 endcase</span>
+<span class="c1">//               end</span>
+
+<span class="c1">//             end else begin</span>
+<span class="c1">//               // non-override memcpy</span>
+<span class="c1">//               // TODO</span>
+<span class="c1">//             end</span>
+
+<span class="c1">//             // Determine logic based on datatype and mask IN_inst.payload.memcpy.option_flags using bitwise AND (&amp;)</span>
+<span class="c1">//             if (IN_inst.payload.memcpy.datatype == `BF16) begin</span>
+<span class="c1">//                 // Example: BF16 processing mode</span>
+<span class="c1">//                 // Check if the 4th bit (ALIGN) is set to 1</span>
+<span class="c1">//                 if ((IN_inst.payload.memcpy.option_flags &amp; `MEMCPY_FLAG_BF16_ALIGN) != 4&#39;b0000) begin</span>
+<span class="c1">//                     OUT_align &lt;= `TRUE;</span>
+
+<span class="c1">//                     // Determine the alignment direction</span>
+<span class="c1">//                     if ((IN_inst.payload.memcpy.option_flags &amp; `MEMCPY_FLAG_BF16_ALIGN_V) != 4&#39;b0000) begin</span>
+<span class="c1">//                         OUT_align_dir &lt;= `ALIGN_VERTICAL;</span>
+<span class="c1">//                     end else if ((IN_inst.payload.memcpy.option_flags &amp; `MEMCPY_FLAG_BF16_ALIGN_H) != 4&#39;b0000) begin</span>
+<span class="c1">//                         OUT_align_dir &lt;= `ALIGN_HORIZONTAL;</span>
+<span class="c1">//                     end else begin</span>
+<span class="c1">//                         // Default direction if neither V nor H is specified</span>
+<span class="c1">//                     end</span>
+
+<span class="c1">//                 end else begin</span>
+<span class="c1">//                     // If ALIGN flag is missing</span>
+<span class="c1">//                     OUT_align &lt;= `FALSE;</span>
+<span class="c1">//                 end</span>
+<span class="c1">//             end else begin</span>
+<span class="c1">//                 // Example: INT processing mode</span>
+<span class="c1">//                 if ((IN_inst.payload.memcpy.option_flags &amp; `MEMCPY_OPT_INT_IS_SCALED) != 4&#39;b0000) begin</span>
+<span class="c1">//                     // Logic for scaled INT</span>
+<span class="c1">//                     OUT_align &lt;= `TRUE; // (Adjust according to your actual spec)</span>
+<span class="c1">//                 end else begin</span>
+<span class="c1">//                     OUT_align &lt;= `FALSE;</span>
+<span class="c1">//                 end</span>
+<span class="c1">//             end</span>
+
+<span class="c1">//             OUT_datatype &lt;= IN_inst.payload.memcpy.datatype;</span>
+
+<span class="c1">//           end</span>
+<span class="c1">//           default: o_valid &lt;= 1&#39;b0;  // unknown opcode → drop</span>
+<span class="c1">//         endcase</span>
+<span class="c1">//       end</span>
+<span class="c1">//     end</span>
+<span class="c1">//   end</span>
+
+<span class="c1">// endmodule</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="global-scheduler">
+<h2>4. Global Scheduler<a class="headerlink" href="#global-scheduler" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Global_Scheduler.sv</span></code> tracks in-flight async instructions, maintains
+the dependency scoreboard, and gates new dispatches when a hazard is
+detected.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">hw/rtl/NPU_Controller/Global_Scheduler.sv</span><a class="headerlink" href="#id4" title="Link to this code">#</a></div>
+<div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="no">`timescale</span><span class="w"> </span><span class="mi">1</span><span class="n">ns</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1</span><span class="n">ps</span>
+<span class="no">`include</span><span class="w"> </span><span class="s">&quot;GEMM_Array.svh&quot;</span>
+<span class="no">`include</span><span class="w"> </span><span class="s">&quot;GLOBAL_CONST.svh&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">isa_pkg::*</span><span class="p">;</span>
+
+<span class="c1">// ===| Global Scheduler |========================================================</span>
+<span class="c1">// Translates decoded VLIW instructions into engine micro-ops.</span>
+<span class="c1">//</span>
+<span class="c1">// Single always_ff drives each output to avoid multiple-driver conflicts.</span>
+<span class="c1">// Priority for OUT_LOAD_uop: GEMM &gt; GEMV &gt; MEMCPY &gt; CVO (one active per cycle).</span>
+<span class="c1">//</span>
+<span class="c1">// OUT_STORE_uop  : registered at issue time; mem_dispatcher uses it to initiate</span>
+<span class="c1">//                  result writeback after the engine signals completion.</span>
+<span class="c1">// OUT_sram_rd_start : one-cycle pulse when a GEMM or GEMV load is dispatched,</span>
+<span class="c1">//                     triggering preprocess_fmap to begin broadcasting from cache.</span>
+<span class="c1">// ===============================================================================</span>
+
+<span class="k">module</span><span class="w"> </span><span class="n">Global_Scheduler</span><span class="w"> </span><span class="p">#()</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">clk_core</span><span class="p">,</span>
+<span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">rst_n_core</span><span class="p">,</span>
+
+<span class="w">    </span><span class="c1">// ===| From ctrl_npu_decoder |===============================================</span>
+<span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">IN_GEMV_op_x64_valid</span><span class="p">,</span>
+<span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">IN_GEMM_op_x64_valid</span><span class="p">,</span>
+<span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">IN_memcpy_op_x64_valid</span><span class="p">,</span>
+<span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">IN_memset_op_x64_valid</span><span class="p">,</span>
+<span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">IN_cvo_op_x64_valid</span><span class="p">,</span>
+
+<span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="n">instruction_op_x64_t</span><span class="w"> </span><span class="n">instruction</span><span class="p">,</span>
+
+<span class="w">    </span><span class="c1">// ===| Engine micro-ops |====================================================</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="n">gemm_control_uop_t</span><span class="w">   </span><span class="n">OUT_GEMM_uop</span><span class="p">,</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="n">GEMV_control_uop_t</span><span class="w">   </span><span class="n">OUT_GEMV_uop</span><span class="p">,</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="n">memory_control_uop_t</span><span class="w"> </span><span class="n">OUT_LOAD_uop</span><span class="p">,</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="n">memory_control_uop_t</span><span class="w"> </span><span class="n">OUT_STORE_uop</span><span class="p">,</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="n">memory_set_uop_t</span><span class="w">     </span><span class="n">OUT_mem_set_uop</span><span class="p">,</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="n">cvo_control_uop_t</span><span class="w">    </span><span class="n">OUT_CVO_uop</span><span class="p">,</span>
+
+<span class="w">    </span><span class="c1">// ===| Datapath control |====================================================</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">OUT_sram_rd_start</span><span class="w">   </span><span class="c1">// pulse: start fmap cache broadcast</span>
+<span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// ===| Combinational instruction body casts |==================================</span>
+<span class="w">  </span><span class="n">GEMV_op_x64_t</span><span class="w">   </span><span class="n">GEMV_op_x64</span><span class="p">;</span>
+<span class="w">  </span><span class="n">GEMM_op_x64_t</span><span class="w">   </span><span class="n">GEMM_op_x64</span><span class="p">;</span>
+<span class="w">  </span><span class="n">memcpy_op_x64_t</span><span class="w"> </span><span class="n">memcpy_op_x64</span><span class="p">;</span>
+<span class="w">  </span><span class="n">memset_op_x64_t</span><span class="w"> </span><span class="n">memset_op_x64</span><span class="p">;</span>
+<span class="w">  </span><span class="n">cvo_op_x64_t</span><span class="w">    </span><span class="n">cvo_op_x64</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">always_comb</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">    </span><span class="n">GEMV_op_x64</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">GEMV_op_x64_t</span><span class="p">&#39;(</span><span class="n">instruction</span><span class="p">.</span><span class="n">instruction</span><span class="p">);</span>
+<span class="w">    </span><span class="n">GEMM_op_x64</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">GEMM_op_x64_t</span><span class="p">&#39;(</span><span class="n">instruction</span><span class="p">.</span><span class="n">instruction</span><span class="p">);</span>
+<span class="w">    </span><span class="n">memcpy_op_x64</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">memcpy_op_x64_t</span><span class="p">&#39;(</span><span class="n">instruction</span><span class="p">.</span><span class="n">instruction</span><span class="p">);</span>
+<span class="w">    </span><span class="n">memset_op_x64</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">memset_op_x64_t</span><span class="p">&#39;(</span><span class="n">instruction</span><span class="p">.</span><span class="n">instruction</span><span class="p">);</span>
+<span class="w">    </span><span class="n">cvo_op_x64</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">cvo_op_x64_t</span><span class="p">&#39;(</span><span class="n">instruction</span><span class="p">.</span><span class="n">instruction</span><span class="p">);</span>
+<span class="w">  </span><span class="k">end</span>
+
+<span class="w">  </span><span class="c1">// ===| MEMSET uop |============================================================</span>
+<span class="w">  </span><span class="k">always_ff</span><span class="w"> </span><span class="p">@(</span><span class="k">posedge</span><span class="w"> </span><span class="n">clk_core</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">rst_n_core</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">      </span><span class="n">OUT_mem_set_uop</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">&#39;0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">IN_memset_op_x64_valid</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">      </span><span class="n">OUT_mem_set_uop</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="p">&#39;{</span>
+<span class="w">          </span><span class="n">dest_cache</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">dest_cache_e</span><span class="p">&#39;(</span><span class="n">memset_op_x64</span><span class="p">.</span><span class="n">dest_cache</span><span class="p">),</span>
+<span class="w">          </span><span class="n">dest_addr</span><span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="n">memset_op_x64</span><span class="p">.</span><span class="n">dest_addr</span><span class="p">,</span>
+<span class="w">          </span><span class="n">a_value</span><span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="n">memset_op_x64</span><span class="p">.</span><span class="n">a_value</span><span class="p">,</span>
+<span class="w">          </span><span class="n">b_value</span><span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="n">memset_op_x64</span><span class="p">.</span><span class="n">b_value</span><span class="p">,</span>
+<span class="w">          </span><span class="n">c_value</span><span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="n">memset_op_x64</span><span class="p">.</span><span class="n">c_value</span>
+<span class="w">      </span><span class="p">};</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">  </span><span class="k">end</span>
+
+<span class="w">  </span><span class="c1">// ===| MEMCPY route translation ===============================================</span>
+<span class="w">  </span><span class="c1">// from_device/to_device (1-bit each) → data_route_e (8-bit enum)</span>
+<span class="w">  </span><span class="n">data_route_e</span><span class="w"> </span><span class="n">memcpy_route</span><span class="p">;</span>
+<span class="w">  </span><span class="k">always_comb</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">memcpy_op_x64</span><span class="p">.</span><span class="n">from_device</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">FROM_HOST</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">memcpy_op_x64</span><span class="p">.</span><span class="n">to_device</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">TO_NPU</span><span class="p">)</span>
+<span class="w">      </span><span class="n">memcpy_route</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">from_host_to_L2</span><span class="p">;</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">      </span><span class="n">memcpy_route</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">from_L2_to_host</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span>
+
+<span class="w">  </span><span class="c1">// ===| LOAD uop — single driver (priority: GEMM &gt; GEMV &gt; MEMCPY &gt; CVO) |======</span>
+<span class="w">  </span><span class="k">always_ff</span><span class="w"> </span><span class="p">@(</span><span class="k">posedge</span><span class="w"> </span><span class="n">clk_core</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">rst_n_core</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">      </span><span class="n">OUT_LOAD_uop</span><span class="w">      </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">&#39;0</span><span class="p">;</span>
+<span class="w">      </span><span class="n">OUT_sram_rd_start</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mb">1&#39;b0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">      </span><span class="n">OUT_sram_rd_start</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mb">1&#39;b0</span><span class="p">;</span><span class="w">   </span><span class="c1">// default: no pulse</span>
+
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">IN_GEMM_op_x64_valid</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">        </span><span class="n">OUT_LOAD_uop</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="p">&#39;{</span>
+<span class="w">            </span><span class="n">data_dest</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="n">from_L2_to_L1_GEMM</span><span class="p">,</span>
+<span class="w">            </span><span class="n">dest_addr</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="m">&#39;0</span><span class="p">,</span>
+<span class="w">            </span><span class="n">src_addr</span><span class="w">       </span><span class="o">:</span><span class="w"> </span><span class="n">GEMM_op_x64</span><span class="p">.</span><span class="n">src_addr</span><span class="p">,</span>
+<span class="w">            </span><span class="n">shape_ptr_addr</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">GEMM_op_x64</span><span class="p">.</span><span class="n">shape_ptr_addr</span><span class="p">,</span>
+<span class="w">            </span><span class="n">async</span><span class="w">          </span><span class="o">:</span><span class="w"> </span><span class="n">SYNC_OP</span>
+<span class="w">        </span><span class="p">};</span>
+<span class="w">        </span><span class="n">OUT_sram_rd_start</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mb">1&#39;b1</span><span class="p">;</span>
+
+<span class="w">      </span><span class="k">end</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">IN_GEMV_op_x64_valid</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">        </span><span class="n">OUT_LOAD_uop</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="p">&#39;{</span>
+<span class="w">            </span><span class="n">data_dest</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="n">from_L2_to_L1_GEMV</span><span class="p">,</span>
+<span class="w">            </span><span class="n">dest_addr</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="m">&#39;0</span><span class="p">,</span>
+<span class="w">            </span><span class="n">src_addr</span><span class="w">       </span><span class="o">:</span><span class="w"> </span><span class="n">GEMV_op_x64</span><span class="p">.</span><span class="n">src_addr</span><span class="p">,</span>
+<span class="w">            </span><span class="n">shape_ptr_addr</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">GEMV_op_x64</span><span class="p">.</span><span class="n">shape_ptr_addr</span><span class="p">,</span>
+<span class="w">            </span><span class="n">async</span><span class="w">          </span><span class="o">:</span><span class="w"> </span><span class="n">SYNC_OP</span>
+<span class="w">        </span><span class="p">};</span>
+<span class="w">        </span><span class="n">OUT_sram_rd_start</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mb">1&#39;b1</span><span class="p">;</span>
+
+<span class="w">      </span><span class="k">end</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">IN_memcpy_op_x64_valid</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">        </span><span class="n">OUT_LOAD_uop</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="p">&#39;{</span>
+<span class="w">            </span><span class="n">data_dest</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="n">memcpy_route</span><span class="p">,</span>
+<span class="w">            </span><span class="n">dest_addr</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="n">memcpy_op_x64</span><span class="p">.</span><span class="n">dest_addr</span><span class="p">,</span>
+<span class="w">            </span><span class="n">src_addr</span><span class="w">       </span><span class="o">:</span><span class="w"> </span><span class="n">memcpy_op_x64</span><span class="p">.</span><span class="n">src_addr</span><span class="p">,</span>
+<span class="w">            </span><span class="n">shape_ptr_addr</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">memcpy_op_x64</span><span class="p">.</span><span class="n">shape_ptr_addr</span><span class="p">,</span>
+<span class="w">            </span><span class="n">async</span><span class="w">          </span><span class="o">:</span><span class="w"> </span><span class="n">memcpy_op_x64</span><span class="p">.</span><span class="n">async</span>
+<span class="w">        </span><span class="p">};</span>
+
+<span class="w">      </span><span class="k">end</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">IN_cvo_op_x64_valid</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">        </span><span class="n">OUT_LOAD_uop</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="p">&#39;{</span>
+<span class="w">            </span><span class="n">data_dest</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="n">from_L2_to_CVO</span><span class="p">,</span>
+<span class="w">            </span><span class="n">dest_addr</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="m">&#39;0</span><span class="p">,</span>
+<span class="w">            </span><span class="n">src_addr</span><span class="w">       </span><span class="o">:</span><span class="w"> </span><span class="n">cvo_op_x64</span><span class="p">.</span><span class="n">src_addr</span><span class="p">,</span>
+<span class="w">            </span><span class="n">shape_ptr_addr</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="m">&#39;0</span><span class="p">,</span>
+<span class="w">            </span><span class="n">async</span><span class="w">          </span><span class="o">:</span><span class="w"> </span><span class="n">cvo_op_x64</span><span class="p">.</span><span class="n">async</span>
+<span class="w">        </span><span class="p">};</span>
+<span class="w">      </span><span class="k">end</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">  </span><span class="k">end</span>
+
+<span class="w">  </span><span class="c1">// ===| STORE uop — latched at issue time |=====================================</span>
+<span class="w">  </span><span class="c1">// Held until the engine signals completion (external handshake, not shown here).</span>
+<span class="w">  </span><span class="k">always_ff</span><span class="w"> </span><span class="p">@(</span><span class="k">posedge</span><span class="w"> </span><span class="n">clk_core</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">rst_n_core</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">      </span><span class="n">OUT_STORE_uop</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">&#39;0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">IN_GEMM_op_x64_valid</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">      </span><span class="n">OUT_STORE_uop</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="p">&#39;{</span>
+<span class="w">          </span><span class="n">data_dest</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="n">from_GEMM_res_to_L2</span><span class="p">,</span>
+<span class="w">          </span><span class="n">dest_addr</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="n">GEMM_op_x64</span><span class="p">.</span><span class="n">dest_reg</span><span class="p">,</span>
+<span class="w">          </span><span class="n">src_addr</span><span class="w">       </span><span class="o">:</span><span class="w"> </span><span class="m">&#39;0</span><span class="p">,</span>
+<span class="w">          </span><span class="n">shape_ptr_addr</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">GEMM_op_x64</span><span class="p">.</span><span class="n">shape_ptr_addr</span><span class="p">,</span>
+<span class="w">          </span><span class="n">async</span><span class="w">          </span><span class="o">:</span><span class="w"> </span><span class="n">SYNC_OP</span>
+<span class="w">      </span><span class="p">};</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">IN_GEMV_op_x64_valid</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">      </span><span class="n">OUT_STORE_uop</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="p">&#39;{</span>
+<span class="w">          </span><span class="n">data_dest</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="n">from_GEMV_res_to_L2</span><span class="p">,</span>
+<span class="w">          </span><span class="n">dest_addr</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="n">GEMV_op_x64</span><span class="p">.</span><span class="n">dest_reg</span><span class="p">,</span>
+<span class="w">          </span><span class="n">src_addr</span><span class="w">       </span><span class="o">:</span><span class="w"> </span><span class="m">&#39;0</span><span class="p">,</span>
+<span class="w">          </span><span class="n">shape_ptr_addr</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">GEMV_op_x64</span><span class="p">.</span><span class="n">shape_ptr_addr</span><span class="p">,</span>
+<span class="w">          </span><span class="n">async</span><span class="w">          </span><span class="o">:</span><span class="w"> </span><span class="n">SYNC_OP</span>
+<span class="w">      </span><span class="p">};</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">IN_cvo_op_x64_valid</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">      </span><span class="n">OUT_STORE_uop</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="p">&#39;{</span>
+<span class="w">          </span><span class="n">data_dest</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="n">from_CVO_res_to_L2</span><span class="p">,</span>
+<span class="w">          </span><span class="n">dest_addr</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="n">cvo_op_x64</span><span class="p">.</span><span class="n">dst_addr</span><span class="p">,</span>
+<span class="w">          </span><span class="n">src_addr</span><span class="w">       </span><span class="o">:</span><span class="w"> </span><span class="m">&#39;0</span><span class="p">,</span>
+<span class="w">          </span><span class="n">shape_ptr_addr</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="m">&#39;0</span><span class="p">,</span>
+<span class="w">          </span><span class="n">async</span><span class="w">          </span><span class="o">:</span><span class="w"> </span><span class="n">cvo_op_x64</span><span class="p">.</span><span class="n">async</span>
+<span class="w">      </span><span class="p">};</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">  </span><span class="k">end</span>
+
+<span class="w">  </span><span class="c1">// ===| GEMM uop |==============================================================</span>
+<span class="w">  </span><span class="k">always_ff</span><span class="w"> </span><span class="p">@(</span><span class="k">posedge</span><span class="w"> </span><span class="n">clk_core</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">rst_n_core</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">      </span><span class="n">OUT_GEMM_uop</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">&#39;0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">IN_GEMM_op_x64_valid</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">      </span><span class="n">OUT_GEMM_uop</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="p">&#39;{</span>
+<span class="w">          </span><span class="n">flags</span><span class="w">         </span><span class="o">:</span><span class="w"> </span><span class="n">GEMM_op_x64</span><span class="p">.</span><span class="n">flags</span><span class="p">,</span>
+<span class="w">          </span><span class="n">size_ptr_addr</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">GEMM_op_x64</span><span class="p">.</span><span class="n">size_ptr_addr</span><span class="p">,</span>
+<span class="w">          </span><span class="n">parallel_lane</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">GEMM_op_x64</span><span class="p">.</span><span class="n">parallel_lane</span>
+<span class="w">      </span><span class="p">};</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">  </span><span class="k">end</span>
+
+<span class="w">  </span><span class="c1">// ===| GEMV uop |==============================================================</span>
+<span class="w">  </span><span class="k">always_ff</span><span class="w"> </span><span class="p">@(</span><span class="k">posedge</span><span class="w"> </span><span class="n">clk_core</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">rst_n_core</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">      </span><span class="n">OUT_GEMV_uop</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">&#39;0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">IN_GEMV_op_x64_valid</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">      </span><span class="n">OUT_GEMV_uop</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="p">&#39;{</span>
+<span class="w">          </span><span class="n">flags</span><span class="w">         </span><span class="o">:</span><span class="w"> </span><span class="n">GEMV_op_x64</span><span class="p">.</span><span class="n">flags</span><span class="p">,</span>
+<span class="w">          </span><span class="n">size_ptr_addr</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">GEMV_op_x64</span><span class="p">.</span><span class="n">size_ptr_addr</span><span class="p">,</span>
+<span class="w">          </span><span class="n">parallel_lane</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">GEMV_op_x64</span><span class="p">.</span><span class="n">parallel_lane</span>
+<span class="w">      </span><span class="p">};</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">  </span><span class="k">end</span>
+
+<span class="w">  </span><span class="c1">// ===| CVO uop |===============================================================</span>
+<span class="w">  </span><span class="k">always_ff</span><span class="w"> </span><span class="p">@(</span><span class="k">posedge</span><span class="w"> </span><span class="n">clk_core</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">rst_n_core</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">      </span><span class="n">OUT_CVO_uop</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">&#39;0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">IN_cvo_op_x64_valid</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">      </span><span class="n">OUT_CVO_uop</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="p">&#39;{</span>
+<span class="w">          </span><span class="n">cvo_func</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">cvo_func_e</span><span class="p">&#39;(</span><span class="n">cvo_op_x64</span><span class="p">.</span><span class="n">cvo_func</span><span class="p">),</span>
+<span class="w">          </span><span class="n">src_addr</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">cvo_op_x64</span><span class="p">.</span><span class="n">src_addr</span><span class="p">,</span>
+<span class="w">          </span><span class="n">dst_addr</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">cvo_op_x64</span><span class="p">.</span><span class="n">dst_addr</span><span class="p">,</span>
+<span class="w">          </span><span class="n">length</span><span class="w">   </span><span class="o">:</span><span class="w"> </span><span class="n">cvo_op_x64</span><span class="p">.</span><span class="n">length</span><span class="p">,</span>
+<span class="w">          </span><span class="n">flags</span><span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="n">cvo_flags_t</span><span class="p">&#39;(</span><span class="n">cvo_op_x64</span><span class="p">.</span><span class="n">flags</span><span class="p">),</span>
+<span class="w">          </span><span class="n">async</span><span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="n">cvo_op_x64</span><span class="p">.</span><span class="n">async</span>
+<span class="w">      </span><span class="p">};</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">  </span><span class="k">end</span>
+
+<span class="k">endmodule</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../ISA/dataflow.html"><span class="doc">Per-Instruction Dataflow</span></a> — dependency and completion tracking.</p>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="compute_cores.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Compute Core Modules</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../../Devices/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Devices</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#controller-top">1. Controller Top</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instruction-decoder">2. Instruction Decoder</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instruction-dispatcher">3. Instruction Dispatcher</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#global-scheduler">4. Global Scheduler</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=7f76b32a3354e82990f2"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=7f76b32a3354e82990f2"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, hwkim.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item"><p class="personal-link">
+  <a href="https://hwkim-dev.github.io/hwkim-dev/" target="_blank" rel="noopener">
+    hwkim-dev.github.io
+  </a>
+</p></div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

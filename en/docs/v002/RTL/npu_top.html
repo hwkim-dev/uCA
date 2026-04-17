@@ -1,0 +1,949 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>NPU Top-Level &#8212; pccx Documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=7f76b32a3354e82990f2" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=7f76b32a3354e82990f2" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/language-switcher.css?v=5ec28b56" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mermaid-theme.css?v=36ae3483" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/image-lightbox.css?v=884c9d5a" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../_static/scripts/fontawesome.js?digest=7f76b32a3354e82990f2"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=7f76b32a3354e82990f2" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=7f76b32a3354e82990f2" />
+
+    <script src="../../../_static/documentation_options.js?v=dfc80500"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/v002/RTL/npu_top';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script src="../../../_static/language-switcher.js?v=e91f783c"></script>
+    <script src="../../../_static/image-lightbox.js?v=dec353f8"></script>
+    <script src="../../../_static/mermaid-theme.js?v=7333a321"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Compute Core Modules" href="compute_cores.html" />
+    <link rel="prev" title="ISA Type Package" href="isa_pkg.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../../_static/searchtools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search pccx docs..."
+         aria-label="Search pccx docs..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">pccx</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../index.html">
+    pccx: Parallel Compute Core eXecutor
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    pccx v002 Architecture
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../Devices/index.html">
+    Devices
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../archive/index.html">
+    Archive
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hwkim-dev/pccx" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://hwkim-dev.github.io/hwkim-dev/" title="Personal Site" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-solid fa-user fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Personal Site</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../index.html">
+    pccx: Parallel Compute Core eXecutor
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    pccx v002 Architecture
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../Devices/index.html">
+    Devices
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../archive/index.html">
+    Archive
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/hwkim-dev/pccx" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://hwkim-dev.github.io/hwkim-dev/" title="Personal Site" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-solid fa-user fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Personal Site</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar"><svg class="pst-icon svg-inline--fa" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Hardware Architecture</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Architecture/index.html">Hardware Architecture</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Architecture/rationale.html">Design Rationale: v001 → v002</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Architecture/top_level.html">Top-Level Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Architecture/floorplan.html">Physical Floorplan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Architecture/memory_hierarchy.html">Memory Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Architecture/kv_cache.html">KV Cache Optimization Strategy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Architecture/gemm_core.html">GEMM Core (Systolic Array)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Architecture/gemv_core.html">GEMV Core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Architecture/sfu_core.html">SFU Core (Complex Vector Operations)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Architecture/dsp48e2_w4a8.html">DSP48E2 W4A8 Bit Packing and Sign Recovery</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Instruction Set Architecture (ISA)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ISA/index.html">Instruction Set Architecture (ISA)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ISA/encoding.html">Instruction Encoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ISA/instructions.html">Per-Instruction Encoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ISA/dataflow.html">Per-Instruction Dataflow</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Software Stack</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Drivers/index.html">Software Stack</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Drivers/api.html">C API Overview</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Target Models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Models/index.html">Target Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Models/gemma3n_overview.html">Gemma 3N E4B — Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Models/gemma3n_pipeline.html">Gemma 3N E4B — Operator-Level Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Models/gemma3n_attention_rope.html">Gemma 3N — Attention and RoPE Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Models/gemma3n_ple_laurel.html">Gemma 3N — LAuReL and PLE Calibration Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Models/gemma3n_ffn_sparsity.html">Gemma 3N — FFN Gaussian Top-K Sparsity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Models/gemma3n_execution.html">Gemma 3N E4B on pccx v002 — Execution and Scheduling</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">RTL Source</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">RTL Source Reference (v002)</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="isa_pkg.html">ISA Type Package</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">NPU Top-Level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compute_cores.html">Compute Core Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="controller.html">NPU Controller Modules</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">pccx v002 Architecture</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">RTL Source Reference (v002)</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">NPU Top-Level</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="npu-top-level">
+<h1>NPU Top-Level<a class="headerlink" href="#npu-top-level" title="Link to this heading">#</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">NPU_top.sv</span></code> is the top integration wrapper. It exposes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">S_AXIL_CTRL</span></code> — AXI-Lite control (HPM port, 250 MHz)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">S_AXI_HP{0,1}_WEIGHT</span></code> — 128-bit weight streams for the GEMM systolic array</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">S_AXI_HP{2,3}_WEIGHT</span></code> — 128-bit weight streams for the GEMV core</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">S_AXIS_ACP_FMAP</span></code> / <code class="docutils literal notranslate"><span class="pre">M_AXIS_ACP_RESULT</span></code> — ACP feature-map input and result output</p></li>
+</ul>
+<p>All four sub-cores (GEMM, GEMV, CVO, mem_dispatcher) are instantiated
+here and connected through the shared L2 cache bus.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">hw/rtl/NPU_top.sv</span><a class="headerlink" href="#id1" title="Link to this code">#</a></div>
+<div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="no">`include</span><span class="w"> </span><span class="s">&quot;GLOBAL_CONST.svh&quot;</span>
+<span class="no">`timescale</span><span class="w"> </span><span class="mi">1</span><span class="n">ns</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1</span><span class="n">ps</span>
+<span class="no">`include</span><span class="w"> </span><span class="s">&quot;GEMM_Array.svh&quot;</span>
+<span class="no">`include</span><span class="w"> </span><span class="s">&quot;mem_IO.svh&quot;</span>
+<span class="no">`include</span><span class="w"> </span><span class="s">&quot;npu_interfaces.svh&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">isa_pkg::*</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">vec_core_pkg::*</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">bf16_math_pkg::*</span><span class="p">;</span>
+
+<span class="c1">// ===| NPU Top |=================================================================</span>
+<span class="c1">// Target: Kria KV260 @ 400 MHz</span>
+<span class="c1">//</span>
+<span class="c1">// Architecture V2 (SystemVerilog Interface Version):</span>
+<span class="c1">//   HPC0 / HPC1  : 256-bit Feature Map caching bus (ACP port).</span>
+<span class="c1">//   HP0  ~ HP3   : High-throughput Weight streaming (128-bit each).</span>
+<span class="c1">//   HPM  (MMIO)  : Centralised control &amp; VLIW instruction issuing (AXI-Lite).</span>
+<span class="c1">//   ACP           : Coherent Result Output.</span>
+<span class="c1">//</span>
+<span class="c1">// Data paths:</span>
+<span class="c1">//   OP_GEMM  : ACP_FMAP → preprocess_fmap → systolic → normalizer → packer → ACP_RESULT</span>
+<span class="c1">//   OP_GEMV  : ACP_FMAP → preprocess_fmap → GEMV_top (HP2/3 weights)</span>
+<span class="c1">//   OP_MEMCPY: ACP DDR4 ↔ L2 (mem_dispatcher via ACP)</span>
+<span class="c1">//   OP_MEMSET: Shape constant RAM write (mem_dispatcher)</span>
+<span class="c1">//   OP_CVO   : L2 → CVO_top → L2 (mem_dispatcher ↔ CVO stream bridge)</span>
+<span class="c1">// ===============================================================================</span>
+
+<span class="k">module</span><span class="w"> </span><span class="n">NPU_top</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="c1">// ===| Clock &amp; Reset |=======================================================</span>
+<span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">clk_core</span><span class="p">,</span>
+<span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">rst_n_core</span><span class="p">,</span>
+
+<span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">clk_axi</span><span class="p">,</span>
+<span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">rst_axi_n</span><span class="p">,</span>
+
+<span class="w">    </span><span class="c1">// ===| Soft Clear (synchronous, active-high) |===============================</span>
+<span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">i_clear</span><span class="p">,</span>
+
+<span class="w">    </span><span class="c1">// ===| Control Plane (MMIO) |================================================</span>
+<span class="w">    </span><span class="n">axil_if</span><span class="p">.</span><span class="n">slave</span><span class="w"> </span><span class="n">S_AXIL_CTRL</span><span class="p">,</span>
+
+<span class="w">    </span><span class="c1">// ===| HP Weight Ports — Matrix Core (Systolic) |============================</span>
+<span class="w">    </span><span class="n">axis_if</span><span class="p">.</span><span class="n">slave</span><span class="w"> </span><span class="n">S_AXI_HP0_WEIGHT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">axis_if</span><span class="p">.</span><span class="n">slave</span><span class="w"> </span><span class="n">S_AXI_HP1_WEIGHT</span><span class="p">,</span>
+
+<span class="w">    </span><span class="c1">// ===| HP Weight Ports — Vector Core (GEMV) |================================</span>
+<span class="w">    </span><span class="n">axis_if</span><span class="p">.</span><span class="n">slave</span><span class="w"> </span><span class="n">S_AXI_HP2_WEIGHT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">axis_if</span><span class="p">.</span><span class="n">slave</span><span class="w"> </span><span class="n">S_AXI_HP3_WEIGHT</span><span class="p">,</span>
+
+<span class="w">    </span><span class="c1">// ===| ACP Feature Map / Result (Full-Duplex) |==============================</span>
+<span class="w">    </span><span class="n">axis_if</span><span class="p">.</span><span class="n">slave</span><span class="w">  </span><span class="n">S_AXIS_ACP_FMAP</span><span class="p">,</span>
+<span class="w">    </span><span class="n">axis_if</span><span class="p">.</span><span class="n">master</span><span class="w"> </span><span class="n">M_AXIS_ACP_RESULT</span>
+<span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// ===| Internal Wires — HP Weight (Core-side, post-CDC FIFO) |================</span>
+<span class="w">  </span><span class="n">axis_if</span><span class="w"> </span><span class="p">#(.</span><span class="n">DATA_WIDTH</span><span class="p">(</span><span class="mi">128</span><span class="p">))</span><span class="w"> </span><span class="n">M_CORE_HP0_WEIGHT</span><span class="w"> </span><span class="p">();</span>
+<span class="w">  </span><span class="n">axis_if</span><span class="w"> </span><span class="p">#(.</span><span class="n">DATA_WIDTH</span><span class="p">(</span><span class="mi">128</span><span class="p">))</span><span class="w"> </span><span class="n">M_CORE_HP1_WEIGHT</span><span class="w"> </span><span class="p">();</span>
+<span class="w">  </span><span class="n">axis_if</span><span class="w"> </span><span class="p">#(.</span><span class="n">DATA_WIDTH</span><span class="p">(</span><span class="mi">128</span><span class="p">))</span><span class="w"> </span><span class="n">M_CORE_HP2_WEIGHT</span><span class="w"> </span><span class="p">();</span>
+<span class="w">  </span><span class="n">axis_if</span><span class="w"> </span><span class="p">#(.</span><span class="n">DATA_WIDTH</span><span class="p">(</span><span class="mi">128</span><span class="p">))</span><span class="w"> </span><span class="n">M_CORE_HP3_WEIGHT</span><span class="w"> </span><span class="p">();</span>
+
+<span class="w">  </span><span class="c1">// ===| Internal Wires — Instruction Path |=====================================</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w">                </span><span class="n">GEMV_op_x64_valid_wire</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w">                </span><span class="n">GEMM_op_x64_valid_wire</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w">                </span><span class="n">memcpy_op_x64_valid_wire</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w">                </span><span class="n">memset_op_x64_valid_wire</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w">                </span><span class="n">cvo_op_x64_valid_wire</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">instruction_op_x64_t</span><span class="w"> </span><span class="n">instruction</span><span class="p">;</span>
+
+<span class="w">  </span><span class="kt">logic</span><span class="w">                </span><span class="n">fifo_full_wire</span><span class="p">;</span>
+
+<span class="w">  </span><span class="c1">// ===| [1] NPU Controller |====================================================</span>
+<span class="w">  </span><span class="n">npu_controller_top</span><span class="w"> </span><span class="p">#()</span><span class="w"> </span><span class="n">u_npu_controller_top</span><span class="w"> </span><span class="p">(</span>
+<span class="w">      </span><span class="p">.</span><span class="n">clk</span><span class="w">    </span><span class="p">(</span><span class="n">clk_core</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">rst_n</span><span class="w">  </span><span class="p">(</span><span class="n">rst_n_core</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">i_clear</span><span class="p">(</span><span class="n">i_clear</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">S_AXIL_CTRL</span><span class="p">(</span><span class="n">S_AXIL_CTRL</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_GEMV_op_x64_valid</span><span class="w">  </span><span class="p">(</span><span class="n">GEMV_op_x64_valid_wire</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_GEMM_op_x64_valid</span><span class="w">  </span><span class="p">(</span><span class="n">GEMM_op_x64_valid_wire</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_memcpy_op_x64_valid</span><span class="p">(</span><span class="n">memcpy_op_x64_valid_wire</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_memset_op_x64_valid</span><span class="p">(</span><span class="n">memset_op_x64_valid_wire</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_cvo_op_x64_valid</span><span class="w">   </span><span class="p">(</span><span class="n">cvo_op_x64_valid_wire</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_op_x64</span><span class="p">(</span><span class="n">instruction</span><span class="p">)</span>
+<span class="w">  </span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// ===| [2] Global Scheduler |==================================================</span>
+<span class="w">  </span><span class="n">gemm_control_uop_t</span><span class="w">   </span><span class="n">GEMM_uop_wire</span><span class="p">;</span>
+<span class="w">  </span><span class="n">GEMV_control_uop_t</span><span class="w">   </span><span class="n">GEMV_uop_wire</span><span class="p">;</span>
+<span class="w">  </span><span class="n">memory_control_uop_t</span><span class="w"> </span><span class="n">LOAD_uop_wire</span><span class="p">;</span>
+<span class="w">  </span><span class="n">memory_control_uop_t</span><span class="w"> </span><span class="n">STORE_uop_wire</span><span class="p">;</span><span class="w">  </span><span class="c1">// latched at issue; drives result writeback</span>
+<span class="w">  </span><span class="n">memory_set_uop_t</span><span class="w">     </span><span class="n">mem_set_uop</span><span class="p">;</span>
+<span class="w">  </span><span class="n">cvo_control_uop_t</span><span class="w">    </span><span class="n">CVO_uop_wire</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w">                </span><span class="n">sram_rd_start_wire</span><span class="p">;</span><span class="w">  </span><span class="c1">// one-cycle pulse: start fmap broadcast</span>
+
+<span class="w">  </span><span class="n">Global_Scheduler</span><span class="w"> </span><span class="p">#()</span><span class="w"> </span><span class="n">u_Global_Scheduler</span><span class="w"> </span><span class="p">(</span>
+<span class="w">      </span><span class="p">.</span><span class="n">clk_core</span><span class="w">  </span><span class="p">(</span><span class="n">clk_core</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">rst_n_core</span><span class="p">(</span><span class="n">rst_n_core</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">IN_GEMV_op_x64_valid</span><span class="w">  </span><span class="p">(</span><span class="n">GEMV_op_x64_valid_wire</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_GEMM_op_x64_valid</span><span class="w">  </span><span class="p">(</span><span class="n">GEMM_op_x64_valid_wire</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_memcpy_op_x64_valid</span><span class="p">(</span><span class="n">memcpy_op_x64_valid_wire</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_memset_op_x64_valid</span><span class="p">(</span><span class="n">memset_op_x64_valid_wire</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_cvo_op_x64_valid</span><span class="w">   </span><span class="p">(</span><span class="n">cvo_op_x64_valid_wire</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">instruction</span><span class="p">(</span><span class="n">instruction</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_GEMM_uop</span><span class="w">     </span><span class="p">(</span><span class="n">GEMM_uop_wire</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_GEMV_uop</span><span class="w">     </span><span class="p">(</span><span class="n">GEMV_uop_wire</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_LOAD_uop</span><span class="w">     </span><span class="p">(</span><span class="n">LOAD_uop_wire</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_STORE_uop</span><span class="w">    </span><span class="p">(</span><span class="n">STORE_uop_wire</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_mem_set_uop</span><span class="w">  </span><span class="p">(</span><span class="n">mem_set_uop</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_CVO_uop</span><span class="w">      </span><span class="p">(</span><span class="n">CVO_uop_wire</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_sram_rd_start</span><span class="p">(</span><span class="n">sram_rd_start_wire</span><span class="p">)</span>
+<span class="w">  </span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// ===| [3] Memory Dispatcher |=================================================</span>
+<span class="w">  </span><span class="c1">// CVO stream wires: bridge ↔ CVO_top</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">15</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">cvo_disp_data_wire</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w">        </span><span class="n">cvo_disp_valid_wire</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w">        </span><span class="n">cvo_disp_ready_wire</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">15</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">cvo_result_wire</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w">        </span><span class="n">cvo_result_valid_wire</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w">        </span><span class="n">cvo_result_ready_wire</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w">        </span><span class="n">cvo_disp_busy_wire</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">mem_dispatcher</span><span class="w"> </span><span class="p">#()</span><span class="w"> </span><span class="n">u_mem_dispatcher</span><span class="w"> </span><span class="p">(</span>
+<span class="w">      </span><span class="p">.</span><span class="n">clk_core</span><span class="w">  </span><span class="p">(</span><span class="n">clk_core</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">rst_n_core</span><span class="p">(</span><span class="n">rst_n_core</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">clk_axi</span><span class="w">  </span><span class="p">(</span><span class="n">clk_axi</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">rst_axi_n</span><span class="p">(</span><span class="n">rst_axi_n</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">S_AXIS_ACP_FMAP</span><span class="w">  </span><span class="p">(</span><span class="n">S_AXIS_ACP_FMAP</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">M_AXIS_ACP_RESULT</span><span class="p">(</span><span class="n">M_AXIS_ACP_RESULT</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">IN_LOAD_uop</span><span class="w">     </span><span class="p">(</span><span class="n">LOAD_uop_wire</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_mem_set_uop</span><span class="w">  </span><span class="p">(</span><span class="n">mem_set_uop</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_CVO_uop</span><span class="w">      </span><span class="p">(</span><span class="n">CVO_uop_wire</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_cvo_uop_valid</span><span class="p">(</span><span class="n">cvo_op_x64_valid_wire</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_cvo_data</span><span class="w">     </span><span class="p">(</span><span class="n">cvo_disp_data_wire</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_cvo_valid</span><span class="w">    </span><span class="p">(</span><span class="n">cvo_disp_valid_wire</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_cvo_data_ready</span><span class="p">(</span><span class="n">cvo_disp_ready_wire</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">IN_cvo_result</span><span class="w">       </span><span class="p">(</span><span class="n">cvo_result_wire</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_cvo_result_valid</span><span class="w"> </span><span class="p">(</span><span class="n">cvo_result_valid_wire</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_cvo_result_ready</span><span class="p">(</span><span class="n">cvo_result_ready_wire</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_fifo_full</span><span class="p">(</span><span class="n">fifo_full_wire</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_cvo_busy</span><span class="w"> </span><span class="p">(</span><span class="n">cvo_disp_busy_wire</span><span class="p">)</span>
+<span class="w">  </span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// ===| [4] HP Weight Buffer (CDC FIFO: AXI → Core clock) |====================</span>
+<span class="w">  </span><span class="n">mem_HP_buffer</span><span class="w"> </span><span class="p">#()</span><span class="w"> </span><span class="n">u_HP_buffer</span><span class="w"> </span><span class="p">(</span>
+<span class="w">      </span><span class="p">.</span><span class="n">clk_core</span><span class="w">  </span><span class="p">(</span><span class="n">clk_core</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">rst_n_core</span><span class="p">(</span><span class="n">rst_n_core</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">clk_axi</span><span class="w">   </span><span class="p">(</span><span class="n">clk_axi</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">rst_axi_n</span><span class="w"> </span><span class="p">(</span><span class="n">rst_axi_n</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">S_AXI_HP0_WEIGHT</span><span class="p">(</span><span class="n">S_AXI_HP0_WEIGHT</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">S_AXI_HP1_WEIGHT</span><span class="p">(</span><span class="n">S_AXI_HP1_WEIGHT</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">S_AXI_HP2_WEIGHT</span><span class="p">(</span><span class="n">S_AXI_HP2_WEIGHT</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">S_AXI_HP3_WEIGHT</span><span class="p">(</span><span class="n">S_AXI_HP3_WEIGHT</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">M_CORE_HP0_WEIGHT</span><span class="p">(</span><span class="n">M_CORE_HP0_WEIGHT</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">M_CORE_HP1_WEIGHT</span><span class="p">(</span><span class="n">M_CORE_HP1_WEIGHT</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">M_CORE_HP2_WEIGHT</span><span class="p">(</span><span class="n">M_CORE_HP2_WEIGHT</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">M_CORE_HP3_WEIGHT</span><span class="p">(</span><span class="n">M_CORE_HP3_WEIGHT</span><span class="p">)</span>
+<span class="w">  </span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// ===| [5] FMap Preprocessing Pipeline |=======================================</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="no">`FIXED_MANT_WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">fmap_broadcast</span><span class="w">       </span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="no">`ARRAY_SIZE_H</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w">                         </span><span class="n">fmap_broadcast_valid</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="w">  </span><span class="no">`BF16_EXP_WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">cached_emax_out</span><span class="w">      </span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="no">`ARRAY_SIZE_H</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+
+<span class="w">  </span><span class="n">preprocess_fmap</span><span class="w"> </span><span class="p">#()</span><span class="w"> </span><span class="n">u_fmap_pre</span><span class="w"> </span><span class="p">(</span>
+<span class="w">      </span><span class="p">.</span><span class="n">clk</span><span class="w">    </span><span class="p">(</span><span class="n">clk_core</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">rst_n</span><span class="w">  </span><span class="p">(</span><span class="n">rst_n_core</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">i_clear</span><span class="p">(</span><span class="n">i_clear</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">S_AXIS_ACP_FMAP</span><span class="p">(</span><span class="n">S_AXIS_ACP_FMAP</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">i_rd_start</span><span class="p">(</span><span class="n">sram_rd_start_wire</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">o_fmap_broadcast</span><span class="p">(</span><span class="n">fmap_broadcast</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">o_fmap_valid</span><span class="w">    </span><span class="p">(</span><span class="n">fmap_broadcast_valid</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">o_cached_emax</span><span class="w">   </span><span class="p">(</span><span class="n">cached_emax_out</span><span class="p">)</span>
+<span class="w">  </span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// ===| [6] Systolic Array Engine (Matrix Core) |================================</span>
+<span class="w">  </span><span class="c1">// global_inst[2:0] = flags[5:3] = {findemax, accm, w_scale}</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="no">`DSP48E2_POUT_SIZE</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">raw_res_sum</span><span class="w">      </span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="no">`ARRAY_SIZE_H</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w">                          </span><span class="n">raw_res_sum_valid</span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="no">`ARRAY_SIZE_H</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="w">   </span><span class="no">`BF16_EXP_WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">delayed_emax_32</span><span class="w">  </span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="no">`ARRAY_SIZE_H</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+
+<span class="w">  </span><span class="n">GEMM_systolic_top</span><span class="w"> </span><span class="p">#()</span><span class="w"> </span><span class="n">u_systolic_engine</span><span class="w"> </span><span class="p">(</span>
+<span class="w">      </span><span class="p">.</span><span class="n">clk</span><span class="w">    </span><span class="p">(</span><span class="n">clk_core</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">rst_n</span><span class="w">  </span><span class="p">(</span><span class="n">rst_n_core</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">i_clear</span><span class="p">(</span><span class="n">i_clear</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">global_weight_valid</span><span class="p">(</span><span class="n">M_CORE_HP0_WEIGHT</span><span class="p">.</span><span class="n">tvalid</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">global_inst</span><span class="w">        </span><span class="p">(</span><span class="n">GEMM_uop_wire</span><span class="p">.</span><span class="n">flags</span><span class="p">[</span><span class="mi">5</span><span class="o">:</span><span class="mi">3</span><span class="p">]),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">global_inst_valid</span><span class="w">  </span><span class="p">(</span><span class="n">GEMM_op_x64_valid_wire</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">IN_fmap_broadcast</span><span class="w">      </span><span class="p">(</span><span class="n">fmap_broadcast</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_fmap_broadcast_valid</span><span class="p">(</span><span class="n">fmap_broadcast_valid</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_cached_emax_out</span><span class="w">     </span><span class="p">(</span><span class="n">cached_emax_out</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">IN_weight_fifo_data</span><span class="w"> </span><span class="p">(</span><span class="n">M_CORE_HP0_WEIGHT</span><span class="p">.</span><span class="n">tdata</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_weight_fifo_valid</span><span class="p">(</span><span class="n">M_CORE_HP0_WEIGHT</span><span class="p">.</span><span class="n">tvalid</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">weight_fifo_ready</span><span class="w">   </span><span class="p">(</span><span class="n">M_CORE_HP0_WEIGHT</span><span class="p">.</span><span class="n">tready</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">raw_res_sum</span><span class="w">      </span><span class="p">(</span><span class="n">raw_res_sum</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">raw_res_sum_valid</span><span class="p">(</span><span class="n">raw_res_sum_valid</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">delayed_emax_32</span><span class="w">  </span><span class="p">(</span><span class="n">delayed_emax_32</span><span class="p">)</span>
+<span class="w">  </span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// ===| [7] Result Normalizers (one per systolic column) |======================</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="no">`BF16_WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">norm_res_seq</span><span class="w">      </span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="no">`ARRAY_SIZE_H</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w">                   </span><span class="n">norm_res_seq_valid</span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="no">`ARRAY_SIZE_H</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+
+<span class="w">  </span><span class="k">genvar</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+<span class="w">  </span><span class="k">generate</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">`ARRAY_SIZE_H</span><span class="p">;</span><span class="w"> </span><span class="n">n</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">gen_norm</span>
+<span class="w">      </span><span class="n">gemm_result_normalizer</span><span class="w"> </span><span class="n">u_norm_seq</span><span class="w"> </span><span class="p">(</span>
+<span class="w">          </span><span class="p">.</span><span class="n">clk</span><span class="w">      </span><span class="p">(</span><span class="n">clk_core</span><span class="p">),</span>
+<span class="w">          </span><span class="p">.</span><span class="n">rst_n</span><span class="w">    </span><span class="p">(</span><span class="n">rst_n_core</span><span class="p">),</span>
+<span class="w">          </span><span class="p">.</span><span class="n">data_in</span><span class="w">  </span><span class="p">(</span><span class="n">raw_res_sum</span><span class="p">[</span><span class="n">n</span><span class="p">]),</span>
+<span class="w">          </span><span class="p">.</span><span class="n">e_max</span><span class="w">    </span><span class="p">(</span><span class="n">delayed_emax_32</span><span class="p">[</span><span class="n">n</span><span class="p">]),</span>
+<span class="w">          </span><span class="p">.</span><span class="n">valid_in</span><span class="w"> </span><span class="p">(</span><span class="n">raw_res_sum_valid</span><span class="p">[</span><span class="n">n</span><span class="p">]),</span>
+<span class="w">          </span><span class="p">.</span><span class="n">data_out</span><span class="w"> </span><span class="p">(</span><span class="n">norm_res_seq</span><span class="p">[</span><span class="n">n</span><span class="p">]),</span>
+<span class="w">          </span><span class="p">.</span><span class="n">valid_out</span><span class="p">(</span><span class="n">norm_res_seq_valid</span><span class="p">[</span><span class="n">n</span><span class="p">])</span>
+<span class="w">      </span><span class="p">);</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">  </span><span class="k">endgenerate</span>
+
+<span class="w">  </span><span class="c1">// ===| [8] Result Packer |=====================================================</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="no">`AXI_STREAM_WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">packed_res_data</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w">                         </span><span class="n">packed_res_valid</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">FROM_gemm_result_packer</span><span class="w"> </span><span class="p">#()</span><span class="w"> </span><span class="n">u_packer</span><span class="w"> </span><span class="p">(</span>
+<span class="w">      </span><span class="p">.</span><span class="n">clk</span><span class="w">          </span><span class="p">(</span><span class="n">clk_core</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">rst_n</span><span class="w">        </span><span class="p">(</span><span class="n">rst_n_core</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">row_res</span><span class="w">      </span><span class="p">(</span><span class="n">norm_res_seq</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">row_res_valid</span><span class="p">(</span><span class="n">norm_res_seq_valid</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">packed_data</span><span class="w">  </span><span class="p">(</span><span class="n">packed_res_data</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">packed_valid</span><span class="w"> </span><span class="p">(</span><span class="n">packed_res_valid</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">packed_ready</span><span class="w"> </span><span class="p">(</span><span class="mb">1&#39;b1</span><span class="p">),</span><span class="w">                </span><span class="c1">// downstream accepts unconditionally for now</span>
+<span class="w">      </span><span class="p">.</span><span class="n">o_busy</span><span class="w">       </span><span class="p">()</span>
+<span class="w">  </span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// ===| [9] Vector Core (GEMV) |================================================</span>
+<span class="w">  </span><span class="c1">// Unpack 128-bit flat HP bus → 32 × INT4 per lane before feeding GEMV_top.</span>
+<span class="w">  </span><span class="c1">// HP2 → lane A, HP3 → lane B;  C/D tied to zero (2-lane configuration).</span>
+<span class="w">  </span><span class="k">localparam</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">GemvWeightCnt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mem_pkg</span><span class="o">::</span><span class="n">HpSingleWeightCnt</span><span class="p">;</span><span class="w">  </span><span class="c1">// 32 weights per port</span>
+<span class="w">  </span><span class="k">localparam</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">GemvWeightW</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mem_pkg</span><span class="o">::</span><span class="n">WeightBitWidth</span><span class="p">;</span><span class="w">  </span><span class="c1">// 4-bit INT4</span>
+
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">GemvWeightW</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">gemv_weight_A</span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="n">GemvWeightCnt</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">GemvWeightW</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">gemv_weight_B</span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="n">GemvWeightCnt</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">GemvWeightW</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">gemv_weight_C</span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="n">GemvWeightCnt</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">GemvWeightW</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">gemv_weight_D</span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="n">GemvWeightCnt</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+
+<span class="w">  </span><span class="k">genvar</span><span class="w"> </span><span class="n">w</span><span class="p">;</span>
+<span class="w">  </span><span class="k">generate</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">GemvWeightCnt</span><span class="p">;</span><span class="w"> </span><span class="n">w</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">gen_gemv_unpack</span>
+<span class="w">      </span><span class="k">assign</span><span class="w"> </span><span class="n">gemv_weight_A</span><span class="p">[</span><span class="n">w</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">M_CORE_HP2_WEIGHT</span><span class="p">.</span><span class="n">tdata</span><span class="p">[</span><span class="n">w</span><span class="o">*</span><span class="n">GemvWeightW</span><span class="o">+:</span><span class="n">GemvWeightW</span><span class="p">];</span>
+<span class="w">      </span><span class="k">assign</span><span class="w"> </span><span class="n">gemv_weight_B</span><span class="p">[</span><span class="n">w</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">M_CORE_HP3_WEIGHT</span><span class="p">.</span><span class="n">tdata</span><span class="p">[</span><span class="n">w</span><span class="o">*</span><span class="n">GemvWeightW</span><span class="o">+:</span><span class="n">GemvWeightW</span><span class="p">];</span>
+<span class="w">      </span><span class="k">assign</span><span class="w"> </span><span class="n">gemv_weight_C</span><span class="p">[</span><span class="n">w</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">&#39;0</span><span class="p">;</span>
+<span class="w">      </span><span class="k">assign</span><span class="w"> </span><span class="n">gemv_weight_D</span><span class="p">[</span><span class="n">w</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">&#39;0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">  </span><span class="k">endgenerate</span>
+
+<span class="w">  </span><span class="c1">// num_recur: number of fmap accumulation rounds = vector length / broadcast width.</span>
+<span class="w">  </span><span class="c1">// size_ptr_addr is a 6-bit shape pointer; actual cycle count resolved by scheduler.</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">16</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">gemv_num_recur</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w">        </span><span class="n">gemv_activated_lane</span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="n">VecCoreDefaultCfg</span><span class="p">.</span><span class="n">num_gemv_pipeline</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+
+<span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">gemv_num_recur</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mb">11&#39;b0</span><span class="p">,</span><span class="w"> </span><span class="n">GEMV_uop_wire</span><span class="p">.</span><span class="n">size_ptr_addr</span><span class="p">};</span>
+<span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">gemv_activated_lane</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">&#39;{</span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="mb">1&#39;b0</span><span class="p">};</span>
+
+<span class="w">  </span><span class="n">GEMV_top</span><span class="w"> </span><span class="p">#(</span>
+<span class="w">      </span><span class="p">.</span><span class="n">param</span><span class="p">(</span><span class="n">VecCoreDefaultCfg</span><span class="p">)</span>
+<span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="n">u_GEMV_top</span><span class="w"> </span><span class="p">(</span>
+<span class="w">      </span><span class="p">.</span><span class="n">clk</span><span class="w">  </span><span class="p">(</span><span class="n">clk_core</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">rst_n</span><span class="p">(</span><span class="n">rst_n_core</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">IN_weight_valid_A</span><span class="p">(</span><span class="n">M_CORE_HP2_WEIGHT</span><span class="p">.</span><span class="n">tvalid</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_weight_valid_B</span><span class="p">(</span><span class="n">M_CORE_HP3_WEIGHT</span><span class="p">.</span><span class="n">tvalid</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_weight_valid_C</span><span class="p">(</span><span class="mb">1&#39;b0</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_weight_valid_D</span><span class="p">(</span><span class="mb">1&#39;b0</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">IN_weight_A</span><span class="p">(</span><span class="n">gemv_weight_A</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_weight_B</span><span class="p">(</span><span class="n">gemv_weight_B</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_weight_C</span><span class="p">(</span><span class="n">gemv_weight_C</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_weight_D</span><span class="p">(</span><span class="n">gemv_weight_D</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_weight_ready_A</span><span class="p">(</span><span class="n">M_CORE_HP2_WEIGHT</span><span class="p">.</span><span class="n">tready</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_weight_ready_B</span><span class="p">(</span><span class="n">M_CORE_HP3_WEIGHT</span><span class="p">.</span><span class="n">tready</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_weight_ready_C</span><span class="p">(),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_weight_ready_D</span><span class="p">(),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">IN_fmap_broadcast</span><span class="w">      </span><span class="p">(</span><span class="n">fmap_broadcast</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_fmap_broadcast_valid</span><span class="p">(</span><span class="n">fmap_broadcast_valid</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_num_recur</span><span class="w">           </span><span class="p">(</span><span class="n">gemv_num_recur</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_cached_emax_out</span><span class="w">     </span><span class="p">(</span><span class="n">cached_emax_out</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_activated_lane</span><span class="w">      </span><span class="p">(</span><span class="n">gemv_activated_lane</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_final_fmap_A</span><span class="p">(),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_final_fmap_B</span><span class="p">(),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_final_fmap_C</span><span class="p">(),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_final_fmap_D</span><span class="p">(),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_result_valid_A</span><span class="p">(),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_result_valid_B</span><span class="p">(),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_result_valid_C</span><span class="p">(),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_result_valid_D</span><span class="p">()</span>
+<span class="w">  </span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// ===| [10] CVO Core |=========================================================</span>
+<span class="w">  </span><span class="c1">// e_max BF16 encoding: value = 2^(exp - 127), mantissa implicit 1.0.</span>
+<span class="w">  </span><span class="c1">//   delayed_emax_32[0] is the 8-bit exponent field from column-0 normalizer.</span>
+<span class="w">  </span><span class="c1">//   Packed as BF16: {sign=0, exp=delayed_emax_32[0], mant=7&#39;b0}.</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">15</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">cvo_emax_bf16</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w">        </span><span class="n">cvo_busy_wire</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w">        </span><span class="n">cvo_done_wire</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">cvo_emax_bf16</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mb">1&#39;b0</span><span class="p">,</span><span class="w"> </span><span class="n">delayed_emax_32</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="mb">7&#39;b0</span><span class="p">};</span>
+
+<span class="w">  </span><span class="n">CVO_top</span><span class="w"> </span><span class="n">u_CVO_top</span><span class="w"> </span><span class="p">(</span>
+<span class="w">      </span><span class="p">.</span><span class="n">clk</span><span class="w">    </span><span class="p">(</span><span class="n">clk_core</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">rst_n</span><span class="w">  </span><span class="p">(</span><span class="n">rst_n_core</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">i_clear</span><span class="p">(</span><span class="n">i_clear</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">IN_uop</span><span class="w">       </span><span class="p">(</span><span class="n">CVO_uop_wire</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_uop_valid</span><span class="w"> </span><span class="p">(</span><span class="n">cvo_op_x64_valid_wire</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_uop_ready</span><span class="p">(),</span>
+
+<span class="w">      </span><span class="c1">// ===| L2 DMA stream — via mem_CVO_stream_bridge inside mem_dispatcher |===</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_data</span><span class="w">       </span><span class="p">(</span><span class="n">cvo_disp_data_wire</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_data_valid</span><span class="w"> </span><span class="p">(</span><span class="n">cvo_disp_valid_wire</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_data_ready</span><span class="p">(</span><span class="n">cvo_disp_ready_wire</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_result</span><span class="w">      </span><span class="p">(</span><span class="n">cvo_result_wire</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_result_valid</span><span class="p">(</span><span class="n">cvo_result_valid_wire</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_result_ready</span><span class="w"> </span><span class="p">(</span><span class="n">cvo_result_ready_wire</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">IN_e_max</span><span class="p">(</span><span class="n">cvo_emax_bf16</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_busy</span><span class="p">(</span><span class="n">cvo_busy_wire</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_done</span><span class="p">(</span><span class="n">cvo_done_wire</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">OUT_accm</span><span class="p">()</span>
+<span class="w">  </span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// ===| Status |================================================================</span>
+<span class="w">  </span><span class="c1">// Aggregated NPU busy/done flags — intended for ctrl_npu_frontend IN_enc_stat.</span>
+<span class="w">  </span><span class="c1">// Bit 0 : BUSY  (memory FIFO full | CVO engine active | CVO DMA bridge active)</span>
+<span class="w">  </span><span class="c1">// Bit 1 : DONE  (CVO operation complete pulse)</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">31</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">mmio_npu_stat</span><span class="p">;</span>
+<span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">mmio_npu_stat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">fifo_full_wire</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">cvo_busy_wire</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">cvo_disp_busy_wire</span><span class="p">;</span>
+<span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">mmio_npu_stat</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">cvo_done_wire</span><span class="p">;</span>
+<span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">mmio_npu_stat</span><span class="p">[</span><span class="mi">31</span><span class="o">:</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">30&#39;d0</span><span class="p">;</span>
+
+<span class="k">endmodule</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../Architecture/top_level.html"><span class="doc">Top-Level Architecture</span></a> — block diagram and design rationale.</p>
+</div>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="isa_pkg.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">ISA Type Package</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="compute_cores.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Compute Core Modules</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=7f76b32a3354e82990f2"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=7f76b32a3354e82990f2"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, hwkim.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item"><p class="personal-link">
+  <a href="https://hwkim-dev.github.io/hwkim-dev/" target="_blank" rel="noopener">
+    hwkim-dev.github.io
+  </a>
+</p></div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="_static/language-switcher.css?v=5ec28b56" />
-    <link rel="stylesheet" type="text/css" href="_static/mermaid-theme.css?v=87bd70f5" />
+    <link rel="stylesheet" type="text/css" href="_static/mermaid-theme.css?v=36ae3483" />
     <link rel="stylesheet" type="text/css" href="_static/image-lightbox.css?v=884c9d5a" />
   
   <!-- So that users can add custom icons -->
@@ -444,7 +444,7 @@ const load = async () => {
             console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
             await mermaid.initialize(
                 {...JSON.parse(
-                    `{"startOnLoad": false, "securityLevel": "loose", "flowchart": {"htmlLabels": true, "curve": "basis", "useMaxWidth": false, "padding": 12}, "sequence": {"useMaxWidth": false, "mirrorActors": false}}`
+                    `{"startOnLoad": false, "securityLevel": "loose", "theme": "default", "flowchart": {"htmlLabels": true, "curve": "basis", "useMaxWidth": false, "padding": 12}, "sequence": {"useMaxWidth": false, "mirrorActors": false}}`
                 ),
                 ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
                 }
@@ -472,7 +472,7 @@ const load = async () => {
 console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
 mermaid.initialize(
     {...JSON.parse(
-        `{"startOnLoad": false, "securityLevel": "loose", "flowchart": {"htmlLabels": true, "curve": "basis", "useMaxWidth": false, "padding": 12}, "sequence": {"useMaxWidth": false, "mirrorActors": false}}`
+        `{"startOnLoad": false, "securityLevel": "loose", "theme": "default", "flowchart": {"htmlLabels": true, "curve": "basis", "useMaxWidth": false, "padding": 12}, "sequence": {"useMaxWidth": false, "mirrorActors": false}}`
     ),
     ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
     }
@@ -484,6 +484,7 @@ window.runMermaid = runMermaid;</script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <script src="_static/language-switcher.js?v=e91f783c"></script>
     <script src="_static/image-lightbox.js?v=dec353f8"></script>
+    <script src="_static/mermaid-theme.js?v=7333a321"></script>
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -576,6 +577,13 @@ window.runMermaid = runMermaid;</script>
 
 
 <li class="nav-item ">
+  <a class="nav-link nav-internal" href="docs/v002/index.html">
+    pccx v002 Architecture
+  </a>
+</li>
+
+
+<li class="nav-item ">
   <a class="nav-link nav-internal" href="docs/Devices/index.html">
     Devices
   </a>
@@ -585,13 +593,6 @@ window.runMermaid = runMermaid;</script>
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="docs/archive/index.html">
     Archive
-  </a>
-</li>
-
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="docs/v002/index.html">
-    pccx v002 Architecture
   </a>
 </li>
 
@@ -702,6 +703,13 @@ window.runMermaid = runMermaid;</script>
 
 
 <li class="nav-item ">
+  <a class="nav-link nav-internal" href="docs/v002/index.html">
+    pccx v002 Architecture
+  </a>
+</li>
+
+
+<li class="nav-item ">
   <a class="nav-link nav-internal" href="docs/Devices/index.html">
     Devices
   </a>
@@ -711,13 +719,6 @@ window.runMermaid = runMermaid;</script>
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="docs/archive/index.html">
     Archive
-  </a>
-</li>
-
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="docs/v002/index.html">
-    pccx v002 Architecture
   </a>
 </li>
 

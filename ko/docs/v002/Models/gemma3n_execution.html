@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../../../_static/language-switcher.css?v=5ec28b56" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mermaid-theme.css?v=87bd70f5" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mermaid-theme.css?v=36ae3483" />
     <link rel="stylesheet" type="text/css" href="../../../_static/image-lightbox.css?v=884c9d5a" />
   
   <!-- So that users can add custom icons -->
@@ -448,7 +448,7 @@ const load = async () => {
             console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
             await mermaid.initialize(
                 {...JSON.parse(
-                    `{"startOnLoad": false, "securityLevel": "loose", "flowchart": {"htmlLabels": true, "curve": "basis", "useMaxWidth": false, "padding": 12}, "sequence": {"useMaxWidth": false, "mirrorActors": false}}`
+                    `{"startOnLoad": false, "securityLevel": "loose", "theme": "default", "flowchart": {"htmlLabels": true, "curve": "basis", "useMaxWidth": false, "padding": 12}, "sequence": {"useMaxWidth": false, "mirrorActors": false}}`
                 ),
                 ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
                 }
@@ -476,7 +476,7 @@ const load = async () => {
 console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
 mermaid.initialize(
     {...JSON.parse(
-        `{"startOnLoad": false, "securityLevel": "loose", "flowchart": {"htmlLabels": true, "curve": "basis", "useMaxWidth": false, "padding": 12}, "sequence": {"useMaxWidth": false, "mirrorActors": false}}`
+        `{"startOnLoad": false, "securityLevel": "loose", "theme": "default", "flowchart": {"htmlLabels": true, "curve": "basis", "useMaxWidth": false, "padding": 12}, "sequence": {"useMaxWidth": false, "mirrorActors": false}}`
     ),
     ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
     }
@@ -488,8 +488,10 @@ window.runMermaid = runMermaid;</script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <script src="../../../_static/language-switcher.js?v=e91f783c"></script>
     <script src="../../../_static/image-lightbox.js?v=dec353f8"></script>
+    <script src="../../../_static/mermaid-theme.js?v=7333a321"></script>
     <link rel="index" title="색인" href="../../../genindex.html" />
     <link rel="search" title="검색" href="../../../search.html" />
+    <link rel="next" title="RTL 소스 레퍼런스 (v002)" href="../RTL/index.html" />
     <link rel="prev" title="Gemma 3N — FFN Gaussian Top-K Sparsity" href="gemma3n_ffn_sparsity.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="ko"/>
@@ -580,6 +582,13 @@ window.runMermaid = runMermaid;</script>
 </li>
 
 
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    pccx v002 아키텍처
+  </a>
+</li>
+
+
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../Devices/index.html">
     지원 디바이스
@@ -590,13 +599,6 @@ window.runMermaid = runMermaid;</script>
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../archive/index.html">
     아카이브
-  </a>
-</li>
-
-
-<li class="nav-item current active">
-  <a class="nav-link nav-internal" href="../index.html">
-    pccx v002 아키텍처
   </a>
 </li>
 
@@ -708,6 +710,13 @@ window.runMermaid = runMermaid;</script>
 </li>
 
 
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
+    pccx v002 아키텍처
+  </a>
+</li>
+
+
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../Devices/index.html">
     지원 디바이스
@@ -718,13 +727,6 @@ window.runMermaid = runMermaid;</script>
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../archive/index.html">
     아카이브
-  </a>
-</li>
-
-
-<li class="nav-item current active">
-  <a class="nav-link nav-internal" href="../index.html">
-    pccx v002 아키텍처
   </a>
 </li>
 
@@ -834,6 +836,16 @@ window.runMermaid = runMermaid;</script>
 <li class="toctree-l2"><a class="reference internal" href="gemma3n_ple_laurel.html">Gemma 3N — LAuReL 과 PLE Calibration 모듈</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gemma3n_ffn_sparsity.html">Gemma 3N — FFN Gaussian Top-K Sparsity</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Gemma 3N E4B 를 pccx v002 에서 실행 — Execution / Scheduling</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">RTL 소스</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../RTL/index.html">RTL 소스 레퍼런스 (v002)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../RTL/isa_pkg.html">ISA 타입 패키지</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../RTL/npu_top.html">NPU 최상위 모듈</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../RTL/compute_cores.html">컴퓨트 코어 모듈</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../RTL/controller.html">NPU 컨트롤러 모듈</a></li>
 </ul>
 </details></li>
 </ul>
@@ -1194,6 +1206,15 @@ end-to-end 디코드 목표:</p>
         <p class="prev-next-subtitle">이전</p>
         <p class="prev-next-title">Gemma 3N — FFN Gaussian Top-K Sparsity</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="../RTL/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">다음</p>
+        <p class="prev-next-title">RTL 소스 레퍼런스 (v002)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>

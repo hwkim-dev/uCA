@@ -48,3 +48,11 @@ html[data-theme="dark"] .mermaid-container {
 html[data-theme="dark"] .mermaid svg {
   background: transparent !important;
 }
+
+/* Ensure transparent PNGs render against the dark page background,
+ * not against a white fill that some browsers or themes inject. */
+html[data-theme="dark"] article img,
+html[data-theme="dark"] .bd-content img,
+html[data-theme="dark"] figure img {
+  background: transparent;
+}
