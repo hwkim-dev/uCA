@@ -26,6 +26,7 @@ mermaid_version = '10.9.0'
 mermaid_init_config = {
     "startOnLoad": False,
     "securityLevel": "loose",
+    "theme": "default",
     "flowchart": {
         "htmlLabels": True,
         "curve": "basis",
@@ -42,6 +43,8 @@ templates_path = ['_templates']
 exclude_patterns = [
     '_build', 'Thumbs.db', '.DS_Store', 'node_modules', 'ko',
     '.venv', '.git', 'CLAUDE.md', 'README.md',
+    'codes/v002/README.md',
+    'codes/v002/docs/**',
 ]
 
 # -- Options for HTML output -------------------------------------------------
@@ -59,7 +62,7 @@ html_theme_options = {
     "navbar_end": ["theme-switcher", "navbar-icon-links"],
     "secondary_sidebar_items": ["page-toc"],
     "show_prev_next": True,
-    "navigation_depth": 4,
+    "navigation_depth": 2,
     "show_toc_level": 2,
     "search_bar_text": "Search pccx docs...",
     "icon_links": [
@@ -86,6 +89,7 @@ html_static_path = ['_static']
 html_js_files = [
     'language-switcher.js',
     'image-lightbox.js',
+    'mermaid-theme.js',
 ]
 html_css_files = [
     'language-switcher.css',
