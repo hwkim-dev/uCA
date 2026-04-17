@@ -1,21 +1,31 @@
 ================================
-pccx Navigation
+pccx Documentation
 ================================
 
-Welcome to the **pccx** Sphinx documentation network!
+Welcome to the **pccx** (Parallel Compute Core eXecutor) documentation.
+pccx is a scalable NPU architecture for accelerating Transformer-based LLMs
+on edge devices. Select a section from the sidebar to begin.
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Content
+   :maxdepth: 1
+   :caption: Introduction
 
    docs/index
-   docs/Devices/index
-   docs/archive/index
+
+.. toctree::
+   :maxdepth: 1
+   :caption: v002 Architecture
+
    docs/v002/index
 
-Indices and tables
-==================
+.. toctree::
+   :maxdepth: 1
+   :caption: Target Hardware
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   docs/Devices/index
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Archive
+
+   docs/archive/index
