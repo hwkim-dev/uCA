@@ -1,0 +1,45 @@
+name: EN / KO doc set
+
+on:
+  pull_request:
+    paths:
+      - "docs/**"
+      - "ko/docs/**"
+      - ".github/workflows/en-ko-sync.yml"
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "ko/docs/**"
+
+jobs:
+  file-set-symmetry:
+    name: EN / KO file set must match
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Diff EN vs KO doc file tree
+        run: |
+          set -euo pipefail
+          en=$(find docs     -type f \( -name '*.rst' -o -name '*.md' \) | sed 's|^docs/||'    | sort)
+          ko=$(find ko/docs  -type f \( -name '*.rst' -o -name '*.md' \) | sed 's|^ko/docs/||' | sort)
+
+          only_en=$(comm -23 <(printf '%s\n' "$en") <(printf '%s\n' "$ko") || true)
+          only_ko=$(comm -13 <(printf '%s\n' "$en") <(printf '%s\n' "$ko") || true)
+
+          if [ -n "$only_en" ] || [ -n "$only_ko" ]; then
+              echo "::error ::EN/KO doc file set divergence. Every doc page under docs/ must have a matching path under ko/docs/ (and vice-versa). See CLAUDE.md §4.1 (ko-first authoring policy)."
+              if [ -n "$only_en" ]; then
+                  echo ""
+                  echo "Files present only in docs/ :"
+                  printf '  - %s\n' $only_en
+              fi
+              if [ -n "$only_ko" ]; then
+                  echo ""
+                  echo "Files present only in ko/docs/ :"
+                  printf '  - %s\n' $only_ko
+              fi
+              exit 1
+          fi
+
+          echo "ok: $(printf '%s\n' "$en" | wc -l) doc pages mirrored across EN and KO."
