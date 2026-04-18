@@ -1,0 +1,88 @@
+name: Docs lint
+
+on:
+  pull_request:
+    paths:
+      - "docs/**"
+      - "ko/docs/**"
+      - "conf_common.py"
+      - "conf.py"
+      - "ko/conf.py"
+      - "_static/**"
+      - "_templates/**"
+      - "index.rst"
+      - "ko/index.rst"
+      - "refs.bib"
+      - "requirements.txt"
+      - "requirements-dev.txt"
+      - "Makefile"
+      - ".github/workflows/lint.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "docs/**"
+      - "ko/docs/**"
+      - "conf_common.py"
+      - "conf.py"
+      - "ko/conf.py"
+      - "requirements.txt"
+      - "requirements-dev.txt"
+      - "Makefile"
+  workflow_dispatch:
+
+env:
+  ACTIVE_VERSION: v002
+  RTL_REPO_URL: https://github.com/hwkim-dev/pccx-FPGA-NPU-LLM-kv260
+  RTL_REPO_REF: main
+
+jobs:
+  strict-build:
+    name: Strict -W Sphinx build (EN + KO)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dev toolchain
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+
+      - name: Install system deps (graphviz for sphinx.ext.graphviz)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends graphviz
+
+      - name: Clone active ${{ env.ACTIVE_VERSION }} RTL
+        run: |
+          git clone --depth 1 --branch "${RTL_REPO_REF}" \
+              "${RTL_REPO_URL}" "codes/${ACTIVE_VERSION}"
+
+      - name: make strict (EN + KO, -W --keep-going)
+        run: make strict
+
+  lint:
+    name: sphinx-lint + codespell
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install lint toolchain
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+
+      - name: make lint (sphinx-lint + codespell)
+        run: make lint
