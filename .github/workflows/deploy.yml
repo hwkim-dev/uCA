@@ -14,10 +14,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install dependencies
+      - name: Install system packages
+        run: sudo apt-get install -y graphviz
+
+      - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install sphinx pydata-sphinx-theme myst-parser sphinxcontrib-mermaid
+          pip install -r requirements.txt
 
       - name: Clone v002 RTL repository
         run: |
