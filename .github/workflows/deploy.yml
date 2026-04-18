@@ -4,6 +4,16 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+
+# Which external RTL version should be cloned into `codes/<ACTIVE_VERSION>/`
+# at build time. Archived versions remain committed inside this repo and are
+# read from disk. See CLAUDE.md §8.4 (cutover ceremony) — bump this value as
+# part of the vN → vN+1 transition.
+env:
+  ACTIVE_VERSION: v002
+  RTL_REPO_URL: https://github.com/hwkim-dev/pccx-FPGA-NPU-LLM-kv260
+  RTL_REPO_REF: main
 
 jobs:
   build-and-deploy:
@@ -14,27 +24,34 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install system packages
-        run: sudo apt-get install -y graphviz
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
 
-      - name: Install Python dependencies
+      - name: Install Sphinx toolchain (pinned)
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Clone v002 RTL repository
+      - name: Install system deps (Graphviz for sphinx.ext.graphviz)
         run: |
-          git clone --depth 1 \
-            https://github.com/hwkim-dev/pccx-FPGA-NPU-LLM-kv260 \
-            codes/v002
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends graphviz
 
-      - name: Build English Sphinx HTML
+      - name: Clone active ${{ env.ACTIVE_VERSION }} RTL
         run: |
-          sphinx-build -b html . _build/html/en
+          git clone --depth 1 --branch "${RTL_REPO_REF}" \
+              "${RTL_REPO_URL}" "codes/${ACTIVE_VERSION}"
 
-      - name: Build Korean Sphinx HTML
+      - name: Build English Sphinx HTML (strict)
         run: |
-          sphinx-build -b html ko _build/html/ko
+          sphinx-build -W --keep-going -b html . _build/html/en
+
+      - name: Build Korean Sphinx HTML (strict)
+        run: |
+          sphinx-build -W --keep-going -b html ko _build/html/ko
 
       - name: Create root redirect page and disable Jekyll
         run: |
