@@ -50,3 +50,9 @@ path.
    :caption: RTL Source
 
    RTL/index
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Verification
+
+   Verification/index
