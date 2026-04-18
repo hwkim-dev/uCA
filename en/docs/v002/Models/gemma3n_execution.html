@@ -1,52 +1,766 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Gemma 3N E4B on pccx v002 — Execution and Scheduling" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://hwkim-dev.github.io/pccx/docs/v002/Models/gemma3n_execution.html" />
+<meta property="og:site_name" content="pccx — Parallel Compute Core eXecutor" />
+<meta property="og:description" content="This page explains how a single decode token of Gemma 3N E4B runs end-to-end on pccx v002 — which tensor lives where, which instruction fires which core, and how the scheduler keeps all three compu..." />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="https://hwkim-dev.github.io/pccx/_images/social_previews/summary_docs_v002_Models_gemma3n_execution_6ffda9f3.png" />
+<meta property="og:image:alt" content="This page explains how a single decode token of Gemma 3N E4B runs end-to-end on pccx v002 — which tensor lives where, which instruction fires which core, and how the scheduler keeps all three compu..." />
+<meta name="description" content="This page explains how a single decode token of Gemma 3N E4B runs end-to-end on pccx v002 — which tensor lives where, which instruction fires which core, and how the scheduler keeps all three compu..." />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="RTL Source Reference (v002)" href="../RTL/index.html"><link rel="prev" title="Gemma 3N — FFN Gaussian Top-K Sparsity" href="gemma3n_ffn_sparsity.html">
+        <link rel="canonical" href="https://hwkim-dev.github.io/pccx/docs/v002/Models/gemma3n_execution.html">
 
-<!DOCTYPE html>
-
-
-<html lang="en" data-content_root="../../../" >
-
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <title>Gemma 3N E4B on pccx v002 — Execution and Scheduling &#8212; pccx Documentation</title>
-  
-  
-  
-  <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
-  </script>
-  <!--
-    this give us a css class that will be invisible only if js is disabled
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
-  
-  <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=7f76b32a3354e82990f2" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=7f76b32a3354e82990f2" rel="stylesheet" />
-
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/language-switcher.css?v=5ec28b56" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mermaid-theme.css?v=36ae3483" />
+    <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
+        <title>Gemma 3N E4B on pccx v002 — Execution and Scheduling - pccx</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=acfd86a5" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=505235e3" />
     <link rel="stylesheet" type="text/css" href="../../../_static/image-lightbox.css?v=884c9d5a" />
-  
-  <!-- So that users can add custom icons -->
-  <script defer src="../../../_static/scripts/fontawesome.js?digest=7f76b32a3354e82990f2"></script>
-  <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=7f76b32a3354e82990f2" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=7f76b32a3354e82990f2" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/language-switcher.css?v=cc8629cf" />
+    
+    
 
-    <script src="../../../_static/documentation_options.js?v=dfc80500"></script>
-    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
-    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #0b5fff;
+  --color-brand-content: #0b5fff;
+  --color-announcement-background: #fff5cf;
+  --color-announcement-text: #6b5900;
+  --pccx-accent: #ff7a00;
+  --pccx-muted-border: #dbe1ea;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #7aa8ff;
+  --color-brand-content: #7aa8ff;
+  --color-announcement-background: #332a00;
+  --color-announcement-text: #f9e58b;
+  --pccx-accent: #ffb470;
+  --pccx-muted-border: #3a4049;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #7aa8ff;
+  --color-brand-content: #7aa8ff;
+  --color-announcement-background: #332a00;
+  --color-announcement-text: #f9e58b;
+  --pccx-accent: #ffb470;
+  --pccx-muted-border: #3a4049;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+<div class="announcement">
+  <aside class="announcement-content">
+     English version · <a href="/pccx/ko/">한국어로 보기 →</a> 
+  </aside>
+</div>
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../index.html"><div class="brand">pccx</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky">
+
+<a class="sidebar-brand" href="../../../index.html">
+      <span class="sidebar-brand-text">pccx</span>
+</a>
+
+
+<div class="pccx-langswitch" role="group" aria-label="Language">
+  <a class="pccx-langswitch__btn" href="/pccx/en/"  data-pccx-lang="en">EN</a>
+  <span class="pccx-langswitch__sep" aria-hidden="true">·</span>
+  <a class="pccx-langswitch__btn" href="/pccx/ko/"  data-pccx-lang="ko">한국어</a>
+</div><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">pccx: Parallel Compute Core eXecutor</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">v002 Architecture</span></p>
+<ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">pccx v002 Architecture</a><input aria-label="Toggle navigation of pccx v002 Architecture" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../Architecture/index.html">Hardware Architecture</a><input aria-label="Toggle navigation of Hardware Architecture" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Architecture/rationale.html">Design Rationale: v001 → v002</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Architecture/top_level.html">Top-Level Architecture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Architecture/floorplan.html">Physical Floorplan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Architecture/memory_hierarchy.html">Memory Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Architecture/kv_cache.html">KV Cache Optimization Strategy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Architecture/gemm_core.html">GEMM Core (Systolic Array)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Architecture/gemv_core.html">GEMV Core</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Architecture/sfu_core.html">SFU Core (Complex Vector Operations)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Architecture/dsp48e2_w4a8.html">DSP48E2 W4A8 Bit Packing and Sign Recovery</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../ISA/index.html">Instruction Set Architecture (ISA)</a><input aria-label="Toggle navigation of Instruction Set Architecture (ISA)" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../ISA/encoding.html">Instruction Encoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ISA/instructions.html">Per-Instruction Encoding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ISA/dataflow.html">Per-Instruction Dataflow</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../Drivers/index.html">Software Stack</a><input aria-label="Toggle navigation of Software Stack" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Drivers/api.html">C API Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">Target Models</a><input aria-label="Toggle navigation of Target Models" checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="gemma3n_overview.html">Gemma 3N E4B — Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gemma3n_pipeline.html">Gemma 3N E4B — Operator-Level Pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gemma3n_attention_rope.html">Gemma 3N — Attention and RoPE Constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gemma3n_ple_laurel.html">Gemma 3N — LAuReL and PLE Calibration Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gemma3n_ffn_sparsity.html">Gemma 3N — FFN Gaussian Top-K Sparsity</a></li>
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">Gemma 3N E4B on pccx v002 — Execution and Scheduling</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../RTL/index.html">RTL Source Reference (v002)</a><input aria-label="Toggle navigation of RTL Source Reference (v002)" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../RTL/isa_pkg.html">ISA Type Package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../RTL/npu_top.html">NPU Top-Level</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../RTL/compute_cores.html">Compute Core Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../RTL/controller.html">NPU Controller Modules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Target Hardware</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../Devices/index.html">Devices</a><input aria-label="Toggle navigation of Devices" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../Devices/kv260.html">Target Hardware: Xilinx Kria KV260</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Archive</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../archive/index.html">Archive</a><input aria-label="Toggle navigation of Archive" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../archive/experimental_v001/index.html">Archive: v001 Experimental Architecture</a><input aria-label="Toggle navigation of Archive: v001 Experimental Architecture" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../archive/experimental_v001/Architecture/v001_architecture.html">pccx: Parallel Compute Core eXecutor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../archive/experimental_v001/Drivers/ISA.html">pccx ISA Specification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../archive/experimental_v001/Drivers/ISA_Spreadsheet.html">pccx ISA Spreadsheet View</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../archive/experimental_v001/Drivers/v001_API.html">Developer Reference for pccx v001 Host API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../archive/experimental_v001/rtl_source.html">RTL Source Reference (v001)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Toolchain Demos</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../samples/index.html">Toolchain Demos</a><input aria-label="Toggle navigation of Toolchain Demos" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../samples/mermaid_blockdiagram.html">Mermaid — NPU block diagram</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../samples/wavedrom_axi_read.html">WaveDrom — AXI4 read transaction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../samples/svg_themed_demo.html">SVG — themed 4×4 PE array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../samples/plot_bandwidth.html">scienceplots — bandwidth vs batch size</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../auto_plots/index.html">Plot gallery</a><input aria-label="Toggle navigation of Plot gallery" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../auto_plots/plot_bandwidth.html">Batch size vs achieved HP-AXI bandwidth</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="https://github.com/hwkim-dev/pccx/blob/main/docs/docs/v002/Models/gemma3n_execution.rst?plain=true" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/hwkim-dev/pccx/edit/main/docs/docs/v002/Models/gemma3n_execution.rst" rel="edit" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="gemma-3n-e4b-on-pccx-v002-execution-and-scheduling">
+<h1>Gemma 3N E4B on pccx v002 — Execution and Scheduling<a class="headerlink" href="#gemma-3n-e4b-on-pccx-v002-execution-and-scheduling" title="Link to this heading">¶</a></h1>
+<p>This page explains <em>how</em> a single decode token of Gemma 3N E4B runs
+end-to-end on pccx v002 — which tensor lives where, which instruction
+fires which core, and how the scheduler keeps all three compute engines
+busy.</p>
+<p>For the math, see <a class="reference internal" href="gemma3n_pipeline.html"><span class="doc">Gemma 3N E4B — Operator-Level Pipeline</span></a>. For the instruction encodings
+themselves, see <a class="reference internal" href="../ISA/instructions.html"><span class="doc">Per-Instruction Encoding</span></a>.</p>
+<section id="memory-layout-at-steady-state">
+<h2>1. Memory Layout at Steady State<a class="headerlink" href="#memory-layout-at-steady-state" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper colwidths-given docutils container">
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Region</p></th>
+<th class="head"><p>Backing store</p></th>
+<th class="head"><p>Unit</p></th>
+<th class="head"><p>Contents</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Host DDR4</strong></p></td>
+<td><p>4 GB shared with PS</p></td>
+<td><p>byte</p></td>
+<td><p>All weights (INT4 + per-channel scales), KV cache ring buffer,
+embedding / LM head tables.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>L2 cache</strong> (URAM)</p></td>
+<td><p>1.75 MB, 128-bit words</p></td>
+<td><p>128-bit word</p></td>
+<td><p>Current <code class="docutils literal notranslate"><span class="pre">xs[0..3]</span></code>, <code class="docutils literal notranslate"><span class="pre">x_norm</span></code>, <code class="docutils literal notranslate"><span class="pre">Q/K/V</span></code>, <code class="docutils literal notranslate"><span class="pre">attn_output</span></code>,
+<code class="docutils literal notranslate"><span class="pre">gate_raw</span></code>, <code class="docutils literal notranslate"><span class="pre">up_out</span></code>, <code class="docutils literal notranslate"><span class="pre">hidden</span></code>, <code class="docutils literal notranslate"><span class="pre">mlp_out</span></code>, <code class="docutils literal notranslate"><span class="pre">pli_all</span></code>,
+e_max, reduction accumulators.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Weight Buffer</strong> (BRAM/URAM FIFO)</p></td>
+<td><p>~512 KB</p></td>
+<td><p>128-bit word</p></td>
+<td><p>Burst buffer between HP2/HP3 (250 MHz) and the 400 MHz compute
+cores. Holds at most one GEMV/GEMM’s worth of weights.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Constant Cache</strong> (BRAM)</p></td>
+<td><p>64 entries × 48-bit</p></td>
+<td><p>shape / scale tuple</p></td>
+<td><p>RMSNorm scales, attention shapes, RoPE θ, sparsity cutoff <code class="docutils literal notranslate"><span class="pre">μ</span> <span class="pre">+</span>
+<span class="pre">1.645·σ</span></code>, the <span class="math notranslate nohighlight">\(1/\sqrt{2}\)</span> LAuReL scalar.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="host-setup-once-at-model-load">
+<h2>2. Host Setup (Once, at Model Load)<a class="headerlink" href="#host-setup-once-at-model-load" title="Link to this heading">¶</a></h2>
+<p>The driver performs these steps before any token is generated:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pccx_open(&amp;handle)</span></code> — maps the AXI-Lite control window and opens
+the HP/ACP DMA channels.</p></li>
+<li><p><strong>Load immutable weights</strong> (host DDR → L2 is too small; weights stay
+on DDR and stream on demand via HP ports).</p>
+<ul class="simple">
+<li><p>Embedding table (<code class="docutils literal notranslate"><span class="pre">W_embed</span></code>), PLE tables, AltUp projections,
+LM head — these do land on L2 for the first and last layer
+respectively, via <code class="docutils literal notranslate"><span class="pre">MEMCPY</span> <span class="pre">from_device=1</span> <span class="pre">to_device=0</span> <span class="pre">async=1</span></code>.</p></li>
+</ul>
+</li>
+<li><p><strong>Preload constants</strong> via a sequence of <code class="docutils literal notranslate"><span class="pre">MEMSET</span></code> instructions:</p>
+<ul class="simple">
+<li><p>Attention / FFN shape tuples.</p></li>
+<li><p>Per-layer RoPE <code class="docutils literal notranslate"><span class="pre">theta_base</span></code> (10 000 or 1 000 000 depending on
+the 5-layer cycle).</p></li>
+<li><p>FFN sparsity z-score <code class="docutils literal notranslate"><span class="pre">1.6448536</span></code>.</p></li>
+<li><p>LAuReL <span class="math notranslate nohighlight">\(1/\sqrt{2}\)</span> scalar, attention+LAuReL merged scale.</p></li>
+</ul>
+</li>
+<li><p><strong>Initialize the KV ring buffer</strong>:
+<code class="docutils literal notranslate"><span class="pre">pccx_kv_init(handle,</span> <span class="pre">max_tokens=8192)</span></code>. The hardware treats KV
+cache as a ring with an explicit hard cap — see
+<a class="reference internal" href="../Architecture/kv_cache.html"><span class="doc">KV Cache Optimization Strategy</span></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pccx_start(handle)</span></code> — raises <code class="docutils literal notranslate"><span class="pre">core_enable</span></code> and unblocks the
+dispatcher FIFO.</p></li>
+</ol>
+</section>
+<section id="per-token-decode-flow">
+<h2>3. Per-Token Decode Flow<a class="headerlink" href="#per-token-decode-flow" title="Link to this heading">¶</a></h2>
+<p>One decode token executes Sections 1 → 6 of <a class="reference internal" href="gemma3n_pipeline.html"><span class="doc">Gemma 3N E4B — Operator-Level Pipeline</span></a>. The
+high-level dataflow, annotated with instructions:</p>
+<pre  class="mermaid">
+        flowchart TB
+    A[&quot;Host: read token id&quot;] --&gt; B[&quot;MEMCPY host → L2&lt;br/&gt;W_embed row + pli_all&quot;]
+    B --&gt; C[&quot;GEMV: xs[k+1] = x0 · altup_projs[k]&quot;]
+    C --&gt; L[&quot;Layer loop (i = 0 ... 34)&quot;]
+    L --&gt; L1[&quot;GEMV/CVO: AltUp router + pred&quot;]
+    L1 --&gt; L2[&quot;GEMV: Q/K/V projection&quot;]
+    L2 --&gt; L3[&quot;CVO: QK-Norm + RoPE&quot;]
+    L3 --&gt; L4[&quot;GEMV: Q · Kᵀ&lt;br/&gt;flags.findemax = 1&quot;]
+    L4 --&gt; L5[&quot;CVO: softmax sequence&quot;]
+    L5 --&gt; L6[&quot;GEMV: scores · V&quot;]
+    L6 --&gt; L7[&quot;GEMV: W_o projection&lt;br/&gt;(+ LAuReL GEMVs in parallel)&quot;]
+    L7 --&gt; L8[&quot;GEMV: FFN gate + up&quot;]
+    L8 --&gt; L9[&quot;CVO: sparsity / GELU / merge&quot;]
+    L9 --&gt; L10[&quot;GEMV: W_down + residual add&quot;]
+    L10 --&gt; L11[&quot;GEMV/CVO: AltUp correction + PLE shadow inject&quot;]
+    L11 --&gt; L
+    L --&gt; D[&quot;GEMV: Mean magnitude + unprojections&quot;]
+    D --&gt; E[&quot;GEMV: LM head projection&quot;]
+    E --&gt; F[&quot;CVO: softcap tanh&quot;]
+    F --&gt; G[&quot;MEMCPY L2 → host: logits&quot;]
+    G --&gt; H[&quot;Host: sampling&quot;]
+    </pre><section id="who-does-what">
+<h3>3.1 Who Does What<a class="headerlink" href="#who-does-what" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-given docutils container">
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Pipeline stage</p></th>
+<th class="head"><p>Systolic Array</p></th>
+<th class="head"><p>GEMV ×4</p></th>
+<th class="head"><p>SFU ×4</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Embedding row fetch + AltUp init (×4)</p></td>
+<td><p>—</p></td>
+<td><p>4 GEMV (one per <code class="docutils literal notranslate"><span class="pre">altup_projs[k]</span></code>)</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>PLE pre-compute</p></td>
+<td><p>—</p></td>
+<td><p>1 GEMV</p></td>
+<td><p>2 (RMSNorm + scale)</p></td>
+</tr>
+<tr class="row-even"><td><p>Attention Q/K/V</p></td>
+<td><p>—</p></td>
+<td><p>3 GEMV</p></td>
+<td><p>2 (Q-norm, K-norm per head)</p></td>
+</tr>
+<tr class="row-odd"><td><p>RoPE</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>2 (sin, cos) per Q, K</p></td>
+</tr>
+<tr class="row-even"><td><p>Attention score + softmax + context</p></td>
+<td><p>—</p></td>
+<td><p>2 GEMV</p></td>
+<td><p>3 (exp, reduce_sum, scale)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Output + LAuReL merge</p></td>
+<td><p>—</p></td>
+<td><p>3 GEMV (W_o + 2 LAuReL)</p></td>
+<td><p>1 (× 1/sqrt 2)</p></td>
+</tr>
+<tr class="row-even"><td><p>FFN gate + up</p></td>
+<td><p>—</p></td>
+<td><p>2 GEMV (16384 × 2048 each)</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>FFN sparsity (layers 0–9) or GELU only</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>4 (reduce × 2, gate compute, GELU)</p></td>
+</tr>
+<tr class="row-even"><td><p>FFN down + residual</p></td>
+<td><p>—</p></td>
+<td><p>1 GEMV (2048 × 16384)</p></td>
+<td><p>1 (RMSNorm)</p></td>
+</tr>
+<tr class="row-odd"><td><p>AltUp correction + PLE inject</p></td>
+<td><p>—</p></td>
+<td><p>3 GEMV (ple_gate, ple_proj, shadow-only add)</p></td>
+<td><p>2 (tanh, RMSNorm)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The Systolic Array is <strong>idle</strong> during decode. It wakes up only for the
+prefill stage, where <code class="docutils literal notranslate"><span class="pre">Q</span> <span class="pre">·</span> <span class="pre">Kᵀ</span></code> across the full context is a real GEMM.</p>
+</section>
+<section id="overlap-strategy">
+<h3>3.2 Overlap Strategy<a class="headerlink" href="#overlap-strategy" title="Link to this heading">¶</a></h3>
+<p>Three rules keep the cores busy:</p>
+<ol class="arabic simple">
+<li><p><strong>Weight prefetch from HP2/HP3 starts the moment the previous GEMV
+launches.</strong> The Weight Buffer is deep enough to hold one full GEMV
+worth of weights, so weight DMA and compute always overlap.</p></li>
+<li><p><strong>SFU runs ahead of its consumer.</strong> Once a GEMV finishes, its result
+is written to L2 and immediately picked up by the SFU through a
+direct-connect FIFO. The SFU result goes back to L2 in parallel with
+the next GEMV starting.</p></li>
+<li><p><strong>PLE pre-compute lives off the critical path.</strong> <code class="docutils literal notranslate"><span class="pre">pli_all</span></code> is
+computed on token entry, not per-layer. Per-layer PLE injection is
+also kept off the main stream (see
+<a class="reference internal" href="gemma3n_ple_laurel.html"><span class="doc">Gemma 3N — LAuReL and PLE Calibration Modules</span></a>), so it overlaps with the next layer’s
+AltUp router on the main stream lane.</p></li>
+</ol>
+</section>
+</section>
+<section id="kv-cache-management">
+<h2>4. KV Cache Management<a class="headerlink" href="#kv-cache-management" title="Link to this heading">¶</a></h2>
+<p>KV cache is the single biggest bandwidth consumer. Two driver-level
+behaviors apply:</p>
+<ol class="arabic simple">
+<li><p><strong>Cross-layer sharing.</strong> Only layers 0–19 write their own KV entries.
+Layers 20–34 reuse the cache from layer 18 (local θ) or layer 19
+(global θ). The scheduler therefore issues the GEMV that produces
+<code class="docutils literal notranslate"><span class="pre">K</span></code> / <code class="docutils literal notranslate"><span class="pre">V</span></code> only for <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">&lt;</span> <span class="pre">20</span></code> and re-reads <code class="docutils literal notranslate"><span class="pre">target_K</span></code> /
+<code class="docutils literal notranslate"><span class="pre">target_V</span></code> from the cache for <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">&gt;=</span> <span class="pre">20</span></code>.</p></li>
+<li><p><strong>Hard-cap ring buffer.</strong> <code class="docutils literal notranslate"><span class="pre">max_tokens</span></code> is set at init time and
+cannot grow. When the ring wraps, the <strong>oldest</strong> entries are
+overwritten according to the attention-sink + local-window policy.</p></li>
+<li><p><strong>Optional INT4 / INT8 quantization</strong> on the KV write path (see
+<a class="reference internal" href="../Architecture/kv_cache.html"><span class="doc">KV Cache Optimization Strategy</span></a> §2.1). Recommended default for
+context length &gt; 4 K.</p></li>
+</ol>
+</section>
+<section id="error-and-completion-handling">
+<h2>5. Error and Completion Handling<a class="headerlink" href="#error-and-completion-handling" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Every instruction carries a 1-bit <code class="docutils literal notranslate"><span class="pre">async</span></code> field. The driver treats
+all intra-layer instructions as async and only waits (via the
+<code class="docutils literal notranslate"><span class="pre">done</span></code> status register) once per layer, at the AltUp correction
+step where the previous layer’s results must be visible.</p></li>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">CVO_SCALE</span></code> with <code class="docutils literal notranslate"><span class="pre">flags.recip_scale=1</span></code> returns <code class="docutils literal notranslate"><span class="pre">0</span></code> when the
+scalar is <code class="docutils literal notranslate"><span class="pre">0</span></code>; the driver is responsible for not issuing such an
+instruction (it is a programmer error, not a hardware fault).</p></li>
+<li><p>The Global Scheduler exposes an <strong>error interrupt</strong> on the AXI-Lite
+control bank when an instruction fails decode (reserved bits
+nonzero, unknown opcode, out-of-range addresses). The driver logs
+the instruction and halts.</p></li>
+</ul>
+</section>
+<section id="performance-budget-target">
+<h2>6. Performance Budget (Target)<a class="headerlink" href="#performance-budget-target" title="Link to this heading">¶</a></h2>
+<p>Under the baseline configuration (W4A8 compute path, INT4 KV cache,
+<code class="docutils literal notranslate"><span class="pre">L</span> <span class="pre">=</span> <span class="pre">8192</span></code> hard cap), the end-to-end decode target is:</p>
+<div class="table-wrapper colwidths-given docutils container">
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 20.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Metric</p></th>
+<th class="head"><p>Target</p></th>
+<th class="head"><p>Source of bottleneck</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Decode throughput</p></td>
+<td><p><strong>20 tok/s</strong></p></td>
+<td><p>GEMV bandwidth at 400 MHz × 4 lanes × 1024 MAC/clk.</p></td>
+</tr>
+<tr class="row-odd"><td><p>L2 activation bandwidth</p></td>
+<td><p><strong>~1.6 GB/s</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">xs[0..3]</span></code>, <code class="docutils literal notranslate"><span class="pre">gate_raw</span></code>, <code class="docutils literal notranslate"><span class="pre">up_out</span></code>, <code class="docutils literal notranslate"><span class="pre">hidden</span></code> round-trips.</p></td>
+</tr>
+<tr class="row-even"><td><p>KV cache read bandwidth &#64; 8 K</p></td>
+<td><p><strong>~6 GB/s</strong></p></td>
+<td><p>20 layers × 512 × INT4 × 2 (K, V) × 8 K / 50 ms.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Weight stream bandwidth</p></td>
+<td><p><strong>~3 GB/s</strong></p></td>
+<td><p>Two HP ports at 128-bit × 250 MHz, amortized.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>When context length exceeds 4 K, KV bandwidth becomes the limiter — see
+the mitigations in <a class="reference internal" href="../Architecture/kv_cache.html"><span class="doc">KV Cache Optimization Strategy</span></a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p>Operator spec: <a class="reference internal" href="gemma3n_pipeline.html"><span class="doc">Gemma 3N E4B — Operator-Level Pipeline</span></a></p></li>
+<li><p>Pccx v002 ISA: <a class="reference internal" href="../ISA/index.html"><span class="doc">Instruction Set Architecture (ISA)</span></a></p></li>
+<li><p>Driver API: <a class="reference internal" href="../Drivers/api.html"><span class="doc">C API Overview</span></a></p></li>
+</ul>
+</div>
+</section>
+</section>
+
+    <script type="text/javascript">
+        function init() {
+            WaveDrom.ProcessAll();
+        }
+        window.onload = init;
+    </script>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../RTL/index.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">RTL Source Reference (v002)</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="gemma3n_ffn_sparsity.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Gemma 3N — FFN Gaussian Top-K Sparsity</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026, hwkim
+            </div>
+            Made with 
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            <div class="last-updated">
+              Last updated on 2026-04-18</div>
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              <a class="muted-link " href="https://github.com/hwkim-dev/pccx" aria-label="GitHub"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" width="1em" height="1em"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Gemma 3N E4B on pccx v002 — Execution and Scheduling</a><ul>
+<li><a class="reference internal" href="#memory-layout-at-steady-state">1. Memory Layout at Steady State</a></li>
+<li><a class="reference internal" href="#host-setup-once-at-model-load">2. Host Setup (Once, at Model Load)</a></li>
+<li><a class="reference internal" href="#per-token-decode-flow">3. Per-Token Decode Flow</a><ul>
+<li><a class="reference internal" href="#who-does-what">3.1 Who Does What</a></li>
+<li><a class="reference internal" href="#overlap-strategy">3.2 Overlap Strategy</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kv-cache-management">4. KV Cache Management</a></li>
+<li><a class="reference internal" href="#error-and-completion-handling">5. Error and Completion Handling</a></li>
+<li><a class="reference internal" href="#performance-budget-target">6. Performance Budget (Target)</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../_static/documentation_options.js?v=98de157e"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=b8b12719"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="https://wavedrom.com/skins/default.js"></script>
+    <script src="https://wavedrom.com/wavedrom.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
     <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs";
 
@@ -447,7 +1161,7 @@ const load = async () => {
             console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
             await mermaid.initialize(
                 {...JSON.parse(
-                    `{"startOnLoad": false, "securityLevel": "loose", "theme": "default", "flowchart": {"htmlLabels": true, "curve": "basis", "useMaxWidth": false, "padding": 12}, "sequence": {"useMaxWidth": false, "mirrorActors": false}}`
+                    `{"startOnLoad": false}`
                 ),
                 ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
                 }
@@ -475,7 +1189,7 @@ const load = async () => {
 console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
 mermaid.initialize(
     {...JSON.parse(
-        `{"startOnLoad": false, "securityLevel": "loose", "theme": "default", "flowchart": {"htmlLabels": true, "curve": "basis", "useMaxWidth": false, "padding": 12}, "sequence": {"useMaxWidth": false, "mirrorActors": false}}`
+        `{"startOnLoad": false}`
     ),
     ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
     }
@@ -483,834 +1197,7 @@ mermaid.initialize(
 
 window.addEventListener("load", load);
 window.runMermaid = runMermaid;</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/v002/Models/gemma3n_execution';</script>
-    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
-    <script src="../../../_static/language-switcher.js?v=e91f783c"></script>
     <script src="../../../_static/image-lightbox.js?v=dec353f8"></script>
-    <script src="../../../_static/mermaid-theme.js?v=7333a321"></script>
-    <link rel="index" title="Index" href="../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="RTL Source Reference (v002)" href="../RTL/index.html" />
-    <link rel="prev" title="Gemma 3N — FFN Gaussian Top-K Sparsity" href="gemma3n_ffn_sparsity.html" />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="" />
-  
-    
-    <script src="../../../_static/searchtools.js"></script>
-    <script src="../../../_static/language_data.js"></script>
-    <script src="../../../searchindex.js"></script>
-  
-  </head>
-  <body data-default-mode="">
-  
-  
-  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
-
-  
-  <div id="pst-scroll-pixel-helper"></div>
-  
-  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
-
-  
-  <dialog id="pst-search-dialog">
-    
-<form class="bd-search d-flex align-items-center"
-      action="../../../search.html"
-      method="get">
-  <i class="fa-solid fa-magnifying-glass"></i>
-  <input type="search"
-         class="form-control"
-         name="q"
-         placeholder="Search pccx docs..."
-         aria-label="Search pccx docs..."
-         autocomplete="off"
-         autocorrect="off"
-         autocapitalize="off"
-         spellcheck="false"/>
-  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-  </dialog>
-
-  <div class="pst-async-banner-revealer d-none">
-  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
-</div>
-
-  
-    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
-<div class="bd-header__inner bd-page-width">
-  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
-    <span class="fa-solid fa-bars"></span>
-  </button>
-  
-  
-  <div class="col-lg-3 navbar-header-items__start">
-    
-      <div class="navbar-item">
-
-  
-    
-  
-
-<a class="navbar-brand logo" href="../../../index.html">
-  
-  
-  
-  
-  
-  
-    <p class="title logo__title">pccx</p>
-  
-</a></div>
-    
-  </div>
-  
-  <div class="col-lg-9 navbar-header-items">
-    
-    <div class="me-auto navbar-header-items__center">
-      
-        <div class="navbar-item">
-<nav>
-  <ul class="bd-navbar-elements navbar-nav">
-    
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="../../index.html">
-    pccx: Parallel Compute Core eXecutor
-  </a>
-</li>
-
-
-<li class="nav-item current active">
-  <a class="nav-link nav-internal" href="../index.html">
-    pccx v002 Architecture
-  </a>
-</li>
-
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="../../Devices/index.html">
-    Devices
-  </a>
-</li>
-
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="../../archive/index.html">
-    Archive
-  </a>
-</li>
-
-  </ul>
-</nav></div>
-      
-    </div>
-    
-    
-    <div class="navbar-header-items__end">
-      
-        <div class="navbar-item navbar-persistent--container">
-          
-
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button>
-        </div>
-      
-      
-        <div class="navbar-item">
-
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button></div>
-      
-        <div class="navbar-item"><ul class="navbar-icon-links"
-    aria-label="Icon Links">
-        <li class="nav-item">
-          
-          
-          
-          
-          
-          
-          
-          
-          <a href="https://github.com/hwkim-dev/pccx" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
-            <span class="sr-only">GitHub</span></a>
-        </li>
-        <li class="nav-item">
-          
-          
-          
-          
-          
-          
-          
-          
-          <a href="https://hwkim-dev.github.io/hwkim-dev/" title="Personal Site" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-solid fa-user fa-lg" aria-hidden="true"></i>
-            <span class="sr-only">Personal Site</span></a>
-        </li>
-</ul></div>
-      
-    </div>
-    
-  </div>
-  
-  
-    <div class="navbar-persistent--mobile">
-
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button>
-    </div>
-  
-
-  
-    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
-      <span class="fa-solid fa-outdent"></span>
-    </button>
-  
-</div>
-
-    </header>
-  
-
-  <div class="bd-container">
-    <div class="bd-container__inner bd-page-width">
-      
-      
-      
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
-        
-
-  
-  <div class="sidebar-header-items sidebar-primary__section">
-    
-    
-      <div class="sidebar-header-items__center">
-        
-          
-          
-            <div class="navbar-item">
-<nav>
-  <ul class="bd-navbar-elements navbar-nav">
-    
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="../../index.html">
-    pccx: Parallel Compute Core eXecutor
-  </a>
-</li>
-
-
-<li class="nav-item current active">
-  <a class="nav-link nav-internal" href="../index.html">
-    pccx v002 Architecture
-  </a>
-</li>
-
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="../../Devices/index.html">
-    Devices
-  </a>
-</li>
-
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="../../archive/index.html">
-    Archive
-  </a>
-</li>
-
-  </ul>
-</nav></div>
-          
-        
-      </div>
-    
-    
-    
-      <div class="sidebar-header-items__end">
-        
-          <div class="navbar-item">
-
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button></div>
-        
-          <div class="navbar-item"><ul class="navbar-icon-links"
-    aria-label="Icon Links">
-        <li class="nav-item">
-          
-          
-          
-          
-          
-          
-          
-          
-          <a href="https://github.com/hwkim-dev/pccx" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
-            <span class="sr-only">GitHub</span></a>
-        </li>
-        <li class="nav-item">
-          
-          
-          
-          
-          
-          
-          
-          
-          <a href="https://hwkim-dev.github.io/hwkim-dev/" title="Personal Site" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-solid fa-user fa-lg" aria-hidden="true"></i>
-            <span class="sr-only">Personal Site</span></a>
-        </li>
-</ul></div>
-        
-      </div>
-    
-  </div>
-  
-    <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar"><svg class="pst-icon svg-inline--fa" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
-  </svg>
-  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
-  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
-</button></div>
-        <div class="sidebar-primary-item">
-
-<nav class="bd-docs-nav bd-links"
-     aria-label="Section Navigation">
-  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Overview</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Hardware Architecture</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../Architecture/index.html">Hardware Architecture</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../Architecture/rationale.html">Design Rationale: v001 → v002</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../Architecture/top_level.html">Top-Level Architecture</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../Architecture/floorplan.html">Physical Floorplan</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../Architecture/memory_hierarchy.html">Memory Hierarchy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../Architecture/kv_cache.html">KV Cache Optimization Strategy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../Architecture/gemm_core.html">GEMM Core (Systolic Array)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../Architecture/gemv_core.html">GEMV Core</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../Architecture/sfu_core.html">SFU Core (Complex Vector Operations)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../Architecture/dsp48e2_w4a8.html">DSP48E2 W4A8 Bit Packing and Sign Recovery</a></li>
-</ul>
-</details></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Instruction Set Architecture (ISA)</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../ISA/index.html">Instruction Set Architecture (ISA)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../ISA/encoding.html">Instruction Encoding</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../ISA/instructions.html">Per-Instruction Encoding</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../ISA/dataflow.html">Per-Instruction Dataflow</a></li>
-</ul>
-</details></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Software Stack</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../Drivers/index.html">Software Stack</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../Drivers/api.html">C API Overview</a></li>
-</ul>
-</details></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Target Models</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Target Models</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="gemma3n_overview.html">Gemma 3N E4B — Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gemma3n_pipeline.html">Gemma 3N E4B — Operator-Level Pipeline</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gemma3n_attention_rope.html">Gemma 3N — Attention and RoPE Constraints</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gemma3n_ple_laurel.html">Gemma 3N — LAuReL and PLE Calibration Modules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gemma3n_ffn_sparsity.html">Gemma 3N — FFN Gaussian Top-K Sparsity</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Gemma 3N E4B on pccx v002 — Execution and Scheduling</a></li>
-</ul>
-</details></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">RTL Source</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../RTL/index.html">RTL Source Reference (v002)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../RTL/isa_pkg.html">ISA Type Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../RTL/npu_top.html">NPU Top-Level</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../RTL/compute_cores.html">Compute Core Modules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../RTL/controller.html">NPU Controller Modules</a></li>
-</ul>
-</details></li>
-</ul>
-</div>
-</nav></div>
-    </div>
-  
-  
-  <div class="sidebar-primary-items__end sidebar-primary__section">
-      <div class="sidebar-primary-item">
-<div id="ethical-ad-placement"
-      class="flat"
-      data-ea-publisher="readthedocs"
-      data-ea-type="readthedocs-sidebar"
-      data-ea-manual="true">
-</div></div>
-  </div>
-
-
-      </div>
-      
-      <main id="main-content" class="bd-main" role="main">
-        
-        
-          <div class="bd-content">
-            <div class="bd-article-container">
-              
-              <div class="bd-header-article d-print-none">
-<div class="header-article-items header-article__inner">
-  
-    <div class="header-article-items__start">
-      
-        <div class="header-article-item">
-
-<nav aria-label="Breadcrumb" class="d-print-none">
-  <ul class="bd-breadcrumbs">
-    
-    <li class="breadcrumb-item breadcrumb-home">
-      <a href="../../../index.html" class="nav-link" aria-label="Home">
-        <i class="fa-solid fa-home"></i>
-      </a>
-    </li>
-    
-    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">pccx v002 Architecture</a></li>
-    
-    
-    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Target Models</a></li>
-    
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Gemma 3N E4B on pccx v002 — Execution and Scheduling</span></li>
-  </ul>
-</nav>
-</div>
-      
-    </div>
-  
-  
-</div>
-</div>
-              
-              
-              
-                
-<div id="searchbox"></div>
-                <article class="bd-article">
-                  
-  <section id="gemma-3n-e4b-on-pccx-v002-execution-and-scheduling">
-<h1>Gemma 3N E4B on pccx v002 — Execution and Scheduling<a class="headerlink" href="#gemma-3n-e4b-on-pccx-v002-execution-and-scheduling" title="Link to this heading">#</a></h1>
-<p>This page explains <em>how</em> a single decode token of Gemma 3N E4B runs
-end-to-end on pccx v002 — which tensor lives where, which instruction
-fires which core, and how the scheduler keeps all three compute engines
-busy.</p>
-<p>For the math, see <a class="reference internal" href="gemma3n_pipeline.html"><span class="doc">Gemma 3N E4B — Operator-Level Pipeline</span></a>. For the instruction encodings
-themselves, see <a class="reference internal" href="../ISA/instructions.html"><span class="doc">Per-Instruction Encoding</span></a>.</p>
-<section id="memory-layout-at-steady-state">
-<h2>1. Memory Layout at Steady State<a class="headerlink" href="#memory-layout-at-steady-state" title="Link to this heading">#</a></h2>
-<div class="pst-scrollable-table-container"><table class="table">
-<colgroup>
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 40.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Region</p></th>
-<th class="head"><p>Backing store</p></th>
-<th class="head"><p>Unit</p></th>
-<th class="head"><p>Contents</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><strong>Host DDR4</strong></p></td>
-<td><p>4 GB shared with PS</p></td>
-<td><p>byte</p></td>
-<td><p>All weights (INT4 + per-channel scales), KV cache ring buffer,
-embedding / LM head tables.</p></td>
-</tr>
-<tr class="row-odd"><td><p><strong>L2 cache</strong> (URAM)</p></td>
-<td><p>1.75 MB, 128-bit words</p></td>
-<td><p>128-bit word</p></td>
-<td><p>Current <code class="docutils literal notranslate"><span class="pre">xs[0..3]</span></code>, <code class="docutils literal notranslate"><span class="pre">x_norm</span></code>, <code class="docutils literal notranslate"><span class="pre">Q/K/V</span></code>, <code class="docutils literal notranslate"><span class="pre">attn_output</span></code>,
-<code class="docutils literal notranslate"><span class="pre">gate_raw</span></code>, <code class="docutils literal notranslate"><span class="pre">up_out</span></code>, <code class="docutils literal notranslate"><span class="pre">hidden</span></code>, <code class="docutils literal notranslate"><span class="pre">mlp_out</span></code>, <code class="docutils literal notranslate"><span class="pre">pli_all</span></code>,
-e_max, reduction accumulators.</p></td>
-</tr>
-<tr class="row-even"><td><p><strong>Weight Buffer</strong> (BRAM/URAM FIFO)</p></td>
-<td><p>~512 KB</p></td>
-<td><p>128-bit word</p></td>
-<td><p>Burst buffer between HP2/HP3 (250 MHz) and the 400 MHz compute
-cores. Holds at most one GEMV/GEMM’s worth of weights.</p></td>
-</tr>
-<tr class="row-odd"><td><p><strong>Constant Cache</strong> (BRAM)</p></td>
-<td><p>64 entries × 48-bit</p></td>
-<td><p>shape / scale tuple</p></td>
-<td><p>RMSNorm scales, attention shapes, RoPE θ, sparsity cutoff <code class="docutils literal notranslate"><span class="pre">μ</span> <span class="pre">+</span>
-<span class="pre">1.645·σ</span></code>, the <span class="math notranslate nohighlight">\(1/\sqrt{2}\)</span> LAuReL scalar.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="host-setup-once-at-model-load">
-<h2>2. Host Setup (Once, at Model Load)<a class="headerlink" href="#host-setup-once-at-model-load" title="Link to this heading">#</a></h2>
-<p>The driver performs these steps before any token is generated:</p>
-<ol class="arabic simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">pccx_open(&amp;handle)</span></code> — maps the AXI-Lite control window and opens
-the HP/ACP DMA channels.</p></li>
-<li><p><strong>Load immutable weights</strong> (host DDR → L2 is too small; weights stay
-on DDR and stream on demand via HP ports).</p>
-<ul class="simple">
-<li><p>Embedding table (<code class="docutils literal notranslate"><span class="pre">W_embed</span></code>), PLE tables, AltUp projections,
-LM head — these do land on L2 for the first and last layer
-respectively, via <code class="docutils literal notranslate"><span class="pre">MEMCPY</span> <span class="pre">from_device=1</span> <span class="pre">to_device=0</span> <span class="pre">async=1</span></code>.</p></li>
-</ul>
-</li>
-<li><p><strong>Preload constants</strong> via a sequence of <code class="docutils literal notranslate"><span class="pre">MEMSET</span></code> instructions:</p>
-<ul class="simple">
-<li><p>Attention / FFN shape tuples.</p></li>
-<li><p>Per-layer RoPE <code class="docutils literal notranslate"><span class="pre">theta_base</span></code> (10 000 or 1 000 000 depending on
-the 5-layer cycle).</p></li>
-<li><p>FFN sparsity z-score <code class="docutils literal notranslate"><span class="pre">1.6448536</span></code>.</p></li>
-<li><p>LAuReL <span class="math notranslate nohighlight">\(1/\sqrt{2}\)</span> scalar, attention+LAuReL merged scale.</p></li>
-</ul>
-</li>
-<li><p><strong>Initialize the KV ring buffer</strong>:
-<code class="docutils literal notranslate"><span class="pre">pccx_kv_init(handle,</span> <span class="pre">max_tokens=8192)</span></code>. The hardware treats KV
-cache as a ring with an explicit hard cap — see
-<a class="reference internal" href="../Architecture/kv_cache.html"><span class="doc">KV Cache Optimization Strategy</span></a>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pccx_start(handle)</span></code> — raises <code class="docutils literal notranslate"><span class="pre">core_enable</span></code> and unblocks the
-dispatcher FIFO.</p></li>
-</ol>
-</section>
-<section id="per-token-decode-flow">
-<h2>3. Per-Token Decode Flow<a class="headerlink" href="#per-token-decode-flow" title="Link to this heading">#</a></h2>
-<p>One decode token executes Sections 1 → 6 of <a class="reference internal" href="gemma3n_pipeline.html"><span class="doc">Gemma 3N E4B — Operator-Level Pipeline</span></a>. The
-high-level dataflow, annotated with instructions:</p>
-<pre  class="mermaid">
-        flowchart TB
-    A[&quot;Host: read token id&quot;] --&gt; B[&quot;MEMCPY host → L2&lt;br/&gt;W_embed row + pli_all&quot;]
-    B --&gt; C[&quot;GEMV: xs[k+1] = x0 · altup_projs[k]&quot;]
-    C --&gt; L[&quot;Layer loop (i = 0 ... 34)&quot;]
-    L --&gt; L1[&quot;GEMV/CVO: AltUp router + pred&quot;]
-    L1 --&gt; L2[&quot;GEMV: Q/K/V projection&quot;]
-    L2 --&gt; L3[&quot;CVO: QK-Norm + RoPE&quot;]
-    L3 --&gt; L4[&quot;GEMV: Q · Kᵀ&lt;br/&gt;flags.findemax = 1&quot;]
-    L4 --&gt; L5[&quot;CVO: softmax sequence&quot;]
-    L5 --&gt; L6[&quot;GEMV: scores · V&quot;]
-    L6 --&gt; L7[&quot;GEMV: W_o projection&lt;br/&gt;(+ LAuReL GEMVs in parallel)&quot;]
-    L7 --&gt; L8[&quot;GEMV: FFN gate + up&quot;]
-    L8 --&gt; L9[&quot;CVO: sparsity / GELU / merge&quot;]
-    L9 --&gt; L10[&quot;GEMV: W_down + residual add&quot;]
-    L10 --&gt; L11[&quot;GEMV/CVO: AltUp correction + PLE shadow inject&quot;]
-    L11 --&gt; L
-    L --&gt; D[&quot;GEMV: Mean magnitude + unprojections&quot;]
-    D --&gt; E[&quot;GEMV: LM head projection&quot;]
-    E --&gt; F[&quot;CVO: softcap tanh&quot;]
-    F --&gt; G[&quot;MEMCPY L2 → host: logits&quot;]
-    G --&gt; H[&quot;Host: sampling&quot;]
-    </pre><section id="who-does-what">
-<h3>3.1 Who Does What<a class="headerlink" href="#who-does-what" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<colgroup>
-<col style="width: 30.0%" />
-<col style="width: 20.0%" />
-<col style="width: 20.0%" />
-<col style="width: 30.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Pipeline stage</p></th>
-<th class="head"><p>Systolic Array</p></th>
-<th class="head"><p>GEMV ×4</p></th>
-<th class="head"><p>SFU ×4</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Embedding row fetch + AltUp init (×4)</p></td>
-<td><p>—</p></td>
-<td><p>4 GEMV (one per <code class="docutils literal notranslate"><span class="pre">altup_projs[k]</span></code>)</p></td>
-<td><p>—</p></td>
-</tr>
-<tr class="row-odd"><td><p>PLE pre-compute</p></td>
-<td><p>—</p></td>
-<td><p>1 GEMV</p></td>
-<td><p>2 (RMSNorm + scale)</p></td>
-</tr>
-<tr class="row-even"><td><p>Attention Q/K/V</p></td>
-<td><p>—</p></td>
-<td><p>3 GEMV</p></td>
-<td><p>2 (Q-norm, K-norm per head)</p></td>
-</tr>
-<tr class="row-odd"><td><p>RoPE</p></td>
-<td><p>—</p></td>
-<td><p>—</p></td>
-<td><p>2 (sin, cos) per Q, K</p></td>
-</tr>
-<tr class="row-even"><td><p>Attention score + softmax + context</p></td>
-<td><p>—</p></td>
-<td><p>2 GEMV</p></td>
-<td><p>3 (exp, reduce_sum, scale)</p></td>
-</tr>
-<tr class="row-odd"><td><p>Output + LAuReL merge</p></td>
-<td><p>—</p></td>
-<td><p>3 GEMV (W_o + 2 LAuReL)</p></td>
-<td><p>1 (× 1/sqrt 2)</p></td>
-</tr>
-<tr class="row-even"><td><p>FFN gate + up</p></td>
-<td><p>—</p></td>
-<td><p>2 GEMV (16384 × 2048 each)</p></td>
-<td><p>—</p></td>
-</tr>
-<tr class="row-odd"><td><p>FFN sparsity (layers 0–9) or GELU only</p></td>
-<td><p>—</p></td>
-<td><p>—</p></td>
-<td><p>4 (reduce × 2, gate compute, GELU)</p></td>
-</tr>
-<tr class="row-even"><td><p>FFN down + residual</p></td>
-<td><p>—</p></td>
-<td><p>1 GEMV (2048 × 16384)</p></td>
-<td><p>1 (RMSNorm)</p></td>
-</tr>
-<tr class="row-odd"><td><p>AltUp correction + PLE inject</p></td>
-<td><p>—</p></td>
-<td><p>3 GEMV (ple_gate, ple_proj, shadow-only add)</p></td>
-<td><p>2 (tanh, RMSNorm)</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>The Systolic Array is <strong>idle</strong> during decode. It wakes up only for the
-prefill stage, where <code class="docutils literal notranslate"><span class="pre">Q</span> <span class="pre">·</span> <span class="pre">Kᵀ</span></code> across the full context is a real GEMM.</p>
-</section>
-<section id="overlap-strategy">
-<h3>3.2 Overlap Strategy<a class="headerlink" href="#overlap-strategy" title="Link to this heading">#</a></h3>
-<p>Three rules keep the cores busy:</p>
-<ol class="arabic simple">
-<li><p><strong>Weight prefetch from HP2/HP3 starts the moment the previous GEMV
-launches.</strong> The Weight Buffer is deep enough to hold one full GEMV
-worth of weights, so weight DMA and compute always overlap.</p></li>
-<li><p><strong>SFU runs ahead of its consumer.</strong> Once a GEMV finishes, its result
-is written to L2 and immediately picked up by the SFU through a
-direct-connect FIFO. The SFU result goes back to L2 in parallel with
-the next GEMV starting.</p></li>
-<li><p><strong>PLE pre-compute lives off the critical path.</strong> <code class="docutils literal notranslate"><span class="pre">pli_all</span></code> is
-computed on token entry, not per-layer. Per-layer PLE injection is
-also kept off the main stream (see
-<a class="reference internal" href="gemma3n_ple_laurel.html"><span class="doc">Gemma 3N — LAuReL and PLE Calibration Modules</span></a>), so it overlaps with the next layer’s
-AltUp router on the main stream lane.</p></li>
-</ol>
-</section>
-</section>
-<section id="kv-cache-management">
-<h2>4. KV Cache Management<a class="headerlink" href="#kv-cache-management" title="Link to this heading">#</a></h2>
-<p>KV cache is the single biggest bandwidth consumer. Two driver-level
-behaviors apply:</p>
-<ol class="arabic simple">
-<li><p><strong>Cross-layer sharing.</strong> Only layers 0–19 write their own KV entries.
-Layers 20–34 reuse the cache from layer 18 (local θ) or layer 19
-(global θ). The scheduler therefore issues the GEMV that produces
-<code class="docutils literal notranslate"><span class="pre">K</span></code> / <code class="docutils literal notranslate"><span class="pre">V</span></code> only for <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">&lt;</span> <span class="pre">20</span></code> and re-reads <code class="docutils literal notranslate"><span class="pre">target_K</span></code> /
-<code class="docutils literal notranslate"><span class="pre">target_V</span></code> from the cache for <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">&gt;=</span> <span class="pre">20</span></code>.</p></li>
-<li><p><strong>Hard-cap ring buffer.</strong> <code class="docutils literal notranslate"><span class="pre">max_tokens</span></code> is set at init time and
-cannot grow. When the ring wraps, the <strong>oldest</strong> entries are
-overwritten according to the attention-sink + local-window policy.</p></li>
-<li><p><strong>Optional INT4 / INT8 quantization</strong> on the KV write path (see
-<a class="reference internal" href="../Architecture/kv_cache.html"><span class="doc">KV Cache Optimization Strategy</span></a> §2.1). Recommended default for
-context length &gt; 4 K.</p></li>
-</ol>
-</section>
-<section id="error-and-completion-handling">
-<h2>5. Error and Completion Handling<a class="headerlink" href="#error-and-completion-handling" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>Every instruction carries a 1-bit <code class="docutils literal notranslate"><span class="pre">async</span></code> field. The driver treats
-all intra-layer instructions as async and only waits (via the
-<code class="docutils literal notranslate"><span class="pre">done</span></code> status register) once per layer, at the AltUp correction
-step where the previous layer’s results must be visible.</p></li>
-<li><p>A <code class="docutils literal notranslate"><span class="pre">CVO_SCALE</span></code> with <code class="docutils literal notranslate"><span class="pre">flags.recip_scale=1</span></code> returns <code class="docutils literal notranslate"><span class="pre">0</span></code> when the
-scalar is <code class="docutils literal notranslate"><span class="pre">0</span></code>; the driver is responsible for not issuing such an
-instruction (it is a programmer error, not a hardware fault).</p></li>
-<li><p>The Global Scheduler exposes an <strong>error interrupt</strong> on the AXI-Lite
-control bank when an instruction fails decode (reserved bits
-nonzero, unknown opcode, out-of-range addresses). The driver logs
-the instruction and halts.</p></li>
-</ul>
-</section>
-<section id="performance-budget-target">
-<h2>6. Performance Budget (Target)<a class="headerlink" href="#performance-budget-target" title="Link to this heading">#</a></h2>
-<p>Under the baseline configuration (W4A8 compute path, INT4 KV cache,
-<code class="docutils literal notranslate"><span class="pre">L</span> <span class="pre">=</span> <span class="pre">8192</span></code> hard cap), the end-to-end decode target is:</p>
-<div class="pst-scrollable-table-container"><table class="table">
-<colgroup>
-<col style="width: 30.0%" />
-<col style="width: 20.0%" />
-<col style="width: 50.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Metric</p></th>
-<th class="head"><p>Target</p></th>
-<th class="head"><p>Source of bottleneck</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Decode throughput</p></td>
-<td><p><strong>20 tok/s</strong></p></td>
-<td><p>GEMV bandwidth at 400 MHz × 4 lanes × 1024 MAC/clk.</p></td>
-</tr>
-<tr class="row-odd"><td><p>L2 activation bandwidth</p></td>
-<td><p><strong>~1.6 GB/s</strong></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">xs[0..3]</span></code>, <code class="docutils literal notranslate"><span class="pre">gate_raw</span></code>, <code class="docutils literal notranslate"><span class="pre">up_out</span></code>, <code class="docutils literal notranslate"><span class="pre">hidden</span></code> round-trips.</p></td>
-</tr>
-<tr class="row-even"><td><p>KV cache read bandwidth &#64; 8 K</p></td>
-<td><p><strong>~6 GB/s</strong></p></td>
-<td><p>20 layers × 512 × INT4 × 2 (K, V) × 8 K / 50 ms.</p></td>
-</tr>
-<tr class="row-odd"><td><p>Weight stream bandwidth</p></td>
-<td><p><strong>~3 GB/s</strong></p></td>
-<td><p>Two HP ports at 128-bit × 250 MHz, amortized.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>When context length exceeds 4 K, KV bandwidth becomes the limiter — see
-the mitigations in <a class="reference internal" href="../Architecture/kv_cache.html"><span class="doc">KV Cache Optimization Strategy</span></a>.</p>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<ul class="simple">
-<li><p>Operator spec: <a class="reference internal" href="gemma3n_pipeline.html"><span class="doc">Gemma 3N E4B — Operator-Level Pipeline</span></a></p></li>
-<li><p>Pccx v002 ISA: <a class="reference internal" href="../ISA/index.html"><span class="doc">Instruction Set Architecture (ISA)</span></a></p></li>
-<li><p>Driver API: <a class="reference internal" href="../Drivers/api.html"><span class="doc">C API Overview</span></a></p></li>
-</ul>
-</div>
-</section>
-</section>
-
-
-                </article>
-              
-              
-              
-              
-              
-                <footer class="prev-next-footer d-print-none">
-                  
-<div class="prev-next-area">
-    <a class="left-prev"
-       href="gemma3n_ffn_sparsity.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Gemma 3N — FFN Gaussian Top-K Sparsity</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="../RTL/index.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">RTL Source Reference (v002)</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
-</div>
-                </footer>
-              
-            </div>
-            
-            
-              
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-<div
-    id="pst-page-navigation-heading-2"
-    class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
-  </div>
-  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memory-layout-at-steady-state">1. Memory Layout at Steady State</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#host-setup-once-at-model-load">2. Host Setup (Once, at Model Load)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#per-token-decode-flow">3. Per-Token Decode Flow</a><ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#who-does-what">3.1 Who Does What</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overlap-strategy">3.2 Overlap Strategy</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kv-cache-management">4. KV Cache Management</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#error-and-completion-handling">5. Error and Completion Handling</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-budget-target">6. Performance Budget (Target)</a></li>
-</ul>
-  </nav></div>
-
-</div></div>
-              
-            
-          </div>
-          <footer class="bd-footer-content">
-            
-          </footer>
-        
-      </main>
-    </div>
-  </div>
-  
-  <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../../_static/scripts/bootstrap.js?digest=7f76b32a3354e82990f2"></script>
-<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=7f76b32a3354e82990f2"></script>
-
-  <footer class="bd-footer">
-<div class="bd-footer__inner bd-page-width">
-  
-    <div class="footer-items__start">
-      
-        <div class="footer-item">
-
-  <p class="copyright">
-    
-      © Copyright 2026, hwkim.
-      <br/>
-    
-  </p>
-</div>
-      
-        <div class="footer-item"><p class="personal-link">
-  <a href="https://hwkim-dev.github.io/hwkim-dev/" target="_blank" rel="noopener">
-    hwkim-dev.github.io
-  </a>
-</p></div>
-      
-    </div>
-  
-  
-  
-    <div class="footer-items__end">
-      
-        <div class="footer-item">
-
-  <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
-    <br/>
-  </p>
-</div>
-      
-    </div>
-  
-</div>
-
-  </footer>
-  </body>
+    <script src="../../../_static/language-switcher.js?v=118c9f35"></script>
+    </body>
 </html>
