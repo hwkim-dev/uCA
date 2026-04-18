@@ -1,15 +1,16 @@
 Archive: v001 Experimental Architecture
 =======================================
 
-   [!WARNING] This architecture is a preliminary (v001) experimental
-   design. Although structurally superior, it was engineered with a
-   heavy inclination toward GEMM (Matrix) computations. Because local
-   LLM environments are predominantly bound by GEMV (Vector) operations,
+.. warning::
+
+   This architecture is a preliminary (v001) experimental design.
+   Although structurally superior, it was engineered with a heavy
+   inclination toward GEMM (Matrix) computations. Because local LLM
+   environments are predominantly bound by GEMV (Vector) operations,
    this branch has been currently archived in favor of an optimized
    structure.
 
-|Status Archived| |SystemVerilog RTL| |Target Hardware| |Quantization
-Precision|
+|Status Archived| |SystemVerilog RTL| |Target Hardware| |Quantization Precision|
 
 .. toctree::
    :hidden:
@@ -47,30 +48,25 @@ Quick Menu
 
 .. container:: grid cards
 
-   -  `Architecture Overview <Architecture/v001_architecture.md>`__
+   -  :doc:`Architecture Overview <Architecture/v001_architecture>`
 
       Illustrates the internal NPU architecture, the 3-tier core system
       decoupled model, and the memory transition layer layout.
 
-   -  `ISA Specification <Drivers/ISA.md>`__
+   -  :doc:`ISA Specification <Drivers/ISA>`
 
       Explains the 64-bit VLIW core, Opcode routing design, register
       mappings, and pipeline scheduling methodologies.
 
-   -  `ISA Spreadsheet <Drivers/ISA_Spreadsheet.md>`__
+   -  :doc:`ISA Spreadsheet <Drivers/ISA_Spreadsheet>`
 
       Provides an internal spreadsheet-view breakdown of the overall
       modular ISA structure.
 
-   -  `C API Detail <Drivers/v001_API.md>`__
+   -  :doc:`C API Detail <Drivers/v001_API>`
 
       Focuses on the primary wrapping interfaces of ``pccx_v1_api.c`` and
       ``pccx_v1_api.h`` targeting the active NPU host controller.
-
-   -  `Agents Architecture <agents.md>`__
-
-      Concept logic on the autonomous agent micro-scheduling model
-      operating inside the decoupled dataflow pipeline.
 
 --------------
 

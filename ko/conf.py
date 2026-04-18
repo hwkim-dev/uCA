@@ -48,10 +48,6 @@ exclude_patterns = [
     # so rewrite them with the correct depth.
     "../codes/v002/README.md",
     "../codes/v002/docs/**",
-    # v001 architecture MD is an orphaned archive page that references a
-    # deleted image and starts at H2. Excluded until we either restore the
-    # asset or fold the content into a proper v001 archive index.
-    "docs/archive/experimental_v001/v001_architecture.md",
 ]
 
 
