@@ -115,7 +115,7 @@ CVO does not have a dedicated figure, but the path is:
    Dispatcher
        │
        ▼
-   cvo_control_uop_t → SFU bank (32×1 × 4)
+   cvo_control_uop_t → SFU (single BF16 scalar pipeline)
                           ▲
                           │ L2 cache ``src_addr``  ─── input vector
                           │

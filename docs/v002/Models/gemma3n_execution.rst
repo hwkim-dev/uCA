@@ -110,7 +110,7 @@ high-level dataflow, annotated with instructions:
    * - Pipeline stage
      - Systolic Array
      - GEMV ×4
-     - SFU ×4
+     - SFU (serial)
    * - Embedding row fetch + AltUp init (×4)
      - —
      - 4 GEMV (one per ``altup_projs[k]``)

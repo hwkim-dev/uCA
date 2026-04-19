@@ -68,16 +68,18 @@ The top level is organized around four principles.
      - 400 MHz
      - Stores small constants — shape / size pointers, scale factors —
        written by MEMSET.
-   * - **Systolic Array (32×16 ×2)**
+   * - **Systolic Array (32 × 32, cascade break @ row 16)**
      - 400 MHz
-     - GEMM-only 2D systolic array. See :doc:`gemm_core`.
-   * - **GEMV Core (32×1 ×4)**
+     - GEMM-only 2D systolic array. Single instance; two 32 × 16
+       sub-chains share the grid. See :doc:`gemm_core`.
+   * - **GEMV Core (×4)**
      - 400 MHz
-     - Parallel vector MAC + reduction tree. See :doc:`gemv_core`.
-   * - **SFU (32×1 ×4)**
+     - Four parallel cores, each a 32-MAC LUT pipeline + 5-stage
+       reduction tree. See :doc:`gemv_core`.
+   * - **SFU (×1)**
      - 400 MHz
-     - Non-linear functions — Softmax, GELU, RMSNorm, and more.
-       See :doc:`sfu_core`.
+     - A single scalar BF16 pipeline (1 element / clk) for Softmax,
+       GELU, RMSNorm, RoPE, and friends. See :doc:`sfu_core`.
 
 3. Clock Domain Strategy
 =========================
@@ -109,11 +111,11 @@ matching analysis in :doc:`memory_hierarchy`.
    flowchart LR
      DDR[(Host DDR4)] -->|HP2/HP3| WB[Weight Buffer]
      DDR -->|ACP DMA| L2[(L2 Cache<br/>Central URAM)]
-     WB --> SA[Systolic Array<br/>32×16 ×2]
+     WB --> SA[Systolic Array<br/>32×32]
      WB --> GV[GEMV Core<br/>×4]
      L2 --> SA
      L2 --> GV
-     L2 <--> SFU[SFU<br/>×4]
+     L2 <--> SFU[SFU<br/>×1]
      GV <-. direct FIFO .-> SFU
      SA --> L2
      GV --> L2

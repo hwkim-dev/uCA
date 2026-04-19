@@ -20,11 +20,15 @@ cache flanked by symmetric compute slices**.
 - **Central L2 cache**: placed at the geometric center of the floorplan
   so that the upper and lower slices reach activations with identical
   latency.
-- **Upper / lower slices**: each slice contains a GEMV 32×1 bank, an SFU
-  bank, a constant cache, and an L1 cache. During decoding the two slices
-  can run in parallel on different batches, heads, or multi-query streams.
-- **Right-side systolic arrays**: two 32×16 systolic arrays sit
-  side-by-side to handle the heavy GEMMs in the prefill stage.
+- **Upper / lower slices**: each slice holds two 32×1 GEMV cores (four
+  in total across both slices) plus the per-core L1 and constant caches.
+  During decoding the two slices can run in parallel on different
+  batches, heads, or multi-query streams. The SFU is a single instance
+  sited between the two slices so the direct GEMV↔SFU FIFO stays short
+  for both halves.
+- **Right-side systolic array**: a 32×32 GEMM core (cascade split at
+  row 16 into two 32×16 sub-chains) handles the heavy GEMMs of the
+  prefill stage.
 
 2. Bus Structure
 ================

@@ -35,7 +35,7 @@ Rather than reusing a generic matrix accelerator, pccx is designed around the ac
 </tr>
 <tr>
 <td><b>GEMM (Matrix)</b></td>
-<td>32 × 16 × 2 systolic array</td>
+<td>32 × 32 systolic array (cascade split @ row 16)</td>
 <td><b>819 GMAC/s @ 400 MHz</b></td>
 <td>Prefill, Q·Kᵀ, score·V</td>
 </tr>
