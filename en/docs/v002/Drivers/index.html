@@ -7,12 +7,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://hwkim-dev.github.io/pccx/docs/v002/Drivers/index.html" />
 <meta property="og:site_name" content="pccx — Parallel Compute Core eXecutor" />
-<meta property="og:description" content="The pccx v002 driver is a C/C++ hardware abstraction layer (HAL). Responsibilities include: 64-bit instruction encoding and dispatch, Preloading pointers and scale factors via MEMSET, Managing DMA ..." />
+<meta property="og:description" content="The pccx v002 driver is a C/C++ hardware abstraction layer (HAL) plus a thin public API. Its responsibilities: Encoding and dispatching 64-bit VLIW instructions via the CMD_IN FIFO., Preloading sha..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="https://hwkim-dev.github.io/pccx/_images/social_previews/summary_docs_v002_Drivers_index_e60dd3c2.png" />
-<meta property="og:image:alt" content="The pccx v002 driver is a C/C++ hardware abstraction layer (HAL). Responsibilities include: 64-bit instruction encoding and dispatch, Preloading pointers and scale factors via MEMSET, Managing DMA ..." />
-<meta name="description" content="The pccx v002 driver is a C/C++ hardware abstraction layer (HAL). Responsibilities include: 64-bit instruction encoding and dispatch, Preloading pointers and scale factors via MEMSET, Managing DMA ..." />
+<meta property="og:image" content="https://hwkim-dev.github.io/pccx/_images/social_previews/summary_docs_v002_Drivers_index_a9f390d5.png" />
+<meta property="og:image:alt" content="The pccx v002 driver is a C/C++ hardware abstraction layer (HAL) plus a thin public API. Its responsibilities: Encoding and dispatching 64-bit VLIW instructions via the CMD_IN FIFO., Preloading sha..." />
+<meta name="description" content="The pccx v002 driver is a C/C++ hardware abstraction layer (HAL) plus a thin public API. Its responsibilities: Encoding and dispatching 64-bit VLIW instructions via the CMD_IN FIFO., Preloading sha..." />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="C API Overview" href="api.html"><link rel="prev" title="Per-Instruction Dataflow" href="../ISA/dataflow.html">
         <link rel="canonical" href="https://hwkim-dev.github.io/pccx/docs/v002/Drivers/index.html">
@@ -441,25 +441,22 @@
         <article role="main" id="furo-main-content">
           <section id="software-stack">
 <h1>Software Stack<a class="headerlink" href="#software-stack" title="Link to this heading">¶</a></h1>
-<p>The pccx v002 driver is a C/C++ hardware abstraction layer (HAL).
-Responsibilities include:</p>
+<p>The pccx v002 driver is a C/C++ hardware abstraction layer (HAL)
+plus a thin public API. Its responsibilities:</p>
 <ul class="simple">
-<li><p>64-bit instruction encoding and dispatch</p></li>
-<li><p>Preloading pointers and scale factors via MEMSET</p></li>
-<li><p>Managing DMA between the host and the L2 cache</p></li>
-<li><p>Polling or interrupt handling for async completion</p></li>
+<li><p>Encoding and dispatching 64-bit VLIW instructions via the CMD_IN FIFO.</p></li>
+<li><p>Preloading shape / size pointers and scale factors through <code class="docutils literal notranslate"><span class="pre">MEMSET</span></code>.</p></li>
+<li><p>Driving DMA between the host DDR4 and the NPU L2 cache.</p></li>
+<li><p>Polling <code class="docutils literal notranslate"><span class="pre">STAT_OUT</span></code> for async completion.</p></li>
 </ul>
+<p>The implementation lives under
+<code class="file docutils literal notranslate"><span class="pre">codes/v002/sw/driver/uCA_v1_api.h</span></code> /
+<code class="file docutils literal notranslate"><span class="pre">uCA_v1_api.c</span></code> and carries forward the v001 design with minor
+comment updates for the pccx v002 ISA reference URL.</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api.html">C API Overview</a></li>
 </ul>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The v002 driver API is still in the design stage. The reference
-implementation draws from v001’s
-<code class="file docutils literal notranslate"><span class="pre">docs/archive/experimental_v001/Drivers/uCA_v1_api.h</span></code> and
-<code class="file docutils literal notranslate"><span class="pre">uCA_v1_api.c</span></code>.</p>
 </div>
 </section>
 

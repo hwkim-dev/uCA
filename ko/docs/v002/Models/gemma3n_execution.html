@@ -350,7 +350,7 @@
 <p class="caption" role="heading"><span class="caption-text">타겟 하드웨어</span></p>
 <ul>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../Devices/index.html">지원 디바이스</a><input aria-label="Toggle navigation of 지원 디바이스" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../Devices/kv260.html">pccx: 병렬 컴퓨트 코어 익스큐터</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../Devices/kv260.html">타겟 하드웨어: Xilinx Kria KV260</a></li>
 </ul>
 </li>
 </ul>
@@ -477,11 +477,11 @@ embedding / LM head 테이블.</p></td>
 <code class="docutils literal notranslate"><span class="pre">gate_raw</span></code>, <code class="docutils literal notranslate"><span class="pre">up_out</span></code>, <code class="docutils literal notranslate"><span class="pre">hidden</span></code>, <code class="docutils literal notranslate"><span class="pre">mlp_out</span></code>, <code class="docutils literal notranslate"><span class="pre">pli_all</span></code>,
 e_max, reduction 누산.</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>Weight Buffer</strong> (BRAM/URAM FIFO)</p></td>
-<td><p>~512 KB</p></td>
+<tr class="row-even"><td><p><strong>Weight Buffer</strong> (URAM FIFO, HP 포트 당 1 개)</p></td>
+<td><p>4 × 64 KB (포트 당 4096 깊이)</p></td>
 <td><p>128-bit word</p></td>
-<td><p>HP2/HP3 (250 MHz) 과 400 MHz 코어 사이의 burst buffer. 한 번에
-GEMV/GEMM 하나만큼의 가중치 저장.</p></td>
+<td><p>각 HP 포트 (250 MHz) 와 400 MHz 코어 사이의 burst buffer. 한
+번에 GEMV/GEMM 하나만큼의 가중치 저장.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Constant Cache</strong> (BRAM)</p></td>
 <td><p>64 엔트리 × 48-bit</p></td>
@@ -562,7 +562,7 @@ ring 으로 동작 — <a class="reference internal" href="../Architecture/kv_ca
 <tr class="row-odd"><th class="head"><p>파이프라인 단계</p></th>
 <th class="head"><p>Systolic Array</p></th>
 <th class="head"><p>GEMV ×4</p></th>
-<th class="head"><p>SFU ×4</p></th>
+<th class="head"><p>SFU (직렬)</p></th>
 </tr>
 </thead>
 <tbody>

@@ -7,12 +7,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://hwkim-dev.github.io/pccx/docs/v002/RTL/compute_cores.html" />
 <meta property="og:site_name" content="pccx — Parallel Compute Core eXecutor" />
-<meta property="og:description" content="1. 행렬 코어 — Systolic Top: GEMM_systolic_top.sv 는 32 × 16 × 2 시스톨릭 어레이를 감싸는 래퍼입니다. HP0/HP1에서 가중치 타일을, L2 캐시에서 활성화 행을 수신하고 누산 결과를 후처리기(post-processor)로 스트리밍합니다. hw/rtl/MAT_CORE/GEMM_systolic_top.sv, 2..." />
+<meta property="og:description" content="1. 행렬 코어 — Systolic Top: GEMM_systolic_top.sv 는 32 × 32 시스톨릭 어레이 (cascade 가 16 행 에서 끊겨 32 × 16 서브체인 2 개로 나뉨) 를 감싸는 래퍼입니다. HP0/HP1 에서 가중치 타일을, L2 캐시에서 활성화 행을 수신하고 누산 결과를 후처리기 (post-processor) 로 스트리밍..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="https://hwkim-dev.github.io/pccx/_images/social_previews/summary_docs_v002_RTL_compute_cores_47d48886.png" />
-<meta property="og:image:alt" content="1. 행렬 코어 — Systolic Top: GEMM_systolic_top.sv 는 32 × 16 × 2 시스톨릭 어레이를 감싸는 래퍼입니다. HP0/HP1에서 가중치 타일을, L2 캐시에서 활성화 행을 수신하고 누산 결과를 후처리기(post-processor)로 스트리밍합니다. hw/rtl/MAT_CORE/GEMM_systolic_top.sv, 2..." />
-<meta name="description" content="1. 행렬 코어 — Systolic Top: GEMM_systolic_top.sv 는 32 × 16 × 2 시스톨릭 어레이를 감싸는 래퍼입니다. HP0/HP1에서 가중치 타일을, L2 캐시에서 활성화 행을 수신하고 누산 결과를 후처리기(post-processor)로 스트리밍합니다. hw/rtl/MAT_CORE/GEMM_systolic_top.sv, 2..." />
+<meta property="og:image" content="https://hwkim-dev.github.io/pccx/_images/social_previews/summary_docs_v002_RTL_compute_cores_1d4cbddd.png" />
+<meta property="og:image:alt" content="1. 행렬 코어 — Systolic Top: GEMM_systolic_top.sv 는 32 × 32 시스톨릭 어레이 (cascade 가 16 행 에서 끊겨 32 × 16 서브체인 2 개로 나뉨) 를 감싸는 래퍼입니다. HP0/HP1 에서 가중치 타일을, L2 캐시에서 활성화 행을 수신하고 누산 결과를 후처리기 (post-processor) 로 스트리밍..." />
+<meta name="description" content="1. 행렬 코어 — Systolic Top: GEMM_systolic_top.sv 는 32 × 32 시스톨릭 어레이 (cascade 가 16 행 에서 끊겨 32 × 16 서브체인 2 개로 나뉨) 를 감싸는 래퍼입니다. HP0/HP1 에서 가중치 타일을, L2 캐시에서 활성화 행을 수신하고 누산 결과를 후처리기 (post-processor) 로 스트리밍..." />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="index" title="색인" href="../../../genindex.html"><link rel="search" title="검색" href="../../../search.html"><link rel="next" title="NPU 컨트롤러 모듈" href="controller.html"><link rel="prev" title="NPU 최상위 모듈" href="npu_top.html">
         <link rel="canonical" href="https://hwkim-dev.github.io/pccx/docs/v002/RTL/compute_cores.html">
@@ -350,7 +350,7 @@
 <p class="caption" role="heading"><span class="caption-text">타겟 하드웨어</span></p>
 <ul>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../Devices/index.html">지원 디바이스</a><input aria-label="Toggle navigation of 지원 디바이스" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../Devices/kv260.html">pccx: 병렬 컴퓨트 코어 익스큐터</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../Devices/kv260.html">타겟 하드웨어: Xilinx Kria KV260</a></li>
 </ul>
 </li>
 </ul>
@@ -453,9 +453,10 @@
 </div>
 <section id="systolic-top">
 <h2>1. 행렬 코어 — Systolic Top<a class="headerlink" href="#systolic-top" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">GEMM_systolic_top.sv</span></code>는 32 × 16 × 2 시스톨릭 어레이를 감싸는 래퍼입니다.
-HP0/HP1에서 가중치 타일을, L2 캐시에서 활성화 행을 수신하고
-누산 결과를 후처리기(post-processor)로 스트리밍합니다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">GEMM_systolic_top.sv</span></code>는 32 × 32 시스톨릭 어레이 (cascade 가 16 행
+에서 끊겨 32 × 16 서브체인 2 개로 나뉨) 를 감싸는 래퍼입니다. HP0/HP1
+에서 가중치 타일을, L2 캐시에서 활성화 행을 수신하고 누산 결과를
+후처리기 (post-processor) 로 스트리밍합니다.</p>
 <div class="literal-block-wrapper docutils container" id="id2">
 <div class="code-block-caption"><span class="caption-number">리스팅 3 </span><span class="caption-text">hw/rtl/MAT_CORE/GEMM_systolic_top.sv</span><a class="headerlink" href="#id2" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="no">`timescale</span><span class="w"> </span><span class="mi">1</span><span class="n">ns</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1</span><span class="n">ps</span>
@@ -629,9 +630,9 @@ HP0/HP1에서 가중치 타일을, L2 캐시에서 활성화 행을 수신하고
 </section>
 <section id="gemv-top">
 <h2>2. 벡터 코어 — GEMV Top<a class="headerlink" href="#gemv-top" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">GEMV_top.sv</span></code>는 4개의 병렬 GEMV 레인을 인스턴스화합니다. 각 레인은
-8-lane MAC 파이프라인과 3단계 reduction tree를 가지며, HP2/HP3에서
-가중치를 스트리밍합니다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">GEMV_top.sv</span></code>는 4 개의 병렬 GEMV 코어를 인스턴스화합니다. 각 코어는
+32-wide LUT 기반 MAC 과 5 단 reduction tree (Stage 1: DSP48E2 16 슬라이스,
+Stage 2–5: LUT 가산기) 를 가지며, HP2/HP3 에서 가중치를 스트리밍합니다.</p>
 <div class="literal-block-wrapper docutils container" id="id3">
 <div class="code-block-caption"><span class="caption-number">리스팅 4 </span><span class="caption-text">hw/rtl/VEC_CORE/GEMV_top.sv</span><a class="headerlink" href="#id3" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="no">`timescale</span><span class="w"> </span><span class="mi">1</span><span class="n">ns</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1</span><span class="n">ps</span>

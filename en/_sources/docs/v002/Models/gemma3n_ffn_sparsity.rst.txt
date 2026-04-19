@@ -67,8 +67,6 @@ Layers 10–34 skip this step and use the standard GELU gate:
        UpOp --> UpOut["up_out (16384)"]
        UpOut --> MultOp
        MultOp --> FFN_Mid["hidden → W_down"]
-       style FilterOp fill:#ffcc80,stroke:#e65100,stroke-width:2px
-       style SparseGate fill:#c8e6c9,stroke:#388e3c
 
 4. Mapping onto pccx v002
 ==========================

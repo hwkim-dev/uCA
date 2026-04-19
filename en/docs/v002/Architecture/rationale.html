@@ -588,13 +588,11 @@ The effective throughput seen by the systolic array is 3.125× higher.</p>
     HP3[AXI HP3] --&gt; BUF
   end
   subgraph core[Internal 400 MHz Domain]
-    BUF --&gt;|broadcast| SA1[Systolic Array #1&lt;br/&gt;32×16, 1 DSP = 2 MAC]
-    BUF --&gt;|broadcast| SA2[Systolic Array #2&lt;br/&gt;32×16, 1 DSP = 2 MAC]
-    SA1 --&gt; ACC[Result Accumulator&lt;br/&gt;819 GMAC/s peak]
-    SA2 --&gt; ACC
+    BUF --&gt;|broadcast| SA[Systolic Array&lt;br/&gt;32×32 · 1 DSP = 2 MAC&lt;br/&gt;cascade break &#64; row 16]
+    SA --&gt; ACC[Result Accumulator&lt;br/&gt;819 GMAC/s peak]
   end
-    </pre><p>Each systolic array performs <strong>32 × 16 × 2 = 1,024 MAC/clk</strong>. Combined,
-2,048 MAC/clk × 400 MHz yields a <strong>819 GMAC/s theoretical peak</strong>.</p>
+    </pre><p>The single 32 × 32 grid holds <strong>1,024 PEs × 2 MAC = 2,048 MAC/clk</strong>.
+Running at 400 MHz, this yields a <strong>819 GMAC/s theoretical peak</strong>.</p>
 </section>
 </section>
 <section id="new-trade-offs">

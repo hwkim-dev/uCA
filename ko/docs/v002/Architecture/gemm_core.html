@@ -7,12 +7,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://hwkim-dev.github.io/pccx/docs/v002/Architecture/gemm_core.html" />
 <meta property="og:site_name" content="pccx — Parallel Compute Core eXecutor" />
-<meta property="og:description" content="GEMM 코어는 Transformer 의 프리필(Prefill) 단계에서 지배적인 대규모 행렬 곱셈을 담당합니다. pccx v002 는 32 × 16 2차원 시스톨릭 어레이 2 개 를 나란히 배치하여 이론 피크 819 GMAC/s @ 400 MHz 를 제공합니다. 1. 연산 대상: GEMM 은 다음과 같이 Weight (N × N) 와 Activati..." />
+<meta property="og:description" content="GEMM 코어는 Transformer 의 프리필(Prefill) 단계에서 지배적인 대규모 행렬 곱셈을 담당합니다. pccx v002 는 32 × 32 2 차원 시스톨릭 어레이 1 개 를 사용하며, 누적 cascade 가 16 행에서 끊겨 같은 물리 격자를 공유하는 32 × 16 서브체인 2 개로 동작하여 이론 피크 819 GMAC/s @ 400 MHz..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="https://hwkim-dev.github.io/pccx/_images/social_previews/summary_docs_v002_Architecture_gemm_core_4eb80e44.png" />
-<meta property="og:image:alt" content="GEMM 코어는 Transformer 의 프리필(Prefill) 단계에서 지배적인 대규모 행렬 곱셈을 담당합니다. pccx v002 는 32 × 16 2차원 시스톨릭 어레이 2 개 를 나란히 배치하여 이론 피크 819 GMAC/s @ 400 MHz 를 제공합니다. 1. 연산 대상: GEMM 은 다음과 같이 Weight (N × N) 와 Activati..." />
-<meta name="description" content="GEMM 코어는 Transformer 의 프리필(Prefill) 단계에서 지배적인 대규모 행렬 곱셈을 담당합니다. pccx v002 는 32 × 16 2차원 시스톨릭 어레이 2 개 를 나란히 배치하여 이론 피크 819 GMAC/s @ 400 MHz 를 제공합니다. 1. 연산 대상: GEMM 은 다음과 같이 Weight (N × N) 와 Activati..." />
+<meta property="og:image" content="https://hwkim-dev.github.io/pccx/_images/social_previews/summary_docs_v002_Architecture_gemm_core_d9045031.png" />
+<meta property="og:image:alt" content="GEMM 코어는 Transformer 의 프리필(Prefill) 단계에서 지배적인 대규모 행렬 곱셈을 담당합니다. pccx v002 는 32 × 32 2 차원 시스톨릭 어레이 1 개 를 사용하며, 누적 cascade 가 16 행에서 끊겨 같은 물리 격자를 공유하는 32 × 16 서브체인 2 개로 동작하여 이론 피크 819 GMAC/s @ 400 MHz..." />
+<meta name="description" content="GEMM 코어는 Transformer 의 프리필(Prefill) 단계에서 지배적인 대규모 행렬 곱셈을 담당합니다. pccx v002 는 32 × 32 2 차원 시스톨릭 어레이 1 개 를 사용하며, 누적 cascade 가 16 행에서 끊겨 같은 물리 격자를 공유하는 32 × 16 서브체인 2 개로 동작하여 이론 피크 819 GMAC/s @ 400 MHz..." />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="index" title="색인" href="../../../genindex.html"><link rel="search" title="검색" href="../../../search.html"><link rel="next" title="GEMV 코어" href="gemv_core.html"><link rel="prev" title="KV 캐시 최적화 전략" href="kv_cache.html">
         <link rel="canonical" href="https://hwkim-dev.github.io/pccx/docs/v002/Architecture/gemm_core.html">
@@ -350,7 +350,7 @@
 <p class="caption" role="heading"><span class="caption-text">타겟 하드웨어</span></p>
 <ul>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../Devices/index.html">지원 디바이스</a><input aria-label="Toggle navigation of 지원 디바이스" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../Devices/kv260.html">pccx: 병렬 컴퓨트 코어 익스큐터</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../Devices/kv260.html">타겟 하드웨어: Xilinx Kria KV260</a></li>
 </ul>
 </li>
 </ul>
@@ -442,8 +442,10 @@
           <section id="gemm">
 <h1>GEMM 코어 (시스톨릭 어레이)<a class="headerlink" href="#gemm" title="Link to this heading">¶</a></h1>
 <p>GEMM 코어는 Transformer 의 <strong>프리필(Prefill)</strong> 단계에서 지배적인 대규모
-행렬 곱셈을 담당합니다. pccx v002 는 <strong>32 × 16 2차원 시스톨릭 어레이 2 개</strong>
-를 나란히 배치하여 이론 피크 <strong>819 GMAC/s &#64; 400 MHz</strong> 를 제공합니다.</p>
+행렬 곱셈을 담당합니다. pccx v002 는 <strong>32 × 32 2 차원 시스톨릭 어레이
+1 개</strong> 를 사용하며, 누적 cascade 가 16 행에서 끊겨 같은 물리 격자를
+공유하는 <strong>32 × 16</strong> 서브체인 2 개로 동작하여 이론 피크
+<strong>819 GMAC/s &#64; 400 MHz</strong> 를 제공합니다.</p>
 <div class="admonition note">
 <p class="admonition-title">참고</p>
 <p>GEMM 은 주로 프리필(배치·시퀀스 길이 큰 초기 프롬프트 처리) 과
@@ -478,11 +480,12 @@ Row × Col 로 정의되며, 타일링(tiling) 은 소프트웨어 계층에서 
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>어레이 차원</p></td>
-<td><p><strong>32 (M) × 16 (K)</strong></p></td>
+<tr class="row-even"><td><p>물리 격자</p></td>
+<td><p><strong>32 (M) × 32 (K)</strong> → <strong>1,024 PE</strong></p></td>
 </tr>
-<tr class="row-odd"><td><p>어레이 개수</p></td>
-<td><p><strong>2</strong> (듀얼 어레이)</p></td>
+<tr class="row-odd"><td><p>Cascade 분할</p></td>
+<td><p><strong>16 행</strong> 에서 끊어짐 → 32 × 16 서브체인 2 개
+(<code class="docutils literal notranslate"><span class="pre">GEMM_systolic_array.sv</span></code> 에서 <code class="docutils literal notranslate"><span class="pre">BREAK_CASCADE=1</span></code> 위치)</p></td>
 </tr>
 <tr class="row-even"><td><p>PE 당 DSP</p></td>
 <td><p><strong>1</strong> (DSP48E2)</p></td>
@@ -490,13 +493,10 @@ Row × Col 로 정의되며, 타일링(tiling) 은 소프트웨어 계층에서 
 <tr class="row-odd"><td><p>PE 당 MAC / clk</p></td>
 <td><p><strong>2</strong> (듀얼 채널 비트 패킹, <a class="reference internal" href="dsp48e2_w4a8.html"><span class="doc">DSP48E2 W4A8 비트 패킹과 부호 복원</span></a> 참조)</p></td>
 </tr>
-<tr class="row-even"><td><p>총 MAC / clk / 어레이</p></td>
-<td><p><strong>32 × 16 × 2 = 1024</strong></p></td>
+<tr class="row-even"><td><p>총 MAC / clk</p></td>
+<td><p><strong>1,024 PE × 2 MAC = 2,048</strong></p></td>
 </tr>
-<tr class="row-odd"><td><p>총 MAC / clk (× 2 어레이)</p></td>
-<td><p><strong>2,048</strong></p></td>
-</tr>
-<tr class="row-even"><td><p>피크 처리량</p></td>
+<tr class="row-odd"><td><p>피크 처리량</p></td>
 <td><p><strong>2,048 × 400 MHz = 819 GMAC/s</strong></p></td>
 </tr>
 </tbody>
@@ -540,15 +540,11 @@ column 방향에 매핑됩니다.</p></li>
   subgraph Host[Host DDR4]
     W[Weights INT4]
   end
-  WB[Weight Buffer&lt;br/&gt;BRAM FIFO] --&gt;|staggered| PE[(PE Grid&lt;br/&gt;32×16)]
+  WB[Weight Buffer&lt;br/&gt;URAM FIFO] --&gt;|staggered| PE[(PE Grid&lt;br/&gt;32×32 · cascade break &#64; row 16)]
   L2[L2 Cache&lt;br/&gt;URAM] --&gt;|activations INT8| PE
   PE --&gt;|partial sums| RA[Result Accumulator]
   RA --&gt;|scale / requant| L2
   W --&gt; WB
-  classDef cache fill:#e8f0fe,stroke:#4c6ef5,color:#1a2e66;
-  classDef mem fill:#fff4e0,stroke:#f08c00,color:#663c00;
-  class WB,L2 cache
-  class Host mem
     </pre></section>
 <section id="accumulation">
 <h3>3.3 누적 (Accumulation)<a class="headerlink" href="#accumulation" title="Link to this heading">¶</a></h3>
@@ -665,22 +661,28 @@ Accumulator 로 출력되는 경로입니다.</span><a class="headerlink" href="
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">MAT_ROWS</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ARRAY_SIZE_H</span></code></p></td>
 <td><p>32</p></td>
-<td><p>시스톨릭 어레이의 M 방향 PE 개수.</p></td>
+<td><p>가중치 / M 방향 PE 개수 (<code class="docutils literal notranslate"><span class="pre">npu_arch.svh</span></code>).</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">MAT_COLS</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ARRAY_SIZE_V</span></code></p></td>
+<td><p>32</p></td>
+<td><p>액티베이션 / K 방향 PE 개수. 안전 누적 한계와 별개의 물리 크기.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BREAK_CASCADE</span></code> 행</p></td>
 <td><p>16</p></td>
-<td><p>K 방향 PE 개수. 안전 누적 한계와 별개의 물리 크기.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GEMM_systolic_array.sv</span></code> 에서 고정. DSP48E2 의 P cascade 를
+반으로 끊어, 두 개의 16 행 서브체인이 각자 cascade 길이 예산을
+넘지 않게 함.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">MAT_INSTANCES</span></code></p></td>
-<td><p>2</p></td>
-<td><p>어레이 인스턴스 수. 플로어플랜 우측 배치.</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">MatPipelineCnt</span></code></p></td>
+<td><p>1</p></td>
+<td><p>최상위 <code class="docutils literal notranslate"><span class="pre">GEMM_systolic_top</span></code> 인스턴스 수 (<code class="docutils literal notranslate"><span class="pre">device_pkg.sv</span></code>).</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>KV260 기준 32 × 16 × 2 구성은 DSP48E2 슬라이스 1,024 개를 사용하여
+<p>KV260 기준 32 × 32 격자는 <strong>DSP48E2 슬라이스 1,024 개</strong> 를 사용하여
 디바이스 전체 1,248 개 예산의 약 82 % 를 점유합니다.</p>
 </section>
 </section>

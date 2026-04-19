@@ -7,12 +7,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://hwkim-dev.github.io/pccx/docs/v002/RTL/compute_cores.html" />
 <meta property="og:site_name" content="pccx — Parallel Compute Core eXecutor" />
-<meta property="og:description" content="1. Matrix Core — Systolic Top: GEMM_systolic_top.sv wraps the 32 × 16 × 2 systolic array. It receives weight tiles from HP0/HP1 and activation rows from the L2 cache, and streams accumulated result..." />
+<meta property="og:description" content="1. Matrix Core — Systolic Top: GEMM_systolic_top.sv wraps the 32 × 32 systolic array (cascade split at row 16 into two 32 × 16 sub-chains). It receives weight tiles from HP0/HP1 and activation rows..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="https://hwkim-dev.github.io/pccx/_images/social_previews/summary_docs_v002_RTL_compute_cores_74a6af9b.png" />
-<meta property="og:image:alt" content="1. Matrix Core — Systolic Top: GEMM_systolic_top.sv wraps the 32 × 16 × 2 systolic array. It receives weight tiles from HP0/HP1 and activation rows from the L2 cache, and streams accumulated result..." />
-<meta name="description" content="1. Matrix Core — Systolic Top: GEMM_systolic_top.sv wraps the 32 × 16 × 2 systolic array. It receives weight tiles from HP0/HP1 and activation rows from the L2 cache, and streams accumulated result..." />
+<meta property="og:image" content="https://hwkim-dev.github.io/pccx/_images/social_previews/summary_docs_v002_RTL_compute_cores_0566ac6c.png" />
+<meta property="og:image:alt" content="1. Matrix Core — Systolic Top: GEMM_systolic_top.sv wraps the 32 × 32 systolic array (cascade split at row 16 into two 32 × 16 sub-chains). It receives weight tiles from HP0/HP1 and activation rows..." />
+<meta name="description" content="1. Matrix Core — Systolic Top: GEMM_systolic_top.sv wraps the 32 × 32 systolic array (cascade split at row 16 into two 32 × 16 sub-chains). It receives weight tiles from HP0/HP1 and activation rows..." />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="NPU Controller Modules" href="controller.html"><link rel="prev" title="NPU Top-Level" href="npu_top.html">
         <link rel="canonical" href="https://hwkim-dev.github.io/pccx/docs/v002/RTL/compute_cores.html">
@@ -453,9 +453,10 @@
 </div>
 <section id="matrix-core-systolic-top">
 <h2>1. Matrix Core — Systolic Top<a class="headerlink" href="#matrix-core-systolic-top" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">GEMM_systolic_top.sv</span></code> wraps the 32 × 16 × 2 systolic array. It
-receives weight tiles from HP0/HP1 and activation rows from the L2
-cache, and streams accumulated results to the post-processor.</p>
+<p><code class="docutils literal notranslate"><span class="pre">GEMM_systolic_top.sv</span></code> wraps the 32 × 32 systolic array (cascade
+split at row 16 into two 32 × 16 sub-chains). It receives weight tiles
+from HP0/HP1 and activation rows from the L2 cache, and streams
+accumulated results to the post-processor.</p>
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption"><span class="caption-number">Listing 3 </span><span class="caption-text">hw/rtl/MAT_CORE/GEMM_systolic_top.sv</span><a class="headerlink" href="#id1" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="no">`timescale</span><span class="w"> </span><span class="mi">1</span><span class="n">ns</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1</span><span class="n">ps</span>
@@ -629,8 +630,9 @@ cache, and streams accumulated results to the post-processor.</p>
 </section>
 <section id="vector-core-gemv-top">
 <h2>2. Vector Core — GEMV Top<a class="headerlink" href="#vector-core-gemv-top" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">GEMV_top.sv</span></code> instantiates 4 parallel GEMV lanes, each with an 8-lane
-MAC pipeline and a 3-stage reduction tree. Weights stream from HP2/HP3.</p>
+<p><code class="docutils literal notranslate"><span class="pre">GEMV_top.sv</span></code> instantiates 4 parallel GEMV cores. Each core has a
+32-wide LUT-based MAC and a 5-stage reduction tree (Stage 1 uses 16
+DSP48E2 slices; Stages 2–5 are LUT adders). Weights stream from HP2/HP3.</p>
 <div class="literal-block-wrapper docutils container" id="id2">
 <div class="code-block-caption"><span class="caption-number">Listing 4 </span><span class="caption-text">hw/rtl/VEC_CORE/GEMV_top.sv</span><a class="headerlink" href="#id2" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="no">`timescale</span><span class="w"> </span><span class="mi">1</span><span class="n">ns</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1</span><span class="n">ps</span>

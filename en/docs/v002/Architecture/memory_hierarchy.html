@@ -452,8 +452,8 @@ to <strong>prevent data starvation</strong> in the compute cores.</p>
     HP[&quot;AXI HP2 / HP3&lt;br/&gt;256 bit/clk × 2&quot;]
   end
   subgraph core[&quot;Internal 400 MHz&quot;]
-    WB[&quot;Weight Buffer&lt;br/&gt;BRAM FIFO&quot;]
-    L2[(&quot;L2 Cache&lt;br/&gt;URAM ~1.5 MB&quot;)]
+    WB[&quot;Weight Buffer&lt;br/&gt;URAM FIFO&quot;]
+    L2[(&quot;L2 Cache&lt;br/&gt;URAM ~1.75 MB&quot;)]
     L1[&quot;L1 Cache&lt;br/&gt;per-core BRAM&quot;]
     CC[&quot;Constant Cache&lt;br/&gt;BRAM&quot;]
     L0[&quot;L0 Accumulator&lt;br/&gt;DSP48E2 P-reg&quot;]
@@ -505,14 +505,14 @@ to <strong>prevent data starvation</strong> in the compute cores.</p>
 </tr>
 <tr class="row-odd"><td><p><strong>L2 Cache</strong></p></td>
 <td><p>URAM</p></td>
-<td><p>~1.5 MB (96 URAM)</p></td>
+<td><p><strong>1.75 MB</strong> (114,688 × 128-bit; ~50 of 64 URAM)</p></td>
 <td><p>256 bit × 2 / clk (both slices)</p></td>
 <td><p>Activations, KV cache, intermediate results</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Weight Buffer</strong></p></td>
-<td><p>BRAM (FIFO)</p></td>
-<td><p>~128 KB</p></td>
-<td><p>256 bit / clk × 2 HP ports</p></td>
+<td><p>URAM (FIFO)</p></td>
+<td><p>4 × 64 KB (4 HP ports, 4096 deep each)</p></td>
+<td><p>128 bit/clk per HP port &#64; 250 MHz</p></td>
 <td><p>INT4 weight stream</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Host DDR4</strong></p></td>
@@ -532,11 +532,13 @@ to <strong>prevent data starvation</strong> in the compute cores.</p>
 <p><strong>Goal</strong>: the HP ports must deliver enough weight bandwidth to feed the
 GEMM systolic array each cycle.</p>
 <ul class="simple">
-<li><p>Systolic array: <strong>32 × 16 × 2 = 1,024 DSP</strong> at 400 MHz.</p></li>
+<li><p>Systolic array: <strong>32 × 32 = 1,024 DSP</strong> at 400 MHz (one grid, cascade
+split at row 16 into two 32 × 16 sub-chains).</p></li>
 <li><p>With W4A8 dual-channel packing, <strong>1 DSP = 2 MAC</strong>, so 2,048 MAC/clk.</p></li>
 <li><p>Weight demand: 2,048 × 4 bit = <strong>8,192 bit/clk &#64; 400 MHz</strong>.</p></li>
-<li><p>Supply: 256 bit/clk each on HP0 / HP1 at 250 MHz, i.e., about
-<strong>128 bit/clk &#64; 400 MHz</strong> equivalent.</p></li>
+<li><p>Supply: HP0 + HP1 deliver <strong>2 × 128 bit/clk &#64; 250 MHz</strong> (= 64 Gbit/s
+total raw), which normalises to <strong>~160 bit/clk &#64; 400 MHz</strong> downstream
+of the CDC FIFO.</p></li>
 </ul>
 <p>The gap is closed by <strong>weight reuse (Weight Stationary)</strong>: the GEMM
 systolic array preloads weights once and reuses them for hundreds to
@@ -548,10 +550,12 @@ thousands of cycles; the Weight Buffer only prefetches. See
 <p><strong>Goal</strong>: L2 cache must satisfy concurrent activation reads from GEMM,
 GEMV, and SFU.</p>
 <ul class="simple">
-<li><p>L2 cache ports: each slice owns independent read / write ports
-(<strong>dual-port URAM</strong>).</p></li>
-<li><p>Peak slice-side demand: GEMV 32×1 × 4 cores = 128 INT8 element/clk. A
-256 bit/clk port supplies this comfortably.</p></li>
+<li><p>L2 cache ports: <strong>dual-port URAM</strong> — ACP DMA on Port A, NPU compute
+on Port B, both 128-bit wide per cycle.</p></li>
+<li><p>Peak slice-side demand: 4 GEMV cores × 32 INT8 elements/clk = 128
+INT8 elem/clk total. A single 128-bit URAM read supplies 16 INT8
+elements per cycle, so the GEMV broadcast path (activation is reused
+across all 4 cores) works within a single port.</p></li>
 </ul>
 </section>
 <section id="host-device-path">

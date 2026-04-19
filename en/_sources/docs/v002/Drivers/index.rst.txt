@@ -2,22 +2,20 @@
 Software Stack
 ==================
 
-The pccx v002 driver is a C/C++ hardware abstraction layer (HAL).
-Responsibilities include:
+The pccx v002 driver is a C/C++ hardware abstraction layer (HAL)
+plus a thin public API. Its responsibilities:
 
-- 64-bit instruction encoding and dispatch
-- Preloading pointers and scale factors via MEMSET
-- Managing DMA between the host and the L2 cache
-- Polling or interrupt handling for async completion
+- Encoding and dispatching 64-bit VLIW instructions via the CMD_IN FIFO.
+- Preloading shape / size pointers and scale factors through ``MEMSET``.
+- Driving DMA between the host DDR4 and the NPU L2 cache.
+- Polling ``STAT_OUT`` for async completion.
+
+The implementation lives under
+:file:`codes/v002/sw/driver/uCA_v1_api.h` /
+:file:`uCA_v1_api.c` and carries forward the v001 design with minor
+comment updates for the pccx v002 ISA reference URL.
 
 .. toctree::
    :maxdepth: 1
 
    api
-
-.. note::
-
-   The v002 driver API is still in the design stage. The reference
-   implementation draws from v001's
-   :file:`docs/archive/experimental_v001/Drivers/uCA_v1_api.h` and
-   :file:`uCA_v1_api.c`.

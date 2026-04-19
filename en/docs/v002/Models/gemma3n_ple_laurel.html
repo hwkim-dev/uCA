@@ -473,9 +473,6 @@ full formula including the post-attention RMSNorm and the residual add.</p>
     LAuReL --&gt; AddOp
     AddOp --&gt; ScaleOp[&quot;× 1/sqrt(2)&quot;]
     ScaleOp --&gt; FinalOut[&quot;Attention + LAuReL output&quot;]
-    style Attn fill:#c8e6c9,stroke:#388e3c
-    style LAuReL fill:#ffccbc,stroke:#d84315
-    style ScaleOp fill:#bbdefb,stroke:#1976d2
     </pre></section>
 <section id="hardware-mapping-on-pccx-v002">
 <h3>1.3 Hardware Mapping on pccx v002<a class="headerlink" href="#hardware-mapping-on-pccx-v002" title="Link to this heading">¶</a></h3>
@@ -576,11 +573,6 @@ stays a clean residual path.</p>
     AddPLE --&gt; X1_Out[&quot;Updated shadow streams xs[1..3]&quot;]
     X0_Out --&gt; NextLayer[&quot;Next layer&quot;]
     X1_Out --&gt; NextLayer
-    style X0 fill:#a5d6a7,stroke:#2e7d32
-    style MainComputation fill:#a5d6a7,stroke:#2e7d32
-    style X1 fill:#ce93d8,stroke:#6a1b9a
-    style AddPLE fill:#ce93d8,stroke:#6a1b9a
-    style PLE fill:#ffe082,stroke:#ff8f00
     </pre></section>
 <section id="hardware-mapping">
 <h3>2.3 Hardware Mapping<a class="headerlink" href="#hardware-mapping" title="Link to this heading">¶</a></h3>

@@ -7,12 +7,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://hwkim-dev.github.io/pccx/docs/Devices/kv260.html" />
 <meta property="og:site_name" content="pccx — Parallel Compute Core eXecutor" />
-<meta property="og:description" content="KV260 is the primary target hardware platform for pccx. Key specifications: FPGA fabric: Zynq UltraScale+ MPSoC, DSP slices: 1,248 DSP48E2 slices, BRAM: 144 block RAMs, Operating frequency: 400 MHz..." />
+<meta property="og:description" content="KV260 is the primary target hardware platform for pccx. Key specifications: FPGA fabric: Zynq UltraScale+ MPSoC (ZU5EV), DSP slices: 1,248 DSP48E2, BRAM: 144 block RAMs (36 Kb each), URAM: 64 Ultra..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="https://hwkim-dev.github.io/pccx/_images/social_previews/summary_docs_Devices_kv260_c5405a18.png" />
-<meta property="og:image:alt" content="KV260 is the primary target hardware platform for pccx. Key specifications: FPGA fabric: Zynq UltraScale+ MPSoC, DSP slices: 1,248 DSP48E2 slices, BRAM: 144 block RAMs, Operating frequency: 400 MHz..." />
-<meta name="description" content="KV260 is the primary target hardware platform for pccx. Key specifications: FPGA fabric: Zynq UltraScale+ MPSoC, DSP slices: 1,248 DSP48E2 slices, BRAM: 144 block RAMs, Operating frequency: 400 MHz..." />
+<meta property="og:image" content="https://hwkim-dev.github.io/pccx/_images/social_previews/summary_docs_Devices_kv260_b0416a6c.png" />
+<meta property="og:image:alt" content="KV260 is the primary target hardware platform for pccx. Key specifications: FPGA fabric: Zynq UltraScale+ MPSoC (ZU5EV), DSP slices: 1,248 DSP48E2, BRAM: 144 block RAMs (36 Kb each), URAM: 64 Ultra..." />
+<meta name="description" content="KV260 is the primary target hardware platform for pccx. Key specifications: FPGA fabric: Zynq UltraScale+ MPSoC (ZU5EV), DSP slices: 1,248 DSP48E2, BRAM: 144 block RAMs (36 Kb each), URAM: 64 Ultra..." />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Archive" href="../archive/index.html"><link rel="prev" title="Devices" href="index.html">
         <link rel="canonical" href="https://hwkim-dev.github.io/pccx/docs/Devices/kv260.html">
@@ -445,9 +445,10 @@
 <section id="key-specifications">
 <h2>Key specifications<a class="headerlink" href="#key-specifications" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p><strong>FPGA fabric:</strong> Zynq UltraScale+ MPSoC</p></li>
-<li><p><strong>DSP slices:</strong> 1,248 DSP48E2 slices</p></li>
-<li><p><strong>BRAM:</strong> 144 block RAMs</p></li>
+<li><p><strong>FPGA fabric:</strong> Zynq UltraScale+ MPSoC (ZU5EV)</p></li>
+<li><p><strong>DSP slices:</strong> 1,248 DSP48E2</p></li>
+<li><p><strong>BRAM:</strong> 144 block RAMs (36 Kb each)</p></li>
+<li><p><strong>URAM:</strong> 64 UltraRAM blocks (288 Kb each)</p></li>
 <li><p><strong>Operating frequency:</strong> 400 MHz (target)</p></li>
 <li><p><strong>AXI interfaces:</strong> AXI-Lite (HPM), AXI HP ports 0–3, AXI ACP</p></li>
 </ul>
@@ -474,16 +475,16 @@
 </thead>
 <tbody>
 <tr class="row-even"><td><p>DSP48E2</p></td>
-<td><p>~1,248</p></td>
+<td><p>~1,088</p></td>
 <td><p>1,248</p></td>
 </tr>
-<tr class="row-odd"><td><p>BRAM (36K)</p></td>
+<tr class="row-odd"><td><p>BRAM (36 Kb)</p></td>
 <td><p>~140</p></td>
 <td><p>144</p></td>
 </tr>
-<tr class="row-even"><td><p>URAM</p></td>
-<td><p>~96</p></td>
-<td><p>96</p></td>
+<tr class="row-even"><td><p>URAM (288 Kb)</p></td>
+<td><p>~50</p></td>
+<td><p>64</p></td>
 </tr>
 <tr class="row-odd"><td><p>LUT</p></td>
 <td><p>~200K</p></td>
@@ -494,8 +495,13 @@
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Actual resource usage varies with configuration parameters (systolic
-array dimensions, number of cores, etc.).</p>
+<p>The DSP48E2 estimate sums the 1,024-slice GEMM systolic array with the
+GEMV reduction stage-1 allocation (16 DSPs × 4 cores = 64). Including
+the SFU / CVO BF16 multipliers, post-synthesis utilisation is expected
+to land in the ~1,150–1,200 range and will be revised once the
+implementation flow completes.</p>
+<p>All numbers above scale with configuration parameters (systolic array
+dimensions, number of GEMV / SFU cores, and so on).</p>
 </div>
 </section>
 </section>

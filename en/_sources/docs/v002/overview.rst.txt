@@ -98,7 +98,8 @@ improvement are covered in :doc:`Architecture/rationale`. In short:
      - **W4A8 (INT8 activations)**
    * - Core composition
      - Matrix + Vector + CVO (blurred boundaries)
-     - Matrix + **GEMV 32×1 × 4** + **SFU 32×1 × 4**
+     - Matrix (32 × 32 systolic) + **4 × 32-MAC GEMV cores** +
+       **1 BF16-scalar SFU**
    * - HP port layout
      - One SA mapped to one port (250 MHz ceiling)
      - HP2 / HP3 distributed, consumed internally at 400 MHz

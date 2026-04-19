@@ -459,16 +459,21 @@ family.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>Unit dimensions</p></td>
-<td><p><strong>32 × 1 (per instance)</strong></p></td>
+<tr class="row-even"><td><p>Unit pipeline</p></td>
+<td><p><strong>1 BF16 scalar / clk</strong> (streaming — a single operation works
+its way through <code class="docutils literal notranslate"><span class="pre">IN_length</span></code> elements one cycle at a time)</p></td>
 </tr>
 <tr class="row-odd"><td><p>Instances</p></td>
-<td><p><strong>4</strong> per slice (upper + lower = 2 slices)</p></td>
+<td><p><strong>1</strong> (single <code class="docutils literal notranslate"><span class="pre">CVO_top</span></code>, shared by both slices)</p></td>
 </tr>
-<tr class="row-even"><td><p>Internal precision</p></td>
+<tr class="row-even"><td><p>Sub-units</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CVO_sfu_unit</span></code> (EXP / SQRT / GELU / RECIP / SCALE / REDUCE_SUM)
++ <code class="docutils literal notranslate"><span class="pre">CVO_cordic_unit</span></code> (SIN / COS)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Internal precision</p></td>
 <td><p><strong>BF16 / FP32</strong> (dynamic promotion)</p></td>
 </tr>
-<tr class="row-odd"><td><p>Supported functions</p></td>
+<tr class="row-even"><td><p>Supported functions</p></td>
 <td><p><strong>EXP, SQRT, GELU, SIN, COS, REDUCE_SUM, SCALE, RECIP</strong></p></td>
 </tr>
 </tbody>
@@ -549,8 +554,12 @@ a coarse estimate; a 2nd- or 3rd-order polynomial refines it.</p></li>
 </section>
 <section id="reduction">
 <h3>3.2 Reduction<a class="headerlink" href="#reduction" title="Link to this heading">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">CVO_REDUCE_SUM</span></code> folds 32 lanes through a 5-stage adder tree. It’s the
-building block for softmax’s denominator.</p>
+<p><code class="docutils literal notranslate"><span class="pre">CVO_REDUCE_SUM</span></code> uses the BF16 accumulator inside <code class="docutils literal notranslate"><span class="pre">CVO_sfu_unit</span></code> to
+<strong>sum one element per cycle serially</strong> for <code class="docutils literal notranslate"><span class="pre">IN_length</span></code> cycles, then
+emits the scalar sum. When upstream data arrives as a 32-wide GEMV
+output, the GEMV reduction tree has already collapsed that to a scalar,
+so the SFU only needs to accumulate and normalise. Softmax’s denominator
+is the canonical user.</p>
 </section>
 <section id="softmax-fast-path">
 <h3>3.3 Softmax Fast Path<a class="headerlink" href="#softmax-fast-path" title="Link to this heading">¶</a></h3>
@@ -589,9 +598,9 @@ completion. Completion notifications are handled by
 </section>
 <section id="physical-placement">
 <h2>5. Physical Placement<a class="headerlink" href="#physical-placement" title="Link to this heading">¶</a></h2>
-<p>On the floorplan (<a class="reference internal" href="floorplan.html"><span class="doc">Physical Floorplan</span></a>) the SFU appears four times per
-slice, for a total of eight units. They sit adjacent to the GEMV cores
-so the direct FIFO stays short.</p>
+<p>The floorplan (<a class="reference internal" href="floorplan.html"><span class="doc">Physical Floorplan</span></a>) reserves a single SFU instance near the
+centre, accessible to both slices. Siting it adjacent to the GEMV cores
+keeps the <strong>direct FIFO</strong> between GEMV and SFU as short as possible.</p>
 </section>
 <section id="scalability">
 <h2>6. Scalability<a class="headerlink" href="#scalability" title="Link to this heading">¶</a></h2>

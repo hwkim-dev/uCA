@@ -520,18 +520,20 @@ the KV cache.</p></td>
 <td><p>Stores small constants — shape / size pointers, scale factors —
 written by MEMSET.</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>Systolic Array (32×16 ×2)</strong></p></td>
+<tr class="row-odd"><td><p><strong>Systolic Array (32 × 32, cascade break &#64; row 16)</strong></p></td>
 <td><p>400 MHz</p></td>
-<td><p>GEMM-only 2D systolic array. See <a class="reference internal" href="gemm_core.html"><span class="doc">GEMM Core (Systolic Array)</span></a>.</p></td>
+<td><p>GEMM-only 2D systolic array. Single instance; two 32 × 16
+sub-chains share the grid. See <a class="reference internal" href="gemm_core.html"><span class="doc">GEMM Core (Systolic Array)</span></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>GEMV Core (32×1 ×4)</strong></p></td>
+<tr class="row-even"><td><p><strong>GEMV Core (×4)</strong></p></td>
 <td><p>400 MHz</p></td>
-<td><p>Parallel vector MAC + reduction tree. See <a class="reference internal" href="gemv_core.html"><span class="doc">GEMV Core</span></a>.</p></td>
+<td><p>Four parallel cores, each a 32-MAC LUT pipeline + 5-stage
+reduction tree. See <a class="reference internal" href="gemv_core.html"><span class="doc">GEMV Core</span></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>SFU (32×1 ×4)</strong></p></td>
+<tr class="row-odd"><td><p><strong>SFU (×1)</strong></p></td>
 <td><p>400 MHz</p></td>
-<td><p>Non-linear functions — Softmax, GELU, RMSNorm, and more.
-See <a class="reference internal" href="sfu_core.html"><span class="doc">SFU Core (Complex Vector Operations)</span></a>.</p></td>
+<td><p>A single scalar BF16 pipeline (1 element / clk) for Softmax,
+GELU, RMSNorm, RoPE, and friends. See <a class="reference internal" href="sfu_core.html"><span class="doc">SFU Core (Complex Vector Operations)</span></a>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -564,11 +566,11 @@ matching analysis in <a class="reference internal" href="memory_hierarchy.html">
         flowchart LR
   DDR[(Host DDR4)] --&gt;|HP2/HP3| WB[Weight Buffer]
   DDR --&gt;|ACP DMA| L2[(L2 Cache&lt;br/&gt;Central URAM)]
-  WB --&gt; SA[Systolic Array&lt;br/&gt;32×16 ×2]
+  WB --&gt; SA[Systolic Array&lt;br/&gt;32×32]
   WB --&gt; GV[GEMV Core&lt;br/&gt;×4]
   L2 --&gt; SA
   L2 --&gt; GV
-  L2 &lt;--&gt; SFU[SFU&lt;br/&gt;×4]
+  L2 &lt;--&gt; SFU[SFU&lt;br/&gt;×1]
   GV &lt;-. direct FIFO .-&gt; SFU
   SA --&gt; L2
   GV --&gt; L2

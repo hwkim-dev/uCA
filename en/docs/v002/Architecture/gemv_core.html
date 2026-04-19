@@ -486,15 +486,19 @@ same shape.</span><a class="headerlink" href="#id1" title="Link to this image">�
 <td><p><strong>32 (K) × 1 (M)</strong></p></td>
 </tr>
 <tr class="row-odd"><td><p>Number of cores</p></td>
-<td><p><strong>4</strong> (per slice; 2 slices total — upper and lower)</p></td>
+<td><p><strong>4 total</strong> (<code class="docutils literal notranslate"><span class="pre">VecPipelineCnt</span> <span class="pre">=</span> <span class="pre">4</span></code> in <code class="docutils literal notranslate"><span class="pre">device_pkg.sv</span></code>; split 2
+per slice across upper / lower halves of the floorplan)</p></td>
 </tr>
-<tr class="row-even"><td><p>Pipeline width</p></td>
-<td><p><strong>8 MAC</strong> (8 DSP48E2 lanes)</p></td>
+<tr class="row-even"><td><p>Per-core multiply width</p></td>
+<td><p><strong>32 MAC / clk</strong> (INT4 × BF16, LUT-based pre-computation)</p></td>
 </tr>
-<tr class="row-odd"><td><p>Reduction tree</p></td>
-<td><p><strong>3 stages</strong> (8 → 4 → 2 → 1)</p></td>
+<tr class="row-odd"><td><p>Stage-1 accumulator DSPs</p></td>
+<td><p><strong>16 DSP48E2</strong> per core (32 partial products → 16 pair-sums)</p></td>
 </tr>
-<tr class="row-even"><td><p>Peak throughput</p></td>
+<tr class="row-even"><td><p>Reduction tree</p></td>
+<td><p><strong>5 stages</strong> (32 → 16 → 8 → 4 → 2 → 1)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Peak throughput</p></td>
 <td><p><strong>32 MAC × 4 cores × 400 MHz = 51.2 GMAC/s</strong></p></td>
 </tr>
 </tbody>
@@ -508,10 +512,11 @@ same shape.</span><a class="headerlink" href="#id1" title="Link to this image">�
 </a>
 <figcaption>
 <p><span class="caption-number">Figure 7 </span><span class="caption-text"><strong>Figure GEMV-Core.</strong> The <strong>Pre-Process</strong> block dequantizes one
-activation row and one weight column, then fans the data out to 8
-pipelined DSP lanes. Each lane’s result feeds a 3-stage reduction
-adder tree that collapses to a scalar; the <strong>Post-Process</strong> block then
-applies scale and bias and writes back to the REGISTER.</span><a class="headerlink" href="#id2" title="Link to this image">¶</a></p>
+activation row and one weight column, then 32 LUT-based multipliers
+compute <code class="docutils literal notranslate"><span class="pre">W</span> <span class="pre">×</span> <span class="pre">A</span></code> in a single cycle. The 32 partial products feed a
+5-stage reduction adder tree (Stage 1: 16 DSP48E2 slices; Stages 2–5:
+LUT adders) that collapses to a scalar. The <strong>Post-Process</strong> block
+finally applies scale / bias and writes the result into the REGISTER.</span><a class="headerlink" href="#id2" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <section id="weight-streaming">
@@ -533,31 +538,30 @@ cores <strong>broadcast</strong> the same vector among themselves.</p>
 <ol class="arabic simple">
 <li><p>Preload an activation tile from L2 into the per-core L1 cache.</p></li>
 <li><p><strong>Pre-Process</strong> dequantizes INT8 → BF16 and applies the scale.</p></li>
-<li><p>8 MAC units execute <code class="docutils literal notranslate"><span class="pre">W</span> <span class="pre">×</span> <span class="pre">A</span></code> in parallel.</p></li>
+<li><p>32 LUT-based multipliers execute <code class="docutils literal notranslate"><span class="pre">W</span> <span class="pre">×</span> <span class="pre">A</span></code> in parallel in a single
+clock. Because <code class="docutils literal notranslate"><span class="pre">W</span></code> is INT4, the 16 possible <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">×</span> <span class="pre">w</span></code> products are
+pre-computed in the LUT; the actual weight bits only <em>select</em> the
+matching entry.</p></li>
 </ol>
 </section>
 <section id="reduction-tree">
 <h3>3.3 Reduction Tree<a class="headerlink" href="#reduction-tree" title="Link to this heading">¶</a></h3>
-<p>The 8 MAC results collapse through a 3-stage adder tree, with pipeline
-registers between stages for timing closure.</p>
+<p>Each core’s 32 partial products collapse to a single scalar through a
+5-stage adder tree, with a pipeline register between every stage for
+400 MHz closure.</p>
 <pre  class="mermaid">
         flowchart TB
-  M0([MAC₀]) --&gt; R0a((+))
-  M1([MAC₁]) --&gt; R0a
-  M2([MAC₂]) --&gt; R0b((+))
-  M3([MAC₃]) --&gt; R0b
-  M4([MAC₄]) --&gt; R0c((+))
-  M5([MAC₅]) --&gt; R0c
-  M6([MAC₆]) --&gt; R0d((+))
-  M7([MAC₇]) --&gt; R0d
-  R0a --&gt; R1a((+))
-  R0b --&gt; R1a
-  R0c --&gt; R1b((+))
-  R0d --&gt; R1b
-  R1a --&gt; R2((+))
-  R1b --&gt; R2
-  R2 --&gt; OUT[/Scalar/]
-    </pre><p>The implementation inherits from v001’s <code class="docutils literal notranslate"><span class="pre">GEMV_reduction.sv</span></code> and
+  MAC[&quot;32 × partial products&lt;br/&gt;(LUT-based W × A)&quot;]
+      --&gt; S1[&quot;Stage 1 — DSP48E2&lt;br/&gt;16 × (a + b)&lt;br/&gt;32 → 16&quot;]
+  S1  --&gt; S2[&quot;Stage 2 — LUT&lt;br/&gt;16 → 8&quot;]
+  S2  --&gt; S3[&quot;Stage 3 — LUT&lt;br/&gt;8 → 4&quot;]
+  S3  --&gt; S4[&quot;Stage 4 — LUT&lt;br/&gt;4 → 2&quot;]
+  S4  --&gt; S5[&quot;Stage 5 — LUT&lt;br/&gt;2 → 1&quot;]
+  S5  --&gt; OUT[/Scalar/]
+    </pre><p>Stage 1 uses the DSP48E2 <code class="docutils literal notranslate"><span class="pre">A:B</span> <span class="pre">+</span> <span class="pre">C</span></code> (ONE48) mode purely to add two
+adjacent partial products (16 DSP slices per core). Stages 2–5 use
+LUT-based adders to keep the DSP budget small. The implementation
+inherits from v001’s <code class="docutils literal notranslate"><span class="pre">GEMV_reduction.sv</span></code> and
 <code class="docutils literal notranslate"><span class="pre">GEMV_reduction_branch.sv</span></code>.</p>
 </section>
 <section id="accumulation-post-processing">
@@ -603,10 +607,17 @@ activation (Q) and weights are partitioned along the head axis.</p></td>
 </section>
 <section id="embedded-lookup-table">
 <h2>5. Embedded Lookup Table<a class="headerlink" href="#embedded-lookup-table" title="Link to this heading">¶</a></h2>
-<p>Each GEMV core embeds a <strong>16-entry LUT</strong> dedicated to W4 dequantization.</p>
+<p>The GEMV core fuses W4 dequantization and the multiply into a single LUT
+pre-computation.</p>
 <ul class="simple">
-<li><p>Reuses <code class="docutils literal notranslate"><span class="pre">GEMV_generate_lut.sv</span></code> from v001.</p></li>
-<li><p>Maps a 4-bit weight directly to its BF16 real value.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GEMV_generate_lut.sv</span></code> (inherited from v001) produces, for each BF16
+activation <code class="docutils literal notranslate"><span class="pre">A</span></code>, all <strong>16 pre-computed products</strong> <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">×</span> <span class="pre">w</span></code> for the
+possible INT4 weight values (-8 to +7).</p></li>
+<li><p>This runs in parallel across all 32 activation positions, so each core
+has <strong>32 × 16 = 512 pre-computed products</strong> ready every clock.</p></li>
+<li><p>When the actual weight arrives, the 4-bit pattern just <em>indexes</em> the
+LUT — the matching value flows straight into the Stage-1 accumulator
+DSP.</p></li>
 <li><p>Scale factors are indexed from the Constant Cache.</p></li>
 </ul>
 </section>

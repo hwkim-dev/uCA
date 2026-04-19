@@ -7,12 +7,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://hwkim-dev.github.io/pccx/docs/v002/Architecture/gemm_core.html" />
 <meta property="og:site_name" content="pccx — Parallel Compute Core eXecutor" />
-<meta property="og:description" content="The GEMM core handles the large matrix-matrix multiplications that dominate the prefill stage of a Transformer. pccx v002 places two 32 × 16 2D systolic arrays side by side, yielding a theoretical ..." />
+<meta property="og:description" content="The GEMM core handles the large matrix-matrix multiplications that dominate the prefill stage of a Transformer. pccx v002 uses one 32 × 32 2D systolic array whose accumulation cascade is broken at ..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="https://hwkim-dev.github.io/pccx/_images/social_previews/summary_docs_v002_Architecture_gemm_core_3f1a2c10.png" />
-<meta property="og:image:alt" content="The GEMM core handles the large matrix-matrix multiplications that dominate the prefill stage of a Transformer. pccx v002 places two 32 × 16 2D systolic arrays side by side, yielding a theoretical ..." />
-<meta name="description" content="The GEMM core handles the large matrix-matrix multiplications that dominate the prefill stage of a Transformer. pccx v002 places two 32 × 16 2D systolic arrays side by side, yielding a theoretical ..." />
+<meta property="og:image" content="https://hwkim-dev.github.io/pccx/_images/social_previews/summary_docs_v002_Architecture_gemm_core_c5682f85.png" />
+<meta property="og:image:alt" content="The GEMM core handles the large matrix-matrix multiplications that dominate the prefill stage of a Transformer. pccx v002 uses one 32 × 32 2D systolic array whose accumulation cascade is broken at ..." />
+<meta name="description" content="The GEMM core handles the large matrix-matrix multiplications that dominate the prefill stage of a Transformer. pccx v002 uses one 32 × 32 2D systolic array whose accumulation cascade is broken at ..." />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="GEMV Core" href="gemv_core.html"><link rel="prev" title="KV Cache Optimization Strategy" href="kv_cache.html">
         <link rel="canonical" href="https://hwkim-dev.github.io/pccx/docs/v002/Architecture/gemm_core.html">
@@ -442,9 +442,10 @@
           <section id="gemm-core-systolic-array">
 <h1>GEMM Core (Systolic Array)<a class="headerlink" href="#gemm-core-systolic-array" title="Link to this heading">¶</a></h1>
 <p>The GEMM core handles the large matrix-matrix multiplications that
-dominate the <strong>prefill</strong> stage of a Transformer. pccx v002 places <strong>two
-32 × 16 2D systolic arrays</strong> side by side, yielding a theoretical peak of
-<strong>819 GMAC/s at 400 MHz</strong>.</p>
+dominate the <strong>prefill</strong> stage of a Transformer. pccx v002 uses <strong>one
+32 × 32 2D systolic array</strong> whose accumulation cascade is broken at
+row 16, giving two <strong>32 × 16</strong> sub-chains that share the same physical
+grid and deliver a theoretical peak of <strong>819 GMAC/s at 400 MHz</strong>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>GEMM is used mainly in prefill (long-prompt initial processing) and in
@@ -479,11 +480,12 @@ defined as Row × Col; tile shapes are chosen by the software layer.</span><a cl
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>Array dimensions</p></td>
-<td><p><strong>32 (M) × 16 (K)</strong></p></td>
+<tr class="row-even"><td><p>Physical grid</p></td>
+<td><p><strong>32 (M) × 32 (K)</strong>  → <strong>1,024 PEs</strong></p></td>
 </tr>
-<tr class="row-odd"><td><p>Number of arrays</p></td>
-<td><p><strong>2</strong> (dual array)</p></td>
+<tr class="row-odd"><td><p>Cascade break</p></td>
+<td><p>at <strong>row 16</strong> → two 32 × 16 sub-chains (<code class="docutils literal notranslate"><span class="pre">GEMM_systolic_array.sv</span></code>
+instantiates <code class="docutils literal notranslate"><span class="pre">GEMM_dsp_unit</span></code> with <code class="docutils literal notranslate"><span class="pre">BREAK_CASCADE=1</span></code> there)</p></td>
 </tr>
 <tr class="row-even"><td><p>DSP per PE</p></td>
 <td><p><strong>1</strong> (DSP48E2)</p></td>
@@ -491,13 +493,10 @@ defined as Row × Col; tile shapes are chosen by the software layer.</span><a cl
 <tr class="row-odd"><td><p>MAC / clk per PE</p></td>
 <td><p><strong>2</strong> (dual-channel bit packing, see <a class="reference internal" href="dsp48e2_w4a8.html"><span class="doc">DSP48E2 W4A8 Bit Packing and Sign Recovery</span></a>)</p></td>
 </tr>
-<tr class="row-even"><td><p>Total MAC / clk per array</p></td>
-<td><p><strong>32 × 16 × 2 = 1,024</strong></p></td>
+<tr class="row-even"><td><p>Total MAC / clk</p></td>
+<td><p><strong>1,024 PE × 2 MAC = 2,048</strong></p></td>
 </tr>
-<tr class="row-odd"><td><p>Total MAC / clk (× 2 arrays)</p></td>
-<td><p><strong>2,048</strong></p></td>
-</tr>
-<tr class="row-even"><td><p>Peak throughput</p></td>
+<tr class="row-odd"><td><p>Peak throughput</p></td>
 <td><p><strong>2,048 × 400 MHz = 819 GMAC/s</strong></p></td>
 </tr>
 </tbody>
@@ -545,15 +544,11 @@ axis maps onto the array’s column direction.</p></li>
   subgraph Host[Host DDR4]
     W[Weights INT4]
   end
-  WB[Weight Buffer&lt;br/&gt;BRAM FIFO] --&gt;|staggered| PE[(PE Grid&lt;br/&gt;32×16)]
+  WB[Weight Buffer&lt;br/&gt;URAM FIFO] --&gt;|staggered| PE[(PE Grid&lt;br/&gt;32×32 · cascade break &#64; row 16)]
   L2[L2 Cache&lt;br/&gt;URAM] --&gt;|activations INT8| PE
   PE --&gt;|partial sums| RA[Result Accumulator]
   RA --&gt;|scale / requant| L2
   W --&gt; WB
-  classDef cache fill:#e8f0fe,stroke:#4c6ef5,color:#1a2e66;
-  classDef mem fill:#fff4e0,stroke:#f08c00,color:#663c00;
-  class WB,L2 cache
-  class Host mem
     </pre></section>
 <section id="accumulation">
 <h3>3.3 Accumulation<a class="headerlink" href="#accumulation" title="Link to this heading">¶</a></h3>
@@ -679,25 +674,31 @@ parameters.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">MAT_ROWS</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ARRAY_SIZE_H</span></code></p></td>
 <td><p>32</p></td>
-<td><p>Number of PEs in the systolic array’s M direction.</p></td>
+<td><p>PEs in the weight / M direction (<code class="docutils literal notranslate"><span class="pre">npu_arch.svh</span></code>).</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">MAT_COLS</span></code></p></td>
-<td><p>16</p></td>
-<td><p>Number of PEs in the K direction. Physical size, independent of the
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ARRAY_SIZE_V</span></code></p></td>
+<td><p>32</p></td>
+<td><p>PEs in the activation / K direction. Independent of the
 safe-accumulation limit.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">MAT_INSTANCES</span></code></p></td>
-<td><p>2</p></td>
-<td><p>Number of array instances. Placed on the right side of the
-floorplan.</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BREAK_CASCADE</span></code> row</p></td>
+<td><p>16</p></td>
+<td><p>Fixed inside <code class="docutils literal notranslate"><span class="pre">GEMM_systolic_array.sv</span></code>. Splits the DSP48E2 P
+cascade in half so the two 16-row sub-chains each stay within
+the cascade length budget.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">MatPipelineCnt</span></code></p></td>
+<td><p>1</p></td>
+<td><p>One <code class="docutils literal notranslate"><span class="pre">GEMM_systolic_top</span></code> instance at the top level
+(<code class="docutils literal notranslate"><span class="pre">device_pkg.sv</span></code>).</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>On KV260 the 32 × 16 × 2 configuration consumes 1,024 DSP48E2 slices —
-about 82% of the device’s 1,248-slice budget.</p>
+<p>On KV260 the 32 × 32 grid consumes <strong>1,024 DSP48E2 slices</strong> — about 82 %
+of the device’s 1,248-slice budget.</p>
 </section>
 </section>
 

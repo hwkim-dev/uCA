@@ -350,7 +350,7 @@
 <p class="caption" role="heading"><span class="caption-text">타겟 하드웨어</span></p>
 <ul>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../Devices/index.html">지원 디바이스</a><input aria-label="Toggle navigation of 지원 디바이스" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../Devices/kv260.html">pccx: 병렬 컴퓨트 코어 익스큐터</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Devices/kv260.html">타겟 하드웨어: Xilinx Kria KV260</a></li>
 </ul>
 </li>
 </ul>
@@ -558,7 +558,8 @@
 </tr>
 <tr class="row-odd"><td><p>코어 구성</p></td>
 <td><p>Matrix + Vector + CVO (경계 모호)</p></td>
-<td><p>Matrix + <strong>GEMV 32×1 × 4</strong> + <strong>SFU 32×1 × 4</strong></p></td>
+<td><p>Matrix (32 × 32 시스톨릭) + <strong>32-MAC GEMV 코어 × 4</strong> +
+<strong>BF16 스칼라 SFU × 1</strong></p></td>
 </tr>
 <tr class="row-even"><td><p>HP 포트</p></td>
 <td><p>단일 SA 에 1 개 (250 MHz 상한)</p></td>

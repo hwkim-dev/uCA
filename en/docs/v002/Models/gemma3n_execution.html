@@ -478,11 +478,11 @@ embedding / LM head tables.</p></td>
 <code class="docutils literal notranslate"><span class="pre">gate_raw</span></code>, <code class="docutils literal notranslate"><span class="pre">up_out</span></code>, <code class="docutils literal notranslate"><span class="pre">hidden</span></code>, <code class="docutils literal notranslate"><span class="pre">mlp_out</span></code>, <code class="docutils literal notranslate"><span class="pre">pli_all</span></code>,
 e_max, reduction accumulators.</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>Weight Buffer</strong> (BRAM/URAM FIFO)</p></td>
-<td><p>~512 KB</p></td>
+<tr class="row-even"><td><p><strong>Weight Buffer</strong> (URAM FIFO, per HP port)</p></td>
+<td><p>4 × 64 KB (4096-deep each)</p></td>
 <td><p>128-bit word</p></td>
-<td><p>Burst buffer between HP2/HP3 (250 MHz) and the 400 MHz compute
-cores. Holds at most one GEMV/GEMM’s worth of weights.</p></td>
+<td><p>Burst buffer between each HP port (250 MHz) and the 400 MHz
+compute cores. Holds at most one GEMV/GEMM’s worth of weights.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Constant Cache</strong> (BRAM)</p></td>
 <td><p>64 entries × 48-bit</p></td>
@@ -565,7 +565,7 @@ high-level dataflow, annotated with instructions:</p>
 <tr class="row-odd"><th class="head"><p>Pipeline stage</p></th>
 <th class="head"><p>Systolic Array</p></th>
 <th class="head"><p>GEMV ×4</p></th>
-<th class="head"><p>SFU ×4</p></th>
+<th class="head"><p>SFU (serial)</p></th>
 </tr>
 </thead>
 <tbody>

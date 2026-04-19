@@ -350,7 +350,7 @@
 <p class="caption" role="heading"><span class="caption-text">타겟 하드웨어</span></p>
 <ul>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../Devices/index.html">지원 디바이스</a><input aria-label="Toggle navigation of 지원 디바이스" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../Devices/kv260.html">pccx: 병렬 컴퓨트 코어 익스큐터</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../Devices/kv260.html">타겟 하드웨어: Xilinx Kria KV260</a></li>
 </ul>
 </li>
 </ul>
@@ -485,15 +485,19 @@ N × N 행렬이며 두 피연산자의 내적 결과가 새 길이 N 의 출력
 <td><p><strong>32 (K) × 1 (M)</strong></p></td>
 </tr>
 <tr class="row-odd"><td><p>코어 개수</p></td>
-<td><p><strong>4</strong> (슬라이스당 4 개, 상·하 2 슬라이스 가능)</p></td>
+<td><p><strong>총 4 개</strong> (<code class="docutils literal notranslate"><span class="pre">device_pkg.sv</span></code> 의 <code class="docutils literal notranslate"><span class="pre">VecPipelineCnt</span> <span class="pre">=</span> <span class="pre">4</span></code>; 플로어
+플랜 상 상·하 슬라이스에 2 개씩 분산)</p></td>
 </tr>
-<tr class="row-even"><td><p>파이프라인 폭</p></td>
-<td><p><strong>8 MAC</strong> (8 DSP48E2 레인)</p></td>
+<tr class="row-even"><td><p>코어 당 곱셈 폭</p></td>
+<td><p><strong>32 MAC / clk</strong> (INT4 × BF16, LUT 기반 사전 계산)</p></td>
 </tr>
-<tr class="row-odd"><td><p>Reduction 트리</p></td>
-<td><p><strong>3 단계</strong> (8 → 4 → 2 → 1)</p></td>
+<tr class="row-odd"><td><p>Stage 1 누적 DSP</p></td>
+<td><p><strong>16 DSP48E2</strong> · 코어당 (32 부분합 → 16 이중합)</p></td>
 </tr>
-<tr class="row-even"><td><p>피크 처리량</p></td>
+<tr class="row-even"><td><p>Reduction 트리</p></td>
+<td><p><strong>5 단계</strong> (32 → 16 → 8 → 4 → 2 → 1)</p></td>
+</tr>
+<tr class="row-odd"><td><p>피크 처리량</p></td>
 <td><p><strong>32 MAC × 4 코어 × 400 MHz = 51.2 GMAC/s</strong></p></td>
 </tr>
 </tbody>
@@ -507,9 +511,11 @@ N × N 행렬이며 두 피연산자의 내적 결과가 새 길이 N 의 출력
 </a>
 <figcaption>
 <p><span class="caption-number">그림 7 </span><span class="caption-text"><strong>Figure GEMV-Core.</strong> Activation 1 행과 Weight 1 열을 <strong>Pre-Process</strong>
-블록에서 dequantize 후, 8 개의 파이프라인 DSP 레인으로 분배합니다.
-각 레인의 결과는 3 단계 reduction adder tree 를 거쳐 스칼라로 축약되며,
-<strong>Post-Process</strong> 블록에서 스케일·bias 를 적용한 뒤 REGISTER 에 기록됩니다.</span><a class="headerlink" href="#id7" title="Link to this image">¶</a></p>
+블록에서 dequantize 하여, 32 개 LUT 기반 곱셈기가 (W × A) 를 단일
+사이클에 병렬 수행합니다. 32 개의 부분곱은 5 단계 reduction adder
+tree (Stage 1: DSP48E2 16 슬라이스, Stage 2–5: LUT) 를 거쳐 스칼라로
+축약되며, <strong>Post-Process</strong> 블록에서 스케일·bias 를 적용한 뒤
+REGISTER 에 기록됩니다.</span><a class="headerlink" href="#id7" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <section id="weight-streaming">
@@ -530,31 +536,28 @@ N × N 행렬이며 두 피연산자의 내적 결과가 새 길이 N 의 출력
 <ol class="arabic simple">
 <li><p>L2 → L1 Cache 로 액티베이션 타일 프리로드.</p></li>
 <li><p><strong>Pre-Process</strong> 블록이 INT8 → BF16 dequantize 와 scale 수행.</p></li>
-<li><p>8 개의 MAC 유닛이 <code class="docutils literal notranslate"><span class="pre">(W</span> <span class="pre">×</span> <span class="pre">A)</span></code> 를 병렬 실행.</p></li>
+<li><p>32 개의 LUT 기반 곱셈 유닛이 <code class="docutils literal notranslate"><span class="pre">(W</span> <span class="pre">×</span> <span class="pre">A)</span></code> 를 한 클럭에 병렬 실행.
+(W 가 INT4 이므로 가능한 16 개 가중치 값에 대한 곱을 먼저 LUT 로
+사전 계산한 뒤, 실제 W 비트 패턴으로 선택만 수행.)</p></li>
 </ol>
 </section>
 <section id="reduction-tree">
 <h3>3.3 Reduction Tree<a class="headerlink" href="#reduction-tree" title="Link to this heading">¶</a></h3>
-<p>8 개 MAC 결과는 다음과 같이 3 단계로 축약되며, 각 단계마다 파이프라인
-레지스터를 삽입해 타이밍을 확보합니다.</p>
+<p>코어 당 32 개의 부분곱을 아래 5 단계 트리로 스칼라 한 개까지 축약하며,
+각 단계마다 파이프라인 레지스터를 삽입해 400 MHz 타이밍을 확보합니다.</p>
 <pre  class="mermaid">
         flowchart TB
-  M0([MAC₀]) --&gt; R0a((+))
-  M1([MAC₁]) --&gt; R0a
-  M2([MAC₂]) --&gt; R0b((+))
-  M3([MAC₃]) --&gt; R0b
-  M4([MAC₄]) --&gt; R0c((+))
-  M5([MAC₅]) --&gt; R0c
-  M6([MAC₆]) --&gt; R0d((+))
-  M7([MAC₇]) --&gt; R0d
-  R0a --&gt; R1a((+))
-  R0b --&gt; R1a
-  R0c --&gt; R1b((+))
-  R0d --&gt; R1b
-  R1a --&gt; R2((+))
-  R1b --&gt; R2
-  R2 --&gt; OUT[/Scalar/]
-    </pre><p>구현은 v001 의 <code class="docutils literal notranslate"><span class="pre">GEMV_reduction.sv</span></code> 와 <code class="docutils literal notranslate"><span class="pre">GEMV_reduction_branch.sv</span></code> 를 계승.</p>
+  MAC[&quot;32 × partial products&lt;br/&gt;(LUT-based W × A)&quot;]
+      --&gt; S1[&quot;Stage 1 — DSP48E2&lt;br/&gt;16 × (a + b)&lt;br/&gt;32 → 16&quot;]
+  S1  --&gt; S2[&quot;Stage 2 — LUT&lt;br/&gt;16 → 8&quot;]
+  S2  --&gt; S3[&quot;Stage 3 — LUT&lt;br/&gt;8 → 4&quot;]
+  S3  --&gt; S4[&quot;Stage 4 — LUT&lt;br/&gt;4 → 2&quot;]
+  S4  --&gt; S5[&quot;Stage 5 — LUT&lt;br/&gt;2 → 1&quot;]
+  S5  --&gt; OUT[/Scalar/]
+    </pre><p>Stage 1 은 <code class="docutils literal notranslate"><span class="pre">DSP48E2</span></code> 의 <code class="docutils literal notranslate"><span class="pre">A:B</span> <span class="pre">+</span> <span class="pre">C</span></code> (ONE48) 모드를 써서 인접한 두
+부분곱을 더하는 용도로만 사용 (16 개 DSP 슬라이스 / 코어). Stage 2–5
+는 LUT 기반 가산기로 구현되어 DSP 예산을 절약. 구현 파일은 v001 의
+<code class="docutils literal notranslate"><span class="pre">GEMV_reduction.sv</span></code> · <code class="docutils literal notranslate"><span class="pre">GEMV_reduction_branch.sv</span></code> 를 그대로 계승.</p>
 </section>
 <section id="id4">
 <h3>3.4 누적 &amp; 포스트프로세싱<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
@@ -596,10 +599,15 @@ row 방향으로 스트라이프 됨. 액티베이션은 공유.</p></td>
 </section>
 <section id="lookup-table">
 <h2>5. 내장 Lookup Table<a class="headerlink" href="#lookup-table" title="Link to this heading">¶</a></h2>
-<p>GEMV 코어 내부에는 W4 dequantize 전용 <strong>16 엔트리 LUT</strong> 가 내장됩니다.</p>
+<p>GEMV 코어는 W4 dequantize 와 MAC 을 하나의 LUT 사전 연산으로 병합.</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">GEMV_generate_lut.sv</span></code> (v001) 재사용.</p></li>
-<li><p>4-bit 가중치 → BF16 실수 값의 직접 조회.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GEMV_generate_lut.sv</span></code> (v001 계승) 가 BF16 액티베이션 <code class="docutils literal notranslate"><span class="pre">A</span></code> 1 개와
+INT4 가중치의 가능한 16 개 값 (-8 ~ +7) 에 대해 <strong>16 개 사전
+계산된 곱</strong> <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">×</span> <span class="pre">w</span></code> 를 만든다.</p></li>
+<li><p>이를 32 개의 액티베이션 위치에 대해 병렬 생성하므로, 코어 당
+<strong>32 × 16 = 512 개의 사전 곱</strong> 이 매 클럭 준비된다.</p></li>
+<li><p>실제 가중치가 도착하면 4-bit 패턴을 인덱스로 LUT 에서 단순 선택 →
+MAC 한 번에 해당하는 값이 Stage 1 누적 DSP 로 바로 흘러간다.</p></li>
 <li><p>스케일 계수는 Constant Cache 에서 인덱싱.</p></li>
 </ul>
 </section>

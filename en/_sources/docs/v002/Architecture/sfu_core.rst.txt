@@ -16,10 +16,14 @@ family.
 
    * - Parameter
      - Value
-   * - Unit dimensions
-     - **32 × 1 (per instance)**
+   * - Unit pipeline
+     - **1 BF16 scalar / clk** (streaming — a single operation works
+       its way through ``IN_length`` elements one cycle at a time)
    * - Instances
-     - **4** per slice (upper + lower = 2 slices)
+     - **1** (single ``CVO_top``, shared by both slices)
+   * - Sub-units
+     - ``CVO_sfu_unit`` (EXP / SQRT / GELU / RECIP / SCALE / REDUCE_SUM)
+       + ``CVO_cordic_unit`` (SIN / COS)
    * - Internal precision
      - **BF16 / FP32** (dynamic promotion)
    * - Supported functions
@@ -85,8 +89,12 @@ Inherits from v001's ``CVO_cordic_unit.sv`` and ``CVO_sfu_unit.sv``:
 3.2 Reduction
 --------------
 
-``CVO_REDUCE_SUM`` folds 32 lanes through a 5-stage adder tree. It's the
-building block for softmax's denominator.
+``CVO_REDUCE_SUM`` uses the BF16 accumulator inside ``CVO_sfu_unit`` to
+**sum one element per cycle serially** for ``IN_length`` cycles, then
+emits the scalar sum. When upstream data arrives as a 32-wide GEMV
+output, the GEMV reduction tree has already collapsed that to a scalar,
+so the SFU only needs to accumulate and normalise. Softmax's denominator
+is the canonical user.
 
 3.3 Softmax Fast Path
 ----------------------
@@ -130,9 +138,9 @@ completion. Completion notifications are handled by
 5. Physical Placement
 ======================
 
-On the floorplan (:doc:`floorplan`) the SFU appears four times per
-slice, for a total of eight units. They sit adjacent to the GEMV cores
-so the direct FIFO stays short.
+The floorplan (:doc:`floorplan`) reserves a single SFU instance near the
+centre, accessible to both slices. Siting it adjacent to the GEMV cores
+keeps the **direct FIFO** between GEMV and SFU as short as possible.
 
 6. Scalability
 ===============

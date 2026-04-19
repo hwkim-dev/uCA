@@ -7,12 +7,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://hwkim-dev.github.io/pccx/docs/v002/Drivers/api.html" />
 <meta property="og:site_name" content="pccx — Parallel Compute Core eXecutor" />
-<meta property="og:description" content="This page sketches the design of the v002 driver’s C API. The API is organized into three layers. Low-level HAL — direct access to AXI-Lite / AXI-HP registers., ISA Encoder — helpers that assemble ..." />
+<meta property="og:description" content="This page documents the v002 driver’s public C API. The implementation lives under codes/v002/sw/driver/( uCA_v1_api.h+ uCA_v1_hal.h). The stack is organized into two layers. HAL( uca_hal_*) — dire..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="https://hwkim-dev.github.io/pccx/_images/social_previews/summary_docs_v002_Drivers_api_527510a9.png" />
-<meta property="og:image:alt" content="This page sketches the design of the v002 driver’s C API. The API is organized into three layers. Low-level HAL — direct access to AXI-Lite / AXI-HP registers., ISA Encoder — helpers that assemble ..." />
-<meta name="description" content="This page sketches the design of the v002 driver’s C API. The API is organized into three layers. Low-level HAL — direct access to AXI-Lite / AXI-HP registers., ISA Encoder — helpers that assemble ..." />
+<meta property="og:image" content="https://hwkim-dev.github.io/pccx/_images/social_previews/summary_docs_v002_Drivers_api_c63722f7.png" />
+<meta property="og:image:alt" content="This page documents the v002 driver’s public C API. The implementation lives under codes/v002/sw/driver/( uCA_v1_api.h+ uCA_v1_hal.h). The stack is organized into two layers. HAL( uca_hal_*) — dire..." />
+<meta name="description" content="This page documents the v002 driver’s public C API. The implementation lives under codes/v002/sw/driver/( uCA_v1_api.h+ uCA_v1_hal.h). The stack is organized into two layers. HAL( uca_hal_*) — dire..." />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="Target Models" href="../Models/index.html"><link rel="prev" title="Software Stack" href="index.html">
         <link rel="canonical" href="https://hwkim-dev.github.io/pccx/docs/v002/Drivers/api.html">
@@ -441,181 +441,228 @@
         <article role="main" id="furo-main-content">
           <section id="c-api-overview">
 <h1>C API Overview<a class="headerlink" href="#c-api-overview" title="Link to this heading">¶</a></h1>
-<p>This page sketches the design of the v002 driver’s C API. The API is
-organized into three layers.</p>
+<p>This page documents the v002 driver’s public C API. The implementation
+lives under <code class="docutils literal notranslate"><span class="pre">codes/v002/sw/driver/</span></code> (<code class="docutils literal notranslate"><span class="pre">uCA_v1_api.h</span></code> + <code class="docutils literal notranslate"><span class="pre">uCA_v1_hal.h</span></code>).</p>
+<p>The stack is organized into two layers.</p>
 <ol class="arabic simple">
-<li><p><strong>Low-level HAL</strong> — direct access to AXI-Lite / AXI-HP registers.</p></li>
-<li><p><strong>ISA Encoder</strong> — helpers that assemble 64-bit instructions.</p></li>
-<li><p><strong>High-level Ops</strong> — convenience wrappers around GEMM / GEMV / CVO /
-MEMCPY.</p></li>
+<li><p><strong>HAL</strong> (<code class="docutils literal notranslate"><span class="pre">uca_hal_*</span></code>) — direct access to AXI-Lite / AXI-HP registers
+and the CMD_IN / STAT_OUT FIFOs. Applications should not call this
+layer directly.</p></li>
+<li><p><strong>Public API</strong> (<code class="docutils literal notranslate"><span class="pre">uca_*</span></code>) — “CUDA-equivalent” compute/memory
+primitives. Every call assembles a 64-bit VLIW instruction
+(<a class="reference internal" href="../ISA/encoding.html"><span class="doc">Instruction Encoding</span></a>) and issues it through the HAL.</p></li>
 </ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The API is named <code class="docutils literal notranslate"><span class="pre">uca_*</span></code> (micro Compute Architecture), not
+<code class="docutils literal notranslate"><span class="pre">pccx_*</span></code>. pccx is the architecture / documentation project; uCA is
+the RTL + software contract it exposes.</p>
+</div>
 <section id="initialization-and-lifecycle">
 <h2>1. Initialization and Lifecycle<a class="headerlink" href="#initialization-and-lifecycle" title="Link to this heading">¶</a></h2>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">pccx_ctx</span><span class="w"> </span><span class="n">pccx_ctx_t</span><span class="p">;</span>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;uCA_v1_api.h&quot;</span>
 
-<span class="c1">// Open the device</span>
-<span class="kt">int</span><span class="w">  </span><span class="nf">pccx_open</span><span class="p">(</span><span class="n">pccx_ctx_t</span><span class="w"> </span><span class="o">**</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">device_path</span><span class="p">);</span>
+<span class="c1">// Bring the NPU up and verify the status register responds.</span>
+<span class="c1">// Returns 0 on success, -1 on failure.</span>
+<span class="kt">int</span><span class="w">  </span><span class="nf">uca_init</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
 
-<span class="c1">// Close the device</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">pccx_close</span><span class="p">(</span><span class="n">pccx_ctx_t</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">);</span>
-
-<span class="c1">// Reset the hardware registers</span>
-<span class="kt">int</span><span class="w">  </span><span class="nf">pccx_reset</span><span class="p">(</span><span class="n">pccx_ctx_t</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">);</span>
+<span class="c1">// Park the NPU and release the HAL.</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">uca_deinit</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The API does <strong>not</strong> take a context pointer — a single process talks to
+a single NPU instance, so the HAL keeps its state in a file-scope
+singleton.</p>
+</section>
+<section id="compute-primitives">
+<h2>2. Compute Primitives<a class="headerlink" href="#compute-primitives" title="Link to this heading">¶</a></h2>
+<p>Every compute call <strong>returns immediately</strong> after writing the instruction
+into the CMD_IN FIFO. Use <code class="docutils literal notranslate"><span class="pre">uca_sync</span></code> (§5) to wait for completion.</p>
+<section id="vector-core-uca-gemv">
+<h3>2.1 Vector Core — <code class="docutils literal notranslate"><span class="pre">uca_gemv</span></code><a class="headerlink" href="#vector-core-uca-gemv" title="Link to this heading">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// y = W · x  (INT4 weight × BF16/INT8 activation → BF16 result)</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">uca_gemv</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">dest_reg</span><span class="p">,</span><span class="w">   </span><span class="c1">// 17-bit L2 destination</span>
+<span class="w">              </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">src_addr</span><span class="p">,</span><span class="w">   </span><span class="c1">// 17-bit L2 source (activation)</span>
+<span class="w">              </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">flags</span><span class="p">,</span><span class="w">      </span><span class="c1">// OR of UCA_FLAG_* (see §4.1)</span>
+<span class="w">              </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">size_ptr</span><span class="p">,</span><span class="w">   </span><span class="c1">// 6-bit size descriptor pointer</span>
+<span class="w">              </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">shape_ptr</span><span class="p">,</span><span class="w">  </span><span class="c1">// 6-bit shape descriptor pointer</span>
+<span class="w">              </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">lanes</span><span class="p">);</span><span class="w">     </span><span class="c1">// 5-bit parallel-lane mask (1–4)</span>
 </pre></div>
 </div>
 </section>
-<section id="instruction-encoding">
-<h2>2. Instruction Encoding<a class="headerlink" href="#instruction-encoding" title="Link to this heading">¶</a></h2>
-<p>One encoder helper per opcode.</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// GEMM / GEMV</span>
-<span class="kt">uint64_t</span><span class="w"> </span><span class="nf">pccx_encode_gemm</span><span class="p">(</span>
-<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">dest_reg</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">src_addr</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">flags</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">size_ptr</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">shape_ptr</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">parallel_lane</span><span class="p">);</span>
-
-<span class="kt">uint64_t</span><span class="w"> </span><span class="nf">pccx_encode_gemv</span><span class="p">(</span><span class="w"> </span><span class="cm">/* same signature */</span><span class="w"> </span><span class="p">);</span>
-
-<span class="c1">// MEMCPY</span>
-<span class="kt">uint64_t</span><span class="w"> </span><span class="nf">pccx_encode_memcpy</span><span class="p">(</span>
-<span class="w">    </span><span class="kt">bool</span><span class="w">     </span><span class="n">from_host</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">bool</span><span class="w">     </span><span class="n">to_host</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">dest_addr</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">src_addr</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">aux_addr</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">shape_ptr</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">bool</span><span class="w">     </span><span class="n">async</span><span class="p">);</span>
-
-<span class="c1">// MEMSET</span>
-<span class="kt">uint64_t</span><span class="w"> </span><span class="nf">pccx_encode_memset</span><span class="p">(</span>
-<span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">dest_cache</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">dest_addr</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">a</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">b</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">c</span><span class="p">);</span>
-
-<span class="c1">// CVO</span>
-<span class="kt">uint64_t</span><span class="w"> </span><span class="nf">pccx_encode_cvo</span><span class="p">(</span>
-<span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">func</span><span class="p">,</span><span class="w">       </span><span class="c1">// CVO_EXP, CVO_GELU, ...</span>
-<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">src_addr</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">dst_addr</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">length</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">flags</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">bool</span><span class="w">     </span><span class="n">async</span><span class="p">);</span>
+<section id="matrix-core-uca-gemm">
+<h3>2.2 Matrix Core — <code class="docutils literal notranslate"><span class="pre">uca_gemm</span></code><a class="headerlink" href="#matrix-core-uca-gemm" title="Link to this heading">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// Y = W · X on the 32 × 32 systolic array.</span>
+<span class="c1">// Identical field layout to uca_gemv; differs only in the opcode</span>
+<span class="c1">// routed into the dispatcher.</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">uca_gemm</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">dest_reg</span><span class="p">,</span>
+<span class="w">              </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">src_addr</span><span class="p">,</span>
+<span class="w">              </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">flags</span><span class="p">,</span>
+<span class="w">              </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">size_ptr</span><span class="p">,</span>
+<span class="w">              </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">shape_ptr</span><span class="p">,</span>
+<span class="w">              </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">lanes</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
-<section id="dispatch-and-synchronization">
-<h2>3. Dispatch and Synchronization<a class="headerlink" href="#dispatch-and-synchronization" title="Link to this heading">¶</a></h2>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// Push a single instruction into the CMD_IN FIFO</span>
-<span class="kt">int</span><span class="w"> </span><span class="nf">pccx_dispatch</span><span class="p">(</span><span class="n">pccx_ctx_t</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">instr</span><span class="p">);</span>
-
-<span class="c1">// Batch dispatch</span>
-<span class="kt">int</span><span class="w"> </span><span class="nf">pccx_dispatch_batch</span><span class="p">(</span><span class="n">pccx_ctx_t</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">,</span>
-<span class="w">                        </span><span class="k">const</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="o">*</span><span class="n">instrs</span><span class="p">,</span>
-<span class="w">                        </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="p">);</span>
-
-<span class="c1">// Wait for all async instructions to complete (polling)</span>
-<span class="kt">int</span><span class="w"> </span><span class="nf">pccx_wait_idle</span><span class="p">(</span><span class="n">pccx_ctx_t</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">timeout_ms</span><span class="p">);</span>
-
-<span class="c1">// Read the STAT_OUT register</span>
-<span class="kt">uint32_t</span><span class="w"> </span><span class="nf">pccx_read_status</span><span class="p">(</span><span class="n">pccx_ctx_t</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">);</span>
+<section id="cvo-sfu-uca-cvo">
+<h3>2.3 CVO / SFU — <code class="docutils literal notranslate"><span class="pre">uca_cvo</span></code><a class="headerlink" href="#cvo-sfu-uca-cvo" title="Link to this heading">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// Complex vector operations:</span>
+<span class="c1">//   Softmax     (EXP, REDUCE_SUM, SCALE)</span>
+<span class="c1">//   RMSNorm     (SQRT, RECIP, SCALE)</span>
+<span class="c1">//   Activation  (GELU)</span>
+<span class="c1">//   RoPE        (SIN / COS)</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">uca_cvo</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">cvo_func</span><span class="p">,</span><span class="w">    </span><span class="c1">// UCA_CVO_* (see §4.3)</span>
+<span class="w">             </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">src_addr</span><span class="p">,</span><span class="w">    </span><span class="c1">// 17-bit L2 source</span>
+<span class="w">             </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">dst_addr</span><span class="p">,</span><span class="w">    </span><span class="c1">// 17-bit L2 destination</span>
+<span class="w">             </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">length</span><span class="p">,</span><span class="w">      </span><span class="c1">// element count</span>
+<span class="w">             </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">flags</span><span class="p">,</span><span class="w">       </span><span class="c1">// OR of UCA_CVO_FLAG_*</span>
+<span class="w">             </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">async</span><span class="p">);</span><span class="w">      </span><span class="c1">// 1 = fire-and-forget, 0 = block</span>
 </pre></div>
 </div>
 </section>
-<section id="high-level-helpers">
-<h2>4. High-Level Helpers<a class="headerlink" href="#high-level-helpers" title="Link to this heading">¶</a></h2>
-<p>Common sequences — such as presetting shape / size at the start of a
-layer — are wrapped as helpers.</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// Preset a shape entry in the Constant Cache</span>
-<span class="kt">int</span><span class="w"> </span><span class="nf">pccx_set_shape</span><span class="p">(</span><span class="n">pccx_ctx_t</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">,</span>
-<span class="w">                   </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span>
-<span class="w">                   </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">M</span><span class="p">,</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">K</span><span class="p">);</span>
-
-<span class="c1">// Host → L2 weight load</span>
-<span class="kt">int</span><span class="w"> </span><span class="nf">pccx_load_weights</span><span class="p">(</span><span class="n">pccx_ctx_t</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">,</span>
-<span class="w">                      </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">l2_dest_addr</span><span class="p">,</span>
-<span class="w">                      </span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">host_src</span><span class="p">,</span>
-<span class="w">                      </span><span class="kt">size_t</span><span class="w"> </span><span class="n">nbytes</span><span class="p">);</span>
-
-<span class="c1">// L2 → Host result fetch</span>
-<span class="kt">int</span><span class="w"> </span><span class="nf">pccx_fetch_result</span><span class="p">(</span><span class="n">pccx_ctx_t</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">,</span>
-<span class="w">                      </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">host_dest</span><span class="p">,</span>
-<span class="w">                      </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">l2_src_addr</span><span class="p">,</span>
-<span class="w">                      </span><span class="kt">size_t</span><span class="w"> </span><span class="n">nbytes</span><span class="p">);</span>
+</section>
+<section id="memory-primitives">
+<h2>3. Memory Primitives<a class="headerlink" href="#memory-primitives" title="Link to this heading">¶</a></h2>
+<section id="uca-memcpy">
+<h3>3.1 <code class="docutils literal notranslate"><span class="pre">uca_memcpy</span></code><a class="headerlink" href="#uca-memcpy" title="Link to this heading">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// Route-encoded DMA. The route enum combines source and destination</span>
+<span class="c1">// (see §4.4). Typical use: load a weight tile from host DDR4 into</span>
+<span class="c1">// L2 before a GEMM/GEMV.</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">uca_memcpy</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">route</span><span class="p">,</span><span class="w">       </span><span class="c1">// UCA_ROUTE_*</span>
+<span class="w">                </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">dest_addr</span><span class="p">,</span><span class="w">   </span><span class="c1">// 17-bit destination</span>
+<span class="w">                </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">src_addr</span><span class="p">,</span><span class="w">    </span><span class="c1">// 17-bit source</span>
+<span class="w">                </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">shape_ptr</span><span class="p">,</span><span class="w">   </span><span class="c1">// 6-bit shape descriptor</span>
+<span class="w">                </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">async</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
-<section id="example-a-transformer-ffn-block">
-<h2>5. Example: a Transformer FFN Block<a class="headerlink" href="#example-a-transformer-ffn-block" title="Link to this heading">¶</a></h2>
-<p>A minimal FFN (<code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">W_down</span> <span class="pre">·</span> <span class="pre">GELU(W_up</span> <span class="pre">·</span> <span class="pre">x)</span></code>) looks like this:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// 1) Preset shapes</span>
-<span class="n">pccx_set_shape</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="cm">/*idx*/</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">M</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="o">=</span><span class="mi">4096</span><span class="p">,</span><span class="w"> </span><span class="n">K</span><span class="o">=</span><span class="mi">4096</span><span class="p">);</span><span class="w">   </span><span class="c1">// W_up</span>
-<span class="n">pccx_set_shape</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="cm">/*idx*/</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">M</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="o">=</span><span class="mi">4096</span><span class="p">,</span><span class="w"> </span><span class="n">K</span><span class="o">=</span><span class="mi">4096</span><span class="p">);</span><span class="w">   </span><span class="c1">// W_down</span>
+<section id="uca-memset">
+<h3>3.2 <code class="docutils literal notranslate"><span class="pre">uca_memset</span></code><a class="headerlink" href="#uca-memset" title="Link to this heading">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// Write a shape / size descriptor (up to three 16-bit values) into</span>
+<span class="c1">// one of the two descriptor caches.</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">uca_memset</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">dest_cache</span><span class="p">,</span><span class="w">  </span><span class="c1">// 0 = fmap_shape, 1 = weight_shape</span>
+<span class="w">                </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">dest_addr</span><span class="p">,</span><span class="w">   </span><span class="c1">// 6-bit pointer slot</span>
+<span class="w">                </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w">           </span><span class="c1">// usually M</span>
+<span class="w">                </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w">           </span><span class="c1">// usually N</span>
+<span class="w">                </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">c</span><span class="p">);</span><span class="w">          </span><span class="c1">// usually K</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="constants">
+<h2>4. Constants<a class="headerlink" href="#constants" title="Link to this heading">¶</a></h2>
+<p>The header exposes named constants for every ISA field so application
+code never hard-codes bit patterns.</p>
+<section id="gemv-gemm-flags-6-bit">
+<h3>4.1 GEMV / GEMM flags (6-bit)<a class="headerlink" href="#gemv-gemm-flags-6-bit" title="Link to this heading">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">UCA_FLAG_FINDEMAX</span><span class="w">   </span><span class="c1">// bit 5 — record e_max of the output (softmax)</span>
+<span class="n">UCA_FLAG_ACCM</span><span class="w">       </span><span class="c1">// bit 4 — accumulate into dest (do not overwrite)</span>
+<span class="n">UCA_FLAG_W_SCALE</span><span class="w">    </span><span class="c1">// bit 3 — apply the weight scale during MAC</span>
+</pre></div>
+</div>
+</section>
+<section id="cvo-flags-5-bit">
+<h3>4.2 CVO flags (5-bit)<a class="headerlink" href="#cvo-flags-5-bit" title="Link to this heading">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">UCA_CVO_FLAG_SUB_EMAX</span><span class="w">     </span><span class="c1">// bit 4 — subtract e_max before the op</span>
+<span class="n">UCA_CVO_FLAG_RECIP_SCALE</span><span class="w">  </span><span class="c1">// bit 3 — SCALE uses 1 / scalar</span>
+<span class="n">UCA_CVO_FLAG_ACCM</span><span class="w">         </span><span class="c1">// bit 2 — accumulate into dst</span>
+</pre></div>
+</div>
+</section>
+<section id="cvo-function-codes-4-bit">
+<h3>4.3 CVO function codes (4-bit)<a class="headerlink" href="#cvo-function-codes-4-bit" title="Link to this heading">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">UCA_CVO_EXP</span><span class="w">          </span><span class="c1">// 0x0  element-wise exp(x)            [SFU]</span>
+<span class="n">UCA_CVO_SQRT</span><span class="w">         </span><span class="c1">// 0x1  element-wise sqrt(x)           [SFU]</span>
+<span class="n">UCA_CVO_GELU</span><span class="w">         </span><span class="c1">// 0x2  element-wise GELU(x)           [SFU]</span>
+<span class="n">UCA_CVO_SIN</span><span class="w">          </span><span class="c1">// 0x3  element-wise sin(x)            [CORDIC]</span>
+<span class="n">UCA_CVO_COS</span><span class="w">          </span><span class="c1">// 0x4  element-wise cos(x)            [CORDIC]</span>
+<span class="n">UCA_CVO_REDUCE_SUM</span><span class="w">   </span><span class="c1">// 0x5  sum-reduction → scalar         [SFU + adder]</span>
+<span class="n">UCA_CVO_SCALE</span><span class="w">        </span><span class="c1">// 0x6  element-wise × scalar          [SFU]</span>
+<span class="n">UCA_CVO_RECIP</span><span class="w">        </span><span class="c1">// 0x7  element-wise 1/x               [SFU]</span>
+</pre></div>
+</div>
+</section>
+<section id="memory-routes-8-bit">
+<h3>4.4 Memory routes (8-bit)<a class="headerlink" href="#memory-routes-8-bit" title="Link to this heading">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">UCA_ROUTE_HOST_TO_L2</span><span class="w">       </span><span class="c1">// 0x01  host DDR4 → L2</span>
+<span class="n">UCA_ROUTE_L2_TO_HOST</span><span class="w">       </span><span class="c1">// 0x10  L2 → host DDR4</span>
+<span class="n">UCA_ROUTE_L2_TO_L1_GEMM</span><span class="w">    </span><span class="c1">// 0x12  L2 → GEMM L1 (input stage)</span>
+<span class="n">UCA_ROUTE_L2_TO_L1_GEMV</span><span class="w">    </span><span class="c1">// 0x13  L2 → GEMV L1 (input stage)</span>
+<span class="n">UCA_ROUTE_GEMM_RES_TO_L2</span><span class="w">   </span><span class="c1">// 0x21  GEMM output → L2</span>
+<span class="n">UCA_ROUTE_GEMV_RES_TO_L2</span><span class="w">   </span><span class="c1">// 0x31  GEMV output → L2</span>
+<span class="n">UCA_ROUTE_CVO_RES_TO_L2</span><span class="w">    </span><span class="c1">// 0x41  SFU / CVO output → L2</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="synchronization">
+<h2>5. Synchronization<a class="headerlink" href="#synchronization" title="Link to this heading">¶</a></h2>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// Poll UCA_STAT_BUSY until every issued instruction retires.</span>
+<span class="c1">// Returns 0 when idle, -1 on timeout.</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">uca_sync</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">timeout_us</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The pccx controller is fully decoupled — <code class="docutils literal notranslate"><span class="pre">uca_init</span></code> configures the
+decoder once, after which every <code class="docutils literal notranslate"><span class="pre">uca_*</span></code> issue is independent. Call
+<code class="docutils literal notranslate"><span class="pre">uca_sync</span></code> before reading results back to host memory with
+<code class="docutils literal notranslate"><span class="pre">uca_memcpy(UCA_ROUTE_L2_TO_HOST,</span> <span class="pre">…)</span></code>.</p>
+</section>
+<section id="example-one-ffn-block">
+<h2>6. Example — One FFN Block<a class="headerlink" href="#example-one-ffn-block" title="Link to this heading">¶</a></h2>
+<p>A minimal FFN <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">W_down</span> <span class="pre">·</span> <span class="pre">GELU(W_up</span> <span class="pre">·</span> <span class="pre">x)</span></code> looks like this:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// 0) Bring the NPU up</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">uca_init</span><span class="p">()</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
 
-<span class="c1">// 2) W_up · x  (GEMV)</span>
-<span class="kt">uint64_t</span><span class="w"> </span><span class="n">i0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pccx_encode_gemv</span><span class="p">(</span>
-<span class="w">    </span><span class="cm">/*dest*/</span><span class="w">  </span><span class="mh">0x0100</span><span class="p">,</span><span class="w"> </span><span class="cm">/*src*/</span><span class="w"> </span><span class="mh">0x0000</span><span class="p">,</span>
-<span class="w">    </span><span class="cm">/*flags*/</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="cm">/*size_ptr*/</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="cm">/*shape_ptr*/</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">    </span><span class="cm">/*lane*/</span><span class="w">  </span><span class="mi">0</span><span class="p">);</span>
-<span class="n">pccx_dispatch</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">i0</span><span class="p">);</span>
+<span class="c1">// 1) Preload shape descriptors.</span>
+<span class="c1">//    slot 0: W_up   (M, N, K) = (1, 4096, 4096)</span>
+<span class="c1">//    slot 1: W_down (M, N, K) = (1, 4096, 4096)</span>
+<span class="n">uca_memset</span><span class="p">(</span><span class="cm">/*cache*/</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="cm">/*slot*/</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4096</span><span class="p">,</span><span class="w"> </span><span class="mi">4096</span><span class="p">);</span>
+<span class="n">uca_memset</span><span class="p">(</span><span class="cm">/*cache*/</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="cm">/*slot*/</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4096</span><span class="p">,</span><span class="w"> </span><span class="mi">4096</span><span class="p">);</span>
 
-<span class="c1">// 3) GELU</span>
-<span class="kt">uint64_t</span><span class="w"> </span><span class="n">i1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pccx_encode_cvo</span><span class="p">(</span>
-<span class="w">    </span><span class="n">CVO_GELU</span><span class="p">,</span>
-<span class="w">    </span><span class="cm">/*src*/</span><span class="w">  </span><span class="mh">0x0100</span><span class="p">,</span><span class="w"> </span><span class="cm">/*dst*/</span><span class="w"> </span><span class="mh">0x0200</span><span class="p">,</span>
-<span class="w">    </span><span class="cm">/*len*/</span><span class="w">  </span><span class="mi">4096</span><span class="p">,</span><span class="w"> </span><span class="cm">/*flags*/</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="cm">/*async*/</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span>
-<span class="n">pccx_dispatch</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">i1</span><span class="p">);</span>
+<span class="c1">// 2) W_up · x  → 0x0100 (GEMV)</span>
+<span class="n">uca_gemv</span><span class="p">(</span><span class="cm">/*dest*/</span><span class="w"> </span><span class="mh">0x0100</span><span class="p">,</span><span class="w"> </span><span class="cm">/*src*/</span><span class="w"> </span><span class="mh">0x0000</span><span class="p">,</span>
+<span class="w">         </span><span class="cm">/*flags*/</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="cm">/*size_ptr*/</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="cm">/*shape_ptr*/</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">         </span><span class="cm">/*lanes*/</span><span class="w"> </span><span class="mh">0x0F</span><span class="p">);</span><span class="w">                 </span><span class="c1">// all four cores active</span>
 
-<span class="c1">// 4) W_down · activation (GEMV)</span>
-<span class="kt">uint64_t</span><span class="w"> </span><span class="n">i2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pccx_encode_gemv</span><span class="p">(</span>
-<span class="w">    </span><span class="cm">/*dest*/</span><span class="w">  </span><span class="mh">0x0300</span><span class="p">,</span><span class="w"> </span><span class="cm">/*src*/</span><span class="w"> </span><span class="mh">0x0200</span><span class="p">,</span>
-<span class="w">    </span><span class="cm">/*flags*/</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="cm">/*size_ptr*/</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="cm">/*shape_ptr*/</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">    </span><span class="cm">/*lane*/</span><span class="w">  </span><span class="mi">0</span><span class="p">);</span>
-<span class="n">pccx_dispatch</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">i2</span><span class="p">);</span>
+<span class="c1">// 3) GELU at 0x0100 → 0x0200</span>
+<span class="n">uca_cvo</span><span class="p">(</span><span class="n">UCA_CVO_GELU</span><span class="p">,</span>
+<span class="w">        </span><span class="cm">/*src*/</span><span class="w"> </span><span class="mh">0x0100</span><span class="p">,</span><span class="w"> </span><span class="cm">/*dst*/</span><span class="w"> </span><span class="mh">0x0200</span><span class="p">,</span>
+<span class="w">        </span><span class="cm">/*length*/</span><span class="w"> </span><span class="mi">4096</span><span class="p">,</span>
+<span class="w">        </span><span class="cm">/*flags*/</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="cm">/*async*/</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
 
-<span class="n">pccx_wait_idle</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="cm">/*timeout_ms*/</span><span class="w"> </span><span class="mi">100</span><span class="p">);</span>
+<span class="c1">// 4) W_down · activation → 0x0300</span>
+<span class="n">uca_gemv</span><span class="p">(</span><span class="cm">/*dest*/</span><span class="w"> </span><span class="mh">0x0300</span><span class="p">,</span><span class="w"> </span><span class="cm">/*src*/</span><span class="w"> </span><span class="mh">0x0200</span><span class="p">,</span>
+<span class="w">         </span><span class="cm">/*flags*/</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="cm">/*size_ptr*/</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="cm">/*shape_ptr*/</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">         </span><span class="cm">/*lanes*/</span><span class="w"> </span><span class="mh">0x0F</span><span class="p">);</span>
+
+<span class="c1">// 5) Wait for completion</span>
+<span class="n">uca_sync</span><span class="p">(</span><span class="cm">/*timeout_us*/</span><span class="w"> </span><span class="mi">100000</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
 <section id="error-handling">
-<h2>6. Error Handling<a class="headerlink" href="#error-handling" title="Link to this heading">¶</a></h2>
-<p>Every driver function returns <code class="docutils literal notranslate"><span class="pre">0</span></code> on success or a negative
-errno-compatible code on failure.</p>
-<div class="table-wrapper colwidths-given docutils container">
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 25.0%" />
-<col style="width: 75.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Error</p></th>
-<th class="head"><p>Meaning</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-EBUSY</span></code></p></td>
-<td><p>CMD_IN FIFO is full.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-ETIMEDOUT</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">pccx_wait_idle</span></code> timed out.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-EINVAL</span></code></p></td>
-<td><p>Encode failed (for example, a field overflowed).</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-EIO</span></code></p></td>
-<td><p>AXI transaction failed.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The driver implementation will eventually live under
-<code class="docutils literal notranslate"><span class="pre">codes/v002/sw/</span></code>. The current docs describe the API contract
-up-front.</p>
+<h2>7. Error Handling<a class="headerlink" href="#error-handling" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">uca_init</span></code> and <code class="docutils literal notranslate"><span class="pre">uca_sync</span></code> return <code class="docutils literal notranslate"><span class="pre">0</span></code> on success and <code class="docutils literal notranslate"><span class="pre">-1</span></code> on
+failure. All other <code class="docutils literal notranslate"><span class="pre">uca_*</span></code> calls return <code class="docutils literal notranslate"><span class="pre">void</span></code> — they only push an
+instruction into the CMD_IN FIFO, and failure modes surface through the
+next <code class="docutils literal notranslate"><span class="pre">uca_sync</span></code> (which polls <code class="docutils literal notranslate"><span class="pre">UCA_STAT_*</span></code>).</p>
+<p>Typical failure surfaces:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uca_init</span></code> returns <code class="docutils literal notranslate"><span class="pre">-1</span></code> if the NPU STAT register does not read
+the expected boot pattern.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uca_sync</span></code> returns <code class="docutils literal notranslate"><span class="pre">-1</span></code> if the <code class="docutils literal notranslate"><span class="pre">BUSY</span></code> bit stays asserted past
+<code class="docutils literal notranslate"><span class="pre">timeout_us</span></code>.</p></li>
+<li><p>Field overflows (e.g. address &gt; 17 bits) are silently masked by the
+instruction encoder — keep application code within the documented
+widths.</p></li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p>Instruction encoding: <a class="reference internal" href="../ISA/encoding.html"><span class="doc">Instruction Encoding</span></a></p></li>
+<li><p>Dataflow per opcode: <a class="reference internal" href="../ISA/dataflow.html"><span class="doc">Per-Instruction Dataflow</span></a></p></li>
+<li><p>RTL side of the ISA: <a class="reference internal" href="../RTL/isa_pkg.html"><span class="doc">ISA Type Package</span></a></p></li>
+</ul>
 </div>
 </section>
 </section>
@@ -689,11 +736,27 @@ up-front.</p>
             <ul>
 <li><a class="reference internal" href="#">C API Overview</a><ul>
 <li><a class="reference internal" href="#initialization-and-lifecycle">1. Initialization and Lifecycle</a></li>
-<li><a class="reference internal" href="#instruction-encoding">2. Instruction Encoding</a></li>
-<li><a class="reference internal" href="#dispatch-and-synchronization">3. Dispatch and Synchronization</a></li>
-<li><a class="reference internal" href="#high-level-helpers">4. High-Level Helpers</a></li>
-<li><a class="reference internal" href="#example-a-transformer-ffn-block">5. Example: a Transformer FFN Block</a></li>
-<li><a class="reference internal" href="#error-handling">6. Error Handling</a></li>
+<li><a class="reference internal" href="#compute-primitives">2. Compute Primitives</a><ul>
+<li><a class="reference internal" href="#vector-core-uca-gemv">2.1 Vector Core — <code class="docutils literal notranslate"><span class="pre">uca_gemv</span></code></a></li>
+<li><a class="reference internal" href="#matrix-core-uca-gemm">2.2 Matrix Core — <code class="docutils literal notranslate"><span class="pre">uca_gemm</span></code></a></li>
+<li><a class="reference internal" href="#cvo-sfu-uca-cvo">2.3 CVO / SFU — <code class="docutils literal notranslate"><span class="pre">uca_cvo</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#memory-primitives">3. Memory Primitives</a><ul>
+<li><a class="reference internal" href="#uca-memcpy">3.1 <code class="docutils literal notranslate"><span class="pre">uca_memcpy</span></code></a></li>
+<li><a class="reference internal" href="#uca-memset">3.2 <code class="docutils literal notranslate"><span class="pre">uca_memset</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#constants">4. Constants</a><ul>
+<li><a class="reference internal" href="#gemv-gemm-flags-6-bit">4.1 GEMV / GEMM flags (6-bit)</a></li>
+<li><a class="reference internal" href="#cvo-flags-5-bit">4.2 CVO flags (5-bit)</a></li>
+<li><a class="reference internal" href="#cvo-function-codes-4-bit">4.3 CVO function codes (4-bit)</a></li>
+<li><a class="reference internal" href="#memory-routes-8-bit">4.4 Memory routes (8-bit)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#synchronization">5. Synchronization</a></li>
+<li><a class="reference internal" href="#example-one-ffn-block">6. Example — One FFN Block</a></li>
+<li><a class="reference internal" href="#error-handling">7. Error Handling</a></li>
 </ul>
 </li>
 </ul>

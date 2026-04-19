@@ -350,7 +350,7 @@
 <p class="caption" role="heading"><span class="caption-text">타겟 하드웨어</span></p>
 <ul>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../Devices/index.html">지원 디바이스</a><input aria-label="Toggle navigation of 지원 디바이스" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../Devices/kv260.html">pccx: 병렬 컴퓨트 코어 익스큐터</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../Devices/kv260.html">타겟 하드웨어: Xilinx Kria KV260</a></li>
 </ul>
 </li>
 </ul>
@@ -471,9 +471,6 @@ RMSNorm 된 <span class="math notranslate nohighlight">\(x_{norm}\)</span>. post
     LAuReL --&gt; AddOp
     AddOp --&gt; ScaleOp[&quot;× 1/sqrt(2)&quot;]
     ScaleOp --&gt; FinalOut[&quot;Attention + LAuReL 출력&quot;]
-    style Attn fill:#c8e6c9,stroke:#388e3c
-    style LAuReL fill:#ffccbc,stroke:#d84315
-    style ScaleOp fill:#bbdefb,stroke:#1976d2
     </pre></section>
 <section id="pccx-v002">
 <h3>1.3 pccx v002 매핑<a class="headerlink" href="#pccx-v002" title="Link to this heading">¶</a></h3>
@@ -574,11 +571,6 @@ RMSNorm 된 <span class="math notranslate nohighlight">\(x_{norm}\)</span>. post
     AddPLE --&gt; X1_Out[&quot;업데이트된 shadow stream xs[1..3]&quot;]
     X0_Out --&gt; NextLayer[&quot;다음 레이어&quot;]
     X1_Out --&gt; NextLayer
-    style X0 fill:#a5d6a7,stroke:#2e7d32
-    style MainComputation fill:#a5d6a7,stroke:#2e7d32
-    style X1 fill:#ce93d8,stroke:#6a1b9a
-    style AddPLE fill:#ce93d8,stroke:#6a1b9a
-    style PLE fill:#ffe082,stroke:#ff8f00
     </pre></section>
 <section id="id5">
 <h3>2.3 하드웨어 매핑<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>

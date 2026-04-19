@@ -350,7 +350,7 @@
 <p class="caption" role="heading"><span class="caption-text">타겟 하드웨어</span></p>
 <ul>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../Devices/index.html">지원 디바이스</a><input aria-label="Toggle navigation of 지원 디바이스" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../Devices/kv260.html">pccx: 병렬 컴퓨트 코어 익스큐터</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../Devices/kv260.html">타겟 하드웨어: Xilinx Kria KV260</a></li>
 </ul>
 </li>
 </ul>
@@ -511,17 +511,20 @@
 <td><p>400 MHz</p></td>
 <td><p>MEMSET 으로 설정되는 shape / size 포인터, scale factor 등 상수 저장.</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>Systolic Array (32×16 ×2)</strong></p></td>
+<tr class="row-odd"><td><p><strong>Systolic Array (32 × 32, cascade break &#64; 16 행)</strong></p></td>
 <td><p>400 MHz</p></td>
-<td><p>GEMM 전용 이차원 시스톨릭 어레이. <a class="reference internal" href="gemm_core.html"><span class="doc">GEMM 코어 (시스톨릭 어레이)</span></a> 참조.</p></td>
+<td><p>GEMM 전용 이차원 시스톨릭 어레이. 단일 인스턴스가 두 개의
+32 × 16 서브체인으로 나뉨. <a class="reference internal" href="gemm_core.html"><span class="doc">GEMM 코어 (시스톨릭 어레이)</span></a> 참조.</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>GEMV Core (32×1 ×4)</strong></p></td>
+<tr class="row-even"><td><p><strong>GEMV Core (×4)</strong></p></td>
 <td><p>400 MHz</p></td>
-<td><p>병렬 벡터 MAC + reduction tree. <a class="reference internal" href="gemv_core.html"><span class="doc">GEMV 코어</span></a> 참조.</p></td>
+<td><p>코어 당 32-MAC LUT + 5 단 reduction tree. 총 4 개 코어.
+<a class="reference internal" href="gemv_core.html"><span class="doc">GEMV 코어</span></a> 참조.</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>SFU (32×1 ×4)</strong></p></td>
+<tr class="row-odd"><td><p><strong>SFU (1 개)</strong></p></td>
 <td><p>400 MHz</p></td>
-<td><p>Softmax/GELU/RMSNorm 등 비선형 함수. <a class="reference internal" href="sfu_core.html"><span class="doc">SFU 코어 (Complex Vector Operations)</span></a> 참조.</p></td>
+<td><p>Softmax/GELU/RMSNorm 등 비선형 함수 전용 스칼라 파이프라인
+(BF16 1 원소/clk). <a class="reference internal" href="sfu_core.html"><span class="doc">SFU 코어 (Complex Vector Operations)</span></a> 참조.</p></td>
 </tr>
 </tbody>
 </table>
@@ -554,11 +557,11 @@ AXI HP 포트의 버스트 전송은 평균 burst length × AXI clock 만큼의 
         flowchart LR
   DDR[(Host DDR4)] --&gt;|HP2/HP3| WB[Weight Buffer]
   DDR --&gt;|ACP DMA| L2[(L2 Cache&lt;br/&gt;중앙 URAM)]
-  WB --&gt; SA[Systolic Array&lt;br/&gt;32×16 ×2]
+  WB --&gt; SA[Systolic Array&lt;br/&gt;32×32]
   WB --&gt; GV[GEMV Core&lt;br/&gt;×4]
   L2 --&gt; SA
   L2 --&gt; GV
-  L2 &lt;--&gt; SFU[SFU&lt;br/&gt;×4]
+  L2 &lt;--&gt; SFU[SFU&lt;br/&gt;×1]
   GV &lt;-. 직결 FIFO .-&gt; SFU
   SA --&gt; L2
   GV --&gt; L2

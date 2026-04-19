@@ -7,12 +7,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://hwkim-dev.github.io/pccx/docs/v002/Drivers/api.html" />
 <meta property="og:site_name" content="pccx — Parallel Compute Core eXecutor" />
-<meta property="og:description" content="본 페이지는 v002 드라이버의 C API 설계 개요를 기술합니다. API 는 세 개의 계층으로 구성됩니다. Low-level HAL — AXI-Lite / AXI-HP 레지스터에 직접 접근., ISA Encoder — 64-bit 명령어 조립 도우미., High-level Ops — GEMM/GEMV/CVO/MEMCPY 를 호출하는 편의 API.. ..." />
+<meta property="og:description" content="v002 드라이버의 공개 C API 를 정리합니다. 구현은 codes/v002/sw/driver/ 아래 uCA_v1_api.h/ uCA_v1_hal.h 에 위치합니다. 스택은 두 계층으로 나뉩니다. HAL( uca_hal_*) — AXI-Lite / AXI-HP 레지스터와 CMD_IN / STAT_OUT FIFO 에 직접 접근. 일반 애플리케이션은 이..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="https://hwkim-dev.github.io/pccx/_images/social_previews/summary_docs_v002_Drivers_api_1610909b.png" />
-<meta property="og:image:alt" content="본 페이지는 v002 드라이버의 C API 설계 개요를 기술합니다. API 는 세 개의 계층으로 구성됩니다. Low-level HAL — AXI-Lite / AXI-HP 레지스터에 직접 접근., ISA Encoder — 64-bit 명령어 조립 도우미., High-level Ops — GEMM/GEMV/CVO/MEMCPY 를 호출하는 편의 API.. ..." />
-<meta name="description" content="본 페이지는 v002 드라이버의 C API 설계 개요를 기술합니다. API 는 세 개의 계층으로 구성됩니다. Low-level HAL — AXI-Lite / AXI-HP 레지스터에 직접 접근., ISA Encoder — 64-bit 명령어 조립 도우미., High-level Ops — GEMM/GEMV/CVO/MEMCPY 를 호출하는 편의 API.. ..." />
+<meta property="og:image" content="https://hwkim-dev.github.io/pccx/_images/social_previews/summary_docs_v002_Drivers_api_46dcbcf2.png" />
+<meta property="og:image:alt" content="v002 드라이버의 공개 C API 를 정리합니다. 구현은 codes/v002/sw/driver/ 아래 uCA_v1_api.h/ uCA_v1_hal.h 에 위치합니다. 스택은 두 계층으로 나뉩니다. HAL( uca_hal_*) — AXI-Lite / AXI-HP 레지스터와 CMD_IN / STAT_OUT FIFO 에 직접 접근. 일반 애플리케이션은 이..." />
+<meta name="description" content="v002 드라이버의 공개 C API 를 정리합니다. 구현은 codes/v002/sw/driver/ 아래 uCA_v1_api.h/ uCA_v1_hal.h 에 위치합니다. 스택은 두 계층으로 나뉩니다. HAL( uca_hal_*) — AXI-Lite / AXI-HP 레지스터와 CMD_IN / STAT_OUT FIFO 에 직접 접근. 일반 애플리케이션은 이..." />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="index" title="색인" href="../../../genindex.html"><link rel="search" title="검색" href="../../../search.html"><link rel="next" title="타깃 모델" href="../Models/index.html"><link rel="prev" title="소프트웨어 스택" href="index.html">
         <link rel="canonical" href="https://hwkim-dev.github.io/pccx/docs/v002/Drivers/api.html">
@@ -350,7 +350,7 @@
 <p class="caption" role="heading"><span class="caption-text">타겟 하드웨어</span></p>
 <ul>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../Devices/index.html">지원 디바이스</a><input aria-label="Toggle navigation of 지원 디바이스" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../Devices/kv260.html">pccx: 병렬 컴퓨트 코어 익스큐터</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../Devices/kv260.html">타겟 하드웨어: Xilinx Kria KV260</a></li>
 </ul>
 </li>
 </ul>
@@ -441,177 +441,223 @@
         <article role="main" id="furo-main-content">
           <section id="c-api">
 <h1>C API 개요<a class="headerlink" href="#c-api" title="Link to this heading">¶</a></h1>
-<p>본 페이지는 v002 드라이버의 C API 설계 개요를 기술합니다. API 는 세 개의
-계층으로 구성됩니다.</p>
+<p>v002 드라이버의 공개 C API 를 정리합니다. 구현은
+<code class="docutils literal notranslate"><span class="pre">codes/v002/sw/driver/</span></code> 아래 <code class="docutils literal notranslate"><span class="pre">uCA_v1_api.h</span></code> / <code class="docutils literal notranslate"><span class="pre">uCA_v1_hal.h</span></code> 에
+위치합니다.</p>
+<p>스택은 두 계층으로 나뉩니다.</p>
 <ol class="arabic simple">
-<li><p><strong>Low-level HAL</strong> — AXI-Lite / AXI-HP 레지스터에 직접 접근.</p></li>
-<li><p><strong>ISA Encoder</strong> — 64-bit 명령어 조립 도우미.</p></li>
-<li><p><strong>High-level Ops</strong> — GEMM/GEMV/CVO/MEMCPY 를 호출하는 편의 API.</p></li>
+<li><p><strong>HAL</strong> (<code class="docutils literal notranslate"><span class="pre">uca_hal_*</span></code>) — AXI-Lite / AXI-HP 레지스터와 CMD_IN /
+STAT_OUT FIFO 에 직접 접근. 일반 애플리케이션은 이 계층을 직접
+호출하지 않는다.</p></li>
+<li><p><strong>Public API</strong> (<code class="docutils literal notranslate"><span class="pre">uca_*</span></code>) — “CUDA 대응” 수준의 연산·메모리
+프리미티브. 모든 호출이 64-bit VLIW 명령어를 조립해
+(<a class="reference internal" href="../ISA/encoding.html"><span class="doc">명령어 인코딩</span></a>) HAL 을 통해 발행한다.</p></li>
 </ol>
-<section id="id1">
-<h2>1. 초기화 &amp; 라이프사이클<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">pccx_ctx</span><span class="w"> </span><span class="n">pccx_ctx_t</span><span class="p">;</span>
-
-<span class="c1">// 디바이스 초기화</span>
-<span class="kt">int</span><span class="w">  </span><span class="nf">pccx_open</span><span class="p">(</span><span class="n">pccx_ctx_t</span><span class="w"> </span><span class="o">**</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">device_path</span><span class="p">);</span>
-
-<span class="c1">// 디바이스 종료</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">pccx_close</span><span class="p">(</span><span class="n">pccx_ctx_t</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">);</span>
-
-<span class="c1">// 하드웨어 레지스터 리셋</span>
-<span class="kt">int</span><span class="w">  </span><span class="nf">pccx_reset</span><span class="p">(</span><span class="n">pccx_ctx_t</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">);</span>
-</pre></div>
-</div>
-</section>
-<section id="id2">
-<h2>2. 명령어 인코딩<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
-<p>ISA 의 각 오피코드에 대응하는 인코더 헬퍼가 제공됩니다.</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// GEMM / GEMV</span>
-<span class="kt">uint64_t</span><span class="w"> </span><span class="nf">pccx_encode_gemm</span><span class="p">(</span>
-<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">dest_reg</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">src_addr</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">flags</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">size_ptr</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">shape_ptr</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">parallel_lane</span><span class="p">);</span>
-
-<span class="kt">uint64_t</span><span class="w"> </span><span class="nf">pccx_encode_gemv</span><span class="p">(</span><span class="w"> </span><span class="cm">/* 동일 시그니처 */</span><span class="w"> </span><span class="p">);</span>
-
-<span class="c1">// MEMCPY</span>
-<span class="kt">uint64_t</span><span class="w"> </span><span class="nf">pccx_encode_memcpy</span><span class="p">(</span>
-<span class="w">    </span><span class="kt">bool</span><span class="w">     </span><span class="n">from_host</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">bool</span><span class="w">     </span><span class="n">to_host</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">dest_addr</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">src_addr</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">aux_addr</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">shape_ptr</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">bool</span><span class="w">     </span><span class="n">async</span><span class="p">);</span>
-
-<span class="c1">// MEMSET</span>
-<span class="kt">uint64_t</span><span class="w"> </span><span class="nf">pccx_encode_memset</span><span class="p">(</span>
-<span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">dest_cache</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">dest_addr</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">a</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">b</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">c</span><span class="p">);</span>
-
-<span class="c1">// CVO</span>
-<span class="kt">uint64_t</span><span class="w"> </span><span class="nf">pccx_encode_cvo</span><span class="p">(</span>
-<span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">func</span><span class="p">,</span><span class="w">       </span><span class="c1">// CVO_EXP, CVO_GELU, ...</span>
-<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">src_addr</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">dst_addr</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">length</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">flags</span><span class="p">,</span>
-<span class="w">    </span><span class="kt">bool</span><span class="w">     </span><span class="n">async</span><span class="p">);</span>
-</pre></div>
-</div>
-</section>
-<section id="id3">
-<h2>3. 디스패치 &amp; 동기화<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// 단일 명령어 발행 (CMD_IN FIFO 에 push)</span>
-<span class="kt">int</span><span class="w"> </span><span class="nf">pccx_dispatch</span><span class="p">(</span><span class="n">pccx_ctx_t</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">instr</span><span class="p">);</span>
-
-<span class="c1">// 배치 발행</span>
-<span class="kt">int</span><span class="w"> </span><span class="nf">pccx_dispatch_batch</span><span class="p">(</span><span class="n">pccx_ctx_t</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">,</span>
-<span class="w">                        </span><span class="k">const</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="o">*</span><span class="n">instrs</span><span class="p">,</span>
-<span class="w">                        </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="p">);</span>
-
-<span class="c1">// 비동기 명령어 완료 대기 (폴링)</span>
-<span class="kt">int</span><span class="w"> </span><span class="nf">pccx_wait_idle</span><span class="p">(</span><span class="n">pccx_ctx_t</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">timeout_ms</span><span class="p">);</span>
-
-<span class="c1">// STAT_OUT 레지스터 조회</span>
-<span class="kt">uint32_t</span><span class="w"> </span><span class="nf">pccx_read_status</span><span class="p">(</span><span class="n">pccx_ctx_t</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">);</span>
-</pre></div>
-</div>
-</section>
-<section id="id4">
-<h2>4. 고수준 도우미<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
-<p>빈번한 시퀀스(예: 레이어 시작 시 shape/size 프리셋) 는 헬퍼로 제공됩니다.</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// Constant Cache 의 shape 엔트리 프리셋</span>
-<span class="kt">int</span><span class="w"> </span><span class="nf">pccx_set_shape</span><span class="p">(</span><span class="n">pccx_ctx_t</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">,</span>
-<span class="w">                   </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span>
-<span class="w">                   </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">M</span><span class="p">,</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">K</span><span class="p">);</span>
-
-<span class="c1">// Host → L2 가중치 로딩</span>
-<span class="kt">int</span><span class="w"> </span><span class="nf">pccx_load_weights</span><span class="p">(</span><span class="n">pccx_ctx_t</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">,</span>
-<span class="w">                      </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">l2_dest_addr</span><span class="p">,</span>
-<span class="w">                      </span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">host_src</span><span class="p">,</span>
-<span class="w">                      </span><span class="kt">size_t</span><span class="w"> </span><span class="n">nbytes</span><span class="p">);</span>
-
-<span class="c1">// L2 → Host 결과 회수</span>
-<span class="kt">int</span><span class="w"> </span><span class="nf">pccx_fetch_result</span><span class="p">(</span><span class="n">pccx_ctx_t</span><span class="w"> </span><span class="o">*</span><span class="n">ctx</span><span class="p">,</span>
-<span class="w">                      </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">host_dest</span><span class="p">,</span>
-<span class="w">                      </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">l2_src_addr</span><span class="p">,</span>
-<span class="w">                      </span><span class="kt">size_t</span><span class="w"> </span><span class="n">nbytes</span><span class="p">);</span>
-</pre></div>
-</div>
-</section>
-<section id="transformer-ffn">
-<h2>5. 예제: Transformer FFN 블록<a class="headerlink" href="#transformer-ffn" title="Link to this heading">¶</a></h2>
-<p>FFN 블록 (<code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">W_down</span> <span class="pre">·</span> <span class="pre">GELU(W_up</span> <span class="pre">·</span> <span class="pre">x)</span></code>) 의 간단한 실행 예시:</p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// 1) shape 프리셋</span>
-<span class="n">pccx_set_shape</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="cm">/*idx*/</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">M</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="o">=</span><span class="mi">4096</span><span class="p">,</span><span class="w"> </span><span class="n">K</span><span class="o">=</span><span class="mi">4096</span><span class="p">);</span><span class="w">   </span><span class="c1">// W_up</span>
-<span class="n">pccx_set_shape</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="cm">/*idx*/</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">M</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="o">=</span><span class="mi">4096</span><span class="p">,</span><span class="w"> </span><span class="n">K</span><span class="o">=</span><span class="mi">4096</span><span class="p">);</span><span class="w">   </span><span class="c1">// W_down</span>
-
-<span class="c1">// 2) W_up · x  (GEMV)</span>
-<span class="kt">uint64_t</span><span class="w"> </span><span class="n">i0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pccx_encode_gemv</span><span class="p">(</span>
-<span class="w">    </span><span class="cm">/*dest*/</span><span class="w">  </span><span class="mh">0x0100</span><span class="p">,</span><span class="w"> </span><span class="cm">/*src*/</span><span class="w"> </span><span class="mh">0x0000</span><span class="p">,</span>
-<span class="w">    </span><span class="cm">/*flags*/</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="cm">/*size_ptr*/</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="cm">/*shape_ptr*/</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">    </span><span class="cm">/*lane*/</span><span class="w">  </span><span class="mi">0</span><span class="p">);</span>
-<span class="n">pccx_dispatch</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">i0</span><span class="p">);</span>
-
-<span class="c1">// 3) GELU</span>
-<span class="kt">uint64_t</span><span class="w"> </span><span class="n">i1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pccx_encode_cvo</span><span class="p">(</span>
-<span class="w">    </span><span class="n">CVO_GELU</span><span class="p">,</span>
-<span class="w">    </span><span class="cm">/*src*/</span><span class="w">  </span><span class="mh">0x0100</span><span class="p">,</span><span class="w"> </span><span class="cm">/*dst*/</span><span class="w"> </span><span class="mh">0x0200</span><span class="p">,</span>
-<span class="w">    </span><span class="cm">/*len*/</span><span class="w">  </span><span class="mi">4096</span><span class="p">,</span><span class="w"> </span><span class="cm">/*flags*/</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="cm">/*async*/</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span>
-<span class="n">pccx_dispatch</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">i1</span><span class="p">);</span>
-
-<span class="c1">// 4) W_down · activation (GEMV)</span>
-<span class="kt">uint64_t</span><span class="w"> </span><span class="n">i2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pccx_encode_gemv</span><span class="p">(</span>
-<span class="w">    </span><span class="cm">/*dest*/</span><span class="w">  </span><span class="mh">0x0300</span><span class="p">,</span><span class="w"> </span><span class="cm">/*src*/</span><span class="w"> </span><span class="mh">0x0200</span><span class="p">,</span>
-<span class="w">    </span><span class="cm">/*flags*/</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="cm">/*size_ptr*/</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="cm">/*shape_ptr*/</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">    </span><span class="cm">/*lane*/</span><span class="w">  </span><span class="mi">0</span><span class="p">);</span>
-<span class="n">pccx_dispatch</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">i2</span><span class="p">);</span>
-
-<span class="n">pccx_wait_idle</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="cm">/*timeout_ms*/</span><span class="w"> </span><span class="mi">100</span><span class="p">);</span>
-</pre></div>
-</div>
-</section>
-<section id="id5">
-<h2>6. 에러 처리<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h2>
-<p>모든 드라이버 함수는 <code class="docutils literal notranslate"><span class="pre">0</span></code> 성공, 음수 errno 호환 에러 코드를 반환합니다.</p>
-<div class="table-wrapper colwidths-given docutils container">
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 25.0%" />
-<col style="width: 75.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>에러</p></th>
-<th class="head"><p>의미</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-EBUSY</span></code></p></td>
-<td><p>CMD_IN FIFO full.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-ETIMEDOUT</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">pccx_wait_idle</span></code> 타임아웃.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-EINVAL</span></code></p></td>
-<td><p>인코딩 실패 (예: 필드 오버플로우).</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-EIO</span></code></p></td>
-<td><p>AXI 전송 실패.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <div class="admonition note">
 <p class="admonition-title">참고</p>
-<p>드라이버 구현은 추후 <code class="docutils literal notranslate"><span class="pre">codes/v002/sw/</span></code> 경로에 포함될 예정이며,
-현재 문서는 API 계약을 사전 정의하는 단계입니다.</p>
+<p>API 네임스페이스는 <code class="docutils literal notranslate"><span class="pre">uca_*</span></code> 이며 <code class="docutils literal notranslate"><span class="pre">pccx_*</span></code> 가 아니다. pccx 는
+아키텍처 / 문서 프로젝트 이름이고, uCA (micro Compute
+Architecture) 가 RTL·소프트웨어 계약의 네이밍이다.</p>
+</div>
+<section id="id1">
+<h2>1. 초기화 &amp; 라이프사이클<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;uCA_v1_api.h&quot;</span>
+
+<span class="c1">// NPU 부팅과 STAT 응답 확인. 성공 시 0, 실패 시 -1.</span>
+<span class="kt">int</span><span class="w">  </span><span class="nf">uca_init</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+
+<span class="c1">// NPU 를 안전 상태로 두고 HAL 해제.</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">uca_deinit</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>API 는 <strong>컨텍스트 포인터를 쓰지 않는다</strong> — 한 프로세스가 NPU 하나와
+만 통신하므로 HAL 이 file-scope 싱글턴으로 상태를 보관한다.</p>
+</section>
+<section id="id2">
+<h2>2. 연산 프리미티브<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<p>모든 연산 호출은 CMD_IN FIFO 에 명령어를 기록한 뒤 <strong>즉시 반환</strong> 한다.
+완료를 기다리려면 <code class="docutils literal notranslate"><span class="pre">uca_sync</span></code> (§5) 를 호출한다.</p>
+<section id="vector-core-uca-gemv">
+<h3>2.1 Vector Core — <code class="docutils literal notranslate"><span class="pre">uca_gemv</span></code><a class="headerlink" href="#vector-core-uca-gemv" title="Link to this heading">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// y = W · x  (INT4 가중치 × BF16/INT8 액티베이션 → BF16 결과)</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">uca_gemv</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">dest_reg</span><span class="p">,</span><span class="w">   </span><span class="c1">// 17-bit L2 목적지</span>
+<span class="w">              </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">src_addr</span><span class="p">,</span><span class="w">   </span><span class="c1">// 17-bit L2 소스 (액티베이션)</span>
+<span class="w">              </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">flags</span><span class="p">,</span><span class="w">      </span><span class="c1">// UCA_FLAG_* OR (§4.1)</span>
+<span class="w">              </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">size_ptr</span><span class="p">,</span><span class="w">   </span><span class="c1">// 6-bit size 포인터</span>
+<span class="w">              </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">shape_ptr</span><span class="p">,</span><span class="w">  </span><span class="c1">// 6-bit shape 포인터</span>
+<span class="w">              </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">lanes</span><span class="p">);</span><span class="w">     </span><span class="c1">// 5-bit 병렬 레인 마스크 (1–4)</span>
+</pre></div>
+</div>
+</section>
+<section id="matrix-core-uca-gemm">
+<h3>2.2 Matrix Core — <code class="docutils literal notranslate"><span class="pre">uca_gemm</span></code><a class="headerlink" href="#matrix-core-uca-gemm" title="Link to this heading">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// Y = W · X 를 32 × 32 시스톨릭 어레이에서 수행.</span>
+<span class="c1">// 필드 레이아웃은 uca_gemv 와 동일하며, 디스패처에서 opcode 만 다르게</span>
+<span class="c1">// 라우팅된다.</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">uca_gemm</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">dest_reg</span><span class="p">,</span>
+<span class="w">              </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">src_addr</span><span class="p">,</span>
+<span class="w">              </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">flags</span><span class="p">,</span>
+<span class="w">              </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">size_ptr</span><span class="p">,</span>
+<span class="w">              </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">shape_ptr</span><span class="p">,</span>
+<span class="w">              </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">lanes</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="cvo-sfu-uca-cvo">
+<h3>2.3 CVO / SFU — <code class="docutils literal notranslate"><span class="pre">uca_cvo</span></code><a class="headerlink" href="#cvo-sfu-uca-cvo" title="Link to this heading">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// 비선형 연산:</span>
+<span class="c1">//   Softmax     (EXP, REDUCE_SUM, SCALE)</span>
+<span class="c1">//   RMSNorm     (SQRT, RECIP, SCALE)</span>
+<span class="c1">//   활성화 함수 (GELU)</span>
+<span class="c1">//   RoPE        (SIN / COS)</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">uca_cvo</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">cvo_func</span><span class="p">,</span><span class="w">    </span><span class="c1">// UCA_CVO_* (§4.3)</span>
+<span class="w">             </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">src_addr</span><span class="p">,</span><span class="w">    </span><span class="c1">// 17-bit L2 소스</span>
+<span class="w">             </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">dst_addr</span><span class="p">,</span><span class="w">    </span><span class="c1">// 17-bit L2 목적지</span>
+<span class="w">             </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">length</span><span class="p">,</span><span class="w">      </span><span class="c1">// 원소 개수</span>
+<span class="w">             </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">flags</span><span class="p">,</span><span class="w">       </span><span class="c1">// UCA_CVO_FLAG_* OR</span>
+<span class="w">             </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">async</span><span class="p">);</span><span class="w">      </span><span class="c1">// 1 = fire-and-forget, 0 = block</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id3">
+<h2>3. 메모리 프리미티브<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<section id="uca-memcpy">
+<h3>3.1 <code class="docutils literal notranslate"><span class="pre">uca_memcpy</span></code><a class="headerlink" href="#uca-memcpy" title="Link to this heading">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// 루트 인코딩 DMA. from/to 가 묶인 enum 으로 표현 (§4.4).</span>
+<span class="c1">// 대표 용례: GEMM/GEMV 이전에 호스트 DDR4 → L2 로 가중치 타일 로드.</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">uca_memcpy</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">route</span><span class="p">,</span><span class="w">       </span><span class="c1">// UCA_ROUTE_*</span>
+<span class="w">                </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">dest_addr</span><span class="p">,</span><span class="w">   </span><span class="c1">// 17-bit 목적지</span>
+<span class="w">                </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">src_addr</span><span class="p">,</span><span class="w">    </span><span class="c1">// 17-bit 소스</span>
+<span class="w">                </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">shape_ptr</span><span class="p">,</span><span class="w">   </span><span class="c1">// 6-bit shape 포인터</span>
+<span class="w">                </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">async</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="uca-memset">
+<h3>3.2 <code class="docutils literal notranslate"><span class="pre">uca_memset</span></code><a class="headerlink" href="#uca-memset" title="Link to this heading">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// 2 개의 descriptor 캐시 중 하나에 shape/size (16-bit × 3) 쓰기.</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">uca_memset</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">dest_cache</span><span class="p">,</span><span class="w">  </span><span class="c1">// 0 = fmap_shape, 1 = weight_shape</span>
+<span class="w">                </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">dest_addr</span><span class="p">,</span><span class="w">   </span><span class="c1">// 6-bit 포인터 슬롯</span>
+<span class="w">                </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w">           </span><span class="c1">// 보통 M</span>
+<span class="w">                </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w">           </span><span class="c1">// 보통 N</span>
+<span class="w">                </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">c</span><span class="p">);</span><span class="w">          </span><span class="c1">// 보통 K</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id4">
+<h2>4. 상수 정의<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
+<p>헤더에서 모든 ISA 필드를 상수로 제공하므로, 애플리케이션이 비트 패턴을
+하드코딩할 필요가 없다.</p>
+<section id="gemv-gemm-6-bit">
+<h3>4.1 GEMV / GEMM 플래그 (6-bit)<a class="headerlink" href="#gemv-gemm-6-bit" title="Link to this heading">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">UCA_FLAG_FINDEMAX</span><span class="w">   </span><span class="c1">// bit 5 — 출력 e_max 기록 (softmax 준비)</span>
+<span class="n">UCA_FLAG_ACCM</span><span class="w">       </span><span class="c1">// bit 4 — 결과를 누적 (덮어쓰지 않음)</span>
+<span class="n">UCA_FLAG_W_SCALE</span><span class="w">    </span><span class="c1">// bit 3 — MAC 중 가중치 스케일 적용</span>
+</pre></div>
+</div>
+</section>
+<section id="cvo-5-bit">
+<h3>4.2 CVO 플래그 (5-bit)<a class="headerlink" href="#cvo-5-bit" title="Link to this heading">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">UCA_CVO_FLAG_SUB_EMAX</span><span class="w">     </span><span class="c1">// bit 4 — 연산 전 e_max 차감</span>
+<span class="n">UCA_CVO_FLAG_RECIP_SCALE</span><span class="w">  </span><span class="c1">// bit 3 — SCALE 이 1 / scalar 사용</span>
+<span class="n">UCA_CVO_FLAG_ACCM</span><span class="w">         </span><span class="c1">// bit 2 — 결과를 dst 에 누적</span>
+</pre></div>
+</div>
+</section>
+<section id="cvo-4-bit">
+<h3>4.3 CVO 함수 코드 (4-bit)<a class="headerlink" href="#cvo-4-bit" title="Link to this heading">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">UCA_CVO_EXP</span><span class="w">          </span><span class="c1">// 0x0  element-wise exp(x)            [SFU]</span>
+<span class="n">UCA_CVO_SQRT</span><span class="w">         </span><span class="c1">// 0x1  element-wise sqrt(x)           [SFU]</span>
+<span class="n">UCA_CVO_GELU</span><span class="w">         </span><span class="c1">// 0x2  element-wise GELU(x)           [SFU]</span>
+<span class="n">UCA_CVO_SIN</span><span class="w">          </span><span class="c1">// 0x3  element-wise sin(x)            [CORDIC]</span>
+<span class="n">UCA_CVO_COS</span><span class="w">          </span><span class="c1">// 0x4  element-wise cos(x)            [CORDIC]</span>
+<span class="n">UCA_CVO_REDUCE_SUM</span><span class="w">   </span><span class="c1">// 0x5  sum-reduction → scalar         [SFU + adder]</span>
+<span class="n">UCA_CVO_SCALE</span><span class="w">        </span><span class="c1">// 0x6  element-wise × scalar          [SFU]</span>
+<span class="n">UCA_CVO_RECIP</span><span class="w">        </span><span class="c1">// 0x7  element-wise 1/x               [SFU]</span>
+</pre></div>
+</div>
+</section>
+<section id="bit">
+<h3>4.4 메모리 루트 (8-bit)<a class="headerlink" href="#bit" title="Link to this heading">¶</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">UCA_ROUTE_HOST_TO_L2</span><span class="w">       </span><span class="c1">// 0x01  호스트 DDR4 → L2</span>
+<span class="n">UCA_ROUTE_L2_TO_HOST</span><span class="w">       </span><span class="c1">// 0x10  L2 → 호스트 DDR4</span>
+<span class="n">UCA_ROUTE_L2_TO_L1_GEMM</span><span class="w">    </span><span class="c1">// 0x12  L2 → GEMM L1 (입력)</span>
+<span class="n">UCA_ROUTE_L2_TO_L1_GEMV</span><span class="w">    </span><span class="c1">// 0x13  L2 → GEMV L1 (입력)</span>
+<span class="n">UCA_ROUTE_GEMM_RES_TO_L2</span><span class="w">   </span><span class="c1">// 0x21  GEMM 결과 → L2</span>
+<span class="n">UCA_ROUTE_GEMV_RES_TO_L2</span><span class="w">   </span><span class="c1">// 0x31  GEMV 결과 → L2</span>
+<span class="n">UCA_ROUTE_CVO_RES_TO_L2</span><span class="w">    </span><span class="c1">// 0x41  SFU / CVO 결과 → L2</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id5">
+<h2>5. 동기화<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h2>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// UCA_STAT_BUSY 가 내려갈 때까지 폴링. 정상 idle 이면 0, 타임아웃 -1.</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">uca_sync</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">timeout_us</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>pccx 컨트롤러는 fully decoupled 이므로 <code class="docutils literal notranslate"><span class="pre">uca_init</span></code> 한 번이면 디코더
+설정이 끝나고, 이후 <code class="docutils literal notranslate"><span class="pre">uca_*</span></code> 발행은 서로 독립적이다. 결과를 호스트
+메모리로 돌려받기 전에 <code class="docutils literal notranslate"><span class="pre">uca_sync</span></code> 를 한 번 호출해 레이턴시 파이프
+라인을 비운 뒤 <code class="docutils literal notranslate"><span class="pre">uca_memcpy(UCA_ROUTE_L2_TO_HOST,</span> <span class="pre">…)</span></code> 을 수행한다.</p>
+</section>
+<section id="ffn">
+<h2>6. 예제 — FFN 블록<a class="headerlink" href="#ffn" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">W_down</span> <span class="pre">·</span> <span class="pre">GELU(W_up</span> <span class="pre">·</span> <span class="pre">x)</span></code> 최소 예시:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// 0) NPU 초기화</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">uca_init</span><span class="p">()</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+
+<span class="c1">// 1) shape descriptor 프리셋</span>
+<span class="c1">//    slot 0: W_up   (M, N, K) = (1, 4096, 4096)</span>
+<span class="c1">//    slot 1: W_down (M, N, K) = (1, 4096, 4096)</span>
+<span class="n">uca_memset</span><span class="p">(</span><span class="cm">/*cache*/</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="cm">/*slot*/</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4096</span><span class="p">,</span><span class="w"> </span><span class="mi">4096</span><span class="p">);</span>
+<span class="n">uca_memset</span><span class="p">(</span><span class="cm">/*cache*/</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="cm">/*slot*/</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4096</span><span class="p">,</span><span class="w"> </span><span class="mi">4096</span><span class="p">);</span>
+
+<span class="c1">// 2) W_up · x  → 0x0100 (GEMV)</span>
+<span class="n">uca_gemv</span><span class="p">(</span><span class="cm">/*dest*/</span><span class="w"> </span><span class="mh">0x0100</span><span class="p">,</span><span class="w"> </span><span class="cm">/*src*/</span><span class="w"> </span><span class="mh">0x0000</span><span class="p">,</span>
+<span class="w">         </span><span class="cm">/*flags*/</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="cm">/*size_ptr*/</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="cm">/*shape_ptr*/</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">         </span><span class="cm">/*lanes*/</span><span class="w"> </span><span class="mh">0x0F</span><span class="p">);</span><span class="w">                 </span><span class="c1">// 4 개 코어 모두 활성</span>
+
+<span class="c1">// 3) 0x0100 에서 GELU → 0x0200</span>
+<span class="n">uca_cvo</span><span class="p">(</span><span class="n">UCA_CVO_GELU</span><span class="p">,</span>
+<span class="w">        </span><span class="cm">/*src*/</span><span class="w"> </span><span class="mh">0x0100</span><span class="p">,</span><span class="w"> </span><span class="cm">/*dst*/</span><span class="w"> </span><span class="mh">0x0200</span><span class="p">,</span>
+<span class="w">        </span><span class="cm">/*length*/</span><span class="w"> </span><span class="mi">4096</span><span class="p">,</span>
+<span class="w">        </span><span class="cm">/*flags*/</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="cm">/*async*/</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+
+<span class="c1">// 4) W_down · activation → 0x0300</span>
+<span class="n">uca_gemv</span><span class="p">(</span><span class="cm">/*dest*/</span><span class="w"> </span><span class="mh">0x0300</span><span class="p">,</span><span class="w"> </span><span class="cm">/*src*/</span><span class="w"> </span><span class="mh">0x0200</span><span class="p">,</span>
+<span class="w">         </span><span class="cm">/*flags*/</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="cm">/*size_ptr*/</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="cm">/*shape_ptr*/</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">         </span><span class="cm">/*lanes*/</span><span class="w"> </span><span class="mh">0x0F</span><span class="p">);</span>
+
+<span class="c1">// 5) 완료 대기</span>
+<span class="n">uca_sync</span><span class="p">(</span><span class="cm">/*timeout_us*/</span><span class="w"> </span><span class="mi">100000</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h2>7. 에러 처리<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">uca_init</span></code> 와 <code class="docutils literal notranslate"><span class="pre">uca_sync</span></code> 는 성공 시 <code class="docutils literal notranslate"><span class="pre">0</span></code>, 실패 시 <code class="docutils literal notranslate"><span class="pre">-1</span></code> 을
+반환한다. 나머지 <code class="docutils literal notranslate"><span class="pre">uca_*</span></code> 호출은 <code class="docutils literal notranslate"><span class="pre">void</span></code> 이며, CMD_IN FIFO 에
+명령어를 푸시하는 동작만 수행한다. 실제 실패 상황은 다음
+<code class="docutils literal notranslate"><span class="pre">uca_sync</span></code> 호출에서 <code class="docutils literal notranslate"><span class="pre">UCA_STAT_*</span></code> 비트로 드러난다.</p>
+<p>대표 실패 패턴:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uca_init</span></code> 가 STAT 레지스터에서 기대하는 부팅 패턴을 읽지 못하면
+<code class="docutils literal notranslate"><span class="pre">-1</span></code> 반환.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uca_sync</span></code> 가 <code class="docutils literal notranslate"><span class="pre">BUSY</span></code> 비트를 <code class="docutils literal notranslate"><span class="pre">timeout_us</span></code> 동안 해제하지 못하면
+<code class="docutils literal notranslate"><span class="pre">-1</span></code> 반환.</p></li>
+<li><p>필드 오버플로 (예: 주소가 17-bit 를 초과) 는 인코더가 단순 마스킹
+하므로, 애플리케이션이 문서화된 비트 폭을 스스로 지켜야 한다.</p></li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">더 보기</p>
+<ul class="simple">
+<li><p>명령어 인코딩: <a class="reference internal" href="../ISA/encoding.html"><span class="doc">명령어 인코딩</span></a></p></li>
+<li><p>opcode 별 dataflow: <a class="reference internal" href="../ISA/dataflow.html"><span class="doc">명령어별 데이터플로우</span></a></p></li>
+<li><p>ISA 의 RTL 측: <a class="reference internal" href="../RTL/isa_pkg.html"><span class="doc">ISA 타입 패키지</span></a></p></li>
+</ul>
 </div>
 </section>
 </section>
@@ -685,11 +731,27 @@
             <ul>
 <li><a class="reference internal" href="#">C API 개요</a><ul>
 <li><a class="reference internal" href="#id1">1. 초기화 &amp; 라이프사이클</a></li>
-<li><a class="reference internal" href="#id2">2. 명령어 인코딩</a></li>
-<li><a class="reference internal" href="#id3">3. 디스패치 &amp; 동기화</a></li>
-<li><a class="reference internal" href="#id4">4. 고수준 도우미</a></li>
-<li><a class="reference internal" href="#transformer-ffn">5. 예제: Transformer FFN 블록</a></li>
-<li><a class="reference internal" href="#id5">6. 에러 처리</a></li>
+<li><a class="reference internal" href="#id2">2. 연산 프리미티브</a><ul>
+<li><a class="reference internal" href="#vector-core-uca-gemv">2.1 Vector Core — <code class="docutils literal notranslate"><span class="pre">uca_gemv</span></code></a></li>
+<li><a class="reference internal" href="#matrix-core-uca-gemm">2.2 Matrix Core — <code class="docutils literal notranslate"><span class="pre">uca_gemm</span></code></a></li>
+<li><a class="reference internal" href="#cvo-sfu-uca-cvo">2.3 CVO / SFU — <code class="docutils literal notranslate"><span class="pre">uca_cvo</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id3">3. 메모리 프리미티브</a><ul>
+<li><a class="reference internal" href="#uca-memcpy">3.1 <code class="docutils literal notranslate"><span class="pre">uca_memcpy</span></code></a></li>
+<li><a class="reference internal" href="#uca-memset">3.2 <code class="docutils literal notranslate"><span class="pre">uca_memset</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id4">4. 상수 정의</a><ul>
+<li><a class="reference internal" href="#gemv-gemm-6-bit">4.1 GEMV / GEMM 플래그 (6-bit)</a></li>
+<li><a class="reference internal" href="#cvo-5-bit">4.2 CVO 플래그 (5-bit)</a></li>
+<li><a class="reference internal" href="#cvo-4-bit">4.3 CVO 함수 코드 (4-bit)</a></li>
+<li><a class="reference internal" href="#bit">4.4 메모리 루트 (8-bit)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5">5. 동기화</a></li>
+<li><a class="reference internal" href="#ffn">6. 예제 — FFN 블록</a></li>
+<li><a class="reference internal" href="#id6">7. 에러 처리</a></li>
 </ul>
 </li>
 </ul>

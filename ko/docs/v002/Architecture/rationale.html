@@ -350,7 +350,7 @@
 <p class="caption" role="heading"><span class="caption-text">타겟 하드웨어</span></p>
 <ul>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../Devices/index.html">지원 디바이스</a><input aria-label="Toggle navigation of 지원 디바이스" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../Devices/kv260.html">pccx: 병렬 컴퓨트 코어 익스큐터</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../Devices/kv260.html">타겟 하드웨어: Xilinx Kria KV260</a></li>
 </ul>
 </li>
 </ul>
@@ -576,13 +576,11 @@ v002 의 경우: 400 MHz × 2 MAC/DSP, 그리고 HP 포트가 250 MHz × (HP2+HP
     HP3[AXI HP3] --&gt; BUF
   end
   subgraph core[내부 400 MHz 도메인]
-    BUF --&gt;|broadcast| SA1[Systolic Array #1&lt;br/&gt;32×16, 1 DSP = 2 MAC]
-    BUF --&gt;|broadcast| SA2[Systolic Array #2&lt;br/&gt;32×16, 1 DSP = 2 MAC]
-    SA1 --&gt; ACC[Result Accumulator&lt;br/&gt;819 GMAC/s peak]
-    SA2 --&gt; ACC
+    BUF --&gt;|broadcast| SA[Systolic Array&lt;br/&gt;32×32 · 1 DSP = 2 MAC&lt;br/&gt;cascade break &#64; 16 행]
+    SA --&gt; ACC[Result Accumulator&lt;br/&gt;819 GMAC/s peak]
   end
-    </pre><p>두 시스톨릭 어레이가 <strong>각각 32 × 16 × 2 = 1,024 MAC/clk</strong> 을 수행하므로,
-합산 2,048 MAC/clk × 400 MHz = <strong>819 GMAC/s</strong> 이론 피크가 산출됩니다.</p>
+    </pre><p>32 × 32 단일 격자가 <strong>1,024 PE × 2 MAC = 2,048 MAC/clk</strong> 을 수행하고,
+400 MHz 로 동작하여 <strong>819 GMAC/s</strong> 이론 피크가 산출됩니다.</p>
 </section>
 </section>
 <section id="id3">

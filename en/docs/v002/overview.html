@@ -561,7 +561,8 @@ improvement are covered in <a class="reference internal" href="Architecture/rati
 </tr>
 <tr class="row-odd"><td><p>Core composition</p></td>
 <td><p>Matrix + Vector + CVO (blurred boundaries)</p></td>
-<td><p>Matrix + <strong>GEMV 32×1 × 4</strong> + <strong>SFU 32×1 × 4</strong></p></td>
+<td><p>Matrix (32 × 32 systolic) + <strong>4 × 32-MAC GEMV cores</strong> +
+<strong>1 BF16-scalar SFU</strong></p></td>
 </tr>
 <tr class="row-even"><td><p>HP port layout</p></td>
 <td><p>One SA mapped to one port (250 MHz ceiling)</p></td>

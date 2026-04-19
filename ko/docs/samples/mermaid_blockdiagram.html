@@ -350,7 +350,7 @@
 <p class="caption" role="heading"><span class="caption-text">타겟 하드웨어</span></p>
 <ul>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../Devices/index.html">지원 디바이스</a><input aria-label="Toggle navigation of 지원 디바이스" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../Devices/kv260.html">pccx: 병렬 컴퓨트 코어 익스큐터</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Devices/kv260.html">타겟 하드웨어: Xilinx Kria KV260</a></li>
 </ul>
 </li>
 </ul>
@@ -446,15 +446,15 @@
 <pre  class="mermaid">
         flowchart LR
     HOST[Host CPU] -- AXI-Lite --&gt; CTRL[NPU Controller]
-    CTRL --&gt; GEMM[GEMM Core&lt;br/&gt;32×16×2]
-    CTRL --&gt; GEMV[GEMV Core&lt;br/&gt;4 lanes × 8 MAC]
+    CTRL --&gt; GEMM[GEMM Core&lt;br/&gt;32×32 · 2-MAC DSP]
+    CTRL --&gt; GEMV[GEMV Core&lt;br/&gt;4 × 32-MAC]
     CTRL --&gt; SFU[SFU / CVO]
     CTRL --&gt; DMA[DMA]
     GEMM &lt;-- HP0/HP1 --&gt; DDR[(DDR4)]
     GEMV &lt;-- HP2/HP3 --&gt; DDR
     DMA  &lt;-- ACP    --&gt; DDR
     GEMV -. 직결 FIFO .-&gt; SFU
-    GEMM --&gt; L2[(공유 L2&lt;br/&gt;URAM ~1.5 MB)]
+    GEMM --&gt; L2[(공유 L2&lt;br/&gt;URAM 1.75 MB)]
     GEMV --&gt; L2
     SFU  --&gt; L2
     </pre><p>렌더 서비스 없이 바로 그려져야 정상입니다. 다이어그램 박스가 비어 있으면
