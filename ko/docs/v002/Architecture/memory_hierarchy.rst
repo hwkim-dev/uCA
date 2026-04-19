@@ -15,7 +15,7 @@ L1 / Constant Cache → PE 레지스터** 의 4 단 계층으로 구성됩니다
        HP["AXI HP2 / HP3<br/>256 bit/clk × 2"]
      end
      subgraph core["내부 400 MHz"]
-       WB["Weight Buffer<br/>BRAM FIFO"]
+       WB["Weight Buffer<br/>URAM FIFO"]
        L2[("L2 Cache<br/>URAM ~1.75 MB")]
        L1["L1 Cache<br/>코어 로컬 BRAM"]
        CC["Constant Cache<br/>BRAM"]
@@ -62,9 +62,9 @@ L1 / Constant Cache → PE 레지스터** 의 4 단 계층으로 구성됩니다
      - 256 bit × 2 / clk (양측 슬라이스)
      - 액티베이션, KV 캐시, 중간 결과
    * - **Weight Buffer**
-     - BRAM (FIFO)
-     - ~128 KB
-     - 256 bit / clk × 2 HP 포트
+     - URAM (FIFO)
+     - 4 × 64 KB (HP 포트 당 4096 깊이)
+     - HP 포트 당 128 bit/clk @ 250 MHz
      - INT4 가중치 스트림
    * - **Host DDR4**
      - 외부 DRAM
