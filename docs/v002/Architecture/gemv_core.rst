@@ -43,7 +43,8 @@ weight matrix**.
    * - Per-core dimensions
      - **32 (K) × 1 (M)**
    * - Number of cores
-     - **4** (per slice; 2 slices total — upper and lower)
+     - **4 total** (``VecPipelineCnt = 4`` in ``device_pkg.sv``; split 2
+       per slice across upper / lower halves of the floorplan)
    * - Per-core multiply width
      - **32 MAC / clk** (INT4 × BF16, LUT-based pre-computation)
    * - Stage-1 accumulator DSPs
