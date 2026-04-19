@@ -23,8 +23,9 @@ cache, and streams accumulated results to the post-processor.
 2. Vector Core — GEMV Top
 ==========================
 
-``GEMV_top.sv`` instantiates 4 parallel GEMV lanes, each with an 8-lane
-MAC pipeline and a 3-stage reduction tree. Weights stream from HP2/HP3.
+``GEMV_top.sv`` instantiates 4 parallel GEMV cores. Each core has a
+32-wide LUT-based MAC and a 5-stage reduction tree (Stage 1 uses 16
+DSP48E2 slices; Stages 2–5 are LUT adders). Weights stream from HP2/HP3.
 
 .. literalinclude:: ../../../codes/v002/hw/rtl/VEC_CORE/GEMV_top.sv
    :language: systemverilog
