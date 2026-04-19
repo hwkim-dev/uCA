@@ -47,7 +47,7 @@
 1. Dispatcher 가 포인터 조회 → GEMV 코어별 shape 분배.
 2. Weight Buffer → 4 개 GEMV 코어로 **행 단위 분할** 스트리밍.
 3. L2 Cache → GEMV 코어의 L1 Cache 로 액티베이션 프리로드.
-4. 코어 내부 8 레인 MAC + 3 단 reduction tree → 스칼라 결과.
+4. 코어 내부 32 레인 LUT 기반 MAC + 5 단 reduction tree → 스칼라 결과.
 5. Post-Process (scale, bias) → L2 Cache 또는 SFU 직결.
 
 3. MEMCPY
