@@ -81,7 +81,8 @@ to **prevent data starvation** in the compute cores.
 **Goal**: the HP ports must deliver enough weight bandwidth to feed the
 GEMM systolic array each cycle.
 
-- Systolic array: **32 × 16 × 2 = 1,024 DSP** at 400 MHz.
+- Systolic array: **32 × 32 = 1,024 DSP** at 400 MHz (one grid, cascade
+  split at row 16 into two 32 × 16 sub-chains).
 - With W4A8 dual-channel packing, **1 DSP = 2 MAC**, so 2,048 MAC/clk.
 - Weight demand: 2,048 × 4 bit = **8,192 bit/clk @ 400 MHz**.
 - Supply: 256 bit/clk each on HP0 / HP1 at 250 MHz, i.e., about

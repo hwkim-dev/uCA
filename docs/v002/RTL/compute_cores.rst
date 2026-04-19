@@ -10,9 +10,10 @@ Compute Core Modules
 1. Matrix Core — Systolic Top
 ==============================
 
-``GEMM_systolic_top.sv`` wraps the 32 × 16 × 2 systolic array. It
-receives weight tiles from HP0/HP1 and activation rows from the L2
-cache, and streams accumulated results to the post-processor.
+``GEMM_systolic_top.sv`` wraps the 32 × 32 systolic array (cascade
+split at row 16 into two 32 × 16 sub-chains). It receives weight tiles
+from HP0/HP1 and activation rows from the L2 cache, and streams
+accumulated results to the post-processor.
 
 .. literalinclude:: ../../../codes/v002/hw/rtl/MAT_CORE/GEMM_systolic_top.sv
    :language: systemverilog

@@ -7,7 +7,7 @@ in `conf_common.py`.
 ```{mermaid}
 flowchart LR
     HOST[Host CPU] -- AXI-Lite --> CTRL[NPU Controller]
-    CTRL --> GEMM[GEMM Core<br/>32×16×2 · 2-MAC DSP]
+    CTRL --> GEMM[GEMM Core<br/>32×32 · 2-MAC DSP]
     CTRL --> GEMV[GEMV Core<br/>4 × 32-MAC]
     CTRL --> SFU[SFU / CVO]
     CTRL --> DMA[DMA]

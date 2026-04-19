@@ -3,9 +3,10 @@ GEMM Core (Systolic Array)
 =============================
 
 The GEMM core handles the large matrix-matrix multiplications that
-dominate the **prefill** stage of a Transformer. pccx v002 places **two
-32 × 16 2D systolic arrays** side by side, yielding a theoretical peak of
-**819 GMAC/s at 400 MHz**.
+dominate the **prefill** stage of a Transformer. pccx v002 uses **one
+32 × 32 2D systolic array** whose accumulation cascade is broken at
+row 16, giving two **32 × 16** sub-chains that share the same physical
+grid and deliver a theoretical peak of **819 GMAC/s at 400 MHz**.
 
 .. note::
 
@@ -37,18 +38,17 @@ GEMM computes the product of a **Weight (N × N)** matrix and an
 
    * - Parameter
      - Value
-   * - Array dimensions
-     - **32 (M) × 16 (K)**
-   * - Number of arrays
-     - **2** (dual array)
+   * - Physical grid
+     - **32 (M) × 32 (K)**  → **1,024 PEs**
+   * - Cascade break
+     - at **row 16** → two 32 × 16 sub-chains (``GEMM_systolic_array.sv``
+       instantiates ``GEMM_dsp_unit`` with ``BREAK_CASCADE=1`` there)
    * - DSP per PE
      - **1** (DSP48E2)
    * - MAC / clk per PE
      - **2** (dual-channel bit packing, see :doc:`dsp48e2_w4a8`)
-   * - Total MAC / clk per array
-     - **32 × 16 × 2 = 1,024**
-   * - Total MAC / clk (× 2 arrays)
-     - **2,048**
+   * - Total MAC / clk
+     - **1,024 PE × 2 MAC = 2,048**
    * - Peak throughput
      - **2,048 × 400 MHz = 819 GMAC/s**
 
@@ -95,7 +95,7 @@ Rather than re-reading weights from the HP ports for every tile, we
      subgraph Host[Host DDR4]
        W[Weights INT4]
      end
-     WB[Weight Buffer<br/>URAM FIFO] -->|staggered| PE[(PE Grid<br/>32×16)]
+     WB[Weight Buffer<br/>URAM FIFO] -->|staggered| PE[(PE Grid<br/>32×32 · cascade break @ row 16)]
      L2[L2 Cache<br/>URAM] -->|activations INT8| PE
      PE -->|partial sums| RA[Result Accumulator]
      RA -->|scale / requant| L2
@@ -197,17 +197,22 @@ parameters.
    * - Parameter
      - KV260 default
      - Meaning
-   * - ``MAT_ROWS``
+   * - ``ARRAY_SIZE_H``
      - 32
-     - Number of PEs in the systolic array's M direction.
-   * - ``MAT_COLS``
-     - 16
-     - Number of PEs in the K direction. Physical size, independent of the
+     - PEs in the weight / M direction (``npu_arch.svh``).
+   * - ``ARRAY_SIZE_V``
+     - 32
+     - PEs in the activation / K direction. Independent of the
        safe-accumulation limit.
-   * - ``MAT_INSTANCES``
-     - 2
-     - Number of array instances. Placed on the right side of the
-       floorplan.
+   * - ``BREAK_CASCADE`` row
+     - 16
+     - Fixed inside ``GEMM_systolic_array.sv``. Splits the DSP48E2 P
+       cascade in half so the two 16-row sub-chains each stay within
+       the cascade length budget.
+   * - ``MatPipelineCnt``
+     - 1
+     - One ``GEMM_systolic_top`` instance at the top level
+       (``device_pkg.sv``).
 
-On KV260 the 32 × 16 × 2 configuration consumes 1,024 DSP48E2 slices —
-about 82% of the device's 1,248-slice budget.
+On KV260 the 32 × 32 grid consumes **1,024 DSP48E2 slices** — about 82 %
+of the device's 1,248-slice budget.
