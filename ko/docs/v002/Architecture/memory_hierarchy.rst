@@ -16,7 +16,7 @@ L1 / Constant Cache → PE 레지스터** 의 4 단 계층으로 구성됩니다
      end
      subgraph core["내부 400 MHz"]
        WB["Weight Buffer<br/>BRAM FIFO"]
-       L2[("L2 Cache<br/>URAM ~1.5 MB")]
+       L2[("L2 Cache<br/>URAM ~1.75 MB")]
        L1["L1 Cache<br/>코어 로컬 BRAM"]
        CC["Constant Cache<br/>BRAM"]
        L0["L0 Accumulator<br/>DSP48E2 P-reg"]
@@ -58,7 +58,7 @@ L1 / Constant Cache → PE 레지스터** 의 4 단 계층으로 구성됩니다
      - ISA 의 shape/size 포인터, scale factor
    * - **L2 Cache**
      - URAM
-     - ~1.5 MB (96 URAM)
+     - **1.75 MB** (114,688 × 128-bit; 64 URAM 중 ~50 개 사용)
      - 256 bit × 2 / clk (양측 슬라이스)
      - 액티베이션, KV 캐시, 중간 결과
    * - **Weight Buffer**
