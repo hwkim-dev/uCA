@@ -85,8 +85,9 @@ GEMM systolic array each cycle.
   split at row 16 into two 32 × 16 sub-chains).
 - With W4A8 dual-channel packing, **1 DSP = 2 MAC**, so 2,048 MAC/clk.
 - Weight demand: 2,048 × 4 bit = **8,192 bit/clk @ 400 MHz**.
-- Supply: 256 bit/clk each on HP0 / HP1 at 250 MHz, i.e., about
-  **128 bit/clk @ 400 MHz** equivalent.
+- Supply: HP0 + HP1 deliver **2 × 128 bit/clk @ 250 MHz** (= 64 Gbit/s
+  total raw), which normalises to **~160 bit/clk @ 400 MHz** downstream
+  of the CDC FIFO.
 
 The gap is closed by **weight reuse (Weight Stationary)**: the GEMM
 systolic array preloads weights once and reuses them for hundreds to
@@ -99,10 +100,12 @@ thousands of cycles; the Weight Buffer only prefetches. See
 **Goal**: L2 cache must satisfy concurrent activation reads from GEMM,
 GEMV, and SFU.
 
-- L2 cache ports: each slice owns independent read / write ports
-  (**dual-port URAM**).
-- Peak slice-side demand: GEMV 32×1 × 4 cores = 128 INT8 element/clk. A
-  256 bit/clk port supplies this comfortably.
+- L2 cache ports: **dual-port URAM** — ACP DMA on Port A, NPU compute
+  on Port B, both 128-bit wide per cycle.
+- Peak slice-side demand: 4 GEMV cores × 32 INT8 elements/clk = 128
+  INT8 elem/clk total. A single 128-bit URAM read supplies 16 INT8
+  elements per cycle, so the GEMV broadcast path (activation is reused
+  across all 4 cores) works within a single port.
 
 2.3 Host ↔ Device Path
 ----------------------
