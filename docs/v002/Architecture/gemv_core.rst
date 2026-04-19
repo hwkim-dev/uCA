@@ -44,10 +44,12 @@ weight matrix**.
      - **32 (K) × 1 (M)**
    * - Number of cores
      - **4** (per slice; 2 slices total — upper and lower)
-   * - Pipeline width
-     - **8 MAC** (8 DSP48E2 lanes)
+   * - Per-core multiply width
+     - **32 MAC / clk** (INT4 × BF16, LUT-based pre-computation)
+   * - Stage-1 accumulator DSPs
+     - **16 DSP48E2** per core (32 partial products → 16 pair-sums)
    * - Reduction tree
-     - **3 stages** (8 → 4 → 2 → 1)
+     - **5 stages** (32 → 16 → 8 → 4 → 2 → 1)
    * - Peak throughput
      - **32 MAC × 4 cores × 400 MHz = 51.2 GMAC/s**
 
@@ -60,10 +62,11 @@ weight matrix**.
    :alt: GEMV core pipeline and reduction tree
 
    **Figure GEMV-Core.** The **Pre-Process** block dequantizes one
-   activation row and one weight column, then fans the data out to 8
-   pipelined DSP lanes. Each lane's result feeds a 3-stage reduction
-   adder tree that collapses to a scalar; the **Post-Process** block then
-   applies scale and bias and writes back to the REGISTER.
+   activation row and one weight column, then 32 LUT-based multipliers
+   compute ``W × A`` in a single cycle. The 32 partial products feed a
+   5-stage reduction adder tree (Stage 1: 16 DSP48E2 slices; Stages 2–5:
+   LUT adders) that collapses to a scalar. The **Post-Process** block
+   finally applies scale / bias and writes the result into the REGISTER.
 
 3.1 Weight Streaming
 ---------------------
@@ -85,34 +88,33 @@ cores **broadcast** the same vector among themselves.
 
 1. Preload an activation tile from L2 into the per-core L1 cache.
 2. **Pre-Process** dequantizes INT8 → BF16 and applies the scale.
-3. 8 MAC units execute ``W × A`` in parallel.
+3. 32 LUT-based multipliers execute ``W × A`` in parallel in a single
+   clock. Because ``W`` is INT4, the 16 possible ``A × w`` products are
+   pre-computed in the LUT; the actual weight bits only *select* the
+   matching entry.
 
 3.3 Reduction Tree
 -------------------
 
-The 8 MAC results collapse through a 3-stage adder tree, with pipeline
-registers between stages for timing closure.
+Each core's 32 partial products collapse to a single scalar through a
+5-stage adder tree, with a pipeline register between every stage for
+400 MHz closure.
 
 .. mermaid::
 
    flowchart TB
-     M0([MAC₀]) --> R0a((+))
-     M1([MAC₁]) --> R0a
-     M2([MAC₂]) --> R0b((+))
-     M3([MAC₃]) --> R0b
-     M4([MAC₄]) --> R0c((+))
-     M5([MAC₅]) --> R0c
-     M6([MAC₆]) --> R0d((+))
-     M7([MAC₇]) --> R0d
-     R0a --> R1a((+))
-     R0b --> R1a
-     R0c --> R1b((+))
-     R0d --> R1b
-     R1a --> R2((+))
-     R1b --> R2
-     R2 --> OUT[/Scalar/]
+     MAC["32 × partial products<br/>(LUT-based W × A)"]
+         --> S1["Stage 1 — DSP48E2<br/>16 × (a + b)<br/>32 → 16"]
+     S1  --> S2["Stage 2 — LUT<br/>16 → 8"]
+     S2  --> S3["Stage 3 — LUT<br/>8 → 4"]
+     S3  --> S4["Stage 4 — LUT<br/>4 → 2"]
+     S4  --> S5["Stage 5 — LUT<br/>2 → 1"]
+     S5  --> OUT[/Scalar/]
 
-The implementation inherits from v001's ``GEMV_reduction.sv`` and
+Stage 1 uses the DSP48E2 ``A:B + C`` (ONE48) mode purely to add two
+adjacent partial products (16 DSP slices per core). Stages 2–5 use
+LUT-based adders to keep the DSP budget small. The implementation
+inherits from v001's ``GEMV_reduction.sv`` and
 ``GEMV_reduction_branch.sv``.
 
 3.4 Accumulation & Post-Processing
@@ -148,10 +150,17 @@ the partition axis.
 5. Embedded Lookup Table
 =========================
 
-Each GEMV core embeds a **16-entry LUT** dedicated to W4 dequantization.
+The GEMV core fuses W4 dequantization and the multiply into a single LUT
+pre-computation.
 
-- Reuses ``GEMV_generate_lut.sv`` from v001.
-- Maps a 4-bit weight directly to its BF16 real value.
+- ``GEMV_generate_lut.sv`` (inherited from v001) produces, for each BF16
+  activation ``A``, all **16 pre-computed products** ``A × w`` for the
+  possible INT4 weight values (-8 to +7).
+- This runs in parallel across all 32 activation positions, so each core
+  has **32 × 16 = 512 pre-computed products** ready every clock.
+- When the actual weight arrives, the 4-bit pattern just *indexes* the
+  LUT — the matching value flows straight into the Stage-1 accumulator
+  DSP.
 - Scale factors are indexed from the Constant Cache.
 
 6. Interaction with Softmax / Normalize
