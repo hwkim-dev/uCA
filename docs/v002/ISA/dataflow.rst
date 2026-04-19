@@ -47,7 +47,7 @@ Path Summary
 1. Dispatcher resolves pointers → per-core shape distribution.
 2. Weight Buffer → 4 GEMV cores, streaming **by row partition**.
 3. L2 cache → per-core L1 cache for activation preload.
-4. 8-lane MAC inside each core + 3-stage reduction tree → scalar result.
+4. 32-lane LUT-based MAC inside each core + 5-stage reduction tree → scalar result.
 5. Post-Process (scale, bias) → L2 cache or direct SFU FIFO.
 
 3. MEMCPY

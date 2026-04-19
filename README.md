@@ -41,8 +41,8 @@ Rather than reusing a generic matrix accelerator, pccx is designed around the ac
 </tr>
 <tr>
 <td><b>GEMV (Vector)</b></td>
-<td>4 lanes × 8-MAC pipeline + 3-stage reduction tree</td>
-<td>Weight-streaming limited</td>
+<td>4 cores × 32-MAC LUT pipeline + 5-stage reduction tree</td>
+<td>Weight-streaming limited (~51.2 GMAC/s @ 400 MHz)</td>
 <td>Autoregressive decoding</td>
 </tr>
 <tr>
@@ -68,7 +68,7 @@ External AXI (250 MHz)          Core Domain (400 MHz)
 S_AXIL_CTRL (HPM)    ────────►  npu_controller_top
                                   ├─ ctrl_npu_decoder   (64-bit VLIW → opcode + body)
 S_AXI_HP0/HP1        ────────►  GEMM_systolic_top      (32×16×2, W-Stationary)
-S_AXI_HP2/HP3        ────────►  GEMV_top               (4-lane, 8-MAC, reduction tree)
+S_AXI_HP2/HP3        ────────►  GEMV_top               (4 cores × 32-MAC LUT, 5-stage tree)
 S_AXIS_ACP_FMAP      ────────►  ┌─────────────────────────────────┐
 M_AXIS_ACP_RESULT    ◄────────  │  Shared L2 Cache (URAM ~1.5 MB)│
                                 │  GEMV ──FIFO──► CVO_top (SFU)  │
@@ -82,7 +82,7 @@ M_AXIS_ACP_RESULT    ◄────────  │  Shared L2 Cache (URAM ~1.
 | Level | Technology | Size | Access |
 |-------|-----------|------|--------|
 | L1 (Activation row buffer) | Block RAM | per-core | Systolic / GEMV lanes |
-| L2 (Shared cache) | URAM | ~1.5 MB | All cores + mem_dispatcher |
+| L2 (Shared cache) | URAM | 1.75 MB (114,688 × 128-bit) | All cores + mem_dispatcher |
 | Weight stream | HP AXI port × 4 | DDR4 bandwidth | HP0/1 → GEMM, HP2/3 → GEMV |
 | KV Cache | DDR4 (off-chip) | Up to 10–12 GB | ACP coherent port |
 
