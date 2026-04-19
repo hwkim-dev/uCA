@@ -31,11 +31,11 @@ Gemma 3N E4B 를 pccx v002 에서 실행 — Execution / Scheduling
      - 현재 ``xs[0..3]``, ``x_norm``, ``Q/K/V``, ``attn_output``,
        ``gate_raw``, ``up_out``, ``hidden``, ``mlp_out``, ``pli_all``,
        e_max, reduction 누산.
-   * - **Weight Buffer** (BRAM/URAM FIFO)
-     - ~512 KB
+   * - **Weight Buffer** (URAM FIFO, HP 포트 당 1 개)
+     - 4 × 64 KB (포트 당 4096 깊이)
      - 128-bit word
-     - HP2/HP3 (250 MHz) 과 400 MHz 코어 사이의 burst buffer. 한 번에
-       GEMV/GEMM 하나만큼의 가중치 저장.
+     - 각 HP 포트 (250 MHz) 와 400 MHz 코어 사이의 burst buffer. 한
+       번에 GEMV/GEMM 하나만큼의 가중치 저장.
    * - **Constant Cache** (BRAM)
      - 64 엔트리 × 48-bit
      - shape / scale tuple
