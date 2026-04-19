@@ -95,15 +95,11 @@ Rather than re-reading weights from the HP ports for every tile, we
      subgraph Host[Host DDR4]
        W[Weights INT4]
      end
-     WB[Weight Buffer<br/>BRAM FIFO] -->|staggered| PE[(PE Grid<br/>32×16)]
+     WB[Weight Buffer<br/>URAM FIFO] -->|staggered| PE[(PE Grid<br/>32×16)]
      L2[L2 Cache<br/>URAM] -->|activations INT8| PE
      PE -->|partial sums| RA[Result Accumulator]
      RA -->|scale / requant| L2
      W --> WB
-     classDef cache fill:#e8f0fe,stroke:#4c6ef5,color:#1a2e66;
-     classDef mem fill:#fff4e0,stroke:#f08c00,color:#663c00;
-     class WB,L2 cache
-     class Host mem
 
 3.3 Accumulation
 -----------------

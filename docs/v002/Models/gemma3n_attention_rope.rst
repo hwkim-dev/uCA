@@ -108,16 +108,6 @@ cycle.
        E3["..."]
        E4["..."]
        E5["..."]
-       style L0 fill:#e3f2fd,stroke:#1e88e5
-       style L1 fill:#e3f2fd,stroke:#1e88e5
-       style L2 fill:#e3f2fd,stroke:#1e88e5
-       style L3 fill:#e3f2fd,stroke:#1e88e5
-       style L4 fill:#ffe0b2,stroke:#f57c00
-       style L5 fill:#e3f2fd,stroke:#1e88e5
-       style L6 fill:#e3f2fd,stroke:#1e88e5
-       style L7 fill:#e3f2fd,stroke:#1e88e5
-       style L8 fill:#e3f2fd,stroke:#1e88e5
-       style L9 fill:#ffe0b2,stroke:#f57c00
 
 2.3 Hardware Consequence on pccx v002
 --------------------------------------
