@@ -23,9 +23,9 @@ HP0/HP1에서 가중치 타일을, L2 캐시에서 활성화 행을 수신하고
 2. 벡터 코어 — GEMV Top
 =========================
 
-``GEMV_top.sv``\ 는 4개의 병렬 GEMV 레인을 인스턴스화합니다. 각 레인은
-8-lane MAC 파이프라인과 3단계 reduction tree를 가지며, HP2/HP3에서
-가중치를 스트리밍합니다.
+``GEMV_top.sv``\ 는 4 개의 병렬 GEMV 코어를 인스턴스화합니다. 각 코어는
+32-wide LUT 기반 MAC 과 5 단 reduction tree (Stage 1: DSP48E2 16 슬라이스,
+Stage 2–5: LUT 가산기) 를 가지며, HP2/HP3 에서 가중치를 스트리밍합니다.
 
 .. literalinclude:: ../../../../codes/v002/hw/rtl/VEC_CORE/GEMV_top.sv
    :language: systemverilog
