@@ -659,6 +659,22 @@ here and connected through the shared L2 cache bus.</p>
 <span class="w">  </span><span class="kt">logic</span><span class="w">                          </span><span class="n">raw_res_sum_valid</span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="no">`ARRAY_SIZE_H</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
 <span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="w">   </span><span class="no">`BF16_EXP_WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">delayed_emax_32</span><span class="w">  </span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="no">`ARRAY_SIZE_H</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
 
+<span class="w">  </span><span class="c1">// ===| v002 dual-lane weight unpack |=========================================</span>
+<span class="w">  </span><span class="c1">// HP0 / HP1 each carry a 128-bit AXIS word that holds 32 INT4 weights.</span>
+<span class="w">  </span><span class="c1">// Slice each into a 32-element INT4 array for the systolic engine.</span>
+<span class="w">  </span><span class="k">localparam</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">WEIGHT_CNT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">`HP_PORT_SINGLE_WIDTH</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="no">`INT4_WIDTH</span><span class="p">;</span><span class="w">  </span><span class="c1">// 32</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="no">`INT4_WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">hp0_weight_int4</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="n">WEIGHT_CNT</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="no">`INT4_WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">hp1_weight_int4</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="n">WEIGHT_CNT</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+<span class="w">  </span><span class="k">genvar</span><span class="w"> </span><span class="n">wi</span><span class="p">;</span>
+<span class="w">  </span><span class="k">generate</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">wi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">wi</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">WEIGHT_CNT</span><span class="p">;</span><span class="w"> </span><span class="n">wi</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">g_weight_unpack</span>
+<span class="w">      </span><span class="k">assign</span><span class="w"> </span><span class="n">hp0_weight_int4</span><span class="p">[</span><span class="n">wi</span><span class="p">]</span><span class="w"> </span><span class="o">=</span>
+<span class="w">          </span><span class="n">M_CORE_HP0_WEIGHT</span><span class="p">.</span><span class="n">tdata</span><span class="p">[</span><span class="n">wi</span><span class="o">*</span><span class="no">`INT4_WIDTH</span><span class="w"> </span><span class="o">+:</span><span class="w"> </span><span class="no">`INT4_WIDTH</span><span class="p">];</span>
+<span class="w">      </span><span class="k">assign</span><span class="w"> </span><span class="n">hp1_weight_int4</span><span class="p">[</span><span class="n">wi</span><span class="p">]</span><span class="w"> </span><span class="o">=</span>
+<span class="w">          </span><span class="n">M_CORE_HP1_WEIGHT</span><span class="p">.</span><span class="n">tdata</span><span class="p">[</span><span class="n">wi</span><span class="o">*</span><span class="no">`INT4_WIDTH</span><span class="w"> </span><span class="o">+:</span><span class="w"> </span><span class="no">`INT4_WIDTH</span><span class="p">];</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">  </span><span class="k">endgenerate</span>
+
 <span class="w">  </span><span class="n">GEMM_systolic_top</span><span class="w"> </span><span class="p">#()</span><span class="w"> </span><span class="n">u_systolic_engine</span><span class="w"> </span><span class="p">(</span>
 <span class="w">      </span><span class="p">.</span><span class="n">clk</span><span class="w">    </span><span class="p">(</span><span class="n">clk_core</span><span class="p">),</span>
 <span class="w">      </span><span class="p">.</span><span class="n">rst_n</span><span class="w">  </span><span class="p">(</span><span class="n">rst_n_core</span><span class="p">),</span>
@@ -672,9 +688,15 @@ here and connected through the shared L2 cache bus.</p>
 <span class="w">      </span><span class="p">.</span><span class="n">IN_fmap_broadcast_valid</span><span class="p">(</span><span class="n">fmap_broadcast_valid</span><span class="p">),</span>
 <span class="w">      </span><span class="p">.</span><span class="n">IN_cached_emax_out</span><span class="w">     </span><span class="p">(</span><span class="n">cached_emax_out</span><span class="p">),</span>
 
-<span class="w">      </span><span class="p">.</span><span class="n">IN_weight_fifo_data</span><span class="w"> </span><span class="p">(</span><span class="n">M_CORE_HP0_WEIGHT</span><span class="p">.</span><span class="n">tdata</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">IN_weight_fifo_valid</span><span class="p">(</span><span class="n">M_CORE_HP0_WEIGHT</span><span class="p">.</span><span class="n">tvalid</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">weight_fifo_ready</span><span class="w">   </span><span class="p">(</span><span class="n">M_CORE_HP0_WEIGHT</span><span class="p">.</span><span class="n">tready</span><span class="p">),</span>
+<span class="w">      </span><span class="c1">// v002 dual-lane weights: HP0 → upper INT4 channel, HP1 → lower.</span>
+<span class="w">      </span><span class="c1">// Both 128-bit AXIS streams are unpacked into 32 × INT4 arrays by a</span>
+<span class="w">      </span><span class="c1">// simple bit-slice assign just before this instantiation.</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_weight_upper</span><span class="w">      </span><span class="p">(</span><span class="n">hp0_weight_int4</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_weight_upper_valid</span><span class="p">(</span><span class="n">M_CORE_HP0_WEIGHT</span><span class="p">.</span><span class="n">tvalid</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_weight_upper_ready</span><span class="p">(</span><span class="n">M_CORE_HP0_WEIGHT</span><span class="p">.</span><span class="n">tready</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_weight_lower</span><span class="w">      </span><span class="p">(</span><span class="n">hp1_weight_int4</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_weight_lower_valid</span><span class="p">(</span><span class="n">M_CORE_HP1_WEIGHT</span><span class="p">.</span><span class="n">tvalid</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">IN_weight_lower_ready</span><span class="p">(</span><span class="n">M_CORE_HP1_WEIGHT</span><span class="p">.</span><span class="n">tready</span><span class="p">),</span>
 
 <span class="w">      </span><span class="p">.</span><span class="n">raw_res_sum</span><span class="w">      </span><span class="p">(</span><span class="n">raw_res_sum</span><span class="p">),</span>
 <span class="w">      </span><span class="p">.</span><span class="n">raw_res_sum_valid</span><span class="p">(</span><span class="n">raw_res_sum_valid</span><span class="p">),</span>
@@ -876,7 +898,7 @@ here and connected through the shared L2 cache bus.</p>
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2026-04-19</div>
+              Last updated on 2026-04-20</div>
           </div>
           <div class="right-details">
             <div class="icons">

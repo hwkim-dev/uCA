@@ -480,20 +480,21 @@
 <span class="cm"> */</span>
 
 <span class="k">module</span><span class="w"> </span><span class="n">GEMM_systolic_top</span><span class="w"> </span><span class="p">#(</span>
-<span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">weight_lane_cnt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">`HP_PORT_CNT</span><span class="p">,</span>
+<span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">weight_lane_cnt</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="no">`HP_PORT_CNT</span><span class="p">,</span>
 <span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">weight_width_per_lane</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">`HP_PORT_SINGLE_WIDTH</span><span class="p">,</span>
-<span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">weight_size</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="no">`INT4</span><span class="p">,</span>
+<span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">weight_size</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="no">`INT4_WIDTH</span><span class="p">,</span>
 
-<span class="w">    </span><span class="c1">// 32 = 128bit / int4(4bit)</span>
-<span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">weight_cnt</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="no">`HP_WEIGHT_CNT</span><span class="p">(</span><span class="no">`HP_PORT_SINGLE_WIDTH</span><span class="p">,</span><span class="w"> </span><span class="no">`INT4</span><span class="p">),</span>
+<span class="w">    </span><span class="c1">// 32 = 128 bit / int4 (4-bit)</span>
+<span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">weight_cnt</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="no">`HP_PORT_SINGLE_WIDTH</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="no">`INT4_WIDTH</span><span class="p">,</span>
 
-<span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">array_horizontal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">`ARRAY_SIZE_H</span><span class="p">,</span>
-<span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">array_vertical</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="no">`ARRAY_SIZE_V</span><span class="p">,</span>
+<span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">array_horizontal</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="no">`ARRAY_SIZE_H</span><span class="p">,</span>
+<span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">array_vertical</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="no">`ARRAY_SIZE_V</span><span class="p">,</span>
 
-<span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">dsp_A_port</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="no">`ACIN</span><span class="p">,</span>
-
-<span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">IN_fmap_brodcast</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">`FIXED_MANT_WIDTH</span>
-
+<span class="w">    </span><span class="c1">// v001 fmap was BF16 mantissa on DSP A-port. v002 will replace this</span>
+<span class="w">    </span><span class="c1">// with INT8 on B-port; the staggered delay still carries the v001</span>
+<span class="w">    </span><span class="c1">// width until the PREPROCESS stage is ported.</span>
+<span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">dsp_A_port</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="no">`DEVICE_DSP_A_WIDTH</span><span class="p">,</span>
+<span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">IN_fmap_brodcast</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="no">`FIXED_MANT_WIDTH</span>
 <span class="p">)(</span>
 <span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span>
 <span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">rst_n</span><span class="p">,</span>
@@ -511,10 +512,16 @@
 <span class="w">    </span><span class="c1">// e_max (from Cache for Normalization alignment)</span>
 <span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="no">`BF16_EXP_WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w">  </span><span class="n">IN_cached_emax_out</span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="no">`ARRAY_SIZE_H</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
 
-<span class="w">    </span><span class="c1">// Weight Input from FIFO (Direct)</span>
-<span class="w">    </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="no">`HP_PORT_MAX_WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">IN_weight_fifo_data</span><span class="p">,</span>
-<span class="w">    </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w">                          </span><span class="n">IN_weight_fifo_valid</span><span class="p">,</span>
-<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w">                          </span><span class="n">weight_fifo_ready</span><span class="p">,</span>
+<span class="w">    </span><span class="c1">// ===| Weight input lanes |===================================================</span>
+<span class="w">    </span><span class="c1">//   HP0 -&gt; upper INT4 channel, HP1 -&gt; lower INT4 channel. Both lanes must</span>
+<span class="w">    </span><span class="c1">//   present valid data in the same cycle for the W4A8 dual-MAC pipeline.</span>
+<span class="w">    </span><span class="c1">//   Arrays are already unpacked to 32 × INT4 upstream (128 bit / 4 bit = 32).</span>
+<span class="w">    </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="no">`INT4_WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">IN_weight_upper</span><span class="w">      </span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="p">(</span><span class="no">`HP_PORT_SINGLE_WIDTH</span><span class="o">/</span><span class="no">`INT4_WIDTH</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+<span class="w">    </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w">                   </span><span class="n">IN_weight_upper_valid</span><span class="p">,</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w">                   </span><span class="n">IN_weight_upper_ready</span><span class="p">,</span>
+<span class="w">    </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="no">`INT4_WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">IN_weight_lower</span><span class="w">      </span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="p">(</span><span class="no">`HP_PORT_SINGLE_WIDTH</span><span class="o">/</span><span class="no">`INT4_WIDTH</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+<span class="w">    </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w">                   </span><span class="n">IN_weight_lower_valid</span><span class="p">,</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w">                   </span><span class="n">IN_weight_lower_ready</span><span class="p">,</span>
 
 <span class="w">    </span><span class="c1">// Output Results (Raw)</span>
 <span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="no">`DSP48E2_POUT_SIZE</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">raw_res_sum</span><span class="w">      </span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="no">`ARRAY_SIZE_H</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
@@ -524,24 +531,28 @@
 <span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="no">`BF16_EXP_WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">delayed_emax_32</span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="no">`ARRAY_SIZE_H</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 <span class="p">);</span>
 
-<span class="w">  </span><span class="c1">// ===| Weight Dispatcher (The Unpacker) |=======</span>
-<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">weight_size</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">unpacked_weights</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="n">weight_cnt</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
-<span class="w">  </span><span class="kt">logic</span><span class="w">             </span><span class="n">weights_ready_for_array</span><span class="p">;</span>
+<span class="w">  </span><span class="c1">// ===| Weight Dispatcher (dual-lane pipeline FF) |============================</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">weight_size</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">weight_upper</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="n">weight_cnt</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">weight_size</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">weight_lower</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="n">weight_cnt</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w">                   </span><span class="n">weights_ready_for_array</span><span class="p">;</span>
 
 <span class="w">  </span><span class="n">GEMM_weight_dispatcher</span><span class="w"> </span><span class="p">#(</span>
-<span class="w">    </span><span class="p">.</span><span class="n">weight_lane_cnt</span><span class="p">(</span><span class="n">weight_lane_cnt</span><span class="p">),</span>
-<span class="w">    </span><span class="p">.</span><span class="n">weight_width_per_lane</span><span class="p">(</span><span class="n">weight_width_per_lane</span><span class="p">),</span>
 <span class="w">    </span><span class="p">.</span><span class="n">weight_size</span><span class="p">(</span><span class="n">weight_size</span><span class="p">),</span>
-<span class="w">    </span><span class="p">.</span><span class="n">weight_cnt</span><span class="p">(</span><span class="n">weight_cnt</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="n">array_horizontal</span><span class="p">(</span><span class="n">array_horizontal</span><span class="p">),</span>
-<span class="w">    </span><span class="p">.</span><span class="n">array_vertical</span><span class="p">(</span><span class="n">array_vertical</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="n">weight_cnt</span><span class="w"> </span><span class="p">(</span><span class="n">weight_cnt</span><span class="p">)</span>
 <span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="n">u_weight_unpacker</span><span class="w"> </span><span class="p">(</span>
-<span class="w">      </span><span class="p">.</span><span class="n">clk</span><span class="p">(</span><span class="n">clk</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">clk</span><span class="w">  </span><span class="p">(</span><span class="n">clk</span><span class="p">),</span>
 <span class="w">      </span><span class="p">.</span><span class="n">rst_n</span><span class="p">(</span><span class="n">rst_n</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">fifo_data</span><span class="p">(</span><span class="n">IN_weight_fifo_data</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">fifo_valid</span><span class="p">(</span><span class="n">IN_weight_fifo_valid</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">fifo_ready</span><span class="p">(</span><span class="n">weight_fifo_ready</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">weight_out</span><span class="p">(</span><span class="n">unpacked_weights</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">fifo_upper</span><span class="w">      </span><span class="p">(</span><span class="n">IN_weight_upper</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">fifo_upper_valid</span><span class="p">(</span><span class="n">IN_weight_upper_valid</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">fifo_upper_ready</span><span class="p">(</span><span class="n">IN_weight_upper_ready</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">fifo_lower</span><span class="w">      </span><span class="p">(</span><span class="n">IN_weight_lower</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">fifo_lower_valid</span><span class="p">(</span><span class="n">IN_weight_lower_valid</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">fifo_lower_ready</span><span class="p">(</span><span class="n">IN_weight_lower_ready</span><span class="p">),</span>
+
+<span class="w">      </span><span class="p">.</span><span class="n">weight_upper</span><span class="p">(</span><span class="n">weight_upper</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">weight_lower</span><span class="p">(</span><span class="n">weight_lower</span><span class="p">),</span>
 <span class="w">      </span><span class="p">.</span><span class="n">weight_valid</span><span class="p">(</span><span class="n">weights_ready_for_array</span><span class="p">)</span>
 <span class="w">  </span><span class="p">);</span>
 
@@ -571,28 +582,42 @@
 <span class="w">  </span><span class="c1">// ===| Systolic Array Core (The Engine) |=======</span>
 <span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="no">`DSP48E2_POUT_SIZE</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">raw_res_seq</span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="no">`ARRAY_SIZE_H</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
 
+<span class="w">  </span><span class="c1">// TODO(pccx v002 §2.2 follow-up):</span>
+<span class="w">  </span><span class="c1">//   * Fmap must arrive as INT8 from the PREPROCESS stage. Today the</span>
+<span class="w">  </span><span class="c1">//     staggered_fmap is 27-bit BF16 mantissa (v001 carryover); we</span>
+<span class="w">  </span><span class="c1">//     truncate to its low 8 bits as a placeholder.</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">staggered_fmap_INT8</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="no">`ARRAY_SIZE_H</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+<span class="w">  </span><span class="k">genvar</span><span class="w"> </span><span class="n">col_idx</span><span class="p">;</span>
+<span class="w">  </span><span class="k">generate</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">col_idx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">col_idx</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">`ARRAY_SIZE_H</span><span class="p">;</span><span class="w"> </span><span class="n">col_idx</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">act_trunc</span>
+<span class="w">      </span><span class="k">assign</span><span class="w"> </span><span class="n">staggered_fmap_INT8</span><span class="p">[</span><span class="n">col_idx</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">staggered_fmap</span><span class="p">[</span><span class="n">col_idx</span><span class="p">][</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">];</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">  </span><span class="k">endgenerate</span>
+
 <span class="w">  </span><span class="n">GEMM_systolic_array</span><span class="w"> </span><span class="p">#(</span>
-<span class="w">      </span><span class="p">.</span><span class="n">ARRAY_HORIZONTAL</span><span class="p">(</span><span class="no">`ARRAY_SIZE_H</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">array_horizontal</span><span class="p">(</span><span class="no">`ARRAY_SIZE_H</span><span class="p">),</span>
 <span class="w">      </span><span class="p">.</span><span class="n">array_vertical</span><span class="w">  </span><span class="p">(</span><span class="no">`ARRAY_SIZE_V</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">h_in_size</span><span class="p">(</span><span class="no">`GEMM_MAC_UNIT_IN_H</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">v_in_size</span><span class="p">(</span><span class="no">`GEMM_MAC_UNIT_IN_V</span><span class="p">)</span>
+<span class="w">      </span><span class="p">.</span><span class="n">INT4_BITS</span><span class="w">       </span><span class="p">(</span><span class="no">`INT4_WIDTH</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">INT8_BITS</span><span class="w">       </span><span class="p">(</span><span class="mi">8</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">B_PORT_W</span><span class="w">        </span><span class="p">(</span><span class="no">`DEVICE_DSP_B_WIDTH</span><span class="p">)</span>
 <span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="n">u_compute_core</span><span class="w"> </span><span class="p">(</span>
 <span class="w">      </span><span class="p">.</span><span class="n">clk</span><span class="p">(</span><span class="n">clk</span><span class="p">),</span>
 <span class="w">      </span><span class="p">.</span><span class="n">rst_n</span><span class="p">(</span><span class="n">rst_n</span><span class="p">),</span>
 <span class="w">      </span><span class="p">.</span><span class="n">i_clear</span><span class="p">(</span><span class="n">i_clear</span><span class="p">),</span>
 <span class="w">      </span><span class="p">.</span><span class="n">i_weight_valid</span><span class="p">(</span><span class="n">global_weight_valid</span><span class="p">),</span>
 
-<span class="w">      </span><span class="c1">// Horizontal: Weights</span>
-<span class="w">      </span><span class="p">.</span><span class="n">H_in</span><span class="p">(</span><span class="n">unpacked_weights</span><span class="p">),</span>
+<span class="w">      </span><span class="c1">// Horizontal: distinct upper / lower INT4 weight streams.</span>
+<span class="w">      </span><span class="p">.</span><span class="n">H_in_upper</span><span class="p">(</span><span class="n">weight_upper</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">H_in_lower</span><span class="p">(</span><span class="n">weight_lower</span><span class="p">),</span>
 
-<span class="w">      </span><span class="c1">// Vertical: Feature Map Broadcast &amp; Instructions (Staggered)</span>
-<span class="w">      </span><span class="p">.</span><span class="n">V_in</span><span class="p">(</span><span class="n">staggered_fmap</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">in_valid</span><span class="p">(</span><span class="n">staggered_fmap_valid</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">inst_in</span><span class="p">(</span><span class="n">staggered_inst</span><span class="p">),</span>
+<span class="w">      </span><span class="c1">// Vertical: Feature Map (INT8 truncation placeholder) + Instructions.</span>
+<span class="w">      </span><span class="p">.</span><span class="n">V_in</span><span class="w">         </span><span class="p">(</span><span class="n">staggered_fmap_INT8</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">in_valid</span><span class="w">     </span><span class="p">(</span><span class="n">staggered_fmap_valid</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">inst_in</span><span class="w">      </span><span class="p">(</span><span class="n">staggered_inst</span><span class="p">),</span>
 <span class="w">      </span><span class="p">.</span><span class="n">inst_valid_in</span><span class="p">(</span><span class="n">staggered_inst_valid</span><span class="p">),</span>
 
-<span class="w">      </span><span class="p">.</span><span class="n">V_out</span><span class="p">(</span><span class="n">raw_res_seq</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">V_ACC_out</span><span class="p">(</span><span class="n">raw_res_sum</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">V_out</span><span class="w">      </span><span class="p">(</span><span class="n">raw_res_seq</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">V_ACC_out</span><span class="w">  </span><span class="p">(</span><span class="n">raw_res_sum</span><span class="p">),</span>
 <span class="w">      </span><span class="p">.</span><span class="n">V_ACC_valid</span><span class="p">(</span><span class="n">raw_res_sum_valid</span><span class="p">)</span>
 <span class="w">  </span><span class="p">);</span>
 
@@ -682,10 +707,12 @@ Stage 2–5: LUT 가산기) 를 가지며, HP2/HP3 에서 가중치를 스트리
 
 <span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">IN_activated_lane</span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="n">param</span><span class="p">.</span><span class="n">num_gemv_pipeline</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
 
-<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">param</span><span class="p">.</span><span class="n">fmap_type_mixed_precision</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">OUT_final_fmap_A</span><span class="p">,</span>
-<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">param</span><span class="p">.</span><span class="n">fmap_type_mixed_precision</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">OUT_final_fmap_B</span><span class="p">,</span>
-<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">param</span><span class="p">.</span><span class="n">fmap_type_mixed_precision</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">OUT_final_fmap_C</span><span class="p">,</span>
-<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">param</span><span class="p">.</span><span class="n">fmap_type_mixed_precision</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">OUT_final_fmap_D</span><span class="p">,</span>
+<span class="w">    </span><span class="c1">// Per-lane batch vector. Width tracks `GEMV_reduction_branch`&#39;s signed</span>
+<span class="w">    </span><span class="c1">// fixed-point format (fixed_mant_width + 2 headroom + 1 sign).</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">param</span><span class="p">.</span><span class="n">fixed_mant_width</span><span class="o">+</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">OUT_final_fmap_A</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="n">param</span><span class="p">.</span><span class="n">gemv_batch</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">param</span><span class="p">.</span><span class="n">fixed_mant_width</span><span class="o">+</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">OUT_final_fmap_B</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="n">param</span><span class="p">.</span><span class="n">gemv_batch</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">param</span><span class="p">.</span><span class="n">fixed_mant_width</span><span class="o">+</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">OUT_final_fmap_C</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="n">param</span><span class="p">.</span><span class="n">gemv_batch</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">param</span><span class="p">.</span><span class="n">fixed_mant_width</span><span class="o">+</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">OUT_final_fmap_D</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="n">param</span><span class="p">.</span><span class="n">gemv_batch</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
 
 <span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">OUT_result_valid_A</span><span class="p">,</span>
 <span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">OUT_result_valid_B</span><span class="p">,</span>
@@ -693,7 +720,7 @@ Stage 2–5: LUT 가산기) 를 가지며, HP2/HP3 에서 가중치를 스트리
 <span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">OUT_result_valid_D</span>
 <span class="p">);</span>
 
-<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">param</span><span class="p">.</span><span class="n">fixed_mant_width</span><span class="o">+</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">fmap_LUT_wire</span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="n">param</span><span class="p">.</span><span class="n">fmap_cache_out_cnt</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="o">:</span><span class="n">param</span><span class="p">.</span><span class="n">weight_width</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="kt">signed</span><span class="w"> </span><span class="p">[</span><span class="n">param</span><span class="p">.</span><span class="n">fixed_mant_width</span><span class="o">+</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">fmap_LUT_wire</span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="n">param</span><span class="p">.</span><span class="n">fmap_cache_out_cnt</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="o">:</span><span class="n">param</span><span class="p">.</span><span class="n">weight_width</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
 
 <span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">fmap_ready_wire</span><span class="p">;</span>
 
@@ -892,6 +919,12 @@ CORDIC + LUT 하이브리드 함수 유닛을 조율합니다.
 <span class="w">    </span><span class="n">data_valid_to_unit_wire</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ST_RUNNING</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">IN_data_valid</span><span class="p">;</span>
 <span class="w">  </span><span class="k">end</span>
 
+<span class="w">  </span><span class="c1">// ===| Opcode Routing (declared ahead of units that use it as a gating term) |</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">is_cordic_op_wire</span><span class="p">;</span>
+<span class="w">  </span><span class="k">always_comb</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">    </span><span class="n">is_cordic_op_wire</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">uop_func</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">CVO_SIN</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">(</span><span class="n">uop_func</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">CVO_COS</span><span class="p">);</span>
+<span class="w">  </span><span class="k">end</span>
+
 <span class="w">  </span><span class="c1">// ===| SFU Instantiation |=====================================================</span>
 <span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">15</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">sfu_result</span><span class="p">;</span>
 <span class="w">  </span><span class="kt">logic</span><span class="w">        </span><span class="n">sfu_result_valid</span><span class="p">;</span>
@@ -930,12 +963,6 @@ CORDIC + LUT 하이브리드 함수 유닛을 조율합니다.
 <span class="w">      </span><span class="p">.</span><span class="n">OUT_cos_bf16</span><span class="w"> </span><span class="p">(</span><span class="n">cordic_cos</span><span class="p">),</span>
 <span class="w">      </span><span class="p">.</span><span class="n">OUT_valid</span><span class="w">    </span><span class="p">(</span><span class="n">cordic_valid</span><span class="p">)</span>
 <span class="w">  </span><span class="p">);</span>
-
-<span class="w">  </span><span class="c1">// ===| Opcode Routing |========================================================</span>
-<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">is_cordic_op_wire</span><span class="p">;</span>
-<span class="w">  </span><span class="k">always_comb</span><span class="w"> </span><span class="k">begin</span>
-<span class="w">    </span><span class="n">is_cordic_op_wire</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">uop_func</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">CVO_SIN</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">(</span><span class="n">uop_func</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">CVO_COS</span><span class="p">);</span>
-<span class="w">  </span><span class="k">end</span>
 
 <span class="w">  </span><span class="c1">// ===| FSM Logic |=============================================================</span>
 <span class="w">  </span><span class="k">always_ff</span><span class="w"> </span><span class="p">@(</span><span class="k">posedge</span><span class="w"> </span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
@@ -1032,47 +1059,90 @@ CORDIC + LUT 하이브리드 함수 유닛을 조율합니다.
 <div class="code-block-caption"><span class="caption-number">리스팅 6 </span><span class="caption-text">hw/rtl/MAT_CORE/GEMM_dsp_unit.sv</span><a class="headerlink" href="#id5" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="no">`timescale</span><span class="w"> </span><span class="mi">1</span><span class="n">ns</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1</span><span class="n">ps</span>
 
+<span class="c1">// ===============================================================================</span>
+<span class="c1">// Module: GEMM_dsp_unit</span>
+<span class="c1">// Phase : pccx v002 (W4A8, 1 DSP = 2 MAC)</span>
+<span class="c1">//</span>
+<span class="c1">// Role</span>
+<span class="c1">// ----</span>
+<span class="c1">//   A single PE of the 32 × 32 systolic array (with cascade break @ row 16).</span>
+<span class="c1">//   Holds two stationary INT4 weights (w_upper / w_lower) and multiplies them</span>
+<span class="c1">//   in parallel against an INT8 activation streaming vertically through the</span>
+<span class="c1">//   column via B-port cascade, emitting two MACs per DSP per cycle.</span>
+<span class="c1">//</span>
+<span class="c1">// Data-flow summary</span>
+<span class="c1">// -----------------</span>
+<span class="c1">//   Weights (2 × INT4, horizontal shift-register along each row):</span>
+<span class="c1">//     in_H_upper -&gt; latch -&gt; packer.w_upper -&gt; A-port  -&gt; out_H_upper</span>
+<span class="c1">//     in_H_lower -&gt; latch -&gt; packer.w_lower -&gt; A-port  -&gt; out_H_lower</span>
+<span class="c1">//</span>
+<span class="c1">//   Activation (INT8, vertical cascade via BCIN/BCOUT):</span>
+<span class="c1">//     top row : in_V       -&gt; sign-ext(18) -&gt; B  (B_INPUT = DIRECT)</span>
+<span class="c1">//     others  : BCIN_in    -&gt; cascade      -&gt; B  (B_INPUT = CASCADE)</span>
+<span class="c1">//     always  : BCOUT_out  -&gt; next row BCIN</span>
+<span class="c1">//</span>
+<span class="c1">//   Partial sum (48-bit accumulator, P-port cascade):</span>
+<span class="c1">//     top / normal rows : V_result_in via PCIN</span>
+<span class="c1">//     break row (16)    : V_result_in via C-port (fabric), P_fabric_out</span>
+<span class="c1">//                         feeds the merger back into the lower half.</span>
+<span class="c1">//</span>
+<span class="c1">// Notes</span>
+<span class="c1">// -----</span>
+<span class="c1">//   * A_INPUT is always DIRECT — weights are stationary per PE, not cascaded.</span>
+<span class="c1">//   * BREG = 2 is kept so that activation can be shadow-loaded one cycle</span>
+<span class="c1">//     ahead of the MAC fire, giving a steady one-cycle `o_valid` pipeline</span>
+<span class="c1">//     latency. AREG = 1 is enough for weights (they rarely change).</span>
+<span class="c1">//   * The accumulator drain window is bounded by the packer&#39;s guard band</span>
+<span class="c1">//     (UPPER_SHIFT = 21, 1024 MACs per channel). The GEMM instruction</span>
+<span class="c1">//     dispatcher is responsible for issuing a flush before that limit.</span>
+<span class="c1">// ===============================================================================</span>
 
 <span class="no">`include</span><span class="w"> </span><span class="s">&quot;GLOBAL_CONST.svh&quot;</span>
 <span class="no">`include</span><span class="w"> </span><span class="s">&quot;GEMM_Array.svh&quot;</span>
 
 <span class="k">module</span><span class="w"> </span><span class="n">GEMM_dsp_unit</span><span class="w"> </span><span class="p">#(</span>
-<span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">IS_TOP_ROW</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">BREAK_CASCADE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  </span><span class="c1">// If 1, break the vertical cascade chain here</span>
-<span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">ACIN_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">`DSP48E2_A_WIDTH</span><span class="p">,</span>
-<span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">ACOUT_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">`DSP48E2_A_WIDTH</span><span class="p">,</span>
-<span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">POUT_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">`DSP48E2_POUT_SIZE</span>
+<span class="w">  </span><span class="k">parameter</span><span class="w"> </span><span class="n">IS_TOP_ROW</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">  </span><span class="k">parameter</span><span class="w"> </span><span class="n">BREAK_CASCADE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  </span><span class="c1">// 1 at row 16 of the 32-row physical array</span>
+<span class="w">  </span><span class="k">parameter</span><span class="w"> </span><span class="n">INT4_BITS</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="no">`INT4_WIDTH</span><span class="p">,</span><span class="w">           </span><span class="c1">// 4</span>
+<span class="w">  </span><span class="k">parameter</span><span class="w"> </span><span class="n">INT8_BITS</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span>
+<span class="w">  </span><span class="k">parameter</span><span class="w"> </span><span class="n">A_PORT_W</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="no">`DEVICE_DSP_A_WIDTH</span><span class="p">,</span><span class="w">   </span><span class="c1">// 30</span>
+<span class="w">  </span><span class="k">parameter</span><span class="w"> </span><span class="n">B_PORT_W</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="no">`DEVICE_DSP_B_WIDTH</span><span class="p">,</span><span class="w">   </span><span class="c1">// 18</span>
+<span class="w">  </span><span class="k">parameter</span><span class="w"> </span><span class="n">P_PORT_W</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="no">`DSP48E2_POUT_SIZE</span><span class="p">,</span><span class="w">    </span><span class="c1">// 48</span>
+<span class="w">  </span><span class="k">parameter</span><span class="w"> </span><span class="n">UPPER_SHIFT</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mi">21</span><span class="w">                     </span><span class="c1">// matches GEMM_dsp_packer default</span>
 <span class="p">)</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span>
-<span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">rst_n</span><span class="p">,</span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">rst_n</span><span class="p">,</span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">i_clear</span><span class="p">,</span>
 
-<span class="w">    </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">i_clear</span><span class="p">,</span>
-<span class="w">    </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">i_valid</span><span class="p">,</span><span class="w">         </span><span class="c1">// Feature Map Data Valid</span>
-<span class="w">    </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">i_weight_valid</span><span class="p">,</span><span class="w">  </span><span class="c1">// Background Weight Shift Enable</span>
-<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">o_valid</span><span class="p">,</span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">i_valid</span><span class="p">,</span><span class="w">         </span><span class="c1">// activation data valid</span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">i_weight_valid</span><span class="p">,</span><span class="w">  </span><span class="c1">// latch a new pair of weights from in_H_*</span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">o_valid</span><span class="p">,</span>
 
-<span class="w">    </span><span class="c1">// [Horizontal] int4 (4-bit) -&gt; external FF -&gt; DSP B port</span>
-<span class="w">    </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="no">`GEMM_MAC_UNIT_IN_H</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">in_H</span><span class="p">,</span>
-<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="no">`GEMM_MAC_UNIT_IN_H</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">out_H</span><span class="p">,</span>
+<span class="w">  </span><span class="c1">// ===| Horizontal weight shift-registers (two INT4 lanes per row) |============</span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">INT4_BITS</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">in_H_upper</span><span class="p">,</span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">INT4_BITS</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">out_H_upper</span><span class="p">,</span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">INT4_BITS</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">in_H_lower</span><span class="p">,</span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">INT4_BITS</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">out_H_lower</span><span class="p">,</span>
 
-<span class="w">    </span><span class="c1">// [Vertical] 30-bit -&gt; DSP A/ACIN port</span>
-<span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="nl">ACIN_size:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">in_V</span><span class="p">,</span><span class="w">  </span><span class="c1">// Used if IS_TOP_ROW == 1 or BREAK_CASCADE == 1</span>
-<span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="nl">ACIN_size:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">ACIN_in</span><span class="p">,</span><span class="w">  </span><span class="c1">// Used if IS_TOP_ROW == 0 and BREAK_CASCADE == 0</span>
-<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="nl">ACOUT_size:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">ACOUT_out</span><span class="p">,</span>
+<span class="w">  </span><span class="c1">// ===| Vertical INT8 activation |==============================================</span>
+<span class="w">  </span><span class="c1">//   Top row uses in_V (fabric). Non-top rows ignore in_V and take BCIN_in.</span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">INT8_BITS</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">in_V</span><span class="p">,</span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">B_PORT_W</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w">  </span><span class="n">BCIN_in</span><span class="p">,</span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">B_PORT_W</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w">  </span><span class="n">BCOUT_out</span><span class="p">,</span>
 
-<span class="w">    </span><span class="c1">// [3-Bit VLIW Instruction]</span>
-<span class="w">    </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">instruction_in_V</span><span class="p">,</span>
-<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">instruction_out_V</span><span class="p">,</span>
-<span class="w">    </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w">       </span><span class="n">inst_valid_in_V</span><span class="p">,</span><span class="w">    </span><span class="c1">// Cascaded Instruction Valid</span>
-<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w">       </span><span class="n">inst_valid_out_V</span><span class="p">,</span>
+<span class="w">  </span><span class="c1">// ===| VLIW 3-bit instruction (vertical pipeline) |============================</span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">instruction_in_V</span><span class="p">,</span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">instruction_out_V</span><span class="p">,</span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w">       </span><span class="n">inst_valid_in_V</span><span class="p">,</span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w">       </span><span class="n">inst_valid_out_V</span><span class="p">,</span>
 
-<span class="w">    </span><span class="c1">// vertical shift port</span>
-<span class="w">    </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="nl">POUT_size:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">V_result_in</span><span class="p">,</span><span class="w">   </span><span class="c1">// PCIN (or Fabric C) from upper DSP</span>
-<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="nl">POUT_size:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">V_result_out</span><span class="p">,</span><span class="w">  </span><span class="c1">// PCOUT to lower DSP&#39;s PCIN</span>
-<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="nl">POUT_size:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">P_fabric_out</span><span class="w">   </span><span class="c1">// P to lower DSP&#39;s Fabric C if broken</span>
+<span class="w">  </span><span class="c1">// ===| Partial-sum cascade (PCIN/PCOUT + optional fabric break) |==============</span>
+<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">P_PORT_W</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">V_result_in</span><span class="p">,</span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">P_PORT_W</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">V_result_out</span><span class="p">,</span>
+<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">P_PORT_W</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">P_fabric_out</span>
 <span class="p">);</span>
 
-<span class="w">  </span><span class="c1">// ===| [Instruction Latch (Event-Driven)] |============================</span>
+<span class="w">  </span><span class="c1">// ===| Instruction latch |======================================================</span>
 <span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">current_inst</span><span class="p">;</span>
 
 <span class="w">  </span><span class="k">always_ff</span><span class="w"> </span><span class="p">@(</span><span class="k">posedge</span><span class="w"> </span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
@@ -1083,7 +1153,6 @@ CORDIC + LUT 하이브리드 함수 유닛을 조율합니다.
 <span class="w">    </span><span class="k">end</span>
 <span class="w">  </span><span class="k">end</span>
 
-<span class="w">  </span><span class="c1">// Pass instruction and its valid signal down to the next PE</span>
 <span class="w">  </span><span class="k">always_ff</span><span class="w"> </span><span class="p">@(</span><span class="k">posedge</span><span class="w"> </span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">rst_n</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
 <span class="w">      </span><span class="n">instruction_out_V</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mb">3&#39;b000</span><span class="p">;</span>
@@ -1094,7 +1163,10 @@ CORDIC + LUT 하이브리드 함수 유닛을 조율합니다.
 <span class="w">    </span><span class="k">end</span>
 <span class="w">  </span><span class="k">end</span>
 
-<span class="w">  </span><span class="c1">// ===| [The &quot;Flush &amp; Load&quot; Sequencer] |================================</span>
+<span class="w">  </span><span class="c1">// ===| Flush sequencer |========================================================</span>
+<span class="w">  </span><span class="c1">//   Same shape as v001: a single-hot pulse walks down a 4-bit shift register</span>
+<span class="w">  </span><span class="c1">//   whenever the dispatcher asserts instruction[2] (flush opcode). Stages 1-2</span>
+<span class="w">  </span><span class="c1">//   clear the P-register, stage 3 latches the newly loaded weights.</span>
 <span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">flush_sequence</span><span class="p">;</span>
 
 <span class="w">  </span><span class="k">always_ff</span><span class="w"> </span><span class="p">@(</span><span class="k">posedge</span><span class="w"> </span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
@@ -1108,31 +1180,25 @@ CORDIC + LUT 하이브리드 함수 유닛을 조율합니다.
 <span class="w">    </span><span class="k">end</span>
 <span class="w">  </span><span class="k">end</span>
 
-<span class="w">  </span><span class="c1">// ===| [Hardware Mapping (VLIW Decoding)] |============================</span>
-<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">8</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">dynamic_opmode</span><span class="p">;</span>
-<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">dynamic_alumode</span><span class="p">;</span>
-
 <span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">is_flushing</span><span class="p">;</span>
 <span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">is_flushing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">flush_sequence</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">flush_sequence</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
 
-<span class="w">  </span><span class="c1">// OPMODE Selection</span>
-<span class="w">  </span><span class="c1">// W(2), Z(3), Y(2), X(2)</span>
-<span class="w">  </span><span class="c1">// If BREAK_CASCADE == 1, we must take the previous result from the C port instead of PCIN.</span>
-<span class="w">  </span><span class="c1">// Z-mux: 001 is PCIN, 011 is C.</span>
+<span class="w">  </span><span class="c1">// ===| OPMODE / ALUMODE |=======================================================</span>
+<span class="w">  </span><span class="c1">//   Z-mux selects whether the P accumulator is continued from PCIN (cascade)</span>
+<span class="w">  </span><span class="c1">//   or from the fabric C-port (after a cascade break at row 16).</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">8</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">dynamic_opmode</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">3</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">dynamic_alumode</span><span class="p">;</span>
 <span class="w">  </span><span class="k">localparam</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">Z_MUX</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BREAK_CASCADE</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="mb">3&#39;b011</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mb">3&#39;b001</span><span class="p">;</span>
 
 <span class="w">  </span><span class="k">always_comb</span><span class="w"> </span><span class="k">begin</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">is_flushing</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
-<span class="w">      </span><span class="c1">// Flush: P = 0 + 0 + 0 (Clear accumulator)</span>
-<span class="w">      </span><span class="n">dynamic_opmode</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mb">9&#39;b00_000_00_00</span><span class="p">;</span>
+<span class="w">      </span><span class="n">dynamic_opmode</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mb">9&#39;b00_000_00_00</span><span class="p">;</span><span class="w">   </span><span class="c1">// P = 0</span>
 <span class="w">      </span><span class="n">dynamic_alumode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mb">4&#39;b0000</span><span class="p">;</span>
 <span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">current_inst</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mb">1&#39;b1</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
-<span class="w">      </span><span class="c1">// Calc: P = P_prev + A*B</span>
-<span class="w">      </span><span class="n">dynamic_opmode</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mb">2&#39;b00</span><span class="p">,</span><span class="w"> </span><span class="n">Z_MUX</span><span class="p">,</span><span class="w"> </span><span class="mb">2&#39;b01</span><span class="p">,</span><span class="w"> </span><span class="mb">2&#39;b01</span><span class="p">};</span>
+<span class="w">      </span><span class="n">dynamic_opmode</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mb">2&#39;b00</span><span class="p">,</span><span class="w"> </span><span class="n">Z_MUX</span><span class="p">,</span><span class="w"> </span><span class="mb">2&#39;b01</span><span class="p">,</span><span class="w"> </span><span class="mb">2&#39;b01</span><span class="p">};</span><span class="w">  </span><span class="c1">// P = P_prev + A*B</span>
 <span class="w">      </span><span class="n">dynamic_alumode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mb">4&#39;b0000</span><span class="p">;</span>
 <span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">begin</span>
-<span class="w">      </span><span class="c1">// Idle: P = P_prev (Pass through)</span>
-<span class="w">      </span><span class="n">dynamic_opmode</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mb">2&#39;b00</span><span class="p">,</span><span class="w"> </span><span class="n">Z_MUX</span><span class="p">,</span><span class="w"> </span><span class="mb">2&#39;b00</span><span class="p">,</span><span class="w"> </span><span class="mb">2&#39;b00</span><span class="p">};</span>
+<span class="w">      </span><span class="n">dynamic_opmode</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mb">2&#39;b00</span><span class="p">,</span><span class="w"> </span><span class="n">Z_MUX</span><span class="p">,</span><span class="w"> </span><span class="mb">2&#39;b00</span><span class="p">,</span><span class="w"> </span><span class="mb">2&#39;b00</span><span class="p">};</span><span class="w">  </span><span class="c1">// P = P_prev (pass)</span>
 <span class="w">      </span><span class="n">dynamic_alumode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mb">4&#39;b0000</span><span class="p">;</span>
 <span class="w">    </span><span class="k">end</span>
 <span class="w">  </span><span class="k">end</span>
@@ -1140,110 +1206,113 @@ CORDIC + LUT 하이브리드 함수 유닛을 조율합니다.
 <span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">dsp_ce_p</span><span class="p">;</span>
 <span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">dsp_ce_p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_inst</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">is_flushing</span><span class="p">;</span>
 
-<span class="w">  </span><span class="c1">// ===| [Fabric FF &amp; Weight Pipeline] |=================================</span>
+<span class="w">  </span><span class="c1">// ===| Weight latch + horizontal shift |========================================</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">INT4_BITS</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">w_upper_reg</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">INT4_BITS</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">w_lower_reg</span><span class="p">;</span>
+
 <span class="w">  </span><span class="k">always_ff</span><span class="w"> </span><span class="p">@(</span><span class="k">posedge</span><span class="w"> </span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">rst_n</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">i_clear</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
-<span class="w">      </span><span class="n">out_H</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">begin</span>
-<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i_weight_valid</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
-<span class="w">        </span><span class="n">out_H</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">in_H</span><span class="p">;</span>
-<span class="w">      </span><span class="k">end</span>
+<span class="w">      </span><span class="n">w_upper_reg</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">&#39;0</span><span class="p">;</span>
+<span class="w">      </span><span class="n">w_lower_reg</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">&#39;0</span><span class="p">;</span>
+<span class="w">      </span><span class="n">out_H_upper</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">&#39;0</span><span class="p">;</span>
+<span class="w">      </span><span class="n">out_H_lower</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">&#39;0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i_weight_valid</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">      </span><span class="n">w_upper_reg</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">in_H_upper</span><span class="p">;</span>
+<span class="w">      </span><span class="n">w_lower_reg</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">in_H_lower</span><span class="p">;</span>
+<span class="w">      </span><span class="n">out_H_upper</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">in_H_upper</span><span class="p">;</span>
+<span class="w">      </span><span class="n">out_H_lower</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">in_H_lower</span><span class="p">;</span>
 <span class="w">    </span><span class="k">end</span>
 <span class="w">  </span><span class="k">end</span>
 
-<span class="w">  </span><span class="c1">// ===| [Dual B-Register Control] |================</span>
-<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">dsp_ce_b1</span><span class="p">;</span>
-<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">dsp_ce_b2</span><span class="p">;</span>
-<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">load_trigger</span><span class="p">;</span>
+<span class="w">  </span><span class="c1">// ===| Bit packing (2 × INT4 weights -&gt; A port, INT8 act -&gt; B port) |==========</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="kt">signed</span><span class="w"> </span><span class="p">[</span><span class="n">A_PORT_W</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">a_packed</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="kt">signed</span><span class="w"> </span><span class="p">[</span><span class="n">B_PORT_W</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">b_extended</span><span class="p">;</span>
 
-<span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">load_trigger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">flush_sequence</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+<span class="w">  </span><span class="n">GEMM_dsp_packer</span><span class="w"> </span><span class="p">#(</span>
+<span class="w">    </span><span class="p">.</span><span class="n">INT4_BITS</span><span class="w">   </span><span class="p">(</span><span class="n">INT4_BITS</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">INT8_BITS</span><span class="w">   </span><span class="p">(</span><span class="n">INT8_BITS</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">A_PORT_W</span><span class="w">    </span><span class="p">(</span><span class="n">A_PORT_W</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">B_PORT_W</span><span class="w">    </span><span class="p">(</span><span class="n">B_PORT_W</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">UPPER_SHIFT</span><span class="w"> </span><span class="p">(</span><span class="n">UPPER_SHIFT</span><span class="p">)</span>
+<span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="n">u_packer</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="p">.</span><span class="n">in_w_lower</span><span class="w">     </span><span class="p">(</span><span class="n">w_lower_reg</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">in_w_upper</span><span class="w">     </span><span class="p">(</span><span class="n">w_upper_reg</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">in_act</span><span class="w">         </span><span class="p">(</span><span class="n">in_V</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">out_a_packed</span><span class="w">   </span><span class="p">(</span><span class="n">a_packed</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">out_b_extended</span><span class="w"> </span><span class="p">(</span><span class="n">b_extended</span><span class="p">)</span>
+<span class="w">  </span><span class="p">);</span>
 
-<span class="w">  </span><span class="k">always_comb</span><span class="w"> </span><span class="k">begin</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">current_inst</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mb">1&#39;b1</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
-<span class="w">      </span><span class="n">dsp_ce_b1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i_valid</span><span class="p">;</span>
-<span class="w">      </span><span class="n">dsp_ce_b2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i_valid</span><span class="p">;</span>
-<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">begin</span>
-<span class="w">      </span><span class="n">dsp_ce_b1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">load_trigger</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">i_weight_valid</span><span class="p">;</span>
-<span class="w">      </span><span class="n">dsp_ce_b2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">load_trigger</span><span class="p">;</span>
-<span class="w">    </span><span class="k">end</span>
-<span class="w">  </span><span class="k">end</span>
-
+<span class="w">  </span><span class="c1">// ===| Output-valid pipeline |==================================================</span>
 <span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">valid_delay</span><span class="p">;</span>
 <span class="w">  </span><span class="k">always_ff</span><span class="w"> </span><span class="p">@(</span><span class="k">posedge</span><span class="w"> </span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">rst_n</span><span class="p">)</span><span class="w"> </span><span class="n">valid_delay</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mb">1&#39;b0</span><span class="p">;</span>
-<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="n">valid_delay</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">i_valid</span><span class="p">;</span>
+<span class="w">    </span><span class="k">else</span><span class="w">        </span><span class="n">valid_delay</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">i_valid</span><span class="p">;</span>
 <span class="w">  </span><span class="k">end</span>
 <span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">o_valid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">valid_delay</span><span class="p">;</span>
 
-<span class="w">  </span><span class="c1">// &lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;</span>
-<span class="w">  </span><span class="c1">// [DSP48E2 primitive instantiation] &lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;&lt;&gt;</span>
-<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">17</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">in_H_padded</span><span class="p">;</span>
-<span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">in_H_padded</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="mi">14</span><span class="p">{</span><span class="n">in_H</span><span class="p">[</span><span class="no">`GEMM_MAC_UNIT_IN_H</span><span class="o">-</span><span class="mi">1</span><span class="p">]}},</span><span class="w"> </span><span class="n">in_H</span><span class="p">};</span>
+<span class="w">  </span><span class="c1">// ===| DSP48E2 primitive |======================================================</span>
+<span class="w">  </span><span class="c1">//   A-port  : packer output (DIRECT, no cascade).</span>
+<span class="w">  </span><span class="c1">//   B-port  : direct (top row) or BCIN cascade (non-top rows).</span>
+<span class="w">  </span><span class="c1">//   P-port  : PCIN cascade or C-fabric when BREAK_CASCADE = 1.</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">P_PORT_W</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">p_internal</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">P_PORT_W</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">dsp_c_input</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">P_PORT_W</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">dsp_pcin_input</span><span class="p">;</span>
 
-<span class="w">  </span><span class="c1">// If TOP_ROW or BREAK_CASCADE, we get A from Fabric (in_V). Otherwise from ACIN.</span>
-<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">29</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">dsp_a_input</span><span class="p">;</span>
-<span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">dsp_a_input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">IS_TOP_ROW</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">BREAK_CASCADE</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">in_V</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">30&#39;d0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">dsp_c_input</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">BREAK_CASCADE</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">V_result_in</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="m">&#39;0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">dsp_pcin_input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BREAK_CASCADE</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="m">&#39;0</span><span class="w">          </span><span class="o">:</span><span class="w"> </span><span class="n">V_result_in</span><span class="p">;</span>
 
-<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">29</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">dsp_acin_input</span><span class="p">;</span>
-<span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">dsp_acin_input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">IS_TOP_ROW</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">BREAK_CASCADE</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="mi">30&#39;d0</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">ACIN_in</span><span class="p">;</span>
-
-<span class="w">  </span><span class="c1">// If BREAK_CASCADE, we receive the accumulated result from Fabric C (V_result_in)</span>
-<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">47</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">dsp_c_input</span><span class="p">;</span>
-<span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">dsp_c_input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BREAK_CASCADE</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">V_result_in</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">48&#39;d0</span><span class="p">;</span>
-
-<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">47</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">dsp_pcin_input</span><span class="p">;</span>
-<span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">dsp_pcin_input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BREAK_CASCADE</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="mi">48&#39;d0</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">V_result_in</span><span class="p">;</span>
-
-<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">47</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">p_internal</span><span class="p">;</span>
-
+<span class="w">  </span><span class="c1">// Break row re-injects the activation from fabric (same pattern the v001</span>
+<span class="w">  </span><span class="c1">// A-port used for BF16 mantissa). Otherwise BCIN cascade drives B.</span>
 <span class="w">  </span><span class="n">DSP48E2</span><span class="w"> </span><span class="p">#(</span>
-<span class="w">      </span><span class="p">.</span><span class="n">A_INPUT</span><span class="p">((</span><span class="n">IS_TOP_ROW</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">BREAK_CASCADE</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">&quot;DIRECT&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;CASCADE&quot;</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">B_INPUT</span><span class="p">(</span><span class="s">&quot;DIRECT&quot;</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">AREG</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">BREG</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">CREG</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">MREG</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">PREG</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">OPMODEREG</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">ALUMODEREG</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">USE_MULT</span><span class="p">(</span><span class="s">&quot;MULTIPLY&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="n">A_INPUT</span><span class="w">    </span><span class="p">(</span><span class="s">&quot;DIRECT&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">B_INPUT</span><span class="w">    </span><span class="p">((</span><span class="n">IS_TOP_ROW</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">BREAK_CASCADE</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">&quot;DIRECT&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">&quot;CASCADE&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">AREG</span><span class="w">       </span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">BREG</span><span class="w">       </span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">CREG</span><span class="w">       </span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">MREG</span><span class="w">       </span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">PREG</span><span class="w">       </span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">OPMODEREG</span><span class="w">  </span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">ALUMODEREG</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">USE_MULT</span><span class="w">   </span><span class="p">(</span><span class="s">&quot;MULTIPLY&quot;</span><span class="p">)</span>
 <span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="n">DSP_HARD_BLOCK</span><span class="w"> </span><span class="p">(</span>
-<span class="w">      </span><span class="p">.</span><span class="n">CLK</span><span class="p">(</span><span class="n">clk</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">RSTA</span><span class="p">(</span><span class="n">i_clear</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">RSTB</span><span class="p">(</span><span class="n">i_clear</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">RSTM</span><span class="p">(</span><span class="n">i_clear</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">RSTP</span><span class="p">(</span><span class="n">i_clear</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">RSTCTRL</span><span class="p">(</span><span class="n">i_clear</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">RSTALLCARRYIN</span><span class="p">(</span><span class="n">i_clear</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">RSTALUMODE</span><span class="p">(</span><span class="n">i_clear</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">RSTC</span><span class="p">(</span><span class="n">i_clear</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">CLK</span><span class="w">          </span><span class="p">(</span><span class="n">clk</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">RSTA</span><span class="w">         </span><span class="p">(</span><span class="n">i_clear</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">RSTB</span><span class="w">         </span><span class="p">(</span><span class="n">i_clear</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">RSTM</span><span class="w">         </span><span class="p">(</span><span class="n">i_clear</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">RSTP</span><span class="w">         </span><span class="p">(</span><span class="n">i_clear</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">RSTCTRL</span><span class="w">      </span><span class="p">(</span><span class="n">i_clear</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">RSTALLCARRYIN</span><span class="p">(</span><span class="n">i_clear</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">RSTALUMODE</span><span class="w">   </span><span class="p">(</span><span class="n">i_clear</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">RSTC</span><span class="w">         </span><span class="p">(</span><span class="n">i_clear</span><span class="p">),</span>
 
-<span class="w">      </span><span class="p">.</span><span class="n">CEA1</span><span class="p">(</span><span class="n">i_valid</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">CEA2</span><span class="p">(</span><span class="n">i_valid</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">CEB1</span><span class="p">(</span><span class="n">dsp_ce_b1</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">CEB2</span><span class="p">(</span><span class="n">dsp_ce_b2</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">CEM</span><span class="p">(</span><span class="n">i_valid</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">CEP</span><span class="p">(</span><span class="n">dsp_ce_p</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">CECTRL</span><span class="p">(</span><span class="mb">1&#39;b1</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">CEALUMODE</span><span class="p">(</span><span class="mb">1&#39;b1</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">CEC</span><span class="p">(</span><span class="mb">1&#39;b1</span><span class="p">),</span><span class="w">  </span><span class="c1">// Enable C register if breaking cascade</span>
+<span class="w">    </span><span class="p">.</span><span class="n">CEA1</span><span class="w">     </span><span class="p">(</span><span class="n">i_weight_valid</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">CEA2</span><span class="w">     </span><span class="p">(</span><span class="n">i_weight_valid</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">CEB1</span><span class="w">     </span><span class="p">(</span><span class="n">i_valid</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">CEB2</span><span class="w">     </span><span class="p">(</span><span class="n">i_valid</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">CEM</span><span class="w">      </span><span class="p">(</span><span class="n">i_valid</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">CEP</span><span class="w">      </span><span class="p">(</span><span class="n">dsp_ce_p</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">CECTRL</span><span class="w">   </span><span class="p">(</span><span class="mb">1&#39;b1</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">CEALUMODE</span><span class="p">(</span><span class="mb">1&#39;b1</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">CEC</span><span class="w">      </span><span class="p">(</span><span class="mb">1&#39;b1</span><span class="p">),</span>
 
-<span class="w">      </span><span class="p">.</span><span class="n">A</span><span class="p">(</span><span class="n">dsp_a_input</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">ACIN</span><span class="p">(</span><span class="n">dsp_acin_input</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">ACOUT</span><span class="p">(</span><span class="n">ACOUT_out</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">A</span><span class="w">     </span><span class="p">(</span><span class="n">a_packed</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">ACIN</span><span class="w">  </span><span class="p">(</span><span class="m">&#39;0</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">ACOUT</span><span class="w"> </span><span class="p">(),</span>
 
-<span class="w">      </span><span class="p">.</span><span class="n">B</span><span class="p">(</span><span class="n">in_H_padded</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">C</span><span class="p">(</span><span class="n">dsp_c_input</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">B</span><span class="w">     </span><span class="p">(</span><span class="n">b_extended</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">BCIN</span><span class="w">  </span><span class="p">(</span><span class="n">BCIN_in</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">BCOUT</span><span class="w"> </span><span class="p">(</span><span class="n">BCOUT_out</span><span class="p">),</span>
 
-<span class="w">      </span><span class="p">.</span><span class="n">PCIN</span><span class="w"> </span><span class="p">(</span><span class="n">dsp_pcin_input</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">PCOUT</span><span class="p">(</span><span class="n">V_result_out</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">C</span><span class="w">     </span><span class="p">(</span><span class="n">dsp_c_input</span><span class="p">),</span>
 
-<span class="w">      </span><span class="p">.</span><span class="n">OPMODE</span><span class="p">(</span><span class="n">dynamic_opmode</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">ALUMODE</span><span class="p">(</span><span class="n">dynamic_alumode</span><span class="p">),</span>
-<span class="w">      </span><span class="p">.</span><span class="n">P</span><span class="p">(</span><span class="n">p_internal</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="n">PCIN</span><span class="w">  </span><span class="p">(</span><span class="n">dsp_pcin_input</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">PCOUT</span><span class="w"> </span><span class="p">(</span><span class="n">V_result_out</span><span class="p">),</span>
+
+<span class="w">    </span><span class="p">.</span><span class="n">OPMODE</span><span class="w"> </span><span class="p">(</span><span class="n">dynamic_opmode</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">ALUMODE</span><span class="p">(</span><span class="n">dynamic_alumode</span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">P</span><span class="w">      </span><span class="p">(</span><span class="n">p_internal</span><span class="p">)</span>
 <span class="w">  </span><span class="p">);</span>
 
-<span class="w">  </span><span class="c1">// We must expose the internal P so it can be routed via fabric to the next DSP</span>
 <span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">P_fabric_out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p_internal</span><span class="p">;</span>
 
 <span class="k">endmodule</span>
@@ -1293,7 +1362,7 @@ CORDIC + LUT 하이브리드 함수 유닛을 조율합니다.
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2026-04-19</div>
+              Last updated on 2026-04-20</div>
           </div>
           <div class="right-details">
             <div class="icons">
