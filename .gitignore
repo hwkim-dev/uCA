@@ -39,3 +39,9 @@ pccx_master_roadmap_final.md
 pccx_v002_extended_20toks_plan.md
 tinynpu_v003_gemma4_e4b_plan(1).md
 tinynpu_v003_gemma4_e4b_plan.md
+
+# User-only action checklist (local, never committed)
+USER_ACTIONS.md
+
+# Phase 0 downloaded artifacts (weights + datasets, huge)
+data/
