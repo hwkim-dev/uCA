@@ -8,6 +8,7 @@ Pre-RTL bottleneck detection, UVM co-simulation, and LLM-driven testbench genera
    :hidden:
 
    modules/overview
+   modules/node-editor
    design/rationale
    pccx-format
    verification-workflow
