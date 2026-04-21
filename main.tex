@@ -302,9 +302,11 @@
 
 % ---------- Helper: render \uop with a math mu so the symbol does not
 % drop out when the active main font lacks Greek lowercase coverage
-% (e.g. Latin Modern Roman, our CI fallback).  ----------
-\providecommand{\uop}{\ensuremath{\mu}\text{op}}
-\providecommand{\uops}{\ensuremath{\mu}\text{ops}}
+% (e.g. Latin Modern Roman, our CI fallback).  xspace lets us write
+% "\uop is" without losing the trailing space. ----------
+\usepackage{xspace}
+\providecommand{\uop}{\ensuremath{\mu}\text{op}\xspace}
+\providecommand{\uops}{\ensuremath{\mu}\text{ops}\xspace}
 
 
 % ---------- TikZ common styles ----------
@@ -686,6 +688,106 @@ the 400\,MHz compute core.}
 \label{fig:cdc}
 \end{figure}
 
+\subsection*{AXI-HP Read Handshake}
+
+Every weight or activation byte that crosses from the PS side of the
+chip to the PL side does so over the AXI-HP 4-channel burst-capable
+read protocol.  The ingress direction of one such handshake (single
+beat shown; a full burst chains 16 of these on the data phase) is
+illustrated in Figure~\ref{fig:axi-timing}.  The protocol enforces
+three rules the software driver must respect:
+
+\begin{itemize}[label={\color{oceanblue}\textbullet}, leftmargin=*, itemsep=0.3ex]
+    \item \texttt{ARVALID} must remain asserted until both
+          \texttt{ARVALID} and \texttt{ARREADY} are sampled high on
+          the same rising edge (the \textit{address handshake}).
+    \item \texttt{ARADDR} must be stable across that window.
+    \item After the handshake, the master must be ready to accept
+          \texttt{RDATA} within at most \texttt{T\_rdata\_max} cycles
+          of the corresponding \texttt{RVALID} assertion.
+\end{itemize}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+  font=\sffamily\scriptsize,
+  sig/.style={semithick, draw=oceanblue, line cap=round},
+  clk/.style={semithick, draw=graytext, line cap=round},
+  grid/.style={very thin, dotted, draw=graytext!55},
+  hilite/.style={thick, draw=accentred, dashed},
+  lbl/.style={anchor=east, font=\sffamily\small},
+]
+  \def\cw{0.9}   % cycle width
+
+  % Signal labels (left column)
+  \node[lbl] at (-0.1,  5) {CLK};
+  \node[lbl] at (-0.1,  4) {ARVALID};
+  \node[lbl] at (-0.1,  3) {ARREADY};
+  \node[lbl] at (-0.1,  2) {ARADDR[16:0]};
+  \node[lbl] at (-0.1,  1) {RVALID};
+  \node[lbl] at (-0.1,  0) {RDATA[127:0]};
+
+  % Cycle grid + numbers
+  \foreach \i in {0,...,6} {
+    \draw[grid] ({\cw*\i}, -0.4) -- ({\cw*\i}, 5.6);
+    \node[font=\sffamily\scriptsize\color{graytext}] at ({\cw*\i + \cw/2}, 5.75) {t\the\numexpr\i+1\relax};
+  }
+
+  % Clock (6 cycles), square wave with half-period of 0.5 cycle
+  \draw[clk] (0, 5.0)
+    -- ({\cw*0.5}, 5.0) -- ({\cw*0.5}, 5.4) -- ({\cw*1.0}, 5.4) -- ({\cw*1.0}, 5.0)
+    -- ({\cw*1.5}, 5.0) -- ({\cw*1.5}, 5.4) -- ({\cw*2.0}, 5.4) -- ({\cw*2.0}, 5.0)
+    -- ({\cw*2.5}, 5.0) -- ({\cw*2.5}, 5.4) -- ({\cw*3.0}, 5.4) -- ({\cw*3.0}, 5.0)
+    -- ({\cw*3.5}, 5.0) -- ({\cw*3.5}, 5.4) -- ({\cw*4.0}, 5.4) -- ({\cw*4.0}, 5.0)
+    -- ({\cw*4.5}, 5.0) -- ({\cw*4.5}, 5.4) -- ({\cw*5.0}, 5.4) -- ({\cw*5.0}, 5.0)
+    -- ({\cw*5.5}, 5.0) -- ({\cw*5.5}, 5.4) -- ({\cw*6.0}, 5.4) -- ({\cw*6.0}, 5.0);
+
+  % ARVALID: asserted cycles t2..t3 (master), deassertion on t4
+  \draw[sig] (0, 4) -- ({\cw*1}, 4)
+    -- ({\cw*1}, 4.4) -- ({\cw*3}, 4.4) -- ({\cw*3}, 4)
+    -- ({\cw*6}, 4);
+
+  % ARREADY: asserted cycle t3 (slave), 1-cycle high
+  \draw[sig] (0, 3) -- ({\cw*2}, 3)
+    -- ({\cw*2}, 3.4) -- ({\cw*3}, 3.4) -- ({\cw*3}, 3)
+    -- ({\cw*6}, 3);
+
+  % ARADDR: valid t2..t3 with addr label
+  \draw[sig] (0, 2) -- ({\cw*1}, 2);
+  \draw[sig] ({\cw*1}, 2) -- ({\cw*1.1}, 2.4) -- ({\cw*3}, 2.4)
+             -- ({\cw*3.1}, 2) -- ({\cw*6}, 2);
+  \node[font=\sffamily\scriptsize] at ({\cw*2}, 2.2) {\texttt{addr}};
+
+  % RVALID: asserted t5 (slave returns data one cycle after handshake+latency)
+  \draw[sig] (0, 1) -- ({\cw*4}, 1)
+    -- ({\cw*4}, 1.4) -- ({\cw*5}, 1.4) -- ({\cw*5}, 1)
+    -- ({\cw*6}, 1);
+
+  % RDATA: valid during RVALID
+  \draw[sig] (0, 0) -- ({\cw*4}, 0);
+  \draw[sig] ({\cw*4}, 0) -- ({\cw*4.1}, 0.4) -- ({\cw*5}, 0.4)
+             -- ({\cw*5.1}, 0) -- ({\cw*6}, 0);
+  \node[font=\sffamily\scriptsize] at ({\cw*4.5}, 0.2) {\texttt{data}};
+
+  % Handshake marker at t3 (both ARVALID & ARREADY high)
+  \draw[hilite] ({\cw*2.5}, 4.55) -- ({\cw*2.5}, 2.85);
+  \node[font=\sffamily\scriptsize\color{accentred}, anchor=west]
+    at ({\cw*2.6}, 3.7) {address handshake};
+
+  % Data-phase marker at t5
+  \draw[hilite] ({\cw*4.5}, 1.55) -- ({\cw*4.5}, -0.25);
+  \node[font=\sffamily\scriptsize\color{accentred}, anchor=west]
+    at ({\cw*4.6}, 0.7) {data beat};
+\end{tikzpicture}
+\caption{AXI-HP read protocol, single beat.  On cycle \texttt{t3} both
+\texttt{ARVALID} and \texttt{ARREADY} are high --- the address is
+captured.  Two cycles of round-trip latency later (cycle \texttt{t5})
+the slave returns \texttt{RDATA} with \texttt{RVALID}.  A full burst
+chains 16 data beats on back-to-back cycles once the address phase
+has committed.}
+\label{fig:axi-timing}
+\end{figure}
+
 \section{Instruction Pipeline}
 
 \begin{figure}[h]
@@ -944,6 +1046,94 @@ single GEMV dispatches 32-lane LUT-based MAC units followed by a
 \caption{GEMV weight streaming: the 4 GEMV cores each consume a
 row-partition stream; results concatenate into a single vector.}
 \label{fig:gemv-stream}
+\end{figure}
+
+Each GEMV core reduces its 32 partial products to a single scalar
+through a five-stage binary tree (Figure~\ref{fig:gemv-tree}).  Stage
+1 is implemented with 16 DSP48E2 slices running in $A+B$ mode;
+stages 2--5 fall to 6-LUT adders to conserve the DSP budget for the
+GEMM array.
+
+\begin{figure}[h]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+  font=\sffamily\scriptsize,
+  leaf/.style={rectangle, draw=oceanblue, fill=oceanblue!10,
+               minimum width=0.42cm, minimum height=0.42cm, inner sep=0pt},
+  dsp/.style ={rectangle, draw=accentred, fill=accentred!15,
+               minimum width=0.6cm, minimum height=0.5cm, inner sep=0pt,
+               font=\sffamily\tiny\bfseries},
+  lut/.style ={rectangle, draw=accentgreen, fill=accentgreen!15,
+               minimum width=0.75cm, minimum height=0.5cm, inner sep=0pt,
+               font=\sffamily\tiny\bfseries},
+  sink/.style={rectangle, draw=accentpurple, fill=accentpurple!20,
+               minimum width=0.9cm, minimum height=0.55cm, inner sep=0pt,
+               font=\sffamily\tiny\bfseries},
+  rowlbl/.style={anchor=east, font=\sffamily\scriptsize\color{graytext}},
+]
+  % Stage 0: 32 leaves (partial products), spaced 0.5cm apart
+  \def\leafdx{0.5}
+  \foreach \i in {0,...,31}
+    \node[leaf] (p\i) at (\i*\leafdx, 0) {};
+  \node[rowlbl] at (-0.3, 0)   {32 $\times$ W$\cdot$A};
+
+  % Stage 1 (DSP48E2): 16 nodes, each merging 2 leaves -> positioned midway
+  \foreach \i in {0,...,15} {
+    \pgfmathtruncatemacro{\a}{2*\i}
+    \pgfmathtruncatemacro{\b}{2*\i+1}
+    \pgfmathsetmacro{\xc}{(\a+\b)*\leafdx/2}
+    \node[dsp] (d\i) at (\xc, -1.0) {D};
+    \draw[arr, -] (p\a) -- (d\i);
+    \draw[arr, -] (p\b) -- (d\i);
+  }
+  \node[rowlbl] at (-0.3, -1.0) {Stage 1 (DSP48E2) 32 $\to$ 16};
+
+  % Stage 2 (LUT): 8 nodes
+  \foreach \i in {0,...,7} {
+    \pgfmathtruncatemacro{\a}{2*\i}
+    \pgfmathtruncatemacro{\b}{2*\i+1}
+    \pgfmathsetmacro{\xc}{(\a+\b)*2*\leafdx/2 + \leafdx/2}
+    \node[lut] (e\i) at (\xc, -2.0) {L};
+    \draw[arr, -] (d\a) -- (e\i);
+    \draw[arr, -] (d\b) -- (e\i);
+  }
+  \node[rowlbl] at (-0.3, -2.0) {Stage 2 (LUT) 16 $\to$ 8};
+
+  % Stage 3 (LUT): 4 nodes
+  \foreach \i in {0,...,3} {
+    \pgfmathtruncatemacro{\a}{2*\i}
+    \pgfmathtruncatemacro{\b}{2*\i+1}
+    \pgfmathsetmacro{\xc}{(\a+\b)*4*\leafdx/2 + 1.5*\leafdx}
+    \node[lut] (f\i) at (\xc, -3.0) {L};
+    \draw[arr, -] (e\a) -- (f\i);
+    \draw[arr, -] (e\b) -- (f\i);
+  }
+  \node[rowlbl] at (-0.3, -3.0) {Stage 3 (LUT) 8 $\to$ 4};
+
+  % Stage 4 (LUT): 2 nodes
+  \foreach \i in {0,1} {
+    \pgfmathtruncatemacro{\a}{2*\i}
+    \pgfmathtruncatemacro{\b}{2*\i+1}
+    \pgfmathsetmacro{\xc}{(\a+\b)*8*\leafdx/2 + 3.5*\leafdx}
+    \node[lut] (g\i) at (\xc, -4.0) {L};
+    \draw[arr, -] (f\a) -- (g\i);
+    \draw[arr, -] (f\b) -- (g\i);
+  }
+  \node[rowlbl] at (-0.3, -4.0) {Stage 4 (LUT) 4 $\to$ 2};
+
+  % Stage 5 (LUT): 1 scalar
+  \node[sink] (s) at (31*\leafdx/2, -5.0) {scalar};
+  \draw[arr, -] (g0) -- (s);
+  \draw[arr, -] (g1) -- (s);
+  \node[rowlbl] at (-0.3, -5.0) {Stage 5 (LUT) 2 $\to$ 1};
+\end{tikzpicture}%
+}
+\caption{Per-core GEMV reduction tree (one of four cores shown).
+Stage 1 absorbs 32 partial products into 16 sums using DSP48E2 $A+B$
+adders; stages 2--5 use 6-LUT adders.  Each stage carries a pipeline
+register so the tree closes timing at 400\,MHz.}
+\label{fig:gemv-tree}
 \end{figure}
 
 \newpage
@@ -1873,6 +2063,57 @@ completion arrives later via \texttt{STAT\_OUT}.}
 \label{fig:async-seq}
 \end{figure}
 
+\section{Fence Tracker State Machine}
+
+The fence tracker is a small FSM inside the Dispatcher with one
+instance per outstanding \texttt{async} instruction.  Each instance
+owns a single \texttt{fence\_id} slot in \texttt{STAT\_OUT}.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+  font=\sffamily\small,
+  node distance = 1.8cm and 2.8cm,
+  state/.style = {circle, draw=oceanblue, thick, minimum size=1.7cm, align=center,
+                  font=\sffamily\footnotesize, inner sep=1pt, fill=skytint},
+  stateh/.style= {circle, draw=accentred, thick, minimum size=1.7cm, align=center,
+                  font=\sffamily\footnotesize, inner sep=1pt, fill=skytint},
+  edgelbl/.style={font=\sffamily\scriptsize, fill=white, inner sep=1pt},
+]
+  \node[state]  (idle) {\textbf{IDLE}\\\scriptsize slot free};
+  \node[stateh, right=of idle] (track) {\textbf{TRACKING}\\\scriptsize \uop in\\\scriptsize flight};
+  \node[state, right=of track] (done) {\textbf{DONE}\\\scriptsize fence\\\scriptsize retired};
+
+  % Transitions
+  \draw[arr, bend left=15]   (idle.north east)
+        to node[edgelbl, above] {\texttt{async} \uop dispatched}
+        (track.north west);
+  \draw[arr, bend left=15]   (track.north east)
+        to node[edgelbl, above] {back-end \texttt{fence\_done}}
+        (done.north west);
+  \draw[arr, bend left=30]   (done.south west)
+        to node[edgelbl, below] {host reads \texttt{STAT\_OUT}}
+        (idle.south east);
+
+  % Self-loop on TRACKING
+  \draw[arr] (track.north)
+        .. controls +(150:1.0) and +(30:1.0) ..
+        node[edgelbl, above] {partial progress (no state change)}
+        (track.north);
+
+  % Reset from any state on reset (abstracted)
+  \node[font=\sffamily\scriptsize\color{graytext}, below=2.2cm of track, align=center]
+    {Global reset returns every tracker slot to \textbf{IDLE}.\\
+     There are 16 slots in hardware --- one per outstanding \texttt{fence\_id}.};
+\end{tikzpicture}
+\caption{Per-slot fence-tracker state machine.  A slot transitions
+IDLE$\to$TRACKING the moment an \texttt{async} \uop is accepted by the
+back end, and TRACKING$\to$DONE when the back end asserts
+\texttt{fence\_done}.  The host reading \texttt{STAT\_OUT} returns the
+slot to IDLE.}
+\label{fig:fence-fsm}
+\end{figure}
+
 \newpage
 
 % =================================================================
@@ -1969,6 +2210,83 @@ GEMM   dest=..., src=..., ...
           trip is skipped.
 \end{itemize}
 
+\section{Roofline Model}
+
+Figure~\ref{fig:roofline} plots the classical roofline for pccx v002:
+the ceiling is the $800$\,GMAC/s peak compute of 2000 DSP48E2 slices
+running at $400$\,MHz in $9 \times 4$ packed mode, and the slope is
+the $12.8$\,GB/s DDR4 bandwidth delivered through the 4 AXI-HP ports.
+The three operators the ISA exposes land in distinct regimes:
+
+\begin{itemize}[label={\color{oceanblue}\textbullet}, leftmargin=*, itemsep=0.3ex]
+    \item \textbf{GEMM} (prefill) — weight reuse of $\sim 256 \times$
+          inside one tile pushes arithmetic intensity above the ridge
+          point; the systolic array runs compute-bound.
+    \item \textbf{GEMV} (decode) — every weight is used once per
+          token, so AI is $\sim 0.5$ MAC/byte and throughput tracks
+          the memory slope.  Speculative decoding and tied-embedding
+          reuse are the only ways to cross the ridge.
+    \item \textbf{CVO} — dominated by the activation/scale memory
+          traffic; runs left of the ridge but is a small fraction of
+          total cycles.
+\end{itemize}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+  \begin{loglogaxis}[
+    width=10.5cm,
+    height=7.2cm,
+    xlabel={Arithmetic intensity (MAC / byte)},
+    ylabel={Achieved throughput (GMAC/s)},
+    xmin=0.1, xmax=1000,
+    ymin=1,   ymax=2000,
+    grid=both,
+    major grid style={draw=graytext!30},
+    minor grid style={draw=graytext!15},
+    axis line style={draw=graytext},
+    tick label style={font=\sffamily\footnotesize, color=graytext},
+    label style={font=\sffamily\small},
+    legend style={font=\sffamily\footnotesize, at={(0.98,0.05)}, anchor=south east,
+                  draw=graytext!40, fill=white},
+    legend cell align=left,
+  ]
+    % Memory slope: y = 12.8 GB/s * x (MAC/byte) -> treat MAC as 1 op each
+    % and bandwidth as 12.8 byte/sec (in GB/s).  So y_max_mem = BW * AI.
+    \addplot[domain=0.1:100, samples=2, thick, color=accentred]
+      { 12.8 * x };
+    \addlegendentry{Memory bound (12.8\,GB/s)}
+
+    % Compute ceiling at 800 GMAC/s
+    \addplot[domain=0.1:1000, samples=2, thick, color=accentgreen]
+      { 800 };
+    \addlegendentry{Compute peak (800\,GMAC/s)}
+
+    % Operating points
+    \addplot[only marks, mark=*, mark size=2.7pt, color=oceanblue]
+      coordinates { (0.5, 6.4) };
+    \addlegendentry{GEMV (AI $\approx$ 0.5)}
+
+    \addplot[only marks, mark=square*, mark size=2.7pt, color=oceanblue]
+      coordinates { (256, 800) };
+    \addlegendentry{GEMM (AI $\approx$ 256)}
+
+    \addplot[only marks, mark=triangle*, mark size=3pt, color=accentpurple]
+      coordinates { (2, 25.6) };
+    \addlegendentry{CVO (AI $\approx$ 2)}
+
+    % Ridge point annotation
+    \addplot[dashed, thick, color=graytext] coordinates { (62.5, 1) (62.5, 800) };
+    \node[font=\sffamily\scriptsize\color{graytext}, anchor=south west]
+      at (axis cs: 62.5, 1.2) {ridge: 62.5 MAC/B};
+  \end{loglogaxis}
+\end{tikzpicture}
+\caption{Roofline model for pccx v002.  GEMM sits at the compute
+ceiling; GEMV is firmly memory-bound.  CVO is off-critical-path but
+also bandwidth-limited.}
+\label{fig:roofline}
+\end{figure}
+
 \newpage
 
 % =================================================================
@@ -2056,6 +2374,178 @@ quick lookup.
 \hline
 \end{longtable}
 
+\chapter{GLOSSARY}
+
+\begin{longtable}{|>{\raggedright\arraybackslash}p{3.8cm}|p{11.8cm}|}
+\hline
+\rowcolor{skytint}
+\textbf{Term} & \textbf{Definition} \\
+\hline
+\endfirsthead
+
+\rowcolor{skytint}
+\textbf{Term} & \textbf{Definition} \\
+\hline
+\endhead
+
+\texttt{accm} & GEMM/GEMV flag (bit [4] of the flags field) --- when set,
+the result is \textbf{added} to the destination; when clear, the
+destination is overwritten. \\
+\hline
+ACP & Accelerator Coherency Port --- a cache-coherent AXI port on the
+Zynq UltraScale+ PS side that the NPU uses for host-visible DMA. \\
+\hline
+\uop & Micro-operation: a decoded, back-end-specific packet emitted
+by the Dispatcher.  One architectural instruction fans out to one or
+more \uops. \\
+\hline
+Async / \texttt{async} & MEMCPY / CVO flag (bit [0] of the bit-0 flag)
+--- when set, the Control Unit retires the instruction immediately and
+reports completion through \texttt{STAT\_OUT} instead of blocking. \\
+\hline
+AXI-Lite & Lightweight subset of the ARM AMBA AXI4 protocol used here
+for the 64-bit \texttt{CMD\_IN} / \texttt{STAT\_OUT} control path.
+Single-beat, non-burst. \\
+\hline
+AXI-HP & High-Performance AXI port on the KV260's PS --- the NPU claims
+four 128-bit HP ports for bulk data movement between DDR4 and L2. \\
+\hline
+BF16 & ``Brain floating-point'' half-precision format: 1 sign / 8
+exponent / 7 mantissa bits.  Used for activations, KV cache, and SFU
+intermediates.  Chosen for its IEEE-float-compatible exponent range
+without the FP16 precision cliff. \\
+\hline
+BFP & Block Floating Point --- an activation-level numeric format
+where a group of INT8 mantissas shares one BF16 exponent
+($S_{\mathrm{fmap}}$).  Folds the MAC product into a single post-
+process scalar multiply. \\
+\hline
+BRAM / URAM & Xilinx on-chip RAM primitives: BRAM is 36\,Kb / block,
+URAM is 288\,Kb / block.  v002 uses URAM as the unified L2 backing
+store and BRAM for per-core L1. \\
+\hline
+CDC & Clock Domain Crossing --- the boundary between the 250\,MHz
+AXI domain and the 400\,MHz compute domain.  Crossed by XPM async
+FIFOs; see Figure~\ref{fig:cdc}. \\
+\hline
+CORDIC & ``COordinate Rotation DIgital Computer'' --- an iterative
+shift-and-add algorithm that evaluates trigonometric and hyperbolic
+functions without a hardware multiplier.  Used inside the SFU for
+\texttt{CVO\_SIN}, \texttt{CVO\_COS}, \texttt{CVO\_EXP},
+\texttt{CVO\_SQRT}. \\
+\hline
+CVO & Complex Vector Op --- the family of non-linear scalar/vector
+activations (softmax, GELU, RMSNorm, RoPE) dispatched to the SFU.
+See \texttt{CVO\_*} function codes in Appendix~C. \\
+\hline
+\texttt{dest\_cache} (\texttt{dc}) & MEMSET operand: 2-bit selector for
+which Constant Cache bank receives the write
+(0=\texttt{fmap\_shape}, 1=\texttt{weight\_shape}, 2--3 reserved). \\
+\hline
+DSP48E2 & Xilinx UltraScale+ DSP slice: $30 \times 18$ signed multiplier
+plus 48-bit accumulator.  v002 drives it in $9 \times 4$ packed W4A8
+mode for two MACs / cycle per slice. \\
+\hline
+Dispatcher & Control-unit block that routes decoded \uops to the
+back-ends (GEMM, GEMV, SFU, DMA).  Also runs the fence tracker. \\
+\hline
+$E_{\max}$ & Maximum exponent found during a softmax numerator pass;
+subtracted before the \texttt{CVO\_EXP} to keep the sum finite. \\
+\hline
+Fence tracker & State machine inside the Dispatcher that tracks
+in-flight \texttt{async} instructions and writes
+\texttt{STAT\_OUT} when the back-end fence retires; see
+Figure~\ref{fig:fence-fsm}. \\
+\hline
+\texttt{findemax} & GEMV flag (bit [5]) --- update the $E_{\max}$
+register during this MAC epoch; consumed by a following
+\texttt{CVO\_EXP}. \\
+\hline
+GEMM & General Matrix-Matrix Multiply (prefill-dominant).  v002 uses a
+$32 \times 32$ systolic array with a cascade break at row 16. \\
+\hline
+GEMV & General Matrix-Vector Multiply (decode-dominant).  v002 has
+4 GEMV cores each with 32-MAC streaming and a 5-stage reduction tree;
+see Figure~\ref{fig:gemv-tree}. \\
+\hline
+HP port & See AXI-HP. \\
+\hline
+INT4 / INT8 & 4-bit / 8-bit signed integer.  INT4 is the weight
+quantization target (W4); INT8 is the activation quantization target
+(A8) in the W4A8 scheme. \\
+\hline
+KV cache & Key / Value cache --- a per-layer BF16 buffer in L2 that
+stores attention keys and values across tokens during autoregressive
+decode. \\
+\hline
+Lane / \texttt{parallel\_lane} & GEMM/GEMV operand (5 bits) that
+restricts execution to a subset of the 32 lanes.  \texttt{lane = 0}
+activates all lanes. \\
+\hline
+L1 / L2 & L1 = per-core weight buffer backed by URAM FIFOs.  L2 =
+unified 1.75\,MB central cache shared by GEMM, GEMV, SFU, DMA. \\
+\hline
+LUT (Xilinx) & 6-input lookup table, the basic configurable-logic
+cell.  v002 uses LUTs for GEMV dequantize pre-computation and for
+reduction tree stages 2--5. \\
+\hline
+MEMCPY & DMA move between two address spaces.  Can be synchronous
+(blocking) or \texttt{async = 1} (fire-and-forget). \\
+\hline
+MEMSET & Constant Cache scalar write.  Used to push
+($M$, $N$, $K$) and scale factors to pointer indices before a
+GEMM/GEMV. \\
+\hline
+opcode & 4-bit field in bits [63:60] of every v002 instruction.  See
+Appendix~A for the full map. \\
+\hline
+PL / PS & Programmable Logic (FPGA fabric) / Processing System (ARM
+cores) --- the two halves of the Zynq UltraScale+ SoC on KV260. \\
+\hline
+\texttt{recip\_scale} & Reciprocal of the softmax denominator;
+supplied as an operand to the fused \texttt{CVO\_SCALE} stage to
+complete the softmax division in one shot. \\
+\hline
+RoPE & Rotary Position Embedding --- applies $\sin$ / $\cos$
+rotations to Q and K vectors before attention.  Expressed in pccx as
+paired \texttt{CVO\_SIN} / \texttt{CVO\_COS} dispatches. \\
+\hline
+\texttt{shape\_ptr} / \texttt{size\_ptr} & 6-bit operand fields
+pointing into the Constant Cache for the ($M$, $N$, $K$) tuple and
+for the tile-size tuple.  Populated by MEMSET. \\
+\hline
+SFU & Special Function Unit --- the single-core back-end that
+executes CVO instructions.  Mixes CORDIC iterations with LUT-based
+interpolation.  BF16 datapath. \\
+\hline
+\texttt{src\_addr} / \texttt{dest\_addr} & 17-bit operand fields
+addressing 128-bit blocks in L2 (2\,MB linear). \\
+\hline
+STAT\_OUT & Host-side status register written by the Dispatcher once
+an \texttt{async} instruction's fence retires.  AXI-Lite read-only. \\
+\hline
+Systolic array & Regular grid of PEs used for GEMM.  v002 pins
+weights inside PEs (weight-stationary) while activations march
+left-to-right and partial sums march top-to-bottom.  See
+Figure~\ref{fig:systolic}. \\
+\hline
+Weight Stationary / Weight Streaming & Two systolic schedules.
+\textbf{Stationary} (GEMM) reuses the same weight across many
+activations; \textbf{Streaming} (GEMV) streams fresh weights every
+cycle because each weight is used once per token. \\
+\hline
+W4A8 & The pccx v002 quantization scheme: 4-bit weights, 8-bit
+activations, BF16 scale factors applied at post-process. \\
+\hline
+XPM & Xilinx Parameterized Macro --- vendor-provided primitives for
+FIFOs, CDC, memory etc.  The NPU uses \texttt{xpm\_fifo\_async} in
+independent-clock mode for the PS~$\leftrightarrow$~PL crossing. \\
+\hline
+\end{longtable}
+
+\newpage
+
+% =================================================================
 \chapter{REVISION HISTORY}
 
 \begin{longtable}{|l|l|p{9.5cm}|}
@@ -2073,6 +2563,14 @@ URAM allocation, CDC FIFO, DSP48E2 datapath, systolic array, GEMV
 streaming, decode/dispatch, hazard tracker, async completion
 sequence, CVO pipeline).  Numbers mirror \texttt{isa\_pkg.sv} in
 the RTL repo. \\
+\hline
+v002-r2 & 2026-04-22 &
+Intel-SDM polish pass.  Added wire-level AXI-HP read-handshake
+timing diagram (Figure~\ref{fig:axi-timing}), GEMV 5-stage
+reduction tree (Figure~\ref{fig:gemv-tree}), fence-tracker state
+machine (Figure~\ref{fig:fence-fsm}), and a roofline performance
+model (Figure~\ref{fig:roofline}).  New Appendix~D glossary
+(~40 terms). \\
 \hline
 \end{longtable}
 
