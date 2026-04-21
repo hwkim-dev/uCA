@@ -100,6 +100,11 @@
 \geometry{top=2.3cm, bottom=2.3cm, left=2cm, right=2cm,
           headheight=14pt, headsep=20pt, footskip=30pt}
 
+% Allow a small budget of extra stretch to break lines containing long
+% \texttt paths and URLs that hyphenation alone cannot handle.  Keeps
+% CI quiet without visibly ugly justification on normal prose.
+\setlength{\emergencystretch}{3em}
+
 % ---------- Colour palette ----------
 \definecolor{oceanblue}{HTML}{006994}
 \definecolor{OCEANBLUE}{HTML}{006994}
@@ -262,14 +267,15 @@
 % ---------- Compact "side-note" callout ----------
 \newtcolorbox{SideNote}[1]{
   enhanced,
-  colback   = skytint,
-  colframe  = deepnavy,
+  colback      = skytint,
+  colframe     = deepnavy,
+  colbacktitle = deepnavy,
+  coltitle     = white,
   sharp corners,
-  boxrule   = 0.6pt,
-  title     = {#1},
-  coltitle  = deepnavy,
-  fonttitle = \sffamily\bfseries\small,
-  fontupper = \small,
+  boxrule      = 0.6pt,
+  title        = {#1},
+  fonttitle    = \sffamily\bfseries\small,
+  fontupper    = \small,
   top=4pt, bottom=4pt, left=6pt, right=6pt,
   before skip=6pt, after skip=6pt,
 }
@@ -293,6 +299,13 @@
 % ---------- Bit-field width — bytefield takes the width per environment
 % via the [bitwidth=...] option, so nothing is set globally here.
 % ----------
+
+% ---------- Helper: render \uop with a math mu so the symbol does not
+% drop out when the active main font lacks Greek lowercase coverage
+% (e.g. Latin Modern Roman, our CI fallback).  ----------
+\providecommand{\uop}{\ensuremath{\mu}\text{op}}
+\providecommand{\uops}{\ensuremath{\mu}\text{ops}}
+
 
 % ---------- TikZ common styles ----------
 \tikzset{
@@ -574,7 +587,7 @@ via four 128-bit HP ports.}
 
 Figure~\ref{fig:npu-top} expands the PL side of Figure~\ref{fig:system-context}.
 The Control Unit decodes each 64-bit instruction in one cycle and
-emits micro-ops (\textit{μops}) into the Dispatcher, which resolves
+emits micro-ops (\textit{\uops}) into the Dispatcher, which resolves
 hazards and feeds the GEMM, GEMV, SFU, and DMA back-end resources.
 
 \begin{figure}[h]
@@ -609,7 +622,7 @@ hazards and feeds the GEMM, GEMV, SFU, and DMA back-end resources.
 
   % Arrows
   \draw[arr] (cmd) -- (dec);
-  \draw[arr] (dec) -- node[above, font=\sffamily\scriptsize]{μop} (disp);
+  \draw[arr] (dec) -- node[above, font=\sffamily\scriptsize]{\uop} (disp);
   \draw[arr, <->] (disp) -- (gs);
 
   \draw[arr] (disp.south) -- ++(0,-0.35cm) -| (gemm.north);
@@ -946,7 +959,7 @@ encodes a 4-bit opcode in the most-significant nibble followed by a
 
 \begin{figure}[h]
 \centering
-\begin{bytefield}[bitwidth=1.0em, bitheight=2.3em, boxformatting={\centering\sffamily\scriptsize}]{64}
+\begin{bytefield}[bitwidth=0.68em, bitheight=2.2em, boxformatting={\centering\sffamily\scriptsize}]{64}
   \bitheader[endianness=big,lsb=0]{0,15,20,26,43,59,63} \\
   \bitbox{4}{\color{oceanblue}\textbf{opcode}\\[0.2em]\scriptsize[63:60]} &
   \bitbox{60}{\color{graytext}\textbf{instruction body --- opcode-specific}\\[0.2em]\scriptsize[59:0]}
@@ -997,11 +1010,11 @@ eleven are reserved. Decoder behaviour on reserved opcodes is
   \node[blocknode, right=of cmd, minimum width=2.3cm] (dec)  {opcode[63:60]\\branch};
 
   % 5 branches
-  \node[branch, right=1.6cm of dec, yshift=2.4cm]  (b0) {GEMV μop};
-  \node[branch, right=1.6cm of dec, yshift=1.4cm]  (b1) {GEMM μop};
-  \node[branch, right=1.6cm of dec, yshift=0.4cm]  (b2) {MEMCTRL μop};
-  \node[branch, right=1.6cm of dec, yshift=-0.6cm] (b3) {MEMSET μop};
-  \node[branch, right=1.6cm of dec, yshift=-1.6cm] (b4) {CVO μop};
+  \node[branch, right=1.6cm of dec, yshift=2.4cm]  (b0) {GEMV \uop};
+  \node[branch, right=1.6cm of dec, yshift=1.4cm]  (b1) {GEMM \uop};
+  \node[branch, right=1.6cm of dec, yshift=0.4cm]  (b2) {MEMCTRL \uop};
+  \node[branch, right=1.6cm of dec, yshift=-0.6cm] (b3) {MEMSET \uop};
+  \node[branch, right=1.6cm of dec, yshift=-1.6cm] (b4) {CVO \uop};
   \node[font=\sffamily\scriptsize\color{graytext}, right=1.6cm of dec, yshift=-2.4cm]
     (res) {reserved $\to$ UB};
 
@@ -1016,17 +1029,17 @@ eleven are reserved. Decoder behaviour on reserved opcodes is
   \draw[arr, <->] (disp) -- (gs);
 \end{tikzpicture}
 \caption{Decode and dispatch pathway. The opcode selects one of five
-μop types; the dispatcher resolves inter-instruction hazards before
+\uop types; the dispatcher resolves inter-instruction hazards before
 handing off to the back end.}
 \label{fig:decode-dispatch}
 \end{figure}
 
-\section{μop Decomposition Summary}
+\section{\uop Decomposition Summary}
 
 \begin{longtable}{|l|p{10cm}|}
 \hline
 \rowcolor{skytint}
-\textbf{μop type} & \textbf{Constituent fields (width)} \\
+\textbf{\uop type} & \textbf{Constituent fields (width)} \\
 \hline
 \endfirsthead
 
@@ -1052,7 +1065,7 @@ The 60-bit body falls into four structural families. Figures
 
 \begin{figure}[h]
 \centering
-\begin{bytefield}[bitwidth=1.05em, bitheight=2.3em, boxformatting={\centering\sffamily\scriptsize}]{64}
+\begin{bytefield}[bitwidth=0.68em, bitheight=2.2em, boxformatting={\centering\sffamily\scriptsize}]{64}
   \bitheader[endianness=big,lsb=0]{0,3,8,14,20,26,43,60,63} \\
   \bitbox{4}{\color{oceanblue}\textbf{opcode}} &
   \bitbox{17}{\color{accentgreen}\textbf{dest\_reg}\\\scriptsize [59:43]} &
@@ -1072,7 +1085,7 @@ The 60-bit body falls into four structural families. Figures
 
 \begin{figure}[h]
 \centering
-\begin{bytefield}[bitwidth=1.05em, bitheight=2.3em, boxformatting={\centering\sffamily\scriptsize}]{64}
+\begin{bytefield}[bitwidth=0.68em, bitheight=2.2em, boxformatting={\centering\sffamily\scriptsize}]{64}
   \bitheader[endianness=big,lsb=0]{0,1,7,24,41,58,59,60,63} \\
   \bitbox{4}{\color{oceanblue}\textbf{opcode}} &
   \bitbox{1}{\color{accentred}\textbf{fd}\\\tiny[59]} &
@@ -1093,7 +1106,7 @@ The 60-bit body falls into four structural families. Figures
 
 \begin{figure}[h]
 \centering
-\begin{bytefield}[bitwidth=1.05em, bitheight=2.3em, boxformatting={\centering\sffamily\scriptsize}]{64}
+\begin{bytefield}[bitwidth=0.68em, bitheight=2.2em, boxformatting={\centering\sffamily\scriptsize}]{64}
   \bitheader[endianness=big,lsb=0]{0,4,20,36,52,58,60,63} \\
   \bitbox{4}{\color{oceanblue}\textbf{opcode}} &
   \bitbox{2}{\color{accentred}\textbf{dc}\\\tiny[59:58]} &
@@ -1112,7 +1125,7 @@ The 60-bit body falls into four structural families. Figures
 
 \begin{figure}[h]
 \centering
-\begin{bytefield}[bitwidth=1.05em, bitheight=2.3em, boxformatting={\centering\sffamily\scriptsize}]{64}
+\begin{bytefield}[bitwidth=0.68em, bitheight=2.2em, boxformatting={\centering\sffamily\scriptsize}]{64}
   \bitheader[endianness=big,lsb=0]{0,1,6,22,39,56,60,63} \\
   \bitbox{4}{\color{oceanblue}\textbf{opcode}} &
   \bitbox{4}{\color{accentred}\textbf{func}\\\scriptsize[59:56]} &
@@ -1170,7 +1183,7 @@ A & \texttt{dest} (Mod ModReg, W) $\vert$ \texttt{src} (Mod ModReg, R) $\vert$ \
 \RefSection{Bit-level encoding (Type A)}
 
 \begin{center}
-\begin{bytefield}[bitwidth=1.05em, bitheight=2.2em, boxformatting={\centering\sffamily\scriptsize}]{64}
+\begin{bytefield}[bitwidth=0.68em, bitheight=2.1em, boxformatting={\centering\sffamily\scriptsize}]{64}
   \bitheader[endianness=big,lsb=0]{0,3,8,14,20,26,43,60,63} \\
   \bitbox{4}{opcode} &
   \bitbox{17}{dest\_reg\\[-0.1em]\scriptsize[59:43]} &
@@ -1289,7 +1302,7 @@ architectural flags are affected.
 \RefSection{Bit-level encoding (Type B)}
 
 \begin{center}
-\begin{bytefield}[bitwidth=1.05em, bitheight=2.2em, boxformatting={\centering\sffamily\scriptsize}]{64}
+\begin{bytefield}[bitwidth=0.68em, bitheight=2.1em, boxformatting={\centering\sffamily\scriptsize}]{64}
   \bitheader[endianness=big,lsb=0]{0,1,7,24,41,58,59,60,63} \\
   \bitbox{4}{opcode} &
   \bitbox{1}{fd} & \bitbox{1}{td} &
@@ -1388,7 +1401,7 @@ END DISPATCH
 \RefSection{Bit-level encoding (Type C)}
 
 \begin{center}
-\begin{bytefield}[bitwidth=1.05em, bitheight=2.2em, boxformatting={\centering\sffamily\scriptsize}]{64}
+\begin{bytefield}[bitwidth=0.68em, bitheight=2.1em, boxformatting={\centering\sffamily\scriptsize}]{64}
   \bitheader[endianness=big,lsb=0]{0,4,20,36,52,58,60,63} \\
   \bitbox{4}{opcode} &
   \bitbox{2}{dc\\\scriptsize[59:58]} &
@@ -1452,7 +1465,7 @@ END DISPATCH
 \RefSection{Bit-level encoding (Type D)}
 
 \begin{center}
-\begin{bytefield}[bitwidth=1.05em, bitheight=2.2em, boxformatting={\centering\sffamily\scriptsize}]{64}
+\begin{bytefield}[bitwidth=0.68em, bitheight=2.1em, boxformatting={\centering\sffamily\scriptsize}]{64}
   \bitheader[endianness=big,lsb=0]{0,1,6,22,39,56,60,63} \\
   \bitbox{4}{opcode} &
   \bitbox{4}{func\\\scriptsize[59:56]} &
@@ -1733,6 +1746,7 @@ A host-side byte offset must be divided by 16 before loading into
 
 \begin{figure}[h]
 \centering
+\resizebox{\textwidth}{!}{%
 \begin{tikzpicture}[
   font=\sffamily\footnotesize,
   node distance=0.3cm and 0.6cm,
@@ -1779,7 +1793,8 @@ A host-side byte offset must be divided by 16 before loading into
   \node[dfstep, right=of c5] (c6) {WB L2\\or FIFO};
   \node[above=0.15cm of c1, font=\sffamily\bfseries\color{oceanblue}] {CVO};
   \foreach \a/\b in {c1/c2, c2/c3, c3/c4, c4/c5, c5/c6} \draw[arr] (\a)--(\b);
-\end{tikzpicture}
+\end{tikzpicture}%
+}
 \caption{Per-instruction dataflow summary. Each row is one
 instruction's journey through the NPU from dispatch to writeback.}
 \label{fig:dataflow-summary}
@@ -1789,11 +1804,12 @@ instruction's journey through the NPU from dispatch to writeback.}
 
 \begin{figure}[h]
 \centering
+\resizebox{\textwidth}{!}{%
 \begin{tikzpicture}[
   font=\sffamily\footnotesize,
   node distance=0.3cm and 0.6cm,
 ]
-  \node[blocknode, minimum width=3cm] (in) {Incoming μop};
+  \node[blocknode, minimum width=3cm] (in) {Incoming \uop};
   \node[blocknode, right=1.3cm of in, minimum width=3.4cm, fill=accentorange!15, draw=accentorange]
     (ah) {Address hazard check\\\scriptsize RAW on dest/src};
   \node[blocknode, right=1.3cm of ah, minimum width=3.4cm, fill=accentorange!15, draw=accentorange]
@@ -1808,8 +1824,9 @@ instruction's journey through the NPU from dispatch to writeback.}
   \draw[arr] (rh) -- (ex);
   \draw[arr] (ex.south) -- ++(0,-0.4cm) -| (fence.east);
   \draw[arr] (fence.east) -| (stat.south);
-\end{tikzpicture}
-\caption{Hazard pipeline. Each μop passes an address-hazard and a
+\end{tikzpicture}%
+}
+\caption{Hazard pipeline. Each \uop passes an address-hazard and a
 resource-hazard check before executing; \texttt{async} completion is
 reported via the Fence tracker into \texttt{STAT\_OUT}.}
 \label{fig:hazard}
@@ -1844,7 +1861,7 @@ sequence.
 
   % Message arrows
   \draw[arrfat] ($(h0)+(0,-0.5cm)$) -- node[above, font=\sffamily\scriptsize]{\texttt{CMD\_IN} 64\,b (async=1)} ($(c0)+(0,-0.5cm)$);
-  \draw[arrfat] ($(c0)+(0,-1.2cm)$) -- node[above, font=\sffamily\scriptsize]{μop + \texttt{fence\_id}} ($(b0)+(0,-1.2cm)$);
+  \draw[arrfat] ($(c0)+(0,-1.2cm)$) -- node[above, font=\sffamily\scriptsize]{\uop + \texttt{fence\_id}} ($(b0)+(0,-1.2cm)$);
   \draw[arrfat] ($(c0)+(0,-1.9cm)$) -- node[above, font=\sffamily\scriptsize]{ack (retire to host)} ($(h0)+(0,-1.9cm)$);
   \draw[arrdim, dashed] ($(b0)+(0,-2.6cm)$) -- node[below, font=\sffamily\scriptsize]{(bus transfer \ldots\ latency)} ($(c0)+(0,-2.6cm)$);
   \draw[arrfat] ($(b0)+(0,-3.8cm)$) -- node[above, font=\sffamily\scriptsize]{fence done} ($(c0)+(0,-3.8cm)$);
@@ -1945,8 +1962,8 @@ GEMM   dest=..., src=..., ...
           lane set.
     \item Fuse softmax: on the same SFU dispatch, chain
           \texttt{CVO\_EXP} $\to$ \texttt{CVO\_REDUCE\_SUM} $\to$
-          \texttt{CVO\_SCALE(recip\_scale)} so the pipeline drains
-          once rather than three times.
+          \texttt{CVO\_SCALE}\allowbreak(\texttt{recip\_scale}) so the
+          pipeline drains once rather than three times.
     \item If a GEMV feeds directly into a CVO, pre-tag the GEMV
           \texttt{dest} with the SFU-bypass marker so the L2 round
           trip is skipped.
