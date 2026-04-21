@@ -29,13 +29,45 @@ __pycache__/
 # External v002 RTL repo (cloned by CI at build time)
 codes/v002/
 
-# Local tooling scratch (not committed)
+# ─── AI assistants / agent configs & transcripts ────────────────
+# None of the files below belong in the public repo — they hold per-
+# clone instructions, prompt history, or vendor-specific session
+# caches.  The guide (CLAUDE.md / AGENTS.md / GEMINI.md) is mirrored
+# from the same sources per machine and is never uploaded.
 .claude/
 .claudesignore
-pccx-agent-integration-task.md
 CLAUDE.md
 AGENTS.md
 GEMINI.md
+pccx-agent-integration-task.md
+
+# Other CLI / IDE AI assistants — block the full config directory
+# *and* stray dotfiles they drop at the repo root.
+.codex/
+.gemini/
+.jules/
+.devin/
+.openhands/
+.cursor/
+.cursor*
+.cursorrules
+.cursorignore
+.continue/
+.continuerules
+.aider*
+.specstory/
+.codeium/
+.codeium*
+.roo/
+.roomodes
+.zed/
+.windsurf/
+.windsurf*
+.windsurfrules
+.trae/
+.trae*
+.sourcegraph/
+.tabnine*
 
 # Local roadmap / plan drafts (source material for public roadmap)
 pccx_master_roadmap_final.md
@@ -88,3 +120,53 @@ data/
 # MiKTeX / TeX Live scratch directories
 auxiliary/
 /latex.out/
+
+# ─── OS / editor debris ──────────────────────────────────────────
+.DS_Store
+**/.DS_Store
+Thumbs.db
+desktop.ini
+*~
+*.swp
+*.swo
+.*.swp
+.#*
+\#*\#
+*.bak
+*.orig
+*.rej
+*.tmp
+
+# Editor project folders (contain per-user paths, ignored universally)
+.vscode/
+.idea/
+.fleet/
+*.sublime-project
+*.sublime-workspace
+
+# ─── Secrets / local environment ─────────────────────────────────
+# Never track secrets or machine-specific env.  If an example is
+# needed for contributors, commit `.env.example` only.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets.json
+credentials.json
+
+# ─── Python tool caches ──────────────────────────────────────────
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+*.egg-info/
+dist/
+pip-wheel-metadata/
