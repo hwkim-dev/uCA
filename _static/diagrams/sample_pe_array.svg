@@ -11,24 +11,29 @@
   <defs>
     <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5"
             markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+      <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
     </marker>
 
     <style><![CDATA[
-      text    { fill: #1a1a1a; font: 400 12px ui-sans-serif, system-ui, sans-serif; }
+      /* Theme-aware palette.  See CLAUDE.md §5.2.  The SVG adapts to
+         the system prefers-color-scheme, so there is no full-viewBox
+         canvas — the page background shows through. */
+      svg     { color: #1a1a1a; }
+      text    { fill: currentColor; font: 400 12px ui-sans-serif, system-ui, sans-serif; }
       .t-lbl  { font-size: 11px; }
       .t-pe   { font-weight: 600; font-size: 13px; text-anchor: middle; }
       .t-axis { font-size: 10.5px; letter-spacing: 0.02em; }
-      .box    { fill: #ffffff; stroke: #1a1a1a; stroke-width: 0.75; }
-      .line   { stroke: #1a1a1a; stroke-width: 0.75; fill: none;
+      .box    { fill: #ffffff; stroke: currentColor; stroke-width: 0.75; }
+      .line   { stroke: currentColor; stroke-width: 0.75; fill: none;
                 marker-end: url(#arr); }
-      .bus    { stroke: #1a1a1a; stroke-width: 0.75; fill: none; }
+      .bus    { stroke: currentColor; stroke-width: 0.75; fill: none; }
+
+      @media (prefers-color-scheme: dark) {
+        svg   { color: #e8e8e8; }
+        .box  { fill: #1f1f22; }
+      }
     ]]></style>
   </defs>
-
-  <!-- Canvas: a self-contained white card so the diagram reads the
-       same way in Furo light and dark themes.  See CLAUDE.md §5.2. -->
-  <rect x="0" y="0" width="560" height="360" fill="#ffffff"/>
 
   <!-- Axis labels (outside the grid) -->
   <text class="t-axis" x="460" y="40"  text-anchor="end">Activations →</text>
