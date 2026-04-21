@@ -14,28 +14,32 @@
   <defs>
     <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5"
             markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+      <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
     </marker>
 
     <style><![CDATA[
-      text       { fill: #1a1a1a; font: 400 12px ui-sans-serif, system-ui, sans-serif; }
+      /* Theme palette — driven by the system preference.  Works even
+         when the SVG is loaded via <img>, because the browser still
+         evaluates @media (prefers-color-scheme) inside the SVG's own
+         document.  No full-viewBox canvas: the page background shows
+         through, so dark-mode readers do not get a white-block
+         eye-burn. */
+      svg        { color: #1a1a1a; }
+      text       { fill: currentColor; font: 400 12px ui-sans-serif, system-ui, sans-serif; }
       .t-title   { font-weight: 600; font-size: 13px; }
       .t-sub     { font-size: 11px; }
       .t-axis    { font-size: 10.5px; letter-spacing: 0.02em; }
-      .box       { fill: #ffffff; stroke: #1a1a1a; stroke-width: 0.75; }
-      .line      { stroke: #1a1a1a; stroke-width: 0.75; fill: none;
+      .box       { fill: #ffffff; stroke: currentColor; stroke-width: 0.75; }
+      .line      { stroke: currentColor; stroke-width: 0.75; fill: none;
                    marker-end: url(#arr); }
-      .bus       { stroke: #1a1a1a; stroke-width: 0.75; fill: none; }
+      .bus       { stroke: currentColor; stroke-width: 0.75; fill: none; }
+
+      @media (prefers-color-scheme: dark) {
+        svg    { color: #e8e8e8; }
+        .box   { fill: #1f1f22; }
+      }
     ]]></style>
   </defs>
-
-  <!-- Canvas.  The SVG is rendered via <img>, so currentColor would
-       not inherit the page's theme colour.  Instead, the diagram
-       carries its own white background: it reads as a self-contained
-       "light card" regardless of whether Furo is in light or dark
-       mode.  This matches the way NVIDIA CUDA and Intel SDM figures
-       render on a dark-themed surrounding page. -->
-  <rect x="0" y="0" width="960" height="560" fill="#ffffff"/>
 
   <!-- ─── Processing System panel ─────────────────────────────── -->
   <rect class="box" x="35" y="30" width="350" height="100"/>
