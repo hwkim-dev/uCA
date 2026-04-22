@@ -29,7 +29,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - name: Check out repo
         uses: actions/checkout@v4
@@ -37,15 +37,14 @@ jobs:
       - name: Install TeX Live (xelatex + needed packages)
         run: |
           sudo apt-get update -qq
+          # texlive-latex-base (xspace.sty) pulled in transitively via
+          # texlive-xetex; texlive-latex-extra provides pgfplots deps.
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
             texlive-xetex \
             texlive-fonts-recommended \
             texlive-fonts-extra \
-            texlive-latex-base \
-            texlive-latex-recommended \
             texlive-latex-extra \
             texlive-pictures \
-            texlive-science \
             lmodern
 
       - name: Build ISA guidebook PDF
