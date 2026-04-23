@@ -616,21 +616,27 @@ hazards and feeds the GEMM, GEMV, SFU, and DMA back-end resources.
   \node[blocknode, below=1.0cm of disp, xshift=-4.8cm, minimum width=2.3cm, fill=accentpurple!8] (gemm) {GEMM\\\scriptsize 32$\times$32 SA};
   \node[blocknode, right=0.35cm of gemm, minimum width=2.3cm, fill=accentpurple!8] (gemv) {GEMV\\\scriptsize 4$\times$32 MAC};
   \node[blocknode, right=0.35cm of gemv, minimum width=2.3cm, fill=accentpurple!8] (sfu)  {SFU (CVO)\\\scriptsize CORDIC/LUT};
-  \node[blocknode, right=0.35cm of sfu, minimum width=2.3cm, fill=accentorange!10] (dma) {DMA\\\scriptsize ACP/HP};
+  \node[blocknode, right=0.35cm of sfu, minimum width=2.3cm, fill=accentorange!10] (dma) {DMA\\\scriptsize HP$\times$4 fetch};
 
-  % Row 3 — Memory
-  \node[ram, below=1.0cm of gemm, minimum width=2.3cm] (l1g) {L1\\\scriptsize GEMM};
-  \node[ram, below=1.0cm of gemv, minimum width=2.3cm] (l1v) {L1\\\scriptsize GEMV};
+  % Row 3 — Activation L1 buffers (act. path: ACP→L2→L1→Compute)
+  %          + Buffer Queue (weight path: HP→BufQ→PipeReg→Compute, bypasses L1/L2)
+  \node[ram, below=1.0cm of gemm, minimum width=2.3cm] (l1g) {L1 (Act.)\\\scriptsize BRAM};
+  \node[ram, below=1.0cm of gemv, minimum width=2.3cm] (l1v) {L1 (Act.)\\\scriptsize BRAM};
   \node[ram, below=1.0cm of sfu,  minimum width=2.3cm] (l1s) {L1\\\scriptsize SFU};
-  \node[ram, below=1.0cm of dma,  minimum width=2.3cm] (wfif){Weight FIFO\\\scriptsize 4$\times$URAM};
+  \node[ram, below=1.0cm of dma,  minimum width=2.3cm, fill=accentorange!15]
+    (wfif) {Buffer Queue\\\scriptsize HP ingress};
 
-  % L2
+  % Pipeline registers (between Buffer Queue and GEMM/GEMV, weight path)
+  \node[stage, below=0.4cm of wfif, minimum width=2.3cm, minimum height=0.65cm, fill=black!5]
+    (pr) {Pipe.~Reg.};
+
+  % L2 — wide bar; receives activations from L1 and from ACP (coherent)
   \node[ram, below=0.9cm of l1v, minimum width=10cm, minimum height=1cm, fill=accentpurple!18]
     (l2) {L2 Cache (Unified FMAP + KV) --- 1.75\,MB URAM};
   \node[ram, below=0.4cm of l2, minimum width=10cm, minimum height=0.8cm, fill=skytint]
     (cc) {Constant Cache --- 64 entries};
 
-  % Arrows
+  % Control path arrows
   \draw[arr] (cmd) -- (dec);
   \draw[arr] (dec) -- node[above, font=\sffamily\scriptsize]{\uop} (disp);
   \draw[arr, <->] (disp) -- (gs);
@@ -640,19 +646,30 @@ hazards and feeds the GEMM, GEMV, SFU, and DMA back-end resources.
   \draw[arr] (disp.south) -- ++(0,-0.35cm) -| (sfu.north);
   \draw[arr] (disp.south) -- ++(0,-0.35cm) -| (dma.north);
 
+  % Activation path (ACP → L2 → L1 → Compute)
   \draw[bus] (gemm) -- (l1g);
   \draw[bus] (gemv) -- (l1v);
   \draw[bus] (sfu)  -- (l1s);
-  \draw[bus] (dma)  -- (wfif);
+  \draw[bus] (l1g)  -- (l2);
+  \draw[bus] (l1v)  -- (l2);
+  \draw[bus] (l1s)  -- (l2);
+  % ACP feeds L2 (coherent, from left)
+  \draw[arr] ($(l2.west)+(-0.6cm,0)$) -- node[above, font=\sffamily\tiny, fill=white, inner sep=1pt]{ACP} (l2.west);
 
-  \draw[bus] (l1g) -- (l2);
-  \draw[bus] (l1v) -- (l2);
-  \draw[bus] (l1s) -- (l2);
-  \draw[bus] (wfif) -- (l2);
+  % Weight path: HP → DMA → Buffer Queue → Pipe.Reg → GEMM/GEMV (bypasses L1/L2)
+  \draw[bus] (dma) -- (wfif);
+  \draw[bus] (wfif) -- (pr);
+  % Dashed arrow from Pipe.Reg exiting left, labelled — goes to GEMM and GEMV directly
+  \draw[ctrl] (pr.west) -- ++(-0.6cm,0)
+      node[anchor=east, font=\sffamily\tiny, align=right, text width=2.0cm]
+          {$\to$ GEMM/GEMV\\(bypasses L1/L2)};
+
   \draw[arr] (cc.east) -| ++(0.6cm,1.6cm) |- (disp.east);
 \end{tikzpicture}
-\caption{NPU top-level block diagram. Control flows top-down; data
-flows bottom-up via the unified L2 cache.}
+\caption{NPU top-level block diagram. \textbf{Activation path} (solid bus):
+ACP $\to$ L2 $\to$ L1(Act.)~$\to$ compute.  \textbf{Weight path} (labelled
+dashes): AXI-HP $\to$ Buffer Queue $\to$ Pipe.Reg $\to$ GEMM/GEMV direct,
+bypassing L1 and L2.  SFU uses L1/L2 for CVO operands.}
 \label{fig:npu-top}
 \end{figure}
 
@@ -672,14 +689,14 @@ boundary; there is no manual synchronizer logic.
 ]
   \node[blocknode, minimum width=2.6cm, minimum height=0.9cm, fill=accentorange!10]
     (wr) {Write\\\scriptsize 250\,MHz};
-  \node[blocknode, right=1.0cm of wr, minimum width=3.6cm, minimum height=0.9cm, fill=black!4]
+  \node[blocknode, right=1.8cm of wr, minimum width=3.6cm, minimum height=0.9cm, fill=black!4]
     (fifo) {XPM Async FIFO\\\scriptsize 4096$\times$128\,b};
-  \node[blocknode, right=1.0cm of fifo, minimum width=2.6cm, minimum height=0.9cm, fill=accentgreen!10]
+  \node[blocknode, right=1.8cm of fifo, minimum width=2.6cm, minimum height=0.9cm, fill=accentgreen!10]
     (rd) {Read\\\scriptsize 400\,MHz};
 
   % Arrows — labels with white fill to prevent overlap
-  \draw[arrfat] (wr) -- node[above, font=\sffamily\scriptsize, fill=white, inner sep=1.5pt]{data + wr\_en} (fifo.west);
-  \draw[arrfat] (fifo.east) -- node[above, font=\sffamily\scriptsize, fill=white, inner sep=1.5pt]{data + rd\_en} (rd);
+  \draw[arrfat] (wr) -- node[above, font=\sffamily\tiny, fill=white, inner sep=1.5pt]{data + wr\_en} (fifo.west);
+  \draw[arrfat] (fifo.east) -- node[above, font=\sffamily\tiny, fill=white, inner sep=1.5pt]{data + rd\_en} (rd);
 
   % Clock labels — placed below each block to avoid overlapping arrow labels
   \node[font=\sffamily\scriptsize, below=0.18cm of wr]  {CLK\_PS (250\,MHz)};
@@ -798,6 +815,7 @@ has committed.}
 \label{fig:axi-timing}
 \end{figure}
 
+\clearpage
 \section{Instruction Pipeline}
 
 \begin{figure}[h]
@@ -838,13 +856,15 @@ resources free up.}
 ]
   % Layer stack
   \node[rectangle, draw=black, thin, fill=black!8,         minimum width=10cm, minimum height=0.9cm] (ddr) {DDR4 --- 4\,GB @ 12.8\,GB/s};
-  \node[rectangle, draw=black, thin, fill=accentorange!10, minimum width=8.5cm, minimum height=0.9cm, below=of ddr] (acp) {AXI-HP $\times$4 + ACP --- 16\,GB/s burst};
+  \node[rectangle, draw=black, thin, fill=accentorange!15, minimum width=9.0cm, minimum height=0.9cm, below=of ddr] (hp) {AXI-HP $\times$4 --- 16\,GB/s burst \textcolor{graytext}{\scriptsize (weight/act. DMA, non-coherent)}};
+  \node[rectangle, draw=black, thin, fill=accentorange!8,  minimum width=8.0cm, minimum height=0.9cm, below=of hp]  (acp) {ACP --- low-latency coherent \textcolor{graytext}{\scriptsize (L2-coherent host$\leftrightarrow$device)}};
   \node[rectangle, draw=black, thin, fill=accentpurple!10, minimum width=7.0cm, minimum height=0.9cm, below=of acp] (l2) {Unified L2 --- 1.75\,MB URAM (FMAP + KV)};
   \node[rectangle, draw=black, thin, fill=oceanblue!10,    minimum width=5.5cm, minimum height=0.9cm, below=of l2]  (l1) {Per-core L1 --- 128\,KB BRAM};
   \node[rectangle, draw=black, thin, fill=accentgreen!10,  minimum width=4.0cm, minimum height=0.9cm, below=of l1]  (rf) {Systolic Array / RegFile};
 
   % Latency labels (right side)
   \node[font=\sffamily\scriptsize\color{graytext}, right=0.2cm of ddr] {$\sim$200 cyc};
+  \node[font=\sffamily\scriptsize\color{graytext}, right=0.2cm of hp]  {$\sim$40 cyc};
   \node[font=\sffamily\scriptsize\color{graytext}, right=0.2cm of acp] {$\sim$40 cyc};
   \node[font=\sffamily\scriptsize\color{graytext}, right=0.2cm of l2]  {$\sim$6 cyc};
   \node[font=\sffamily\scriptsize\color{graytext}, right=0.2cm of l1]  {$\sim$2 cyc};
@@ -856,9 +876,10 @@ resources free up.}
   \node[font=\sffamily\scriptsize\color{graytext}, left=0.2cm of l1]  {$2^{17}$ B};
   \node[font=\sffamily\scriptsize\color{graytext}, left=0.2cm of rf]  {$2^{10}$ B};
 \end{tikzpicture}
-\caption{Memory hierarchy pyramid. Latency increases upward; capacity
-increases upward; bandwidth decreases upward. The unified 1.75\,MB L2
-dominates the on-chip budget.}
+\caption{Memory hierarchy pyramid. AXI-HP~$\times$4 carries non-coherent
+weight/activation DMA (direct to Buffer Queue, bypassing L2); ACP provides
+coherent host$\leftrightarrow$L2 transfers. The unified 1.75\,MB L2 dominates
+the on-chip budget.}
 \label{fig:mem-hier}
 \end{figure}
 
@@ -889,13 +910,17 @@ $\sim$1.75 MB). See Figure~\ref{fig:uram-alloc}.
     }
   }
 
-  % Legend — placed below the grid (grid bottom ≈ y = -(7*0.65+0.58) = -5.13)
-  \draw[fill=accentorange!30, draw=black, thin] (0,-5.5) rectangle ++(0.45,0.45);
-  \node[anchor=west, font=\sffamily\small] at (0.6,-5.27)
-    {Weight FIFO (8 URAMs, 2 per port $\times$ 4 ports)};
-  \draw[fill=accentpurple!20, draw=black, thin] (0,-6.15) rectangle ++(0.45,0.45);
-  \node[anchor=west, font=\sffamily\small] at (0.6,-5.92)
-    {Unified L2 --- FMAP + KV Cache (56 URAMs, 28 pairs)};
+  % Legend — placed to the right of the grid (grid right edge ≈ x = 5.13cm)
+  \draw[fill=accentorange!30, draw=black, thin] (5.5,-0.2) rectangle ++(0.45,0.45);
+  \node[anchor=west, font=\sffamily\small] at (6.05,-0.0)
+    {Weight FIFO};
+  \node[anchor=west, font=\sffamily\scriptsize\color{graytext}] at (6.05,-0.35)
+    {8 URAMs, 2 per port $\times$ 4};
+  \draw[fill=accentpurple!20, draw=black, thin] (5.5,-1.1) rectangle ++(0.45,0.45);
+  \node[anchor=west, font=\sffamily\small] at (6.05,-0.9)
+    {Unified L2};
+  \node[anchor=west, font=\sffamily\scriptsize\color{graytext}] at (6.05,-1.25)
+    {56 URAMs, 28 pairs};
 \end{tikzpicture}
 \caption{Physical URAM allocation on the Kria KV260 (64 blocks total).
 Blocks 0--7 form the 4-port Weight FIFO; blocks 8--63 pair up to
@@ -910,12 +935,18 @@ create the 1.75 MB unified L2.}
 
 \section{Block Floating Point + INT4 Weight Quantization}
 
-pccx performs dot products with exact integer arithmetic by aligning
-activation exponents to a common Block Floating Point (BF16) scale
-factor, then multiplying by INT4-quantized weights. A single
-DSP48E2 executes the 9-bit $\times$ 4-bit inner multiplication
-natively; the BF16 scale collapses out to a cheap scalar multiply
-at the end of the accumulation.
+pccx uses a \textbf{W4A8} quantisation scheme: weights are stored as
+INT4 and activations (feature maps, FMAP) are kept as INT8 throughout
+the datapath.  A single DSP48E2 executes the 9-bit~$\times$~4-bit inner
+multiplication natively.  The accumulated integer result is scaled by the
+joint BF16 factor $S_{\mathrm{fmap}} \cdot S_{\mathrm{weight}}$
+\textit{after} accumulation, in the Post-process stage.
+
+Feature maps remain INT8 for all linear layers (Q/K/V projection, FFN).
+Promotion to BF16 is performed \textit{only} before entering the Special
+Function Unit (SFU) for operations that require floating-point precision:
+RMSNorm, RoPE ($\sin$/$\cos$), softmax, and GELU.  This keeps BF16
+traffic confined to the SFU lane and off the main datapath.
 
 For two activation--weight pairs sharing scale factors
 $S_{\mathrm{fmap}}$ (for BF16) and $S_{\mathrm{weight}}$ (for INT4):
@@ -940,16 +971,16 @@ The quantity $(A \cdot C) + (B \cdot D)$ factors to:
   node distance = 0.55cm and 1.0cm,
 ]
   % Inputs
-  \node[blocknode, fill=accentorange!10] (act) {Activation\\\scriptsize BF16};
+  \node[blocknode, fill=accentorange!10] (act) {Activation\\\scriptsize INT8 (FMAP)};
   \node[blocknode, below=of act, fill=accentpurple!8] (w)  {Weight\\\scriptsize INT4};
 
   % Intermediate stages — extra horizontal gap (1.1 cm) keeps them clear of DSP
-  \node[blocknode, right=1.1cm of act] (emax)  {$E_{\max}$\\\scriptsize align};
+  \node[blocknode, right=1.1cm of act] (emax)  {Scale align\\\scriptsize $S_f$ factor};
   \node[blocknode, right=1.1cm of w]   (signx) {Sign-extend\\\scriptsize INT4$\to$INT9};
 
-  % DSP48E2 — centred between emax and signx, with extra gap (1.4 cm)
+  % DSP48E2 — centred between emax and signx, with gap (2.4 cm) to balance arrow lengths
   \node[blocknode, fill=accentred!8,
-        right=1.4cm of $(emax)!0.5!(signx)$,
+        right=2.4cm of $(emax)!0.5!(signx)$,
         minimum height=2.3cm, minimum width=2.5cm] (dsp)
     {DSP48E2\\\scriptsize $A \cdot B + C$\\\scriptsize 48-bit ACC};
 
@@ -965,13 +996,27 @@ The quantity $(A \cdot C) + (B \cdot D)$ factors to:
   \draw[arr] (dsp)   -- (post);
   \draw[arr] (post)  -- (o);
 \end{tikzpicture}
-\caption{DSP48E2 datapath. INT9 $\times$ INT4 multiplication executes
-natively; the BF16 scale factor product is applied once per MAC epoch
-by the post-process stage.}
+\caption{DSP48E2 datapath (W4A8). INT8 activations are sign-extended to
+INT9; INT4 weights are sign-extended to INT4. The 9$\times$4\,b product
+accumulates in a 48-bit DSP48E2 register; the joint BF16 scale factor
+$S_f \cdot S_w$ is applied once in the Post-process stage.}
 \label{fig:dsp-datapath}
 \end{figure}
 
 \section{Systolic Dataflow — Weight Stationary (GEMM)}
+
+In the Weight Stationary schedule, a tile of INT4 weights is preloaded
+once into the 32$\times$32 PE array and held fixed for the duration of
+the tile computation.  Activations (INT8, one row per cycle) enter from
+the left and propagate right; partial sums (48-bit) enter from the top
+and propagate downward.  Each PE performs one MAC per cycle with no data
+movement on the weight side, maximising weight reuse and minimising the
+HP bandwidth required per GFLOP.
+
+After the tile completes, the accumulator values exit at the bottom edge
+of the array, pass through the Post-process stage (BF16 scale multiply),
+and are written back to L2.  The next weight tile is then preloaded and
+the loop repeats.  See Figure~\ref{fig:systolic} for the dataflow diagram.
 
 \begin{figure}[h]
 \centering
@@ -984,44 +1029,62 @@ by the post-process stage.}
   \def\step{0.80}   % grid step (cm)
   \def\half{0.35}   % half PE size
 
-  % ---- 6×6 PE array — weights labelled inside each PE ----
+  % Row/col labels: physical indices 0,1,2,3,4,5 map to logical 0,1,2,...,30,31
+  % Index 3 is the ellipsis slot; 0,1,2 → 0,1,2; 4 → 30; 5 → 31
+
+  % ---- 6×6 PE array (represents 32×32; row/col 3 = ellipsis slot) ----
   \foreach \i in {0,...,5}
     \foreach \j in {0,...,5} {
-      \node[pe] (pe\i\j) at (\j*\step, -\i*\step) {$W_{\i\j}$};
+      \pgfmathtruncatemacro{\isDots}{(\i==3 || \j==3) ? 1 : 0}
+      \ifnum\isDots=1
+        \node[pe, fill=white, draw=white] (pe\i\j) at (\j*\step, -\i*\step) {$\cdots$};
+      \else
+        \pgfmathtruncatemacro{\ri}{(\i<3) ? \i : (\i==4 ? 30 : 31)}
+        \pgfmathtruncatemacro{\rj}{(\j<3) ? \j : (\j==4 ? 30 : 31)}
+        \node[pe] (pe\i\j) at (\j*\step, -\i*\step) {$W_{\ri,\rj}$};
+      \fi
     }
 
   % ---- Activation inputs from left ----
-  \foreach \i in {0,...,5} {
+  \foreach \i in {0,1,2,4,5} {
+    \pgfmathtruncatemacro{\ri}{(\i<3) ? \i : (\i==4 ? 30 : 31)}
     \draw[arr] ({-1.0}, {-\i*\step}) -- (pe\i0.west);
-    \node[anchor=east, font=\scriptsize] at (-1.05, -\i*\step) {$a_\i$};
+    \node[anchor=east, font=\scriptsize] at (-1.05, -\i*\step) {$a_{\ri}$};
   }
+  % Ellipsis for activation row 3
+  \node[anchor=east, font=\scriptsize] at (-1.05, {-3*\step}) {$\vdots$};
 
-  % ---- Partial-sum inputs from top (arrows end at top edge of row-0 PEs) ----
-  \foreach \j in {0,...,5} {
+  % ---- Partial-sum inputs from top ----
+  \foreach \j in {0,1,2,4,5} {
+    \pgfmathtruncatemacro{\rj}{(\j<3) ? \j : (\j==4 ? 30 : 31)}
     \draw[arr] ({\j*\step}, {0.70}) -- ({\j*\step}, {\half+0.02});
-    \node[anchor=south, font=\scriptsize] at (\j*\step, 0.72) {$\psi_\j^{\mathrm{in}}$};
+    \node[anchor=south, font=\scriptsize] at (\j*\step, 0.72) {$\psi_{\rj}^{\mathrm{in}}$};
   }
+  \node[anchor=south, font=\scriptsize] at ({3*\step}, 0.72) {$\cdots$};
 
-  % ---- Partial-sum outputs from bottom (arrows start at bottom edge of row-5 PEs) ----
-  \def\botY{{-5*\step}}
-  \foreach \j in {0,...,5} {
+  % ---- Partial-sum outputs from bottom ----
+  \foreach \j in {0,1,2,4,5} {
+    \pgfmathtruncatemacro{\rj}{(\j<3) ? \j : (\j==4 ? 30 : 31)}
     \draw[arr] ({\j*\step}, {-5*\step-\half-0.02}) -- ({\j*\step}, {-5*\step-0.72});
-    \node[anchor=north, font=\scriptsize] at (\j*\step, {-5*\step-0.74}) {$\psi_\j^{\mathrm{out}}$};
+    \node[anchor=north, font=\scriptsize] at (\j*\step, {-5*\step-0.74}) {$\psi_{\rj}^{\mathrm{out}}$};
   }
+  \node[anchor=north, font=\scriptsize] at ({3*\step}, {-5*\step-0.74}) {$\cdots$};
 
   % ---- Activation pass-through to right ----
-  \foreach \i in {0,...,5} {
+  \foreach \i in {0,1,2,4,5} {
     \draw[arr] (pe\i5.east) -- ++({0.55},0);
   }
 
   % ---- Annotation ----
   \node[anchor=north west, font=\sffamily\small, align=left]
-    at (0, {-5*\step-1.0}) {Weights $W_{ij}$ preloaded per tile (Weight Stationary).\\
-                             Activations $a_i$ stream left-to-right; partial sums $\psi$ top-to-bottom.};
+    at (0, {-5*\step-1.0}) {Weights $W_{i,j}$ preloaded per tile (Weight Stationary).\\
+                             Activations $a_i$ stream left-to-right ($i=0,1,\ldots,31$);\\
+                             partial sums $\psi_j$ top-to-bottom ($j=0,1,\ldots,31$).};
 \end{tikzpicture}
-\caption{Systolic array dataflow (illustrated on a 6$\times$6; actual
-hardware is 32$\times$32). Weights are preloaded once per tile;
-activations and partial sums march through the array every cycle.}
+\caption{Systolic array dataflow (32$\times$32; middle row/column
+compressed for clarity). Weights $W_{i,j}$ are preloaded once per tile;
+activations $a_i$ stream left-to-right; partial sums $\psi_j$ propagate
+top-to-bottom every cycle.}
 \label{fig:systolic}
 \end{figure}
 
@@ -1065,8 +1128,11 @@ single GEMV dispatches 32-lane LUT-based MAC units followed by a
   \draw[trunk] ($(wjct)+(0, 1.65cm)$) -- ($(wjct)+(0,-1.65cm)$);
   \foreach \c in {c0,c1,c2,c3} \draw[arrfat] (wjct |- \c) -- (\c.west);
 
-  % Core → reduce arrows
-  \foreach \c in {c0,c1,c2,c3} \draw[arr] (\c.east) -- (red.west |- \c);
+  % Core → reduce fan-in (trunk symmetrical to weight bus fan-out)
+  \coordinate (rjct) at ($(red.west)-(0.55cm,0)$);
+  \draw[trunk] (rjct |- c0) -- (rjct |- c3);  % vertical trunk spanning all cores
+  \foreach \c in {c0,c1,c2,c3} \draw[-] (\c.east) -- (rjct |- \c);
+  \draw[arr] (rjct) -- (red.west);
 
   \draw[arr] (red) -- (l2);
 \end{tikzpicture}
@@ -1260,8 +1326,11 @@ eleven are reserved. Decoder behaviour on reserved opcodes is
   \draw[arr] ($(jct)+(0,-2.16cm)$) --
     node[above, font=\sffamily\scriptsize, fill=white, inner sep=1pt]{\texttt{4'h4}} (b4.west);
 
-  % Branches → Dispatcher
-  \foreach \b in {b0,b1,b2,b3,b4} \draw[arr] (\b.east) -- (disp.west |- \b);
+  % Branches → Dispatcher (trunk fan-in, symmetric to the fan-out above)
+  \coordinate (jct2) at ($(disp.west)-(0.65cm,0)$);
+  \draw[trunk] ($(jct2)+(0, 2.16cm)$) -- ($(jct2)+(0,-2.16cm)$);
+  \foreach \b in {b0,b1,b2,b3,b4} \draw[-] (\b.east) -- (jct2 |- \b);
+  \draw[arr] (jct2) -- (disp.west);
 
   \draw[arr, <->] (disp) -- (gs);
 \end{tikzpicture}
@@ -1312,7 +1381,7 @@ The 60-bit body falls into four structural families. Figures
   \bitbox{6}{size\_ptr\\\scriptsize[19:14]} &
   \bitbox{6}{shape\_ptr\\\scriptsize[13:8]} &
   \bitbox{5}{lane\\\scriptsize[7:3]} &
-  \bitbox{3}{rsv\\\scriptsize[2:0]}
+  \bitbox{3}{\tiny rsv\\[-0.4em]\tiny[2:0]}
 \end{bytefield}
 \caption{\textbf{Type A} body layout, used by \texttt{GEMV} (opcode
 \texttt{4'h0}) and \texttt{GEMM} (opcode \texttt{4'h1}).}
@@ -1327,13 +1396,13 @@ The 60-bit body falls into four structural families. Figures
                   boxformatting={\centering\sffamily\scriptsize\bfseries}]{64}
   \bitheader[endianness=big,lsb=0]{0,1,7,24,41,58,59,60,63} \\
   \bitbox{4}{opcode\\\scriptsize[63:60]} &
-  \bitbox{1}{fd\\\scriptsize[59]} &
-  \bitbox{1}{td\\\scriptsize[58]} &
+  \bitbox{1}{\tiny fd} &
+  \bitbox{1}{\tiny td} &
   \bitbox{17}{dest\_addr\\\scriptsize[57:41]} &
   \bitbox{17}{src\_addr\\\scriptsize[40:24]} &
   \bitbox{17}{aux\_addr\\\scriptsize[23:7]} &
   \bitbox{6}{shape\_ptr\\\scriptsize[6:1]} &
-  \bitbox{1}{as\\\scriptsize[0]}
+  \bitbox{1}{\tiny as}
 \end{bytefield}
 \caption{\textbf{Type B} body layout, used by \texttt{MEMCPY} (opcode
 \texttt{4'h2}). \texttt{fd}=\texttt{from\_device}, \texttt{td}=\texttt{to\_device},
@@ -1349,12 +1418,12 @@ The 60-bit body falls into four structural families. Figures
                   boxformatting={\centering\sffamily\scriptsize\bfseries}]{64}
   \bitheader[endianness=big,lsb=0]{0,4,20,36,52,58,60,63} \\
   \bitbox{4}{opcode\\\scriptsize[63:60]} &
-  \bitbox{2}{dc\\\scriptsize[59:58]} &
+  \bitbox{2}{\tiny dc\\[-0.3em]\tiny[59:58]} &
   \bitbox{6}{dest\_addr\\\scriptsize[57:52]} &
   \bitbox{16}{a\_value\\\scriptsize[51:36]} &
   \bitbox{16}{b\_value\\\scriptsize[35:20]} &
   \bitbox{16}{c\_value\\\scriptsize[19:4]} &
-  \bitbox{4}{rsv\\\scriptsize[3:0]}
+  \bitbox{4}{\tiny rsv\\[-0.3em]\tiny[3:0]}
 \end{bytefield}
 \caption{\textbf{Type C} body layout, used by \texttt{MEMSET} (opcode
 \texttt{4'h3}). \texttt{dc}=\texttt{dest\_cache}.}
@@ -1374,7 +1443,7 @@ The 60-bit body falls into four structural families. Figures
   \bitbox{17}{dst\_addr\\\scriptsize[38:22]} &
   \bitbox{16}{length\\\scriptsize[21:6]} &
   \bitbox{5}{flags\\\scriptsize[5:1]} &
-  \bitbox{1}{as\\\scriptsize[0]}
+  \bitbox{1}{\tiny as}
 \end{bytefield}
 \end{center}
 \captionof{figure}{\textbf{Type D} body layout, used by \texttt{CVO} (opcode
@@ -1386,12 +1455,6 @@ The 60-bit body falls into four structural families. Figures
 
 % =================================================================
 \chapter{INSTRUCTION SET REFERENCE (A-Z)}
-
-This chapter is the normative per-instruction reference. Each entry
-follows the \textbf{Intel SDM} format: an Opcode / Instruction /
-Description summary table, a Description paragraph, an Operation
-pseudocode block, a Flags Affected subsection, and an Exceptions
-subsection where applicable.
 
 % =====================================================
 % GEMM / GEMV
@@ -1434,7 +1497,7 @@ A & \texttt{dest} (Mod ModReg, W) $\vert$ \texttt{src} (Mod ModReg, R) $\vert$ \
   \bitbox{6}{size\_ptr\\\scriptsize[19:14]} &
   \bitbox{6}{shape\_ptr\\\scriptsize[13:8]} &
   \bitbox{5}{lane\\\scriptsize[7:3]} &
-  \bitbox{3}{rsv}
+  \bitbox{3}{\tiny rsv}
 \end{bytefield}
 \end{center}
 
@@ -1547,12 +1610,12 @@ architectural flags are affected.
 \begin{bytefield}[bitwidth=0.68em, bitheight=2.1em, boxformatting={\centering\sffamily\scriptsize}]{64}
   \bitheader[endianness=big,lsb=0]{0,1,7,24,41,58,59,60,63} \\
   \bitbox{4}{opcode} &
-  \bitbox{1}{fd} & \bitbox{1}{td} &
+  \bitbox{1}{\tiny fd} & \bitbox{1}{\tiny td} &
   \bitbox{17}{dest\_addr\\\scriptsize[57:41]} &
   \bitbox{17}{src\_addr\\\scriptsize[40:24]} &
   \bitbox{17}{aux\_addr\\\scriptsize[23:7]} &
   \bitbox{6}{shape\_ptr\\\scriptsize[6:1]} &
-  \bitbox{1}{as}
+  \bitbox{1}{\tiny as}
 \end{bytefield}
 \end{center}
 
@@ -1646,12 +1709,12 @@ END DISPATCH
 \begin{bytefield}[bitwidth=0.68em, bitheight=2.1em, boxformatting={\centering\sffamily\scriptsize}]{64}
   \bitheader[endianness=big,lsb=0]{0,4,20,36,52,58,60,63} \\
   \bitbox{4}{opcode} &
-  \bitbox{2}{dc\\\scriptsize[59:58]} &
+  \bitbox{2}{\tiny dc\\[-0.3em]\tiny[59:58]} &
   \bitbox{6}{dest\_addr\\\scriptsize[57:52]} &
   \bitbox{16}{a\_value\\\scriptsize[51:36]} &
   \bitbox{16}{b\_value\\\scriptsize[35:20]} &
   \bitbox{16}{c\_value\\\scriptsize[19:4]} &
-  \bitbox{4}{rsv}
+  \bitbox{4}{\tiny rsv}
 \end{bytefield}
 \end{center}
 
@@ -1715,7 +1778,7 @@ END DISPATCH
   \bitbox{17}{dst\_addr\\\scriptsize[38:22]} &
   \bitbox{16}{length\\\scriptsize[21:6]} &
   \bitbox{5}{flags\\\scriptsize[5:1]} &
-  \bitbox{1}{as}
+  \bitbox{1}{\tiny as}
 \end{bytefield}
 \end{center}
 
@@ -1915,13 +1978,13 @@ re-interpret the two encoding bits.
   \node[blocknode, right=2.0cm of l2, minimum width=2.6cm, fill=accentpurple!8]  (sfu)  {SFU};
 
   \draw[arr]        (host) -- node[above, pos=0.5, fill=white, inner sep=1pt]{\texttt{8'h01}} (l2);
-  \draw[arr]        (l2) to [bend right=25] node[below, pos=0.5, fill=white, inner sep=1pt]{\texttt{8'h10}} (host);
+  \draw[arr]        (l2) to [bend right=25] node[above, pos=0.5, fill=white, inner sep=1pt]{\texttt{8'h10}} (host);
   \draw[arr]        (l2)   -- node[right, pos=0.5, fill=white, inner sep=1pt]{\texttt{8'h12}} (gemm);
   \draw[arr]        (l2)   -- node[right, pos=0.5, fill=white, inner sep=1pt]{\texttt{8'h13}} (gemv);
   \draw[arr]        (l2)   -- node[above, pos=0.5, fill=white, inner sep=1pt]{\texttt{8'h14}} (sfu);
   \draw[arr, dashed] (gemm) -- node[left,  pos=0.5, fill=white, inner sep=1pt]{\texttt{8'h21}} (l2);
   \draw[arr, dashed] (gemv) -- node[left,  pos=0.5, fill=white, inner sep=1pt]{\texttt{8'h31}} (l2);
-  \draw[arr, dashed] (sfu) to [bend right=25] node[below, pos=0.5, fill=white, inner sep=1pt]{\texttt{8'h41}} (l2);
+  \draw[arr, dashed] (sfu) to [bend right=25] node[above, pos=0.5, fill=white, inner sep=1pt]{\texttt{8'h41}} (l2);
 \end{tikzpicture}
 \caption{Visual summary of Table~\ref{tab:data-route}. Solid arrows
 are ingress / compute reads; dashed arrows are writeback paths.}
@@ -2004,37 +2067,37 @@ A host-side byte offset must be divided by 16 before loading into
   \node[dfstep, right=of g3] (g4) {Systolic\\accumulate};
   \node[dfstep, right=of g4] (g5) {Post-proc\\(scale,bias)};
   \node[dfstep, right=of g5] (g6) {WB L2};
-  \node[above=0.15cm of g1, font=\sffamily\bfseries\color{oceanblue}] {GEMM};
+  \node[left=0.1cm of g1, font=\sffamily\bfseries\color{oceanblue}] {GEMM};
   \foreach \a/\b in {g1/g2, g2/g3, g3/g4, g4/g5, g5/g6} \draw[arr] (\a)--(\b);
 
   % GEMV path
-  \node[dfstep, below=0.55cm of g1] (v1) {Const\,Cache\\lookup};
+  \node[dfstep, below=1.0cm of g1] (v1) {Const\,Cache\\lookup};
   \node[dfstep, right=of v1] (v2) {Row-part.\\weight};
   \node[dfstep, right=of v2] (v3) {4 cores\\32-MAC};
   \node[dfstep, right=of v3] (v4) {5-stage\\reduce};
   \node[dfstep, right=of v4] (v5) {Post-proc};
   \node[dfstep, right=of v5] (v6) {WB L2\\or SFU};
-  \node[above=0.15cm of v1, font=\sffamily\bfseries\color{oceanblue}] {GEMV};
+  \node[left=0.1cm of v1, font=\sffamily\bfseries\color{oceanblue}] {GEMV};
   \foreach \a/\b in {v1/v2, v2/v3, v3/v4, v4/v5, v5/v6} \draw[arr] (\a)--(\b);
 
   % MEMCPY path
-  \node[dfstep, below=0.55cm of v1] (m1) {Resolve\\route};
+  \node[dfstep, below=1.0cm of v1] (m1) {Resolve\\route};
   \node[dfstep, right=of m1] (m2) {Shape\\lookup};
   \node[dfstep, right=of m2] (m3) {DMA\\issue};
   \node[dfstep, right=of m3] (m4) {Bus\\transfer};
   \node[dfstep, right=of m4] (m5) {Fence\\register};
   \node[dfstep, right=of m5] (m6) {STAT\_OUT\\report};
-  \node[above=0.15cm of m1, font=\sffamily\bfseries\color{oceanblue}] {MEMCPY};
+  \node[left=0.1cm of m1, font=\sffamily\bfseries\color{oceanblue}] {MEMCPY};
   \foreach \a/\b in {m1/m2, m2/m3, m3/m4, m4/m5, m5/m6} \draw[arr] (\a)--(\b);
 
   % CVO path
-  \node[dfstep, below=0.55cm of m1] (c1) {Func\\decode};
+  \node[dfstep, below=1.0cm of m1] (c1) {Func\\decode};
   \node[dfstep, right=of c1] (c2) {L2 read\\src};
   \node[dfstep, right=of c2] (c3) {$E_{\max}$\\sub};
   \node[dfstep, right=of c3] (c4) {CORDIC/\\LUT};
   \node[dfstep, right=of c4] (c5) {Scale/\\accm};
   \node[dfstep, right=of c5] (c6) {WB L2\\or FIFO};
-  \node[above=0.15cm of c1, font=\sffamily\bfseries\color{oceanblue}] {CVO};
+  \node[left=0.1cm of c1, font=\sffamily\bfseries\color{oceanblue}] {CVO};
   \foreach \a/\b in {c1/c2, c2/c3, c3/c4, c4/c5, c5/c6} \draw[arr] (\a)--(\b);
 \end{tikzpicture}%
 }
@@ -2058,14 +2121,14 @@ instruction's journey through the NPU from dispatch to writeback.}
   \node[blocknode, right=1.3cm of ah, minimum width=3.4cm, fill=accentorange!10]
     (rh) {Resource hazard check\\\scriptsize GEMM/GEMV/SFU};
   \node[blocknode, right=1.3cm of rh, minimum width=2.4cm, fill=accentred!8] (ex) {Execute};
-  \node[scheduler, below=0.55cm of rh, minimum width=7cm]
+  \node[scheduler, below=0.55cm of rh, minimum width=9cm]
     (fence) {Fence tracker --- \texttt{fsmout\_npu\_stat\_collector}};
   \node[blocknode, right=0.6cm of ex, minimum width=2.5cm, fill=accentpurple!8] (stat) {STAT\_OUT};
 
   \draw[arr] (in) -- (ah);
   \draw[arr] (ah) -- (rh);
   \draw[arr] (rh) -- (ex);
-  \draw[arr] (ex.south) -- ++(0,-0.4cm) -| (fence.east);
+  \draw[arr] (ex.south) -- (fence.north -| ex);
   \draw[arr] (fence.east) -| (stat.south);
 \end{tikzpicture}%
 }
@@ -2150,7 +2213,7 @@ owns a single \texttt{fence\_id} slot in \texttt{STAT\_OUT}.
 
   % Self-loop on TRACKING
   \draw[arr] (track.north)
-        .. controls +(150:1.0) and +(30:1.0) ..
+        .. controls +(150:1.8) and +(30:1.8) ..
         node[edgelbl, above] {partial progress (no state change)}
         (track.north);
 
