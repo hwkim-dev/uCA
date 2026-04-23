@@ -14,7 +14,8 @@
 <meta property="og:image:alt" content="Gemma 3N uses two calibration paths that sit outside the main attention / FFN stack: LAuReL(a parallel low-rank branch combined with the attention output) and PLE(a per-layer depth embedding inject..." />
 <meta name="description" content="Gemma 3N uses two calibration paths that sit outside the main attention / FFN stack: LAuReL(a parallel low-rank branch combined with the attention output) and PLE(a per-layer depth embedding inject..." />
 <meta name="twitter:card" content="summary_large_image" />
-<link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="Gemma 3N — FFN Gaussian Top-K Sparsity" href="gemma3n_ffn_sparsity.html"><link rel="prev" title="Gemma 3N — Attention and RoPE Constraints" href="gemma3n_attention_rope.html">
+
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://hwkim-dev.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hwangwoo Kim","url":"https://hwkim-dev.github.io/hwkim-dev/"},"publisher":{"@type":"Person","name":"Hwangwoo Kim","url":"https://hwkim-dev.github.io/hwkim-dev/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"Gemma 3N — LAuReL and PLE Calibration Modules","name":"Gemma 3N — LAuReL and PLE Calibration Modules","url":"https://hwkim-dev.github.io/pccx/en/docs/v002/Models/gemma3n_ple_laurel.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://hwkim-dev.github.io/pccx/en/docs/v002/Models/gemma3n_ple_laurel.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://hwkim-dev.github.io/pccx/"},"author":{"@type":"Person","name":"Hwangwoo Kim","url":"https://hwkim-dev.github.io/hwkim-dev/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://hwkim-dev.github.io/pccx/"},"datePublished":"2026-04-23","dateModified":"2026-04-23","description":"pccx documentation page: Gemma 3N — LAuReL and PLE Calibration Modules. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://hwkim-dev.github.io/pccx/","author":"Hwangwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="Gemma 3N — FFN Gaussian Top-K Sparsity" href="gemma3n_ffn_sparsity.html"><link rel="prev" title="Gemma 3N — Attention and RoPE Constraints" href="gemma3n_attention_rope.html">
         <link rel="canonical" href="https://hwkim-dev.github.io/pccx/docs/v002/Models/gemma3n_ple_laurel.html">
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
@@ -194,11 +195,7 @@
 
 <a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
-<div class="announcement">
-  <aside class="announcement-content">
-     English version · <a href="/pccx/ko/">한국어로 보기 →</a> 
-  </aside>
-</div>
+
 
 <div class="page">
   <header class="mobile-header">
@@ -300,13 +297,17 @@
   <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">pccx: Parallel Compute Core eXecutor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../Evidence/index.html">Evidence</a><input aria-label="Toggle navigation of Evidence" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="simple">
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../roadmap.html">Roadmap (Two-Track)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">v002 Architecture</span></p>
 <ul class="current">
-<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">pccx v002 Architecture</a><input aria-label="Toggle navigation of pccx v002 Architecture" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">pccx v002 Architecture</a><input aria-label="Toggle navigation of pccx v002 Architecture" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../overview.html">Overview</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../Architecture/index.html">Hardware Architecture</a><input aria-label="Toggle navigation of Hardware Architecture" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../Architecture/index.html">Hardware Architecture</a><input aria-label="Toggle navigation of Hardware Architecture" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../Architecture/rationale.html">Design Rationale: v001 → v002</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../Architecture/top_level.html">Top-Level Architecture</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../Architecture/floorplan.html">Physical Floorplan</a></li>
@@ -318,17 +319,20 @@
 <li class="toctree-l3"><a class="reference internal" href="../Architecture/dsp48e2_w4a8.html">DSP48E2 W4A8 Bit Packing and Sign Recovery</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../ISA/index.html">Instruction Set Architecture (ISA)</a><input aria-label="Toggle navigation of Instruction Set Architecture (ISA)" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../ISA/index.html">Instruction Set Architecture (ISA)</a><input aria-label="Toggle navigation of Instruction Set Architecture (ISA)" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../ISA/encoding.html">Instruction Encoding</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../ISA/instructions.html">Per-Instruction Encoding</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../ISA/dataflow.html">Per-Instruction Dataflow</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../Drivers/index.html">Software Stack</a><input aria-label="Toggle navigation of Software Stack" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../Formal/index.html">Formal Model — Sail</a><input aria-label="Toggle navigation of Formal Model — Sail" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../Drivers/index.html">Software Stack</a><input aria-label="Toggle navigation of Software Stack" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../Drivers/api.html">C API Overview</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">Target Models</a><input aria-label="Toggle navigation of Target Models" checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">Target Models</a><input aria-label="Toggle navigation of Target Models" checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="gemma3n_overview.html">Gemma 3N E4B — Overview</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gemma3n_pipeline.html">Gemma 3N E4B — Operator-Level Pipeline</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gemma3n_attention_rope.html">Gemma 3N — Attention and RoPE Constraints</a></li>
@@ -337,7 +341,7 @@
 <li class="toctree-l3"><a class="reference internal" href="gemma3n_execution.html">Gemma 3N E4B on pccx v002 — Execution and Scheduling</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../RTL/index.html">RTL Source Reference (v002)</a><input aria-label="Toggle navigation of RTL Source Reference (v002)" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../RTL/index.html">RTL Source Reference (v002)</a><input aria-label="Toggle navigation of RTL Source Reference (v002)" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/isa_pkg.html">ISA Type Package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/npu_top.html">NPU Top-Level</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/compute_cores.html">Compute Core Modules</a></li>
@@ -350,14 +354,14 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Target Hardware</span></p>
 <ul>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../Devices/index.html">Devices</a><input aria-label="Toggle navigation of Devices" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../Devices/index.html">Devices</a><input aria-label="Toggle navigation of Devices" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../Devices/kv260.html">Target Hardware: Xilinx Kria KV260</a></li>
 </ul>
 </li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">pccx-lab Handbook</span></p>
 <ul>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../Lab/index.html">pccx-lab Handbook</a><input aria-label="Toggle navigation of pccx-lab Handbook" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../Lab/index.html">pccx-lab Handbook</a><input aria-label="Toggle navigation of pccx-lab Handbook" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../Lab/architecture.html">Architecture Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../Lab/cli.html">CLI Reference</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../Lab/analyzer_api.html">Analyzer API</a></li>
@@ -368,13 +372,13 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Archive</span></p>
 <ul>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../archive/index.html">Archive</a><input aria-label="Toggle navigation of Archive" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../archive/experimental_v001/index.html">Archive: v001 Experimental Architecture</a><input aria-label="Toggle navigation of Archive: v001 Experimental Architecture" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../archive/index.html">Archive</a><input aria-label="Toggle navigation of Archive" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../archive/experimental_v001/index.html">Archive: v001 Experimental Architecture</a><input aria-label="Toggle navigation of Archive: v001 Experimental Architecture" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../archive/experimental_v001/Architecture/v001_architecture.html">pccx: Parallel Compute Core eXecutor</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../archive/experimental_v001/Drivers/ISA.html">pccx ISA Specification</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../archive/experimental_v001/Drivers/ISA_Spreadsheet.html">pccx ISA Spreadsheet View</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../archive/experimental_v001/Drivers/v001_API.html">Developer Reference for pccx v001 Host API</a></li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../../archive/experimental_v001/RTL/index.html">RTL Source Reference (v001)</a><input aria-label="Toggle navigation of RTL Source Reference (v001)" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../archive/experimental_v001/RTL/index.html">RTL Source Reference (v001)</a><input aria-label="Toggle navigation of RTL Source Reference (v001)" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../archive/experimental_v001/RTL/top.html">Top level</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../archive/experimental_v001/RTL/packages.html">Packages and Constants</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../archive/experimental_v001/RTL/controller.html">NPU Controller</a></li>
@@ -394,12 +398,12 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Toolchain Demos</span></p>
 <ul>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../samples/index.html">Toolchain Demos</a><input aria-label="Toggle navigation of Toolchain Demos" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../samples/index.html">Toolchain Demos</a><input aria-label="Toggle navigation of Toolchain Demos" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../samples/mermaid_blockdiagram.html">Mermaid — NPU block diagram</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../samples/wavedrom_axi_read.html">WaveDrom — AXI4 read transaction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../samples/svg_themed_demo.html">SVG — themed 4×4 PE array</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../samples/plot_bandwidth.html">scienceplots — bandwidth vs batch size</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../../auto_plots/index.html">Plot gallery</a><input aria-label="Toggle navigation of Plot gallery" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../auto_plots/index.html">Plot gallery</a><input aria-label="Toggle navigation of Plot gallery" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../auto_plots/plot_bandwidth.html">Batch size vs achieved HP-AXI bandwidth</a></li>
 </ul>
 </li>
