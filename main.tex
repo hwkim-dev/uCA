@@ -310,35 +310,37 @@
 
 
 % ---------- TikZ common styles ----------
+% Intel-SDM / NVIDIA-CUDA minimalism: thin black borders, light fills, black arrows.
 \tikzset{
-  arr/.style          = {-Stealth, semithick, draw=oceanblue},
-  arrfat/.style       = {-Stealth, line width=1.1pt, draw=oceanblue},
-  arrdim/.style       = {-Stealth, semithick, draw=graytext},
-  bus/.style          = {line width=2pt, draw=oceanblue!70},
-  ctrl/.style         = {-Stealth, semithick, draw=accentred, dashed},
-  databg/.style       = {fill=oceanblue!8},
-  wirelabel/.style    = {font=\footnotesize\sffamily, color=graytext, fill=white, inner sep=1pt},
-  blocknode/.style    = {rectangle, draw=oceanblue, semithick, rounded corners=2pt,
+  arr/.style          = {-Stealth, thin, draw=black},
+  arrfat/.style       = {-{Stealth[length=2.5mm,width=2mm]}, line width=0.8pt, draw=black},
+  arrdim/.style       = {-Stealth, thin, draw=black!55},
+  bus/.style          = {line width=1.5pt, draw=black!75},
+  ctrl/.style         = {-Stealth, thin, draw=black, dashed},
+  trunk/.style        = {thin, draw=black, fill=none},
+  databg/.style       = {fill=black!4},
+  wirelabel/.style    = {font=\footnotesize\sffamily, fill=white, inner sep=1.5pt},
+  blocknode/.style    = {rectangle, draw=black, thin,
                           fill=oceanblue!8, minimum width=2.4cm, minimum height=0.8cm,
                           font=\sffamily\small, align=center},
-  hotblock/.style     = {rectangle, draw=accentred, thick, rounded corners=2pt,
-                          fill=accentred!10, minimum width=2.4cm, minimum height=0.8cm,
+  hotblock/.style     = {rectangle, draw=black, thin,
+                          fill=accentred!8, minimum width=2.4cm, minimum height=0.8cm,
                           font=\sffamily\small, align=center},
-  ram/.style          = {rectangle, draw=accentpurple, thick, rounded corners=1pt,
-                          fill=accentpurple!10, minimum width=2.0cm, minimum height=0.7cm,
+  ram/.style          = {rectangle, draw=black, thin,
+                          fill=accentpurple!8, minimum width=2.0cm, minimum height=0.7cm,
                           font=\sffamily\small, align=center},
-  stage/.style        = {rectangle, draw=oceanblue, thick, rounded corners=1pt,
-                          fill=oceanblue!10, minimum width=1.6cm, minimum height=1.0cm,
+  stage/.style        = {rectangle, draw=black, thin,
+                          fill=oceanblue!8, minimum width=1.6cm, minimum height=1.0cm,
                           font=\sffamily\footnotesize, align=center},
-  scheduler/.style    = {rectangle, draw=graytext, thick, dashed, rounded corners=3pt,
+  scheduler/.style    = {rectangle, draw=black!55, thin, dashed,
                           fill=white, minimum width=3cm, minimum height=0.9cm,
                           font=\sffamily\small, align=center},
-  port/.style         = {circle, draw=oceanblue, fill=oceanblue!20,
+  port/.style         = {circle, draw=black, thin, fill=black!10,
                           minimum size=0.35cm, inner sep=0pt,
                           font=\sffamily\scriptsize},
-  domainlabel/.style  = {font=\sffamily\scriptsize\color{graytext}, align=center},
+  domainlabel/.style  = {font=\sffamily\scriptsize, align=center},
   everylabel/.style   = {font=\sffamily\footnotesize, align=center},
-  tightarr/.style     = {-{Stealth[length=1.5mm,width=1.2mm]}, thin, draw=oceanblue},
+  tightarr/.style     = {-{Stealth[length=1.5mm,width=1.2mm]}, thin, draw=black},
 }
 
 % =================================================================
@@ -504,8 +506,8 @@ start from the pccx documentation portal.
 \begin{center}
 \begin{tikzpicture}[
   node distance=0.5cm and 0.55cm,
-  vol/.style={rectangle, draw=oceanblue, thick, rounded corners=2pt,
-              fill=skytint, minimum width=3.5cm, minimum height=1.8cm,
+  vol/.style={rectangle, draw=black, thin,
+              fill=oceanblue!8, minimum width=3.5cm, minimum height=1.8cm,
               font=\sffamily\small, align=center, inner sep=4pt},
 ]
   \node[vol] (v1) {\textbf{Volume 1}\\Basic Architecture\\\textcolor{graytext}{\scriptsize Ch. 2 -- 3}};
@@ -544,40 +546,46 @@ Port (ACP) for low-latency transfers.
 \begin{figure}[h]
 \centering
 \begin{tikzpicture}[
-  node distance = 0.5cm and 1.0cm,
+  node distance = 0.45cm and 1.0cm,
   font = \sffamily\small,
 ]
-  % PS side
-  \node[blocknode, minimum width=3.0cm, minimum height=1.1cm, fill=oceanblue!15] (cpu)
+  % ---- PS side (uniform size: 3.0 cm × 1.0 cm) ----
+  \node[blocknode, minimum width=3.0cm, minimum height=1.0cm, fill=oceanblue!10] (cpu)
     {ARM Cortex-A53\\\scriptsize 4 cores};
-  \node[blocknode, below=of cpu, minimum width=3.0cm, minimum height=1.1cm, fill=oceanblue!15]
+  \node[blocknode, below=of cpu, minimum width=3.0cm, minimum height=1.0cm, fill=oceanblue!10]
     (drv) {Host Driver\\\scriptsize libpccx};
-  \node[ram, below=of drv, minimum width=3.0cm] (ddr) {DDR4\\\scriptsize 4\,GB};
-  \node[fit={(cpu) (drv) (ddr)}, draw=graytext, dashed, thick,
+  \node[blocknode, below=of drv, minimum width=3.0cm, minimum height=1.0cm, fill=accentpurple!8]
+    (ddr) {DDR4\\\scriptsize 4\,GB};
+  \node[fit={(cpu)(drv)(ddr)}, draw=black, thin, dashed,
         inner sep=10pt,
-        label={[font=\sffamily\bfseries\color{graytext}, anchor=south]above:Processing System (PS)}]
+        label={[font=\sffamily\bfseries\footnotesize, anchor=south]above:Processing System (PS)}]
         (ps) {};
 
-  % PL side
-  \node[hotblock, right=4.0cm of cpu, minimum width=3.2cm, minimum height=1.3cm]
+  % ---- PL side (uniform size: 3.2 cm × 1.0 cm) ----
+  \node[blocknode, right=4.0cm of cpu, minimum width=3.2cm, minimum height=1.0cm, fill=accentred!8]
     (ctrl) {Control Unit\\\scriptsize decode · dispatch};
-  \node[blocknode, below=of ctrl, minimum width=3.2cm, minimum height=1.3cm, fill=accentpurple!10, draw=accentpurple]
+  \node[blocknode, below=of ctrl, minimum width=3.2cm, minimum height=1.0cm, fill=accentpurple!8]
     (comp) {Compute Cluster\\\scriptsize GEMM · GEMV · SFU};
-  \node[ram, below=of comp, minimum width=3.2cm]
+  \node[blocknode, below=of comp, minimum width=3.2cm, minimum height=1.0cm, fill=accentpurple!8]
     (l2) {L2 Cache\\\scriptsize 1.75\,MB URAM};
-  \node[fit={(ctrl) (comp) (l2)}, draw=graytext, dashed, thick,
+  \node[fit={(ctrl)(comp)(l2)}, draw=black, thin, dashed,
         inner sep=10pt,
-        label={[font=\sffamily\bfseries\color{graytext}, anchor=south]above:Programmable Logic (PL) --- pccx NPU}]
+        label={[font=\sffamily\bfseries\footnotesize, anchor=south]above:Programmable Logic (PL) --- pccx NPU}]
         (pl) {};
 
-  % AXI links
-  \draw[arrfat] (cpu.east) -- node[above=0pt, font=\sffamily\scriptsize]{AXI4-Lite CMD\_IN}
-                            node[below=0pt, font=\sffamily\scriptsize]{64\,b instr.}  (ctrl.west);
-  \draw[arrfat] (ctrl.west) ++(0,-0.35cm) -- ++(-2.3cm,0) -- ++(0,-0.55cm) -| (drv.east)
-      node[pos=0.2, above, font=\sffamily\scriptsize]{STAT\_OUT};
-  \draw[bus] (ddr.east) -- node[above=0pt, font=\sffamily\scriptsize, pos=0.5]{AXI-HP $\times$ 4}
-                          node[below=0pt, font=\sffamily\scriptsize, pos=0.5]{128\,b @ 250\,MHz}
-                          (l2.west);
+  % ---- AXI links ----
+  % CMD_IN: PS → PL (single straight arrow)
+  \draw[arrfat] (cpu.east) --
+    node[above, font=\sffamily\scriptsize, fill=white, inner sep=1pt]{AXI4-Lite CMD\_IN \quad 64\,b}
+    (ctrl.west);
+  % STAT_OUT: PL → PS (return path below CMD_IN)
+  \draw[arrfat] (ctrl.west) ++(0,-0.30cm) -- ++(-1.6cm,0)
+    node[above, pos=0.5, font=\sffamily\scriptsize, fill=white, inner sep=1pt]{STAT\_OUT}
+    -- ++(0,-0.50cm) -| (drv.east);
+  % AXI-HP bulk data (DDR ↔ L2)
+  \draw[bus, <->] (ddr.east) --
+    node[above, font=\sffamily\scriptsize, fill=white, inner sep=1pt]{AXI-HP $\times$4 \enspace 128\,b @ 250\,MHz}
+    (l2.west);
 \end{tikzpicture}
 \caption{Host--device partition. PS issues 64-bit instructions to the
 Control Unit over AXI4-Lite, while bulk activations and weights cross
@@ -605,10 +613,10 @@ hazards and feeds the GEMM, GEMV, SFU, and DMA back-end resources.
   \node[scheduler, above=0.35cm of disp] (gs) {Global Scheduler};
 
   % Row 2 — Back-end resources
-  \node[blocknode, below=1.0cm of disp, xshift=-4.8cm, minimum width=2.3cm, fill=accentpurple!10, draw=accentpurple] (gemm) {GEMM\\\scriptsize 32$\times$32 SA};
-  \node[blocknode, right=0.35cm of gemm, minimum width=2.3cm, fill=accentpurple!10, draw=accentpurple] (gemv) {GEMV\\\scriptsize 4$\times$32 MAC};
-  \node[blocknode, right=0.35cm of gemv, minimum width=2.3cm, fill=accentpurple!10, draw=accentpurple] (sfu)  {SFU (CVO)\\\scriptsize CORDIC/LUT};
-  \node[blocknode, right=0.35cm of sfu, minimum width=2.3cm, fill=accentorange!15, draw=accentorange] (dma) {DMA\\\scriptsize ACP/HP};
+  \node[blocknode, below=1.0cm of disp, xshift=-4.8cm, minimum width=2.3cm, fill=accentpurple!8] (gemm) {GEMM\\\scriptsize 32$\times$32 SA};
+  \node[blocknode, right=0.35cm of gemm, minimum width=2.3cm, fill=accentpurple!8] (gemv) {GEMV\\\scriptsize 4$\times$32 MAC};
+  \node[blocknode, right=0.35cm of gemv, minimum width=2.3cm, fill=accentpurple!8] (sfu)  {SFU (CVO)\\\scriptsize CORDIC/LUT};
+  \node[blocknode, right=0.35cm of sfu, minimum width=2.3cm, fill=accentorange!10] (dma) {DMA\\\scriptsize ACP/HP};
 
   % Row 3 — Memory
   \node[ram, below=1.0cm of gemm, minimum width=2.3cm] (l1g) {L1\\\scriptsize GEMM};
@@ -659,28 +667,30 @@ boundary; there is no manual synchronizer logic.
 \begin{figure}[h]
 \centering
 \begin{tikzpicture}[
-  node distance = 0.3cm and 0.8cm,
+  node distance = 0.5cm and 0.9cm,
   font = \sffamily\small,
 ]
-  \node[blocknode, minimum width=2.4cm, fill=accentorange!15, draw=accentorange]
-    (wr) {Write\\\scriptsize 250 MHz};
-  \node[ram, right=of wr, minimum width=3.5cm, fill=skytint] (fifo) {XPM Async FIFO\\\scriptsize 4096$\times$128\,b};
-  \node[blocknode, right=of fifo, minimum width=2.4cm, fill=accentgreen!15, draw=accentgreen]
-    (rd) {Read\\\scriptsize 400 MHz};
+  \node[blocknode, minimum width=2.6cm, minimum height=0.9cm, fill=accentorange!10]
+    (wr) {Write\\\scriptsize 250\,MHz};
+  \node[blocknode, right=1.0cm of wr, minimum width=3.6cm, minimum height=0.9cm, fill=black!4]
+    (fifo) {XPM Async FIFO\\\scriptsize 4096$\times$128\,b};
+  \node[blocknode, right=1.0cm of fifo, minimum width=2.6cm, minimum height=0.9cm, fill=accentgreen!10]
+    (rd) {Read\\\scriptsize 400\,MHz};
 
-  \draw[arr] (wr) -- node[above, font=\sffamily\scriptsize]{data+wr\_en} (fifo.west);
-  \draw[arr] (fifo.east) -- node[above, font=\sffamily\scriptsize]{data+rd\_en} (rd);
+  % Arrows — labels with white fill to prevent overlap
+  \draw[arrfat] (wr) -- node[above, font=\sffamily\scriptsize, fill=white, inner sep=1.5pt]{data + wr\_en} (fifo.west);
+  \draw[arrfat] (fifo.east) -- node[above, font=\sffamily\scriptsize, fill=white, inner sep=1.5pt]{data + rd\_en} (rd);
 
-  % Clock arrows
-  \node[font=\sffamily\scriptsize, above=0.05cm of wr] {\color{accentorange}CLK\_PS};
-  \node[font=\sffamily\scriptsize, above=0.05cm of rd] {\color{accentgreen}CLK\_PL};
+  % Clock labels — placed below each block to avoid overlapping arrow labels
+  \node[font=\sffamily\scriptsize, below=0.18cm of wr]  {CLK\_PS (250\,MHz)};
+  \node[font=\sffamily\scriptsize, below=0.18cm of rd]  {CLK\_PL (400\,MHz)};
 
-  % Boundary dashed line
-  \draw[graytext, dashed, thick] ($(fifo.north west)+(0,0.4cm)$) -- ($(fifo.south west)+(0,-0.4cm)$);
-  \draw[graytext, dashed, thick] ($(fifo.north east)+(0,0.4cm)$) -- ($(fifo.south east)+(0,-0.4cm)$);
+  % CDC boundary dashed lines (at FIFO edges)
+  \draw[black!50, dashed] ($(fifo.north west)+(0,0.35cm)$) -- ($(fifo.south west)+(0,-0.55cm)$);
+  \draw[black!50, dashed] ($(fifo.north east)+(0,0.35cm)$) -- ($(fifo.south east)+(0,-0.55cm)$);
 
-  \node[domainlabel, above=0.55cm of wr] {PS clock domain};
-  \node[domainlabel, above=0.55cm of rd] {PL clock domain};
+  \node[domainlabel, above=0.45cm of wr]   {PS clock domain};
+  \node[domainlabel, above=0.45cm of rd]   {PL clock domain};
 \end{tikzpicture}
 \caption{Clock-domain crossing path: a 4096$\times$128\,b XPM FIFO in
 \texttt{independent\_clock} mode decouples the 250\,MHz AXI side from
@@ -827,11 +837,11 @@ resources free up.}
   font = \sffamily\small,
 ]
   % Layer stack
-  \node[rectangle, draw=graytext,  thick, fill=graytext!10,  minimum width=10cm, minimum height=0.9cm, rounded corners=2pt] (ddr) {DDR4 --- 4\,GB @ 12.8\,GB/s};
-  \node[rectangle, draw=accentorange, thick, fill=accentorange!15, minimum width=8.5cm, minimum height=0.9cm, rounded corners=2pt, below=of ddr] (acp) {AXI-HP $\times$ 4 + ACP --- 16\,GB/s burst};
-  \node[rectangle, draw=accentpurple, thick, fill=accentpurple!15, minimum width=7.0cm, minimum height=0.9cm, rounded corners=2pt, below=of acp] (l2) {Unified L2 --- 1.75\,MB URAM (FMAP + KV)};
-  \node[rectangle, draw=oceanblue,   thick, fill=oceanblue!15, minimum width=5.5cm, minimum height=0.9cm, rounded corners=2pt, below=of l2]  (l1) {Per-core L1 --- 128\,KB BRAM};
-  \node[rectangle, draw=accentgreen, thick, fill=accentgreen!18, minimum width=4.0cm, minimum height=0.9cm, rounded corners=2pt, below=of l1]  (rf) {Systolic Array / RegFile};
+  \node[rectangle, draw=black, thin, fill=black!8,         minimum width=10cm, minimum height=0.9cm] (ddr) {DDR4 --- 4\,GB @ 12.8\,GB/s};
+  \node[rectangle, draw=black, thin, fill=accentorange!10, minimum width=8.5cm, minimum height=0.9cm, below=of ddr] (acp) {AXI-HP $\times$4 + ACP --- 16\,GB/s burst};
+  \node[rectangle, draw=black, thin, fill=accentpurple!10, minimum width=7.0cm, minimum height=0.9cm, below=of acp] (l2) {Unified L2 --- 1.75\,MB URAM (FMAP + KV)};
+  \node[rectangle, draw=black, thin, fill=oceanblue!10,    minimum width=5.5cm, minimum height=0.9cm, below=of l2]  (l1) {Per-core L1 --- 128\,KB BRAM};
+  \node[rectangle, draw=black, thin, fill=accentgreen!10,  minimum width=4.0cm, minimum height=0.9cm, below=of l1]  (rf) {Systolic Array / RegFile};
 
   % Latency labels (right side)
   \node[font=\sffamily\scriptsize\color{graytext}, right=0.2cm of ddr] {$\sim$200 cyc};
@@ -865,25 +875,27 @@ $\sim$1.75 MB). See Figure~\ref{fig:uram-alloc}.
 \begin{tikzpicture}[
   font = \sffamily\scriptsize,
 ]
-  % 64 cells in an 8×8 grid
+  % 64 cells in an 8×8 grid (cell size 0.6 cm, gap 0.05 cm → step 0.65 cm)
   \foreach \i in {0,...,7} {
     \foreach \j in {0,...,7} {
       \pgfmathtruncatemacro{\n}{\i*8+\j}
       \pgfmathtruncatemacro{\isWeight}{\n < 8 ? 1 : 0}
       \ifnum\isWeight=1
-        \draw[fill=accentorange!35, draw=accentorange] (\j*0.6,-\i*0.6) rectangle ++(0.55,0.55);
+        \draw[fill=accentorange!30, draw=black, thin] (\j*0.65,-\i*0.65) rectangle ++(0.58,0.58);
       \else
-        \draw[fill=accentpurple!25, draw=accentpurple] (\j*0.6,-\i*0.6) rectangle ++(0.55,0.55);
+        \draw[fill=accentpurple!20, draw=black, thin] (\j*0.65,-\i*0.65) rectangle ++(0.58,0.58);
       \fi
-      \node at (\j*0.6 + 0.275, -\i*0.6 + 0.275) {\n};
+      \node at (\j*0.65 + 0.29, -\i*0.65 + 0.29) {\n};
     }
   }
 
-  % Legend
-  \draw[fill=accentorange!35, draw=accentorange] (6,1) rectangle ++(0.4,0.4);
-  \node[right=0.15cm, font=\sffamily\footnotesize] at (6.4,1.2) {Weight FIFO (8 URAMs, 2 per port $\times$ 4 ports)};
-  \draw[fill=accentpurple!25, draw=accentpurple] (6,0.4) rectangle ++(0.4,0.4);
-  \node[right=0.15cm, font=\sffamily\footnotesize] at (6.4,0.6) {Unified L2 --- FMAP + KV Cache (56 URAMs, 28 pairs)};
+  % Legend — placed below the grid (grid bottom ≈ y = -(7*0.65+0.58) = -5.13)
+  \draw[fill=accentorange!30, draw=black, thin] (0,-5.5) rectangle ++(0.45,0.45);
+  \node[anchor=west, font=\sffamily\small] at (0.6,-5.27)
+    {Weight FIFO (8 URAMs, 2 per port $\times$ 4 ports)};
+  \draw[fill=accentpurple!20, draw=black, thin] (0,-6.15) rectangle ++(0.45,0.45);
+  \node[anchor=west, font=\sffamily\small] at (0.6,-5.92)
+    {Unified L2 --- FMAP + KV Cache (56 URAMs, 28 pairs)};
 \end{tikzpicture}
 \caption{Physical URAM allocation on the Kria KV260 (64 blocks total).
 Blocks 0--7 form the 4-port Weight FIFO; blocks 8--63 pair up to
@@ -925,30 +937,33 @@ The quantity $(A \cdot C) + (B \cdot D)$ factors to:
 \centering
 \begin{tikzpicture}[
   font = \sffamily\small,
-  node distance = 0.3cm and 0.6cm,
+  node distance = 0.55cm and 1.0cm,
 ]
   % Inputs
-  \node[blocknode, fill=accentorange!15, draw=accentorange] (act) {Activation\\\scriptsize BF16};
-  \node[blocknode, below=of act, fill=accentpurple!15, draw=accentpurple] (w)  {Weight\\\scriptsize INT4};
+  \node[blocknode, fill=accentorange!10] (act) {Activation\\\scriptsize BF16};
+  \node[blocknode, below=of act, fill=accentpurple!8] (w)  {Weight\\\scriptsize INT4};
 
-  % Exponent alignment
-  \node[blocknode, right=of act] (emax) {$E_{\max}$\\align};
-  \node[blocknode, right=of w]   (signx){Sign-extend\\INT4$\to$INT9};
+  % Intermediate stages — extra horizontal gap (1.1 cm) keeps them clear of DSP
+  \node[blocknode, right=1.1cm of act] (emax)  {$E_{\max}$\\\scriptsize align};
+  \node[blocknode, right=1.1cm of w]   (signx) {Sign-extend\\\scriptsize INT4$\to$INT9};
 
-  % DSP48E2
-  \node[hotblock, right=1cm of $(emax)!0.5!(signx)$, minimum height=2.2cm, minimum width=2.3cm] (dsp)
+  % DSP48E2 — centred between emax and signx, with extra gap (1.4 cm)
+  \node[blocknode, fill=accentred!8,
+        right=1.4cm of $(emax)!0.5!(signx)$,
+        minimum height=2.3cm, minimum width=2.5cm] (dsp)
     {DSP48E2\\\scriptsize $A \cdot B + C$\\\scriptsize 48-bit ACC};
 
-  % Post
-  \node[blocknode, right=of dsp, minimum width=2.8cm] (post) {Post-process\\$\times (S_f \cdot S_w)$};
-  \node[blocknode, right=of post, fill=accentgreen!15, draw=accentgreen] (o) {Output\\\scriptsize BF16};
+  % Post-process and output
+  \node[blocknode, right=1.0cm of dsp, minimum width=2.8cm] (post)
+    {Post-process\\$\times(S_f \cdot S_w)$};
+  \node[blocknode, right=1.0cm of post, fill=accentgreen!10] (o) {Output\\\scriptsize BF16};
 
-  \draw[arr] (act)  -- (emax);
-  \draw[arr] (w)    -- (signx);
-  \draw[arr] (emax) -- (dsp);
-  \draw[arr] (signx) -- (dsp);
-  \draw[arr] (dsp)  -- (post);
-  \draw[arr] (post) -- (o);
+  \draw[arr] (act)   -- (emax);
+  \draw[arr] (w)     -- (signx);
+  \draw[arr] (emax)  -- (dsp.west |- emax);
+  \draw[arr] (signx) -- (dsp.west |- signx);
+  \draw[arr] (dsp)   -- (post);
+  \draw[arr] (post)  -- (o);
 \end{tikzpicture}
 \caption{DSP48E2 datapath. INT9 $\times$ INT4 multiplication executes
 natively; the BF16 scale factor product is applied once per MAC epoch
@@ -962,52 +977,47 @@ by the post-process stage.}
 \centering
 \begin{tikzpicture}[
   font = \sffamily\scriptsize,
-  pe/.style={rectangle, draw=oceanblue, fill=oceanblue!8,
-             minimum width=0.6cm, minimum height=0.6cm, inner sep=0pt},
-  peW/.style={rectangle, draw=accentpurple, fill=accentpurple!20,
-              minimum width=0.6cm, minimum height=0.6cm, inner sep=0pt,
-              node contents={W}},
+  % PE cells: 0.70 cm square, 0.80 cm step → 0.10 cm clear gap between cells
+  pe/.style={rectangle, draw=black, thin, fill=oceanblue!8,
+             minimum width=0.70cm, minimum height=0.70cm, inner sep=0pt},
 ]
-  % 6×6 systolic array (illustrative; actual hw is 32×32)
+  \def\step{0.80}   % grid step (cm)
+  \def\half{0.35}   % half PE size
+
+  % ---- 6×6 PE array — weights labelled inside each PE ----
   \foreach \i in {0,...,5}
     \foreach \j in {0,...,5} {
-      \node[pe] (pe\i\j) at (\j*0.65, -\i*0.65) {\tiny PE};
+      \node[pe] (pe\i\j) at (\j*\step, -\i*\step) {$W_{\i\j}$};
     }
 
-  % Stationary weights (inside each PE)
-  \foreach \i in {0,...,5}
-    \foreach \j in {0,...,5} {
-      \node[font=\tiny\sffamily\bfseries, color=accentpurple]
-        at (\j*0.65, -\i*0.65 - 0.12) {$W_{\i\j}$};
-    }
-
-  % Activation arrows coming in from left
+  % ---- Activation inputs from left ----
   \foreach \i in {0,...,5} {
-    \draw[arr] (-1.2, -\i*0.65) -- (pe\i0);
-    \node[anchor=east, font=\scriptsize] at (-1.2, -\i*0.65) {$a_\i$};
+    \draw[arr] ({-1.0}, {-\i*\step}) -- (pe\i0.west);
+    \node[anchor=east, font=\scriptsize] at (-1.05, -\i*\step) {$a_\i$};
   }
 
-  % Partial sums flowing down
+  % ---- Partial-sum inputs from top (arrows end at top edge of row-0 PEs) ----
   \foreach \j in {0,...,5} {
-    \draw[arr, draw=accentgreen, -Stealth, thick] (\j*0.65, 0.55) -- (\j*0.65, 0.15);
-    \node[anchor=south, font=\scriptsize, color=accentgreen] at (\j*0.65, 0.55) {$\psi_\j^{\mathrm{in}}$};
+    \draw[arr] ({\j*\step}, {0.70}) -- ({\j*\step}, {\half+0.02});
+    \node[anchor=south, font=\scriptsize] at (\j*\step, 0.72) {$\psi_\j^{\mathrm{in}}$};
   }
 
-  % Partial sum out (bottom)
+  % ---- Partial-sum outputs from bottom (arrows start at bottom edge of row-5 PEs) ----
+  \def\botY{{-5*\step}}
   \foreach \j in {0,...,5} {
-    \draw[arr, draw=accentgreen, -Stealth, thick] (\j*0.65, -3.4) -- (\j*0.65, -3.8);
-    \node[anchor=north, font=\scriptsize, color=accentgreen] at (\j*0.65, -3.8) {$\psi_\j^{\mathrm{out}}$};
+    \draw[arr] ({\j*\step}, {-5*\step-\half-0.02}) -- ({\j*\step}, {-5*\step-0.72});
+    \node[anchor=north, font=\scriptsize] at (\j*\step, {-5*\step-0.74}) {$\psi_\j^{\mathrm{out}}$};
   }
 
-  % Activation out (right edge)
+  % ---- Activation pass-through to right ----
   \foreach \i in {0,...,5} {
-    \draw[arr] (\i*0 + 5*0.65 + 0.35, -\i*0.65) -- ++(0.6, 0);
+    \draw[arr] (pe\i5.east) -- ++({0.55},0);
   }
 
-  % Annotation
-  \node[anchor=north west, font=\sffamily\small\color{graytext}, align=left]
-    at (0, -4.1) {Weights $W_{ij}$ stay resident in PEs (Weight Stationary).\\
-                   Activations $a_i$ stream left-to-right; partial sums $\psi$ stream top-to-bottom.};
+  % ---- Annotation ----
+  \node[anchor=north west, font=\sffamily\small, align=left]
+    at (0, {-5*\step-1.0}) {Weights $W_{ij}$ preloaded per tile (Weight Stationary).\\
+                             Activations $a_i$ stream left-to-right; partial sums $\psi$ top-to-bottom.};
 \end{tikzpicture}
 \caption{Systolic array dataflow (illustrated on a 6$\times$6; actual
 hardware is 32$\times$32). Weights are preloaded once per tile;
@@ -1026,25 +1036,43 @@ single GEMV dispatches 32-lane LUT-based MAC units followed by a
 \centering
 \begin{tikzpicture}[
   font = \sffamily\small,
-  node distance = 0.3cm and 0.5cm,
-  core/.style={rectangle, draw=accentpurple, fill=accentpurple!10,
-               minimum width=2.4cm, minimum height=1.1cm, rounded corners=2pt,
+  node distance = 0.35cm and 0.6cm,
+  % All four cores: identical width + height for visual uniformity
+  core/.style={rectangle, draw=black, thin,
+               fill=accentpurple!8,
+               minimum width=2.6cm, minimum height=1.1cm,
                font=\sffamily\small, align=center},
 ]
-  \node[ram, minimum width=2cm] (wbuf) {Weight FIFO\\\scriptsize URAM};
-  \node[core, right=1.2cm of wbuf, yshift=2.0cm]  (c0) {GEMV Core 0\\\scriptsize 32-MAC + 5-stg red.};
-  \node[core, right=1.2cm of wbuf, yshift=0.7cm]  (c1) {GEMV Core 1};
-  \node[core, right=1.2cm of wbuf, yshift=-0.6cm] (c2) {GEMV Core 2};
-  \node[core, right=1.2cm of wbuf, yshift=-1.9cm] (c3) {GEMV Core 3};
-  \node[blocknode, right=1.0cm of c1, yshift=-0.65cm, minimum width=2.5cm, fill=accentgreen!15, draw=accentgreen] (red) {Row-partition\\concat};
-  \node[ram, right=of red, minimum width=2cm] (l2) {L2\\result};
+  \node[blocknode, minimum width=2.0cm, minimum height=1.1cm, fill=accentpurple!8]
+    (wbuf) {Weight FIFO\\\scriptsize URAM};
 
-  \foreach \c in {c0, c1, c2, c3} \draw[bus] (wbuf.east) -- (\c.west);
-  \foreach \c in {c0, c1, c2, c3} \draw[arr] (\c.east)   -- (red.west);
+  % Four cores at fixed y offsets — identical node style
+  \node[core, right=1.4cm of wbuf, yshift= 1.65cm] (c0) {GEMV Core 0};
+  \node[core, right=1.4cm of wbuf, yshift= 0.55cm] (c1) {GEMV Core 1};
+  \node[core, right=1.4cm of wbuf, yshift=-0.55cm] (c2) {GEMV Core 2};
+  \node[core, right=1.4cm of wbuf, yshift=-1.65cm] (c3) {GEMV Core 3};
+
+  % Reduction / concat stage — centred between c1 and c2
+  \node[blocknode, right=1.2cm of c1, yshift=-0.55cm,
+        minimum width=2.5cm, minimum height=1.1cm, fill=accentgreen!10]
+    (red) {Row-partition\\concat};
+  \node[blocknode, right=0.8cm of red, minimum width=1.8cm, minimum height=1.1cm,
+        fill=accentpurple!8] (l2) {L2\\result};
+
+  % Weight bus (trunk style: horizontal line from wbuf, then vertical drops)
+  \coordinate (wjct) at ($(wbuf.east)+(0.5cm,0)$);
+  \draw[-] (wbuf.east) -- (wjct);
+  \draw[trunk] ($(wjct)+(0, 1.65cm)$) -- ($(wjct)+(0,-1.65cm)$);
+  \foreach \c in {c0,c1,c2,c3} \draw[arrfat] (wjct |- \c) -- (\c.west);
+
+  % Core → reduce arrows
+  \foreach \c in {c0,c1,c2,c3} \draw[arr] (\c.east) -- (red.west |- \c);
+
   \draw[arr] (red) -- (l2);
 \end{tikzpicture}
 \caption{GEMV weight streaming: the 4 GEMV cores each consume a
-row-partition stream; results concatenate into a single vector.}
+row-partition stream from the URAM Weight FIFO; results concatenate
+into a single output vector in L2.}
 \label{fig:gemv-stream}
 \end{figure}
 
@@ -1059,15 +1087,15 @@ GEMM array.
 \resizebox{\textwidth}{!}{%
 \begin{tikzpicture}[
   font=\sffamily\scriptsize,
-  leaf/.style={rectangle, draw=oceanblue, fill=oceanblue!10,
+  leaf/.style={rectangle, draw=black, thin, fill=black!6,
                minimum width=0.42cm, minimum height=0.42cm, inner sep=0pt},
-  dsp/.style ={rectangle, draw=accentred, fill=accentred!15,
+  dsp/.style ={rectangle, draw=black, thin, fill=accentred!10,
                minimum width=0.6cm, minimum height=0.5cm, inner sep=0pt,
                font=\sffamily\tiny\bfseries},
-  lut/.style ={rectangle, draw=accentgreen, fill=accentgreen!15,
+  lut/.style ={rectangle, draw=black, thin, fill=accentgreen!10,
                minimum width=0.75cm, minimum height=0.5cm, inner sep=0pt,
                font=\sffamily\tiny\bfseries},
-  sink/.style={rectangle, draw=accentpurple, fill=accentpurple!20,
+  sink/.style={rectangle, draw=black, thin, fill=accentpurple!12,
                minimum width=0.9cm, minimum height=0.55cm, inner sep=0pt,
                font=\sffamily\tiny\bfseries},
   rowlbl/.style={anchor=east, font=\sffamily\scriptsize\color{graytext}},
@@ -1192,30 +1220,49 @@ eleven are reserved. Decoder behaviour on reserved opcodes is
 \begin{tikzpicture}[
   font = \sffamily\footnotesize,
   node distance = 0.4cm and 0.9cm,
-  branch/.style={rectangle, draw=oceanblue, fill=skytint, rounded corners=2pt,
-                 minimum width=2.2cm, minimum height=0.7cm, align=center,
+  branch/.style={rectangle, draw=black, thin, fill=oceanblue!8,
+                 minimum width=2.4cm, minimum height=0.72cm, align=center,
                  font=\sffamily\footnotesize},
 ]
-  \node[blocknode, minimum width=2.4cm] (cmd)  {CMD\_IN FIFO};
-  \node[blocknode, right=of cmd, minimum width=2.3cm] (dec)  {opcode[63:60]\\branch};
+  \node[blocknode, minimum width=2.4cm] (cmd) {CMD\_IN FIFO};
+  \node[blocknode, right=of cmd, minimum width=2.4cm] (dec) {opcode[63:60]\\branch};
 
-  % 5 branches
-  \node[branch, right=1.6cm of dec, yshift=2.4cm]  (b0) {GEMV \uop};
-  \node[branch, right=1.6cm of dec, yshift=1.4cm]  (b1) {GEMM \uop};
-  \node[branch, right=1.6cm of dec, yshift=0.4cm]  (b2) {MEMCTRL \uop};
-  \node[branch, right=1.6cm of dec, yshift=-0.6cm] (b3) {MEMSET \uop};
-  \node[branch, right=1.6cm of dec, yshift=-1.6cm] (b4) {CVO \uop};
-  \node[font=\sffamily\scriptsize\color{graytext}, right=1.6cm of dec, yshift=-2.4cm]
+  % 5 branch nodes — same style, same width
+  \node[branch, right=1.8cm of dec, yshift= 2.16cm] (b0) {GEMV \uop};
+  \node[branch, right=1.8cm of dec, yshift= 1.08cm] (b1) {GEMM \uop};
+  \node[branch, right=1.8cm of dec, yshift= 0.00cm] (b2) {MEMCTRL \uop};
+  \node[branch, right=1.8cm of dec, yshift=-1.08cm] (b3) {MEMSET \uop};
+  \node[branch, right=1.8cm of dec, yshift=-2.16cm] (b4) {CVO \uop};
+  \node[font=\sffamily\scriptsize, right=1.8cm of dec, yshift=-3.00cm]
     (res) {reserved $\to$ UB};
 
-  \node[hotblock, right=1.5cm of b2, minimum width=2.4cm] (disp) {Dispatcher};
+  \node[blocknode, fill=accentred!8, right=1.6cm of b2, minimum width=2.4cm]
+    (disp) {Dispatcher};
   \node[scheduler, above=0.4cm of disp] (gs) {Hazard check};
 
+  % CMD → dec
   \draw[arr] (cmd) -- (dec);
-  \foreach \b/\lbl in {b0/4'h0, b1/4'h1, b2/4'h2, b3/4'h3, b4/4'h4} {
-    \draw[arr] (dec.east) -- node[above, pos=0.45, font=\sffamily\scriptsize]{\lbl} (\b.west);
-    \draw[arr] (\b) -- (disp.west);
-  }
+
+  % Trunk fan-out: stub → vertical trunk → horizontal branches
+  \coordinate (jct) at ($(dec.east)+(0.65cm,0)$);
+  \draw[-] (dec.east) -- (jct);
+  % Vertical trunk spanning all 5 branches
+  \draw[trunk] ($(jct)+(0, 2.16cm)$) -- ($(jct)+(0,-2.16cm)$);
+  % Horizontal branches with labels
+  \draw[arr] ($(jct)+(0, 2.16cm)$) --
+    node[above, font=\sffamily\scriptsize, fill=white, inner sep=1pt]{\texttt{4'h0}} (b0.west);
+  \draw[arr] ($(jct)+(0, 1.08cm)$) --
+    node[above, font=\sffamily\scriptsize, fill=white, inner sep=1pt]{\texttt{4'h1}} (b1.west);
+  \draw[arr] ($(jct)+(0, 0.00cm)$) --
+    node[above, font=\sffamily\scriptsize, fill=white, inner sep=1pt]{\texttt{4'h2}} (b2.west);
+  \draw[arr] ($(jct)+(0,-1.08cm)$) --
+    node[above, font=\sffamily\scriptsize, fill=white, inner sep=1pt]{\texttt{4'h3}} (b3.west);
+  \draw[arr] ($(jct)+(0,-2.16cm)$) --
+    node[above, font=\sffamily\scriptsize, fill=white, inner sep=1pt]{\texttt{4'h4}} (b4.west);
+
+  % Branches → Dispatcher
+  \foreach \b in {b0,b1,b2,b3,b4} \draw[arr] (\b.east) -- (disp.west |- \b);
+
   \draw[arr, <->] (disp) -- (gs);
 \end{tikzpicture}
 \caption{Decode and dispatch pathway. The opcode selects one of five
@@ -1253,18 +1300,19 @@ The 60-bit body falls into four structural families. Figures
 
 \subsection{Type A --- Compute Format (GEMV / GEMM)}
 
-\begin{figure}[h]
+\begin{figure}[htb]
 \centering
-\begin{bytefield}[bitwidth=0.68em, bitheight=2.2em, boxformatting={\centering\sffamily\scriptsize}]{64}
+\begin{bytefield}[bitwidth=0.68em, bitheight=2.4em,
+                  boxformatting={\centering\sffamily\scriptsize\bfseries}]{64}
   \bitheader[endianness=big,lsb=0]{0,3,8,14,20,26,43,60,63} \\
-  \bitbox{4}{\color{oceanblue}\textbf{opcode}} &
-  \bitbox{17}{\color{accentgreen}\textbf{dest\_reg}\\\scriptsize [59:43]} &
-  \bitbox{17}{\color{accentgreen}\textbf{src\_addr}\\\scriptsize [42:26]} &
-  \bitbox{6}{\color{accentred}\textbf{flags}\\\scriptsize[25:20]} &
-  \bitbox{6}{\color{accentorange}\textbf{size\_ptr}\\\scriptsize[19:14]} &
-  \bitbox{6}{\color{accentorange}\textbf{shape\_ptr}\\\scriptsize[13:8]} &
-  \bitbox{5}{\color{accentpurple}\textbf{lane}\\\scriptsize[7:3]} &
-  \bitbox{3}{\color{graytext}rsv\\\scriptsize[2:0]}
+  \bitbox{4}{opcode\\\scriptsize[63:60]} &
+  \bitbox{17}{dest\_reg\\\scriptsize[59:43]} &
+  \bitbox{17}{src\_addr\\\scriptsize[42:26]} &
+  \bitbox{6}{flags\\\scriptsize[25:20]} &
+  \bitbox{6}{size\_ptr\\\scriptsize[19:14]} &
+  \bitbox{6}{shape\_ptr\\\scriptsize[13:8]} &
+  \bitbox{5}{lane\\\scriptsize[7:3]} &
+  \bitbox{3}{rsv\\\scriptsize[2:0]}
 \end{bytefield}
 \caption{\textbf{Type A} body layout, used by \texttt{GEMV} (opcode
 \texttt{4'h0}) and \texttt{GEMM} (opcode \texttt{4'h1}).}
@@ -1273,18 +1321,19 @@ The 60-bit body falls into four structural families. Figures
 
 \subsection{Type B --- Memory Control Format (MEMCPY)}
 
-\begin{figure}[h]
+\begin{figure}[htb]
 \centering
-\begin{bytefield}[bitwidth=0.68em, bitheight=2.2em, boxformatting={\centering\sffamily\scriptsize}]{64}
+\begin{bytefield}[bitwidth=0.68em, bitheight=2.4em,
+                  boxformatting={\centering\sffamily\scriptsize\bfseries}]{64}
   \bitheader[endianness=big,lsb=0]{0,1,7,24,41,58,59,60,63} \\
-  \bitbox{4}{\color{oceanblue}\textbf{opcode}} &
-  \bitbox{1}{\color{accentred}\textbf{fd}\\\tiny[59]} &
-  \bitbox{1}{\color{accentred}\textbf{td}\\\tiny[58]} &
-  \bitbox{17}{\color{accentgreen}\textbf{dest\_addr}\\\scriptsize [57:41]} &
-  \bitbox{17}{\color{accentgreen}\textbf{src\_addr}\\\scriptsize [40:24]} &
-  \bitbox{17}{\color{accentgreen}\textbf{aux\_addr}\\\scriptsize [23:7]} &
-  \bitbox{6}{\color{accentorange}\textbf{shape\_ptr}\\\scriptsize[6:1]} &
-  \bitbox{1}{\color{accentpurple}\textbf{as}\\\tiny[0]}
+  \bitbox{4}{opcode\\\scriptsize[63:60]} &
+  \bitbox{1}{fd\\\scriptsize[59]} &
+  \bitbox{1}{td\\\scriptsize[58]} &
+  \bitbox{17}{dest\_addr\\\scriptsize[57:41]} &
+  \bitbox{17}{src\_addr\\\scriptsize[40:24]} &
+  \bitbox{17}{aux\_addr\\\scriptsize[23:7]} &
+  \bitbox{6}{shape\_ptr\\\scriptsize[6:1]} &
+  \bitbox{1}{as\\\scriptsize[0]}
 \end{bytefield}
 \caption{\textbf{Type B} body layout, used by \texttt{MEMCPY} (opcode
 \texttt{4'h2}). \texttt{fd}=\texttt{from\_device}, \texttt{td}=\texttt{to\_device},
@@ -1294,17 +1343,18 @@ The 60-bit body falls into four structural families. Figures
 
 \subsection{Type C --- Memory Set Format (MEMSET)}
 
-\begin{figure}[h]
+\begin{figure}[htb]
 \centering
-\begin{bytefield}[bitwidth=0.68em, bitheight=2.2em, boxformatting={\centering\sffamily\scriptsize}]{64}
+\begin{bytefield}[bitwidth=0.68em, bitheight=2.4em,
+                  boxformatting={\centering\sffamily\scriptsize\bfseries}]{64}
   \bitheader[endianness=big,lsb=0]{0,4,20,36,52,58,60,63} \\
-  \bitbox{4}{\color{oceanblue}\textbf{opcode}} &
-  \bitbox{2}{\color{accentred}\textbf{dc}\\\tiny[59:58]} &
-  \bitbox{6}{\color{accentgreen}\textbf{dest\_addr}\\\scriptsize[57:52]} &
-  \bitbox{16}{\color{accentpurple}\textbf{a\_value}\\\scriptsize[51:36]} &
-  \bitbox{16}{\color{accentpurple}\textbf{b\_value}\\\scriptsize[35:20]} &
-  \bitbox{16}{\color{accentpurple}\textbf{c\_value}\\\scriptsize[19:4]} &
-  \bitbox{4}{\color{graytext}rsv\\\scriptsize[3:0]}
+  \bitbox{4}{opcode\\\scriptsize[63:60]} &
+  \bitbox{2}{dc\\\scriptsize[59:58]} &
+  \bitbox{6}{dest\_addr\\\scriptsize[57:52]} &
+  \bitbox{16}{a\_value\\\scriptsize[51:36]} &
+  \bitbox{16}{b\_value\\\scriptsize[35:20]} &
+  \bitbox{16}{c\_value\\\scriptsize[19:4]} &
+  \bitbox{4}{rsv\\\scriptsize[3:0]}
 \end{bytefield}
 \caption{\textbf{Type C} body layout, used by \texttt{MEMSET} (opcode
 \texttt{4'h3}). \texttt{dc}=\texttt{dest\_cache}.}
@@ -1313,24 +1363,26 @@ The 60-bit body falls into four structural families. Figures
 
 \subsection{Type D --- Complex Vector Op Format (CVO)}
 
-\begin{figure}[h]
-\centering
-\begin{bytefield}[bitwidth=0.68em, bitheight=2.2em, boxformatting={\centering\sffamily\scriptsize}]{64}
+\vspace{0.3em}
+\begin{center}
+\begin{bytefield}[bitwidth=0.68em, bitheight=2.4em,
+                  boxformatting={\centering\sffamily\scriptsize\bfseries}]{64}
   \bitheader[endianness=big,lsb=0]{0,1,6,22,39,56,60,63} \\
-  \bitbox{4}{\color{oceanblue}\textbf{opcode}} &
-  \bitbox{4}{\color{accentred}\textbf{func}\\\scriptsize[59:56]} &
-  \bitbox{17}{\color{accentgreen}\textbf{src\_addr}\\\scriptsize[55:39]} &
-  \bitbox{17}{\color{accentgreen}\textbf{dst\_addr}\\\scriptsize[38:22]} &
-  \bitbox{16}{\color{accentorange}\textbf{length}\\\scriptsize[21:6]} &
-  \bitbox{5}{\color{accentred}\textbf{flags}\\\scriptsize[5:1]} &
-  \bitbox{1}{\color{accentpurple}\textbf{as}\\\tiny[0]}
+  \bitbox{4}{opcode\\\scriptsize[63:60]} &
+  \bitbox{4}{func\\\scriptsize[59:56]} &
+  \bitbox{17}{src\_addr\\\scriptsize[55:39]} &
+  \bitbox{17}{dst\_addr\\\scriptsize[38:22]} &
+  \bitbox{16}{length\\\scriptsize[21:6]} &
+  \bitbox{5}{flags\\\scriptsize[5:1]} &
+  \bitbox{1}{as\\\scriptsize[0]}
 \end{bytefield}
-\caption{\textbf{Type D} body layout, used by \texttt{CVO} (opcode
+\end{center}
+\captionof{figure}{\textbf{Type D} body layout, used by \texttt{CVO} (opcode
 \texttt{4'h4}). \texttt{as}=\texttt{async}.}
 \label{fig:type-d}
-\end{figure}
+\vspace{0.5em}
 
-\newpage
+\clearpage
 
 % =================================================================
 \chapter{INSTRUCTION SET REFERENCE (A-Z)}
@@ -1782,11 +1834,11 @@ Figure~\ref{fig:cvo-pipeline} illustrates the data path.
 \begin{tikzpicture}[
   font=\sffamily\small,
   node distance = 0.3cm and 0.55cm,
-  st/.style={rectangle, draw=oceanblue, fill=oceanblue!10,
-             minimum width=1.7cm, minimum height=0.9cm, rounded corners=2pt,
+  st/.style={rectangle, draw=black, thin, fill=oceanblue!8,
+             minimum width=1.7cm, minimum height=0.9cm,
              font=\sffamily\footnotesize, align=center},
-  sfu/.style={rectangle, draw=accentpurple, fill=accentpurple!15,
-              minimum width=1.9cm, minimum height=0.9cm, rounded corners=2pt,
+  sfu/.style={rectangle, draw=black, thin, fill=accentpurple!8,
+              minimum width=1.9cm, minimum height=0.9cm,
               font=\sffamily\footnotesize, align=center},
 ]
   \node[st] (s1) {Issue};
@@ -1802,9 +1854,10 @@ Figure~\ref{fig:cvo-pipeline} illustrates the data path.
   \draw[arr] (s4) -- (s5);
   \draw[arr] (s5) -- (s6);
 
-  % Bypass arrow from a GEMV FIFO into s1
-  \node[ram, above=0.5cm of s1, minimum width=2.2cm] (bp) {GEMV FIFO\\(bypass)};
-  \draw[arr, dashed, draw=accentred] (bp) -- (s1);
+  % Bypass arrow from a GEMV FIFO into s1 (fast path, shown dashed)
+  \node[blocknode, above=0.5cm of s1, minimum width=2.2cm, fill=accentpurple!8]
+    (bp) {GEMV FIFO\\(bypass)};
+  \draw[arr, dashed] (bp) -- (s1);
 \end{tikzpicture}
 \caption{CVO pipeline internals. Dashed red arrow is the fast-path
 from a preceding \texttt{GEMV}.}
@@ -1855,20 +1908,20 @@ re-interpret the two encoding bits.
   font=\sffamily\footnotesize,
   node distance=0.45cm and 0.85cm,
 ]
-  \node[ram, minimum width=2.6cm, fill=accentorange!20, draw=accentorange] (host) {Host DDR4};
-  \node[ram, right=2.0cm of host, minimum width=2.6cm] (l2) {L2 Cache};
-  \node[blocknode, above=0.8cm of l2, minimum width=2.6cm, fill=accentpurple!15, draw=accentpurple] (gemm) {GEMM L1};
-  \node[blocknode, below=0.8cm of l2, minimum width=2.6cm, fill=accentpurple!15, draw=accentpurple] (gemv) {GEMV L1};
-  \node[blocknode, right=2.0cm of l2, minimum width=2.6cm, fill=accentpurple!15, draw=accentpurple] (sfu)  {SFU};
+  \node[blocknode, minimum width=2.6cm, fill=accentorange!10] (host) {Host DDR4};
+  \node[blocknode, right=2.0cm of host, minimum width=2.6cm, fill=accentpurple!8] (l2) {L2 Cache};
+  \node[blocknode, above=0.8cm of l2, minimum width=2.6cm, fill=accentpurple!8] (gemm) {GEMM L1};
+  \node[blocknode, below=0.8cm of l2, minimum width=2.6cm, fill=accentpurple!8] (gemv) {GEMV L1};
+  \node[blocknode, right=2.0cm of l2, minimum width=2.6cm, fill=accentpurple!8]  (sfu)  {SFU};
 
-  \draw[arr]  (host)    -- node[above, pos=0.5]{\texttt{8'h01}} (l2);
-  \draw[arr]  (l2) to [bend right=30] node[below, pos=0.5]{\texttt{8'h10}} (host);
-  \draw[arr]  (l2)      -- node[right, pos=0.5]{\texttt{8'h12}} (gemm);
-  \draw[arr]  (l2)      -- node[right, pos=0.5]{\texttt{8'h13}} (gemv);
-  \draw[arr]  (l2)      -- node[above, pos=0.5]{\texttt{8'h14}} (sfu);
-  \draw[arr, dashed] (gemm) -- node[left, pos=0.5]{\texttt{8'h21}} (l2);
-  \draw[arr, dashed] (gemv) -- node[left, pos=0.5]{\texttt{8'h31}} (l2);
-  \draw[arr, dashed] (sfu) to [bend right=30] node[below, pos=0.5]{\texttt{8'h41}} (l2);
+  \draw[arr]        (host) -- node[above, pos=0.5, fill=white, inner sep=1pt]{\texttt{8'h01}} (l2);
+  \draw[arr]        (l2) to [bend right=25] node[below, pos=0.5, fill=white, inner sep=1pt]{\texttt{8'h10}} (host);
+  \draw[arr]        (l2)   -- node[right, pos=0.5, fill=white, inner sep=1pt]{\texttt{8'h12}} (gemm);
+  \draw[arr]        (l2)   -- node[right, pos=0.5, fill=white, inner sep=1pt]{\texttt{8'h13}} (gemv);
+  \draw[arr]        (l2)   -- node[above, pos=0.5, fill=white, inner sep=1pt]{\texttt{8'h14}} (sfu);
+  \draw[arr, dashed] (gemm) -- node[left,  pos=0.5, fill=white, inner sep=1pt]{\texttt{8'h21}} (l2);
+  \draw[arr, dashed] (gemv) -- node[left,  pos=0.5, fill=white, inner sep=1pt]{\texttt{8'h31}} (l2);
+  \draw[arr, dashed] (sfu) to [bend right=25] node[below, pos=0.5, fill=white, inner sep=1pt]{\texttt{8'h41}} (l2);
 \end{tikzpicture}
 \caption{Visual summary of Table~\ref{tab:data-route}. Solid arrows
 are ingress / compute reads; dashed arrows are writeback paths.}
@@ -1940,8 +1993,8 @@ A host-side byte offset must be divided by 16 before loading into
 \begin{tikzpicture}[
   font=\sffamily\footnotesize,
   node distance=0.3cm and 0.6cm,
-  dfstep/.style={rectangle, draw=oceanblue, fill=oceanblue!10,
-               minimum width=2.6cm, minimum height=0.8cm, rounded corners=2pt,
+  dfstep/.style={rectangle, draw=black, thin, fill=oceanblue!8,
+               minimum width=2.6cm, minimum height=0.8cm,
                font=\sffamily\footnotesize, align=center},
 ]
   % GEMM path
@@ -2000,14 +2053,14 @@ instruction's journey through the NPU from dispatch to writeback.}
   node distance=0.3cm and 0.6cm,
 ]
   \node[blocknode, minimum width=3cm] (in) {Incoming \uop};
-  \node[blocknode, right=1.3cm of in, minimum width=3.4cm, fill=accentorange!15, draw=accentorange]
+  \node[blocknode, right=1.3cm of in, minimum width=3.4cm, fill=accentorange!10]
     (ah) {Address hazard check\\\scriptsize RAW on dest/src};
-  \node[blocknode, right=1.3cm of ah, minimum width=3.4cm, fill=accentorange!15, draw=accentorange]
+  \node[blocknode, right=1.3cm of ah, minimum width=3.4cm, fill=accentorange!10]
     (rh) {Resource hazard check\\\scriptsize GEMM/GEMV/SFU};
-  \node[hotblock, right=1.3cm of rh, minimum width=2.4cm] (ex) {Execute};
+  \node[blocknode, right=1.3cm of rh, minimum width=2.4cm, fill=accentred!8] (ex) {Execute};
   \node[scheduler, below=0.55cm of rh, minimum width=7cm]
     (fence) {Fence tracker --- \texttt{fsmout\_npu\_stat\_collector}};
-  \node[ram, right=0.6cm of ex, minimum width=2.5cm] (stat) {STAT\_OUT};
+  \node[blocknode, right=0.6cm of ex, minimum width=2.5cm, fill=accentpurple!8] (stat) {STAT\_OUT};
 
   \draw[arr] (in) -- (ah);
   \draw[arr] (ah) -- (rh);
@@ -2034,7 +2087,7 @@ sequence.
 \begin{tikzpicture}[
   font=\sffamily\small,
   node distance=0.2cm and 1.2cm,
-  agent/.style={rectangle, draw=oceanblue, fill=skytint, rounded corners=2pt,
+  agent/.style={rectangle, draw=black, thin, fill=oceanblue!8,
                 minimum width=2.4cm, minimum height=0.7cm, font=\sffamily\small, align=center},
 ]
   \node[agent] (host) {Host driver};
@@ -2045,9 +2098,9 @@ sequence.
   \coordinate (c0) at ($(ctrl.south) + (0,-0.2cm)$);
   \coordinate (b0) at ($(be.south)   + (0,-0.2cm)$);
 
-  \draw[graytext, thick] (h0) -- ++(0,-5.5cm);
-  \draw[graytext, thick] (c0) -- ++(0,-5.5cm);
-  \draw[graytext, thick] (b0) -- ++(0,-5.5cm);
+  \draw[black!50, thin] (h0) -- ++(0,-5.5cm);
+  \draw[black!50, thin] (c0) -- ++(0,-5.5cm);
+  \draw[black!50, thin] (b0) -- ++(0,-5.5cm);
 
   % Message arrows
   \draw[arrfat] ($(h0)+(0,-0.5cm)$) -- node[above, font=\sffamily\scriptsize]{\texttt{CMD\_IN} 64\,b (async=1)} ($(c0)+(0,-0.5cm)$);
@@ -2074,10 +2127,10 @@ owns a single \texttt{fence\_id} slot in \texttt{STAT\_OUT}.
 \begin{tikzpicture}[
   font=\sffamily\small,
   node distance = 1.8cm and 2.8cm,
-  state/.style = {circle, draw=oceanblue, thick, minimum size=1.7cm, align=center,
-                  font=\sffamily\footnotesize, inner sep=1pt, fill=skytint},
-  stateh/.style= {circle, draw=accentred, thick, minimum size=1.7cm, align=center,
-                  font=\sffamily\footnotesize, inner sep=1pt, fill=skytint},
+  state/.style = {circle, draw=black, thin, minimum size=1.7cm, align=center,
+                  font=\sffamily\footnotesize, inner sep=1pt, fill=oceanblue!8},
+  stateh/.style= {circle, draw=black, thin, minimum size=1.7cm, align=center,
+                  font=\sffamily\footnotesize, inner sep=1pt, fill=accentred!8},
   edgelbl/.style={font=\sffamily\scriptsize, fill=white, inner sep=1pt},
 ]
   \node[state]  (idle) {\textbf{IDLE}\\\scriptsize slot free};
@@ -2253,30 +2306,30 @@ The three operators the ISA exposes land in distinct regimes:
   ]
     % Memory slope: y = 12.8 GB/s * x (MAC/byte) -> treat MAC as 1 op each
     % and bandwidth as 12.8 byte/sec (in GB/s).  So y_max_mem = BW * AI.
-    \addplot[domain=0.1:100, samples=2, thick, color=accentred]
+    \addplot[domain=0.1:100, samples=2, semithick, color=black!70]
       { 12.8 * x };
     \addlegendentry{Memory bound (12.8\,GB/s)}
 
     % Compute ceiling at 800 GMAC/s
-    \addplot[domain=0.1:1000, samples=2, thick, color=accentgreen]
+    \addplot[domain=0.1:1000, samples=2, semithick, color=black, dashed]
       { 800 };
     \addlegendentry{Compute peak (800\,GMAC/s)}
 
     % Operating points
-    \addplot[only marks, mark=*, mark size=2.7pt, color=oceanblue]
+    \addplot[only marks, mark=*, mark size=2.7pt, color=black]
       coordinates { (0.5, 6.4) };
     \addlegendentry{GEMV (AI $\approx$ 0.5)}
 
-    \addplot[only marks, mark=square*, mark size=2.7pt, color=oceanblue]
+    \addplot[only marks, mark=square*, mark size=2.7pt, color=black!70]
       coordinates { (256, 800) };
     \addlegendentry{GEMM (AI $\approx$ 256)}
 
-    \addplot[only marks, mark=triangle*, mark size=3pt, color=accentpurple]
+    \addplot[only marks, mark=triangle*, mark size=3pt, color=black!50]
       coordinates { (2, 25.6) };
     \addlegendentry{CVO (AI $\approx$ 2)}
 
     % Ridge point annotation
-    \addplot[dashed, thick, color=graytext] coordinates { (62.5, 1) (62.5, 800) };
+    \addplot[dashed, semithick, color=black!40] coordinates { (62.5, 1) (62.5, 800) };
     \node[font=\sffamily\scriptsize\color{graytext}, anchor=south west]
       at (axis cs: 62.5, 1.2) {ridge: 62.5 MAC/B};
   \end{loglogaxis}
