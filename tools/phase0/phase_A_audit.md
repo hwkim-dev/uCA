@@ -22,7 +22,7 @@ start on the right files.
 
 ## 2. What still needs attention
 
-### 2.1 Systolic array shape — ✅ already correct as **32 × 16 × 2**
+### 2.1 Systolic array shape — already correct as **32 × 16 × 2**
 
 User-preferred framing (2026-04-20): **32 × 16 × 2 cascade-split**.
 The existing RTL already implements exactly that as `32 × 32 physical
@@ -47,20 +47,20 @@ future readers.
 the cascade-break depth (drain every 1024 MACs on each half
 independently). That falls under §2.2 follow-ups.
 
-### 2.2 DSP bit-packing (1 DSP = 2 MAC) — ✅ modules drafted + simulated
+### 2.2 DSP bit-packing (1 DSP = 2 MAC) — modules drafted + simulated
 
 **Status** (2026-04-20):
 
-- ✅ `hw/rtl/MAT_CORE/GEMM_dsp_packer.sv` — pre-DSP48E2 packer. Two signed
+- `hw/rtl/MAT_CORE/GEMM_dsp_packer.sv` — pre-DSP48E2 packer. Two signed
   INT4 weights into the 30-bit A-port at `UPPER_SHIFT = 21`, INT8
   activation sign-extended to 18-bit B-port. Uses signed arithmetic
   (shift + add), not naive concatenation, so negative weights encode
   correctly.
-- ✅ `hw/rtl/MAT_CORE/GEMM_sign_recovery.sv` — post-DSP unpacker. Lower
+- `hw/rtl/MAT_CORE/GEMM_sign_recovery.sv` — post-DSP unpacker. Lower
   channel = `P[20:0]` as 21-bit signed. Upper channel = `P[41:21]` as
   21-bit signed, incremented by 1 whenever the lower channel is
   negative (carry-borrow correction).
-- ✅ `hw/tb/tb_GEMM_dsp_packer_sign_recovery.sv` — closed-loop testbench
+- `hw/tb/tb_GEMM_dsp_packer_sign_recovery.sv` — closed-loop testbench
   wrapping a behavioural DSP48E2 (signed `A*B`, accumulate). Drives
   1024 random INT4 × INT8 cycles, compares against a software golden.
   **Passes on xsim (Vivado 2025.2): 1024 cycles, 0 mismatches.**
@@ -74,19 +74,19 @@ Bit-width derivation (documented in the packer header):
 
 **Integration status (2026-04-20 continued)**:
 
-- ✅ `GEMM_dsp_unit.sv` — refactored to v002. Two INT4 weight inputs
+- `GEMM_dsp_unit.sv` — refactored to v002. Two INT4 weight inputs
   (`in_H_upper` / `in_H_lower`) feed `GEMM_dsp_packer`. Packer drives
   the DSP48E2 A-port directly (`A_INPUT = DIRECT`). INT8 activation
   enters on the B-port, taking the fabric path at row 0 and at the
   cascade-break row 16 (`B_INPUT = DIRECT`), and the `BCIN/BCOUT`
   cascade chain for every other row.
-- ✅ `GEMM_dsp_unit_last_ROW.sv` — same refactor as above.
-- ✅ `GEMM_systolic_array.sv` — two horizontal weight chains, 8-bit
+- `GEMM_dsp_unit_last_ROW.sv` — same refactor as above.
+- `GEMM_systolic_array.sv` — two horizontal weight chains, 8-bit
   INT8 vertical fabric, BCIN cascade chain replacing the old ACIN
   chain. Cascade-break logic at row 16 preserved.
-- ✅ `GEMM_Array.svh` — collapsed to a pass-through of `npu_arch.svh`
+- `GEMM_Array.svh` — collapsed to a pass-through of `npu_arch.svh`
   (removes the `ARRAY_SIZE_H`/`ARRAY_SIZE_V` redefinition warnings).
-- ✅ `GEMM_systolic_top.sv` — wired to the new systolic array port
+- `GEMM_systolic_top.sv` — wired to the new systolic array port
   list. Placeholder stubs for the upper-weight lane and the INT8
   activation (truncates the 27-bit mantissa to 8 bits for the time
   being — see `TODO(pccx v002 §2.2 follow-up)` in the file).
@@ -109,20 +109,20 @@ Bit-width derivation (documented in the packer header):
 
 **Cleared this sprint**:
 
-- ✅ `FROM_mat_result_packer.sv:62` — declaration of `send_idx` moved
+- `FROM_mat_result_packer.sv:62` — declaration of `send_idx` moved
   above the always-ff that clears `capture_valid`. Pre-existing bug
   resolved.
-- ✅ `GEMM_weight_dispatcher.sv` — rewritten as a dual-lane pipeline
+- `GEMM_weight_dispatcher.sv` — rewritten as a dual-lane pipeline
   register. Exposes `fifo_upper` + `fifo_lower` + `weight_upper` +
   `weight_lower`. Type-mismatch bugs and the undeclared `w_lane_cnt`
   are gone.
-- ✅ `GEMM_systolic_top.sv` — now takes two distinct weight lanes
+- `GEMM_systolic_top.sv` — now takes two distinct weight lanes
   (`IN_weight_upper` + `IN_weight_lower`) end-to-end into
   `H_in_upper` / `H_in_lower`. No more "same-stream" placeholder.
-- ✅ `GLOBAL_CONST.svh::GEMM_MAC_UNIT_IN_H / IN_V` — retired with a
+- `GLOBAL_CONST.svh::GEMM_MAC_UNIT_IN_H / IN_V` — retired with a
   tombstone comment. Callers now use
   `INT4_WIDTH` / `DEVICE_DSP_A_WIDTH` / `DEVICE_DSP_B_WIDTH` directly.
-- ✅ Full MAT_CORE stack (11 files) compiles clean and
+- Full MAT_CORE stack (11 files) compiles clean and
   `GEMM_systolic_top` + `glbl` elaborate successfully.
 
 **Still open (deeper rework, future sprints)**:
@@ -161,13 +161,13 @@ CDC macro.
 
 **Architecture claims confirmed**:
 
-- `device_pkg::VecPipelineCnt = 4` → 4 µV-Core GEMV lanes. ✅
-- `device_pkg::MatPipelineCnt = 1` → single Matrix Core. ✅
+- `device_pkg::VecPipelineCnt = 4` → 4 µV-Core GEMV lanes.
+- `device_pkg::MatPipelineCnt = 1` → single Matrix Core.
 - `GEMV_reduction.sv`: Stage 1 DSP 32→16, Stages 2-5 LUT 16→8→4→2→1,
-  total 5 pipeline stages. ✅ "32-MAC LUT pipeline + 5-stage reduction
+  total 5 pipeline stages. done "32-MAC LUT pipeline + 5-stage reduction
   tree" matches the docs.
 - `CVO_top.sv` instantiates exactly one `CVO_sfu_unit` + one
-  `CVO_cordic_unit`. ✅ Single-SFU per NPU matches the 2026-04-20 doc
+  `CVO_cordic_unit`. done Single-SFU per NPU matches the 2026-04-20 doc
   audit.
 
 **Compile-clean after this sprint**:

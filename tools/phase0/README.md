@@ -11,37 +11,37 @@ can run from a local shell.
 
 | Symbol | Meaning |
 |---|---|
-| 🧑 | User-only (browser / credentials / local hardware) |
-| 🤖 | Automatable (Claude / script) |
-| 🔗 | User-gated, but Claude can write the helper |
+| USER | User-only (browser / credentials / local hardware) |
+| AUTO | Automatable (Claude / script) |
+| LINK | User-gated, but Claude can write the helper |
 
 ## Checklist
 
 ### Compute & accounts
 
-- [ ] 🧑 **TRC TPU application** — submit at <https://sites.research.google/trc/>.
+- [ ] USER **TRC TPU application** — submit at <https://sites.research.google/trc/>.
   - Approval window: 1–2 weeks.
   - If granted, v003 EAGLE-3 training (Phase 2, Week 27–34) runs free.
   - If denied, fall back to Vast.ai (~$30–50).
-- [ ] 🧑 **Vast.ai or RunPod account** — minimum $10 deposit.
+- [ ] USER **Vast.ai or RunPod account** — minimum $10 deposit.
   - Only needed starting v002 Phase H+ (Week 33), so can defer.
   - Card on file so we can burst-rent an RTX 4090 for 30–50 hours.
 
 ### Data & weights
 
-- [ ] 🔗 **Gemma 3N E4B weights** — gated repo on HuggingFace.
+- [ ] LINK **Gemma 3N E4B weights** — gated repo on HuggingFace.
   - User must accept the license on <https://huggingface.co/google/gemma-3n-E4B-it>.
   - After that: `python tools/phase0/download_gemma3n.py` pulls the safetensors.
-- [ ] 🔗 **ShareGPT 50K (ko + en)** — streamed from HF dataset.
+- [ ] LINK **ShareGPT 50K (ko + en)** — streamed from HF dataset.
   - `python tools/phase0/prepare_sharegpt.py --target-size 50000 --out data/sharegpt_ko_en.parquet`
   - Needed for v002 Phase H+ EAGLE-3 head training.
 
 ### Local hardware
 
-- [ ] 🧑 **KV260 dev environment** — confirm Vivado 2023.2 + Vitis + board detected.
+- [ ] USER **KV260 dev environment** — confirm Vivado 2023.2 + Vitis + board detected.
   - `xsct`, `vivado`, `petalinux-config` reachable in `$PATH`.
   - Board visible via `lsusb` / JTAG probe.
-- [ ] 🧑 **KV260 bootable SD card** — PetaLinux or AMD Ubuntu 22.04 image.
+- [ ] USER **KV260 bootable SD card** — PetaLinux or AMD Ubuntu 22.04 image.
   - Target bitstream load path confirmed (`/lib/firmware/xilinx/…`).
 
 ## Kickoff sequence

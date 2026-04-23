@@ -8,7 +8,7 @@ Evidence
 ``.pccx`` 트레이스, Vivado utilisation 리포트, 보드 로그 발췌) 로
 링크되어 있어 숫자를 독립적으로 검증할 수 있다.
 
-측정치가 아직 없는 행은 **⏳ pending** 으로 명시하며, 차단 요소를
+측정치가 아직 없는 행은 **pending** 으로 명시하며, 차단 요소를
 항상 명시한다 — 추정치는 기록하지 않는다.
 
 측정 완료 (재현 가능)
@@ -23,23 +23,23 @@ Evidence
      - 소스
      - 재현기
    * - Sail 모델 타입체크
-     - ✅ clean
+     - clean
      - ``formal/sail/`` (64-bit / 4-bit opcode)
      - ``make check`` (< 5 초)
    * - pccx-core 테스트 스위트
-     - ✅ 7/7 ISA + 16 분석기 테스트
+     - 7/7 ISA + 16 분석기 테스트
      - ``cargo test -p pccx-core``
      - pccx-lab 루트에서 ``cargo test``
    * - ``.pccx`` 바이너리 포맷 디코드 라운드트립
-     - ✅ 비트-정확
+     - 비트-정확
      - ``pccx_format.rs``
      - ``pccx_analyze sample.pccx``
    * - Sphinx zero-warning 빌드
-     - ✅ EN + KO
+     - EN + KO
      - ``_ext/*.py`` + ``docs/**``
      - ``make strict``
    * - Golden-diff 회귀 게이트 (self-calibrated)
-     - ✅ 8 / 8 스텝 + 128 / 128 스텝 ±15 % 이내
+     - 8 / 8 스텝 + 128 / 128 스텝 ±15 % 이내
      - pccx-lab 의 ``samples/*.ref.jsonl``
      - ``pccx_golden_diff --check samples/gemma3n_16tok_smoke.ref.jsonl samples/gemma3n_16tok_smoke.pccx``
 
@@ -54,26 +54,26 @@ Evidence
      - 상태
      - 차단 요소
    * - End-to-end Gemma-3N E4B 디코드 tok/s
-     - ⏳ 보드 실행 대기
+     - 보드 실행 대기
      - §4.1 RTL dispatcher + Global_Scheduler 와이어링
        ({doc}`../v002/Architecture/index`)
    * - KV260 자원 사용량 (LUT / DSP / URAM / BRAM)
-     - ⏳ Vivado impl 대기
+     - Vivado impl 대기
      - ``pccx_analyze --run-synth <rtl_repo>`` 랜딩
        ({doc}`../Lab/cli`)
    * - Timing closure @ 400 MHz core / 250 MHz AXI
-     - ⏳ Vivado impl 대기
+     - Vivado impl 대기
      - 위와 동일
    * - Layer-by-layer 골든 모델 diff (PyTorch 레퍼런스 대비)
-     - ⏳ ``tools/pytorch_reference.py`` 랜딩 대기
+     - ``tools/pytorch_reference.py`` 랜딩 대기
      - 스캐폴드 (``pccx_golden_diff`` CLI + ``.ref.jsonl`` 스키마)
        이미 랜딩 — 위의 measured 행 참고. PyTorch 쪽이
        self-calibrated 레퍼런스를 시맨틱 기반 기대치로 교체할 예정.
    * - 지속 부하 하 P99 디코드 지연
-     - ⏳ 보드 캡처 대기
+     - 보드 캡처 대기
      - 실제 DDR 트래픽으로 512-토큰 실행 필요.
    * - W4A8KV4 디코드 중 7 W TDP 헤드룸
-     - ⏳ Vivado impl + 보드 pmbus 대기
+     - Vivado impl + 보드 pmbus 대기
      - 자원 사용량과 동일 차단.
 
 베이스라인 (향후 비교용)
@@ -107,7 +107,7 @@ Evidence
 4. ``make strict`` 통과, CI 가 페이지 재배포.
 
 추정치 없음. 모든 행은 재현 가능한 산출물로 연결되거나 명명된 차단
-요소와 함께 **⏳ pending** 으로 표시된다.
+요소와 함께 **pending** 으로 표시된다.
 
 .. toctree::
    :hidden:

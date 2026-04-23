@@ -16,9 +16,9 @@ Requires TeX Live 2023+ with `lmodern`, `hyperref`, `natbib`,
 
 ## Status
 
-- ✅ Title page, abstract, section skeleton with content for
+- Title page, abstract, section skeleton with content for
   §Architecture + §Sail Formal Specification.
-- ⏳ §Introduction, §Lab, §Evidence, §Conclusion flagged **TODO** —
+- §Introduction, §Lab, §Evidence, §Conclusion flagged **TODO** —
   filled as measurements land (see the
   [Evidence page](https://hwkim-dev.github.io/pccx/en/docs/Evidence/index.html)).
 

@@ -8,7 +8,7 @@ This page answers the single question a skeptical reviewer asks:
 artefact (captured ``.pccx`` trace, Vivado utilisation report, or
 board-log excerpt) so the numbers can be independently verified.
 
-When a measurement is not yet in hand the row is **⏳ pending** with
+When a measurement is not yet in hand the row is **pending** with
 the gating task explicitly called out — never a speculative figure.
 
 Measured (reproducible)
@@ -23,23 +23,23 @@ Measured (reproducible)
      - Source
      - Reproducer
    * - Sail model type-check
-     - ✅ clean
+     - clean
      - ``formal/sail/`` (64-bit / 4-bit opcode)
      - ``make check`` (< 5 s)
    * - pccx-core test suite
-     - ✅ 7/7 ISA + 16 analyzer tests
+     - 7/7 ISA + 16 analyzer tests
      - ``cargo test -p pccx-core``
      - ``cargo test`` from pccx-lab root
    * - ``.pccx`` binary format decode round-trip
-     - ✅ bit-exact
+     - bit-exact
      - ``pccx_format.rs``
      - ``pccx_analyze sample.pccx``
    * - Sphinx zero-warning build
-     - ✅ EN + KO
+     - EN + KO
      - ``_ext/*.py`` + ``docs/**``
      - ``make strict``
    * - Golden-diff regression gate (self-calibrated)
-     - ✅ 8 / 8 steps + 128 / 128 steps within ±15 %
+     - 8 / 8 steps + 128 / 128 steps within ±15 %
      - ``samples/*.ref.jsonl`` in pccx-lab
      - ``pccx_golden_diff --check samples/gemma3n_16tok_smoke.ref.jsonl samples/gemma3n_16tok_smoke.pccx``
 
@@ -54,27 +54,27 @@ Pending (board / synth)
      - Status
      - Gate
    * - End-to-end Gemma-3N E4B decode tok/s
-     - ⏳ pending board run
+     - pending board run
      - §4.1 RTL dispatcher + Global_Scheduler wiring
        ({doc}`../v002/Architecture/index`)
    * - KV260 resource usage (LUT / DSP / URAM / BRAM)
-     - ⏳ pending Vivado impl
+     - pending Vivado impl
      - ``pccx_analyze --run-synth <rtl_repo>`` landing
        ({doc}`../Lab/cli`)
    * - Timing closure @ 400 MHz core / 250 MHz AXI
-     - ⏳ pending Vivado impl
+     - pending Vivado impl
      - Gate as above
    * - Layer-by-layer golden-model diff (vs PyTorch reference)
-     - ⏳ pending ``tools/pytorch_reference.py`` landing
+     - pending ``tools/pytorch_reference.py`` landing
      - Scaffold (``pccx_golden_diff`` CLI + ``.ref.jsonl`` schema)
        already landed — see the measured row above.  PyTorch side
        will replace self-calibrated references with semantically-
        grounded expectations.
    * - P99 decode latency under sustained load
-     - ⏳ pending board capture
+     - pending board capture
      - Requires 512-token run on real DDR traffic.
    * - 7 W TDP headroom under W4A8KV4 decode
-     - ⏳ pending Vivado impl + board pmbus
+     - pending Vivado impl + board pmbus
      - Gates same as resource usage.
 
 Baselines (for future comparison)
@@ -108,7 +108,7 @@ How this page gets updated
 4. ``make strict`` passes, CI re-deploys the page.
 
 No speculative numbers.  Every row either links to a reproducible
-artefact or is marked **⏳ pending** with a named gate.
+artefact or is marked **pending** with a named gate.
 
 .. toctree::
    :hidden:

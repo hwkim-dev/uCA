@@ -34,14 +34,14 @@ xvlog (source clean)
 
 | Sub-system     | `xvlog` | `xelab` | Notes |
 |----------------|:-------:|:-------:|-------|
-| Packages       | ✅       | ✅       | device_pkg / dtype_pkg / mem_pkg / vec_core_pkg / isa_pkg / bf16_math_pkg / Algorithms |
-| MAT_CORE (11)  | ✅       | ✅ GEMM_systolic_top | Done previous turn |
-| VEC_CORE  (5)  | ✅       | 🟡       | GEMV_top hits unpacked→packed type mismatch (§A.1) |
-| CVO_CORE  (3)  | ✅       | 🟡       | CVO_top needs bf16_add (§A.2) |
-| NPU_Controller | ⚪       | ⚪       | unaudited |
-| PREPROCESS     | ⚪       | ⚪       | unaudited |
-| MEM_control    | ⚪       | ⚪       | unaudited |
-| NPU_top        | ⚪       | ⚪       | unaudited |
+| Packages       | done      | done      | device_pkg / dtype_pkg / mem_pkg / vec_core_pkg / isa_pkg / bf16_math_pkg / Algorithms |
+| MAT_CORE (11)  | done      | done GEMM_systolic_top | Done previous turn |
+| VEC_CORE  (5)  | done      | WIP       | GEMV_top hits unpacked→packed type mismatch (§A.1) |
+| CVO_CORE  (3)  | done      | WIP       | CVO_top needs bf16_add (§A.2) |
+| NPU_Controller | todo       | todo       | unaudited |
+| PREPROCESS     | todo       | todo       | unaudited |
+| MEM_control    | todo       | todo       | unaudited |
+| NPU_top        | todo       | todo       | unaudited |
 
 ### A.1 GEMV_top unpacked→packed
 

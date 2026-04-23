@@ -10,7 +10,7 @@
 [![Precision](https://img.shields.io/badge/Precision-W4A8_→_BF16%2FFP32-green)](#precision)
 [![Docs](https://img.shields.io/badge/Docs-Online-brightgreen)](https://hwkim-dev.github.io/pccx/)
 
-**[📖 Full Documentation →](https://hwkim-dev.github.io/pccx/)**
+**[Full Documentation →](https://hwkim-dev.github.io/pccx/)**
 
 </div>
 

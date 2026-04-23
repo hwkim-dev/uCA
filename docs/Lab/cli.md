@@ -43,15 +43,15 @@ $ pccx_analyze ./dummy_trace.pccx
 ═══════════════════════════════════════════════════════════════════════
   pccx_analyze · 16008 events over 5423940 cycles
 ═══════════════════════════════════════════════════════════════════════
-✓  [roofline] AI 0.69 ops/byte · 321.4 GOPS (0% of peak) · memory-bound
-✓  [roofline_hier] dwell 4 tier: Register=851200cy, URAM L1=52M cy, …
-✓  [bottleneck] 19179 windows · DmaRead×12787, DmaWrite×6392
+   [roofline] AI 0.69 ops/byte · 321.4 GOPS (0% of peak) · memory-bound
+   [roofline_hier] dwell 4 tier: Register=851200cy, URAM L1=52M cy, …
+   [bottleneck] 19179 windows · DmaRead×12787, DmaWrite×6392
     · DmaRead @ [474624..474880] share=100%
-✓  [dma_util] DMA SATURATED: read 46% + write 46% pinned — compute only 4%
-✓  [stall_histogram] 4 stalls · mean 1472 cy · max 5000 cy · 50% long-tail
-✓  [per_core_throughput] 4 cores active · mean 6.2% · σ=3.5pp
-✓  [kv_cache_pressure] HBM-SPILL: decode 512 tokens → 60000 KB KV …
-✓  [phase_classifier] mixed · prefill 22% · decode 61% (512 tok) · idle 17%
+   [dma_util] DMA SATURATED: read 46% + write 46% pinned — compute only 4%
+   [stall_histogram] 4 stalls · mean 1472 cy · max 5000 cy · 50% long-tail
+   [per_core_throughput] 4 cores active · mean 6.2% · σ=3.5pp
+   [kv_cache_pressure] HBM-SPILL: decode 512 tokens → 60000 KB KV …
+   [phase_classifier] mixed · prefill 22% · decode 61% (512 tok) · idle 17%
 ```
 
 ### Example — CI-ready JSON

@@ -28,11 +28,11 @@ _ACTIVE_VERSION = "v002"
 # Short labels — the KO copy is the Korean translation of the EN copy.
 _BANNERS: dict[str, dict[str, str]] = {
     "en": {
-        "prefix": "📼 Archived page · ",
+        "prefix": "Archived page · ",
         "link":   f"jump to the latest ({_ACTIVE_VERSION}) →",
     },
     "ko": {
-        "prefix": "📼 아카이브 페이지 · ",
+        "prefix": "아카이브 페이지 · ",
         "link":   f"최신 ({_ACTIVE_VERSION}) 문서로 이동 →",
     },
 }

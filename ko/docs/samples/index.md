@@ -18,10 +18,10 @@ plot_bandwidth
 
 | 데모                               | 검증 대상 파이프라인         | 테마 대응 |
 | ---------------------------------- | ---------------------------- | :---: |
-| [](mermaid_blockdiagram)           | `sphinxcontrib-mermaid`      | ✓ (neutral) |
+| [](mermaid_blockdiagram)           | `sphinxcontrib-mermaid`      | yes (neutral) |
 | [](wavedrom_axi_read)              | `sphinxcontrib-wavedrom`     | — (래스터) |
-| [](svg_themed_demo)                | 수작업 SVG + Furo CSS 변수   | ✓     |
-| [](plot_bandwidth)                 | `scienceplots` + `sphinx-gallery` | ✓ (팔레트) |
+| [](svg_themed_demo)                | 수작업 SVG + Furo CSS 변수   | yes     |
+| [](plot_bandwidth)                 | `scienceplots` + `sphinx-gallery` | yes (팔레트) |
 
 작성 규약은 `CLAUDE.md` §5 (Diagram Authoring Rules) 와 §6 (Plotting
 Conventions) 를 참고.

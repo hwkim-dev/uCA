@@ -71,11 +71,11 @@ Scope snapshot
 ===============================  ======================
 Phase                            Status
 ===============================  ======================
-Base types + registers           ✅  v002.0 landed
-5-opcode decoder                 ✅  v002.0 landed
-Execute semantics                ⏳  next iteration
-``.pccx`` trace emission         ⏳  next iteration
-Isabelle / Coq export            🔮  phase 3
+Base types + registers           done v002.0 landed
+5-opcode decoder                 done v002.0 landed
+Execute semantics                WIP  next iteration
+``.pccx`` trace emission         WIP  next iteration
+Isabelle / Coq export            planned phase 3
 ===============================  ======================
 
 Running the model
