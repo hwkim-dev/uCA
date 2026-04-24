@@ -1,6 +1,6 @@
 # 아키텍처 개요
 
-_최근 개정: 2026-04-22._
+_최근 개정: 2026-04-24._
 
 pccx-lab 은 pccx v002 NPU 아키텍처를 위한 **데스크톱 프로파일러 + 검증 IDE**
 이다. 컴패니언 ``pccx-FPGA-NPU-LLM-kv260`` RTL 레포의 xsim 테스트벤치가
@@ -11,76 +11,74 @@ timing, waveform, ISA replay 를 **단일 frameless Tauri v2 창** 에 표면화
 이 문서는 코드베이스의 평탄한 지도이다 — 각 서브시스템의 "왜" 는 소스의
 인라인 주석에 있다.
 
+## 단계 현황
+
+Phase 1 (워크스페이스 분할 + 안정 API 계약 + 플러그인 레지스트리 + 크레이트별
+CHANGELOG) 완료. Phase 2 (IntelliSense 파사드) 는 스캐폴드 + M2.1 A-슬라이스
+(`LspMultiplexer` + `NoopBackend`) 까지 랜딩; `tower-lsp` / `lsp-types`
+통합은 Phase 2 본편으로 연기. Phase 3 (원격 백엔드), 4 (insane 리포트),
+5 (AlphaEvolve 루프) 는 설계 문서만 존재 — pccx-lab 레포의
+`docs/design/phase{3,4,5}_*.md` 참고.
+
 ## 레포 구조
+
+Phase 1 워크스페이스 분할 이후 pccx-lab 은 10 개 멤버를 갖는 Cargo
+워크스페이스이다. 각 크레이트는 `plugin-api` 피처 뒤에 `#[unstable]`
+트레이트 표면을 노출하여 다운스트림 (CLI, IDE, remote 데몬) 이 크레이트
+전체를 끌어오지 않고 계약만 의존할 수 있게 한다.
 
 ```
 pccx-lab/
+├── Cargo.toml          Cargo 워크스페이스 (10 멤버)
 ├── src/
-│   ├── core/            — pccx-core: headless Rust, GUI 의존성 없음
-│   │   ├── src/
-│   │   │   ├── lib.rs            단일 public surface
-│   │   │   ├── pccx_format.rs    on-disk 바이너리 포맷
-│   │   │   ├── trace.rs          NpuTrace + NpuEvent
-│   │   │   ├── hw_model.rs       KV260 레퍼런스 상수
-│   │   │   ├── analyzer.rs       TraceAnalyzer 트레이트 + 16 빌트인 ★
-│   │   │   ├── research.rs       Citation 레지스트리 ★
-│   │   │   ├── synth_runner.rs   Vivado spawn + 로그 파싱
-│   │   │   ├── compare.rs        두 트레이스 회귀 게이트
-│   │   │   ├── roofline.rs       Williams/Waterman + hierarchical
-│   │   │   ├── bottleneck.rs     sliding-window contention detector
-│   │   │   ├── report.rs         Markdown 렌더러
-│   │   │   ├── live_window.rs    PerfChart 용 rolling stats
-│   │   │   ├── step_snapshot.rs  결정론적 cycle → registers
-│   │   │   ├── vivado_timing.rs  report_timing_summary 파서
-│   │   │   ├── synth_report.rs   utilisation + timing 요약
-│   │   │   ├── coverage.rs       UVM coverage JSONL merger
-│   │   │   ├── vcd{,_writer}.rs  VCD 수집 + emit
-│   │   │   ├── chrome_trace.rs   Perfetto JSON writer
-│   │   │   ├── isa_replay.rs     Spike 스타일 커밋 로그 파서
-│   │   │   ├── api_ring.rs       uca_* 호출 링 버퍼
-│   │   │   └── bin/
-│   │   │       ├── pccx_cli.rs       Vivado-shaped TCL runner
-│   │   │       ├── pccx_analyze.rs   one-shot 분석 CLI ★
-│   │   │       ├── from_xsim_log.rs  xsim 로그 → .pccx 컨버터
-│   │   │       └── generator.rs      합성 트레이스 제너레이터
-│   │   └── tests/       크로스 모듈 통합 테스트
-│   ├── ai_copilot/      — LLM 오케스트레이션, core 에 의존
-│   │   └── src/
-│   │       ├── lib.rs            카탈로그, 확장, uca_sync helper
-│   │       ├── copilot.rs        Copilot 구조체 + investigate/explain/rank ★
-│   │       └── uvm.rs            UvmStrategy 트레이트 + 16 전략 ★
-│   ├── uvm_bridge/      — SV / UVM DPI-C 어댑터, core 에 의존
-│   └── ui/              — Tauri v2 + React 19 데스크톱 셸
-│       ├── src/                  TypeScript React 컴포넌트
-│       └── src-tauri/            Rust Tauri 셸 + IPC 명령
-├── docs/                — Sphinx 소스 + 핸드북 (본 문서 트리로 이관됨)
-└── scripts/             — 로컬 도구
+│   ├── core/           — pccx-core: headless Rust, GUI 의존성 없음
+│   │                     (.pccx 포맷, trace, roofline, bottleneck,
+│   │                     live_window, step_snapshot, synth_report,
+│   │                     vivado_timing, coverage, vcd, chrome_trace,
+│   │                     isa_replay, 플러그인 레지스트리)
+│   ├── reports/        — pccx-reports: Markdown 리포트 제너레이터
+│   ├── verification/   — pccx-verification: golden_diff + robust_reader
+│   ├── authoring/      — pccx-authoring: ISA / API TOML 컴파일러
+│   ├── evolve/         — pccx-evolve: 투기적 디코딩 프리미티브
+│   │                     (EAGLE 계열 전략; Phase 5 시드)
+│   ├── remote/         — pccx-remote: Phase 3 백엔드 데몬 스캐폴드
+│   ├── lsp/            — pccx-lsp: Phase 2 IntelliSense 파사드
+│   │                     (LspMultiplexer + NoopBackend A-슬라이스)
+│   ├── uvm_bridge/     — pccx-uvm-bridge: SV / UVM DPI-C 어댑터
+│   ├── ai_copilot/     — pccx-ai-copilot: LLM 오케스트레이션
+│   └── ui/src-tauri/   — Tauri v2 데스크톱 셸 + IPC
+├── ui/                  React 19 + TypeScript + Vite 7 (워크스페이스 외부)
+├── docs/                Sphinx 소스 — 핸드북 + Phase 1–5 설계 문서
+└── scripts/             로컬 도구
 ```
-
-★ = 연구 주도 추가 (2026-Q2 literature sweep).
 
 ## 레이어 계약
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
-│  ui/              React 19 + TypeScript + Vite 7             │
-│                   `invoke("cmd", args)` 로 Rust 호출.         │
+│  ui/                React 19 + TypeScript + Vite 7           │
+│                     `invoke("cmd", …)` 로 Rust 호출.          │
 ├──────────────────────────────────────────────────────────────┤
-│  src-tauri/       Tauri v2 셸 (Rust). 얇은 레이어 — 실제      │
-│                   비즈니스 로직은 core/ 에 있음.              │
+│  ui/src-tauri/      Tauri v2 셸. 얇은 레이어 — 실제 로직은    │
+│                     워크스페이스 크레이트 에 있음.            │
 ├──────────────────────────────────────────────────────────────┤
-│  ai_copilot/      Copilot 구조체; core 의 analyzer 레지스트리 │
-│  uvm_bridge/      사용. UI 의존성 없음.                       │
+│  ai_copilot/, lsp/, remote/, uvm_bridge/                     │
+│                     호스트 지향 표면. UI 의존성 없음.         │
 ├──────────────────────────────────────────────────────────────┤
-│  core/            순수 Rust. ui/, ai_copilot/ 에 zero 의존성. │
-│                   analyser surface 는 임의의 host 바이너리가  │
-│                   사용 가능.                                  │
+│  reports/, verification/, authoring/, evolve/                │
+│                     분석 / 저작 크레이트. core/ (evolve 는    │
+│                     추가로 verification/) 에만 의존.          │
+├──────────────────────────────────────────────────────────────┤
+│  core/              순수 Rust. 의존 그래프의 단일 싱크 —      │
+│                     상위 의존성 전무.                         │
 └──────────────────────────────────────────────────────────────┘
 ```
 
-**대원칙**: `core/` 는 상위 레이어에 의존하지 않는다. 신규 분석은
-`core/src/analyzer.rs` 에 넣고 `TraceAnalyzer` 트레이트로 노출한다 —
-UI / Copilot / CLI 모두 자동으로 집어든다.
+**대원칙**: `core/` 는 상위 레이어에 의존하지 않는다. 워크스페이스 그래프는
+acyclic — `core/` 가 단일 싱크이며 Tauri / remote 바이너리가 터미널이다.
+크레이트 간 표면은 트레이트 기반 (`ReportFormat`, `VerificationGate`,
+`IsaCompiler` / `ApiCompiler`, `SurrogateModel` / `EvoOperator` /
+`PRMGate`, `LspBackend`) 이라 호스트 쪽에서 스텁 / 교체가 가능하다.
 
 ## 데이터 흐름 (단일 트레이스)
 
@@ -145,9 +143,10 @@ impl UvmStrategy for MyFix {
 `uvm::builtin_strategies()` 에 append. Copilot 이 "my_analyzer" 발견을
 "my_fix" 로 자동 매핑한다.
 
-**신규 Tauri 커맨드 추가**: `src-tauri/src/lib.rs` 편집 → `#[tauri::command]`
-annotated fn 추가 → `invoke_handler!` 에 등록. `Copilot` 이 이미
-analyzer surface 를 노출하므로 와이어링은 보통 한 줄 브릿지로 끝난다.
+**신규 Tauri 커맨드 추가**: `src/ui/src-tauri/src/lib.rs` 편집 →
+`#[tauri::command]` annotated fn 추가 → `invoke_handler!` 에 등록.
+워크스페이스 크레이트가 이미 analyzer / report / verification
+표면을 노출하므로 와이어링은 보통 한 줄 브릿지로 끝난다.
 
 ## 크로스 레포 경계
 
@@ -159,14 +158,13 @@ analyzer surface 를 노출하므로 와이어링은 보통 한 줄 브릿지로
 - **llm-lite**: 골든 비교용 CPU 레퍼런스. TB 제너레이터와 `reg_golden`
   UVM 전략이 사용.
 
-## 빌드 상태 (현재)
+## 빌드 상태
 
-```text
-cargo test --workspace                → 131 passed (90 core lib + 25 core bin + 10 uvm + 6 copilot)
-cargo check (src-tauri)               → 0 error
-npx tsc --noEmit -p src/ui            → 0 error
-npm run build (vite)                  → 3.6 MB main chunk + 14 split, 38 s
-```
+`cargo test --workspace`, `cargo check` (`src/ui/src-tauri` 포함),
+`npx tsc --noEmit -p src/ui`, `npm run build` (Vite) 는 모든 PR 머지
+이전에 통과해야 한다. 크레이트별 테스트 수는 Phase 1 분할 이후
+유동적이며, 각 크레이트의 `CHANGELOG.md` 가 최신 릴리스 시점의
+수치를 기록한다.
 
 커맨드 레퍼런스는 [CLI 레퍼런스](cli.md), AI 자동화 surface 는
 [Copilot API](copilot.md) 참고.

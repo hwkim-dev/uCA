@@ -80,8 +80,10 @@ Tooling & Lab
       :link-type: url
       :link-alt: Read the pccx-lab design rationale
 
-      Why pccx-lab is one repo, not five. Module boundary rules
-      (``core/``, ``ui/``, ``uvm_bridge/``, ``ai_copilot/``).
+      Why pccx-lab is one repo, not five. Phase 1 split the monolith
+      into a 10-crate Cargo workspace (``core``, ``reports``,
+      ``verification``, ``authoring``, ``evolve``, ``remote``, ``lsp``,
+      ``uvm_bridge``, ``ai_copilot``, ``ui/src-tauri``).
 
    .. grid-item-card:: :octicon:`verified;1.2em;sd-mr-1` Formal model — Sail
       :link: docs/v002/Formal/index
