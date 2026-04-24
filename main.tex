@@ -2,11 +2,11 @@
 %  pccx v002 Instruction Set Architecture — Software Developer's Manual
 %
 %  Authoring entry point for the offline, signoff-ready PDF mirror of
-%  the v002 ISA.  Styled after the Intel 64 and IA-32 Architectures
-%  Software Developer's Manual (per-instruction reference blocks,
-%  bit-level layouts, Operation pseudocode, Flags / Exceptions) and
-%  the NVIDIA CUDA C Programming Guide (heavy TikZ architectural
-%  diagrams, memory hierarchy, execution model).
+%  the v002 ISA.  Styled after classical CPU software developer's
+%  manuals (per-instruction reference blocks, bit-level layouts,
+%  Operation pseudocode, Flags / Exceptions) and classical GPU
+%  programming reference manuals (heavy TikZ architectural diagrams,
+%  memory hierarchy, execution model).
 %
 %  Compile:  xelatex main.tex   (repeat 2x for TOC resolution)
 %  Build:    bash tools/build_isa_pdf.sh
@@ -83,10 +83,10 @@
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
 
-% ---------- Bit-level encoding diagrams (Intel-style) ----------
+% ---------- Bit-level encoding diagrams (reference-manual style) ----------
 \usepackage{bytefield}
 
-% ---------- Boxed instruction reference blocks (Intel SDM style) ----
+% ---------- Boxed instruction reference blocks (classical CPU reference-manual style) ----
 \usepackage[framemethod=TikZ]{mdframed}
 \usepackage{tcolorbox}
 \tcbuselibrary{skins,breakable}
@@ -129,7 +129,7 @@
     pdftitle   = {pccx v002 Instruction Set Architecture — Software Developer's Manual},
     pdfauthor  = {pccx Project},
     pdfsubject = {NPU Instruction Set Architecture Reference Manual},
-    pdfkeywords= {pccx, NPU, ISA, KV260, DSP48E2, systolic array, GEMM, GEMV, LLM, Transformer, CUDA, Intel SDM}
+    pdfkeywords= {pccx, NPU, ISA, KV260, DSP48E2, systolic array, GEMM, GEMV, LLM, Transformer, software developer manual}
 }
 
 % ---------- TOC styling ----------
@@ -229,7 +229,7 @@
 }
 \lstset{style=sv}
 
-% ---------- Intel-SDM-style Instruction Reference environment ----
+% ---------- Classical reference-manual Instruction Reference environment ----
 % \begin{InstructionRef}{MNEMONIC}{One-line description}
 %   ... body ...
 % \end{InstructionRef}
@@ -256,7 +256,7 @@
   after skip  = 10pt,
 }
 
-% ---------- Intel-style "sub-block" inside InstructionRef ----------
+% ---------- Reference-manual-style "sub-block" inside InstructionRef ----------
 \newcommand{\RefSection}[1]{%
   \par\medskip
   {\sffamily\bfseries\color{oceanblue}\normalsize\MakeUppercase{#1}}
@@ -310,7 +310,7 @@
 
 
 % ---------- TikZ common styles ----------
-% Intel-SDM / NVIDIA-CUDA minimalism: thin black borders, light fills, black arrows.
+% Classical reference-manual minimalism: thin black borders, light fills, black arrows.
 \tikzset{
   arr/.style          = {-Stealth, thin, draw=black},
   arrfat/.style       = {-{Stealth[length=2.5mm,width=2mm]}, line width=0.8pt, draw=black},
@@ -415,9 +415,10 @@ platform (Zynq UltraScale+ ZU5EV).
 The manual is organised as three conceptual volumes bound into a
 single book: Volume 1 describes the \textbf{basic architecture} of
 the NPU and its interaction with the host processing system; Volume 2
-is the per-instruction reference written in the classical Intel SDM
-format (Opcode table, Description, Operation pseudocode, Flags
-Affected, Exceptions); Volume 3 is the \textbf{system programming
+is the per-instruction reference written in the classical CPU
+reference-manual format (Opcode table, Description, Operation
+pseudocode, Flags Affected, Exceptions); Volume 3 is the
+\textbf{system programming
 guide} covering memory ordering, completion fences, and the host
 driver surface.
 
@@ -2671,9 +2672,9 @@ independent-clock mode for the PS~$\leftrightarrow$~PL crossing. \\
 \hline
 \endfirsthead
 v002 & 2026-04-21 &
-Initial Software Developer's Manual release.  Intel-SDM-style
-per-instruction reference blocks, bit-level Type A/B/C/D
-\texttt{bytefield} diagrams, CUDA-grade TikZ architectural
+Initial Software Developer's Manual release.  Classical
+reference-manual-style per-instruction reference blocks, bit-level
+Type A/B/C/D \texttt{bytefield} diagrams, print-quality TikZ architectural
 illustrations (system context, NPU top-level, memory hierarchy,
 URAM allocation, CDC FIFO, DSP48E2 datapath, systolic array, GEMV
 streaming, decode/dispatch, hazard tracker, async completion
@@ -2681,7 +2682,7 @@ sequence, CVO pipeline).  Numbers mirror \texttt{isa\_pkg.sv} in
 the RTL repo. \\
 \hline
 v002-r2 & 2026-04-22 &
-Intel-SDM polish pass.  Added wire-level AXI-HP read-handshake
+Reference-manual polish pass.  Added wire-level AXI-HP read-handshake
 timing diagram (Figure~\ref{fig:axi-timing}), GEMV 5-stage
 reduction tree (Figure~\ref{fig:gemv-tree}), fence-tracker state
 machine (Figure~\ref{fig:fence-fsm}), and a roofline performance

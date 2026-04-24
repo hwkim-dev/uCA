@@ -18,7 +18,7 @@
     </marker>
 
     <style><![CDATA[
-      /* NVIDIA CUDA / Intel-SDM style: self-contained printed figure.
+      /* Classical reference-manual style: self-contained printed figure.
          White canvas, black strokes, black text, soft pastel block
          fills.  Same appearance in Furo light and dark mode (the
          diagram is a fixed card, not theme-adaptive).  Palette is

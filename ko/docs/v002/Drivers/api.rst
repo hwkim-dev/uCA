@@ -11,8 +11,8 @@ v002 드라이버의 공개 C API 를 정리합니다. 구현은
 1. **HAL** (``uca_hal_*``) — AXI-Lite / AXI-HP 레지스터와 CMD_IN /
    STAT_OUT FIFO 에 직접 접근. 일반 애플리케이션은 이 계층을 직접
    호출하지 않는다.
-2. **Public API** (``uca_*``) — "CUDA 대응" 수준의 연산·메모리
-   프리미티브. 모든 호출이 64-bit VLIW 명령어를 조립해
+2. **Public API** (``uca_*``) — 익숙한 GPU-프로그래밍-모델 수준의
+   연산·메모리 프리미티브. 모든 호출이 64-bit VLIW 명령어를 조립해
    (:doc:`../ISA/encoding`) HAL 을 통해 발행한다.
 
 .. note::

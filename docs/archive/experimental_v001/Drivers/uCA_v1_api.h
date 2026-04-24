@@ -1,7 +1,7 @@
 // ===| uCA API (High-Level Driver Interface) |====================================
 // uCA: micro Compute Architecture — AI model acceleration API for FPGA NPU.
 //
-// This is the "CUDA equivalent" for the uCA NPU. Application code
+// This is the high-level GPU-programming-model surface for the uCA NPU. Application code
 // (sw/gemma3NE4B/ and future projects) should call only functions from
 // this layer — never touch the HAL directly.
 //

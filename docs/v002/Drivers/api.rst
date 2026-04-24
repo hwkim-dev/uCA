@@ -10,9 +10,10 @@ The stack is organized into two layers.
 1. **HAL** (``uca_hal_*``) — direct access to AXI-Lite / AXI-HP registers
    and the CMD_IN / STAT_OUT FIFOs. Applications should not call this
    layer directly.
-2. **Public API** (``uca_*``) — "CUDA-equivalent" compute/memory
-   primitives. Every call assembles a 64-bit VLIW instruction
-   (:doc:`../ISA/encoding`) and issues it through the HAL.
+2. **Public API** (``uca_*``) — a familiar GPU-programming-model
+   surface of compute/memory primitives. Every call assembles a 64-bit
+   VLIW instruction (:doc:`../ISA/encoding`) and issues it through
+   the HAL.
 
 .. note::
 

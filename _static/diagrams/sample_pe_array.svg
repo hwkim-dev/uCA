@@ -15,7 +15,7 @@
     </marker>
 
     <style><![CDATA[
-      /* Shared pccx palette — NVIDIA CUDA / Intel-SDM minimalism.
+      /* Shared pccx palette — classical reference-manual minimalism.
          Self-contained white canvas + fixed pastel block fills + black
          borders and text.  See CLAUDE.md §5.2. */
       text         { fill: #000000; font: 400 12px ui-sans-serif, system-ui, sans-serif; }

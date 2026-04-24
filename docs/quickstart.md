@@ -11,9 +11,8 @@ myst:
 # Quickstart
 
 The shortest path from "git clone" to "I'm looking at a pccx trace".
-Everything on this page is the **reproducer** the NVIDIA consultation
-report (§6.5) asked for — `docker compose up` lands you at a running
-profiler with a real capture loaded.
+Everything on this page is the **reproducer**: `docker compose up`
+lands you at a running profiler with a real capture loaded.
 
 ```{contents}
 :local:

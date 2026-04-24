@@ -107,7 +107,7 @@ from_xsim_log --log <xsim.log> --output <out.pccx>
 ## `pccx_golden_diff`
 
 후보 `.pccx` 트레이스를 JSONL 레퍼런스 프로파일과 비교하는 end-to-end
-정확성 게이트 (NVIDIA 리포트 §6.2 shape).
+정확성 게이트.
 
 ### 개요
 

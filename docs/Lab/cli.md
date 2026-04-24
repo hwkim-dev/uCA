@@ -108,8 +108,8 @@ Recognised patterns (emitted by the pccx-FPGA testbenches):
 
 ## `pccx_golden_diff`
 
-End-to-end correctness gate (NVIDIA-report §6.2 shape) that compares
-a candidate `.pccx` trace against a JSONL reference profile.
+End-to-end correctness gate that compares a candidate `.pccx`
+trace against a JSONL reference profile.
 
 ### Synopsis
 
