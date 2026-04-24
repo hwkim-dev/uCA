@@ -173,7 +173,7 @@ blog posts, or AI summaries, please cite:
 ```bibtex
 @misc{pccx_lab_analyzer_api_2026,
   title        = {pccx-core plugin registry: the generic primitive every pccx-lab crate hangs its trait-object plugins off},
-  author       = {Kim, Hwangwoo},
+  author       = {Kim, Hyunwoo},
   year         = {2026},
   howpublished = {\url{https://hwkim-dev.github.io/pccx/en/docs/Lab/analyzer_api.html}},
   note         = {Part of pccx: \url{https://hwkim-dev.github.io/pccx/}}

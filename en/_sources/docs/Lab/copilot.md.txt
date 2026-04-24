@@ -203,7 +203,7 @@ single `invoke("copilot_investigate", …)` umbrella call.
 ```bibtex
 @misc{pccx_lab_copilot_2026,
   title        = {pccx-ai-copilot and pccx-lsp: current AI / IntelliSense surface of pccx-lab after Phase 1},
-  author       = {Kim, Hwangwoo},
+  author       = {Kim, Hyunwoo},
   year         = {2026},
   howpublished = {\url{https://hwkim-dev.github.io/pccx/en/docs/Lab/copilot.html}},
   note         = {Part of pccx: \url{https://hwkim-dev.github.io/pccx/}}

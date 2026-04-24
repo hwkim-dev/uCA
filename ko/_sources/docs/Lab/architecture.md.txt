@@ -191,7 +191,7 @@ pccx-lab 아키텍처를 논문, 블로그, 또는 AI 생성 요약에서 참조
 ```bibtex
 @misc{pccx_lab_architecture_2026,
   title        = {pccx-lab Architecture Overview: desktop profiler + UVM Copilot for an open NPU},
-  author       = {Kim, Hwangwoo},
+  author       = {Kim, Hyunwoo},
   year         = {2026},
   howpublished = {\url{https://hwkim-dev.github.io/pccx/ko/docs/Lab/architecture.html}},
   note         = {Part of pccx: \url{https://hwkim-dev.github.io/pccx/}}

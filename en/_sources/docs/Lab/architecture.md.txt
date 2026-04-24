@@ -198,7 +198,7 @@ pccx site so others can find the reference implementation:
 ```bibtex
 @misc{pccx_lab_architecture_2026,
   title        = {pccx-lab Architecture Overview: desktop profiler + UVM Copilot for an open NPU},
-  author       = {Kim, Hwangwoo},
+  author       = {Kim, Hyunwoo},
   year         = {2026},
   howpublished = {\url{https://hwkim-dev.github.io/pccx/en/docs/Lab/architecture.html}},
   note         = {Part of pccx: \url{https://hwkim-dev.github.io/pccx/}}

@@ -120,7 +120,7 @@ Evidence
 
    @misc{pccx_evidence_2026,
      title        = {pccx Evidence: reproducible measurement log for an open W4A8 NPU},
-     author       = {Kim, Hwangwoo},
+     author       = {Kim, Hyunwoo},
      year         = {2026},
      howpublished = {\url{https://hwkim-dev.github.io/pccx/ko/docs/Evidence/index.html}},
      note         = {Tracks the "설계 → 검증된 시스템" closure plan.  Part of pccx: \url{https://hwkim-dev.github.io/pccx/}}

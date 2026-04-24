@@ -71,7 +71,7 @@ binary replaces the old `pccx_analyze --research-list` surface
 ```bibtex
 @misc{pccx_lab_research_2026,
   title        = {pccx-lab research lineage (placeholder): registry rebuild underway after Phase 1 module exodus},
-  author       = {Kim, Hwangwoo},
+  author       = {Kim, Hyunwoo},
   year         = {2026},
   howpublished = {\url{https://hwkim-dev.github.io/pccx/en/docs/Lab/research.html}},
   note         = {Part of pccx: \url{https://hwkim-dev.github.io/pccx/}}

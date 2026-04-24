@@ -16,6 +16,7 @@ Pre-RTL bottleneck detection, UVM co-simulation, and LLM-driven testbench genera
    design/phase3_remote_backend
    design/phase4_insane_reports
    design/phase5_alphaevolve
+   design/phase6_dev_docs_generation
    pccx-format
    verification-workflow
 

@@ -8,10 +8,10 @@ Developer Reference for pccx v001 Host API
 API Architecture Overview
 -------------------------
 
-The current API layer pursues an experience similar to CUDA. Developers
-can utilize the asynchronous hardware accelerator by simply making
-``pccx_*`` C function calls without needing to understand the 64-bit VLIW
-instruction assembly.
+The current API layer pursues the ergonomics of a familiar GPU
+programming model.  Developers can utilize the asynchronous hardware
+accelerator by simply making ``pccx_*`` C function calls without
+needing to understand the 64-bit VLIW instruction assembly.
 
 -  **Non-blocking (Asynchronous)**: All computation functions simply
    queue the instructions into the NPU FIFO via the HAL and return
