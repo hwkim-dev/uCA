@@ -210,11 +210,7 @@ python -m http.server --directory _build/html
 
 Licensed under the **[Apache License 2.0](LICENSE)**.
 
----
 
-See [`CLAUDE.md`](CLAUDE.md) for the full build & contribution guide.
-
----
 
 <div align="center">
 
