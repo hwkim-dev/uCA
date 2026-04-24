@@ -11,6 +11,11 @@ Pre-RTL bottleneck detection, UVM co-simulation, and LLM-driven testbench genera
    modules/overview
    modules/node-editor
    design/rationale
+   design/phase1_crate_split
+   design/phase2_intellisense
+   design/phase3_remote_backend
+   design/phase4_insane_reports
+   design/phase5_alphaevolve
    pccx-format
    verification-workflow
 

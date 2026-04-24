@@ -7,12 +7,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://hwkim-dev.github.io/pccx/docs/Lab/cli.html" />
 <meta property="og:site_name" content="pccx — Parallel Compute Core eXecutor" />
-<meta property="og:description" content="All Rust binaries live under src/core/src/bin/ and ship out of cargo build -p pccx-core. Release binaries land in target/release/. pccx_analyze: One-shot analysis engine — the canonical entry point..." />
+<meta property="og:description" content="Page in flux. Refreshed 2026-04-24 to match pccx-lab HEAD. The single pccx_analyze umbrella binary described in the pre-Phase-1 revision of this page was not re-landed when the workspace split move..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="https://hwkim-dev.github.io/pccx/_images/social_previews/summary_docs_Lab_cli_0d9059a1.png" />
-<meta property="og:image:alt" content="All Rust binaries live under src/core/src/bin/ and ship out of cargo build -p pccx-core. Release binaries land in target/release/. pccx_analyze: One-shot analysis engine — the canonical entry point..." />
-<meta name="description" content="All Rust binaries live under src/core/src/bin/ and ship out of cargo build -p pccx-core. Release binaries land in target/release/. pccx_analyze: One-shot analysis engine — the canonical entry point..." />
+<meta property="og:image" content="https://hwkim-dev.github.io/pccx/_images/social_previews/summary_docs_Lab_cli_48b233e7.png" />
+<meta property="og:image:alt" content="Page in flux. Refreshed 2026-04-24 to match pccx-lab HEAD. The single pccx_analyze umbrella binary described in the pre-Phase-1 revision of this page was not re-landed when the workspace split move..." />
+<meta name="description" content="Page in flux. Refreshed 2026-04-24 to match pccx-lab HEAD. The single pccx_analyze umbrella binary described in the pre-Phase-1 revision of this page was not re-landed when the workspace split move..." />
 <meta name="twitter:card" content="summary_large_image" />
 
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://hwkim-dev.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hwangwoo Kim","url":"https://hwkim-dev.github.io/hwkim-dev/"},"publisher":{"@type":"Person","name":"Hwangwoo Kim","url":"https://hwkim-dev.github.io/hwkim-dev/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"CLI Reference","name":"CLI Reference","url":"https://hwkim-dev.github.io/pccx/en/docs/Lab/cli.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://hwkim-dev.github.io/pccx/en/docs/Lab/cli.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://hwkim-dev.github.io/pccx/"},"author":{"@type":"Person","name":"Hwangwoo Kim","url":"https://hwkim-dev.github.io/hwkim-dev/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://hwkim-dev.github.io/pccx/"},"datePublished":"2026-04-24","dateModified":"2026-04-24","description":"pccx documentation page: CLI Reference. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://hwkim-dev.github.io/pccx/","author":"Hwangwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Analyzer API" href="analyzer_api.html"><link rel="prev" title="Architecture Overview" href="architecture.html">
@@ -457,25 +457,68 @@
         <article role="main" id="furo-main-content">
           <section class="tex2jax_ignore mathjax_ignore" id="cli-reference">
 <h1>CLI Reference<a class="headerlink" href="#cli-reference" title="Link to this heading">¶</a></h1>
-<p>All Rust binaries live under <code class="docutils literal notranslate"><span class="pre">src/core/src/bin/</span></code> and ship out of
-<code class="docutils literal notranslate"><span class="pre">cargo</span> <span class="pre">build</span> <span class="pre">-p</span> <span class="pre">pccx-core</span></code>.  Release binaries land in
-<code class="docutils literal notranslate"><span class="pre">target/release/</span></code>.</p>
-<section id="pccx-analyze">
-<h2><code class="docutils literal notranslate"><span class="pre">pccx_analyze</span></code><a class="headerlink" href="#pccx-analyze" title="Link to this heading">¶</a></h2>
-<p>One-shot analysis engine — the canonical entry point for CI
-pipelines and scripted regression runs.</p>
+<p><em>Page in flux.  Refreshed 2026-04-24 to match pccx-lab HEAD.</em></p>
+<p>The single <code class="docutils literal notranslate"><span class="pre">pccx_analyze</span></code> umbrella binary described in the
+pre-Phase-1 revision of this page was <strong>not re-landed</strong> when the
+workspace split moved code into <code class="docutils literal notranslate"><span class="pre">crates/</span></code>.  Today pccx-lab ships four
+smaller Rust binaries, spread across the crates that own each
+surface.  Each one covers a piece of what <code class="docutils literal notranslate"><span class="pre">pccx_analyze</span></code> used to
+multiplex; the rest (research-list export, analyzer-id explain,
+<code class="docutils literal notranslate"><span class="pre">--compare</span></code> regression gate, synth runner) awaits re-landing inside
+the appropriate crate.</p>
+<section id="binaries-distributed-across-crates">
+<h2>Binaries distributed across crates<a class="headerlink" href="#binaries-distributed-across-crates" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Binary</p></th>
+<th class="head"><p>Source crate</p></th>
+<th class="head"><p>Build command</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pccx_cli</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pccx-reports</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cargo</span> <span class="pre">build</span> <span class="pre">-p</span> <span class="pre">pccx-reports</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">generator</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pccx-core</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cargo</span> <span class="pre">build</span> <span class="pre">-p</span> <span class="pre">pccx-core</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">from_xsim_log</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pccx-core</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cargo</span> <span class="pre">build</span> <span class="pre">-p</span> <span class="pre">pccx-core</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pccx_golden_diff</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pccx-verification</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cargo</span> <span class="pre">build</span> <span class="pre">-p</span> <span class="pre">pccx-verification</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Release artefacts still land in the workspace-wide
+<code class="docutils literal notranslate"><span class="pre">target/release/</span></code> directory.</p>
+</section>
+<section id="pccx-cli">
+<h2><code class="docutils literal notranslate"><span class="pre">pccx_cli</span></code><a class="headerlink" href="#pccx-cli" title="Link to this heading">¶</a></h2>
+<p>Headless trace-inspection CLI — the surface any CI pipeline that only
+needs per-core utilisation, bottleneck windows, roofline verdicts, or
+a Markdown summary should target today.</p>
 <section id="synopsis">
 <h3>Synopsis<a class="headerlink" href="#synopsis" title="Link to this heading">¶</a></h3>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>pccx_analyze &lt;trace.pccx&gt; [--json | --markdown] [--synth UTIL TIMING]
-pccx_analyze --run-synth &lt;RTL_REPO&gt; [--target synth|impl] [--dry-run] [--parse-only]
-pccx_analyze --compare BASE.pccx CAND.pccx [--threshold-pct N] [--json]
-pccx_analyze --research-list [--json]
-pccx_analyze --explain &lt;analyzer_id&gt; [trace.pccx]
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>pccx_cli &lt;path/to/trace.pccx&gt;
+         [--util]
+         [--roofline]
+         [--bottleneck &lt;ratio&gt;]
+         [--windows &lt;cycles&gt;]
+         [--threshold &lt;ratio&gt;]
+         [--report-md]
+         [--source &lt;script&gt;]
 </pre></div>
 </div>
 </section>
-<section id="modes">
-<h3>Modes<a class="headerlink" href="#modes" title="Link to this heading">¶</a></h3>
+<section id="flag-reference">
+<h3>Flag reference<a class="headerlink" href="#flag-reference" title="Link to this heading">¶</a></h3>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
@@ -484,151 +527,120 @@ pccx_analyze --explain &lt;analyzer_id&gt; [trace.pccx]
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><em>(default)</em></p></td>
-<td><p>Pretty console summary — one line per analyzer plus short elaboration for bottlenecks / roofline bands.</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--util</span></code></p></td>
+<td><p>Print per-core MAC utilisation bar chart.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--json</span></code></p></td>
-<td><p>Adjacently-tagged JSON array of <code class="docutils literal notranslate"><span class="pre">AnalysisReport</span></code>.  Stable shape — safe to pipe to <code class="docutils literal notranslate"><span class="pre">jq</span></code> in CI.</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--roofline</span></code></p></td>
+<td><p>Print arithmetic intensity + compute/memory-bound verdict.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--markdown</span></code></p></td>
-<td><p>Emit the canonical <code class="docutils literal notranslate"><span class="pre">report::render_markdown</span></code> document.  Can be combined with <code class="docutils literal notranslate"><span class="pre">--synth</span></code> to include utilisation + timing tables.</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--bottleneck</span> <span class="pre">&lt;ratio&gt;</span></code></p></td>
+<td><p>Legacy per-event DMA hotspot filter (default <code class="docutils literal notranslate"><span class="pre">0.5</span></code>).</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--synth</span> <span class="pre">UTIL</span> <span class="pre">TIMING</span></code></p></td>
-<td><p>Load a pair of Vivado text reports and inline them into the Markdown output.</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--windows</span> <span class="pre">&lt;cycles&gt;</span></code></p></td>
+<td><p>Sliding-window size for the new bottleneck detector (default 256).</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--run-synth</span> <span class="pre">DIR</span></code></p></td>
-<td><p>Spawn Vivado against the RTL repo under <code class="docutils literal notranslate"><span class="pre">DIR/hw</span></code>.  Exits non-zero on any error.</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--threshold</span> <span class="pre">&lt;ratio&gt;</span></code></p></td>
+<td><p>Share-of-window threshold (default <code class="docutils literal notranslate"><span class="pre">0.5</span></code>).</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--target</span> <span class="pre">synth|impl</span></code></p></td>
-<td><p>The <code class="docutils literal notranslate"><span class="pre">vivado/build.sh</span></code> target to invoke (default: <code class="docutils literal notranslate"><span class="pre">synth</span></code>).</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--report-md</span></code></p></td>
+<td><p>Emit a <code class="docutils literal notranslate"><span class="pre">pccx-reports::render_markdown</span></code> summary to stdout.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--dry-run</span></code></p></td>
-<td><p>Print the command that would be run and exit.  No Vivado needed.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--parse-only</span></code></p></td>
-<td><p>Skip Vivado; parse the last run’s <code class="docutils literal notranslate"><span class="pre">hw/build/reports/</span></code> and return the numbers.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--compare</span> <span class="pre">B</span> <span class="pre">C</span></code></p></td>
-<td><p>Diff two <code class="docutils literal notranslate"><span class="pre">.pccx</span></code> captures; exits 1 on regression.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--threshold-pct</span> <span class="pre">N</span></code></p></td>
-<td><p>Regression threshold for <code class="docutils literal notranslate"><span class="pre">--compare</span></code> (default: 15).</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--research-list</span></code></p></td>
-<td><p>Print the research-lineage table (Markdown by default, JSON with <code class="docutils literal notranslate"><span class="pre">--json</span></code>).</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">--explain</span> <span class="pre">ID</span></code></p></td>
-<td><p>Render long-form doc (description + latest finding + arxiv citations) for a single analyzer id.</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">--source</span> <span class="pre">&lt;script&gt;</span></code></p></td>
+<td><p>Run a <code class="docutils literal notranslate"><span class="pre">pccx_tcl</span></code>-style batch script (headless mode).</p></td>
 </tr>
 </tbody>
 </table>
 </div>
+<p>There are no <code class="docutils literal notranslate"><span class="pre">--json</span></code>, <code class="docutils literal notranslate"><span class="pre">--compare</span></code>, <code class="docutils literal notranslate"><span class="pre">--research-list</span></code>, <code class="docutils literal notranslate"><span class="pre">--explain</span></code>,
+or <code class="docutils literal notranslate"><span class="pre">--run-synth</span></code> modes today.  The previous documentation described
+those flags as part of a unified <code class="docutils literal notranslate"><span class="pre">pccx_analyze</span></code> binary that was
+deferred — they are tracked for re-landing but are not callable in the
+current tree.</p>
 </section>
-<section id="example-pretty-trace-analysis">
-<h3>Example — pretty trace analysis<a class="headerlink" href="#example-pretty-trace-analysis" title="Link to this heading">¶</a></h3>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pccx_analyze<span class="w"> </span>./dummy_trace.pccx
-<span class="go">═══════════════════════════════════════════════════════════════════════</span>
-<span class="go">  pccx_analyze · 16008 events over 5423940 cycles</span>
-<span class="go">═══════════════════════════════════════════════════════════════════════</span>
-<span class="go">   [roofline] AI 0.69 ops/byte · 321.4 GOPS (0% of peak) · memory-bound</span>
-<span class="go">   [roofline_hier] dwell 4 tier: Register=851200cy, URAM L1=52M cy, …</span>
-<span class="go">   [bottleneck] 19179 windows · DmaRead×12787, DmaWrite×6392</span>
-<span class="go">    · DmaRead @ [474624..474880] share=100%</span>
-<span class="go">   [dma_util] DMA SATURATED: read 46% + write 46% pinned — compute only 4%</span>
-<span class="go">   [stall_histogram] 4 stalls · mean 1472 cy · max 5000 cy · 50% long-tail</span>
-<span class="go">   [per_core_throughput] 4 cores active · mean 6.2% · σ=3.5pp</span>
-<span class="go">   [kv_cache_pressure] HBM-SPILL: decode 512 tokens → 60000 KB KV …</span>
-<span class="go">   [phase_classifier] mixed · prefill 22% · decode 61% (512 tok) · idle 17%</span>
+<section id="example-pretty-trace-inspection">
+<h3>Example — pretty trace inspection<a class="headerlink" href="#example-pretty-trace-inspection" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pccx_cli<span class="w"> </span>./dummy_trace.pccx<span class="w"> </span>--util<span class="w"> </span>--roofline<span class="w"> </span>--report-md
 </pre></div>
 </div>
+<p>The <code class="docutils literal notranslate"><span class="pre">--report-md</span></code> output is the same Markdown document
+<code class="docutils literal notranslate"><span class="pre">pccx-reports::render_markdown</span></code> produces; consumers that just want the
+Rust API should skip the binary and call it directly.</p>
 </section>
-<section id="example-ci-ready-json">
-<h3>Example — CI-ready JSON<a class="headerlink" href="#example-ci-ready-json" title="Link to this heading">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pccx_analyze<span class="w"> </span>trace.pccx<span class="w"> </span>--json<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.[] | select(.analyzer_id == &quot;bottleneck&quot;) | .summary&#39;</span>
+</section>
+<section id="generator">
+<h2><code class="docutils literal notranslate"><span class="pre">generator</span></code><a class="headerlink" href="#generator" title="Link to this heading">¶</a></h2>
+<p>Generates a demo <code class="docutils literal notranslate"><span class="pre">.pccx</span></code> trace for development and testing.  Used by
+the UI’s first-run flow and by CI smoke tests.</p>
+<section id="id1">
+<h3>Synopsis<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>generator [output_path] [tiles] [cores]
 </pre></div>
 </div>
+<p>Defaults: <code class="docutils literal notranslate"><span class="pre">dummy_trace.pccx</span></code>, <code class="docutils literal notranslate"><span class="pre">tiles=100</span></code>, <code class="docutils literal notranslate"><span class="pre">cores=32</span></code>.  Constructs an
+<code class="docutils literal notranslate"><span class="pre">NpuTrace</span></code> via <code class="docutils literal notranslate"><span class="pre">pccx_core::simulator::generate_realistic_trace</span></code>,
+wraps it in a <code class="docutils literal notranslate"><span class="pre">PccxFile</span></code> with the current <code class="docutils literal notranslate"><span class="pre">HardwareModel::pccx_reference()</span></code>
+metadata, and writes it to disk.</p>
 </section>
-<section id="example-vivado-synthesis-pipeline">
-<h3>Example — Vivado synthesis pipeline<a class="headerlink" href="#example-vivado-synthesis-pipeline" title="Link to this heading">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Smoke-test the flow without actually spawning Vivado.</span>
-pccx_analyze<span class="w"> </span>--run-synth<span class="w"> </span>~/rtl/pccx-FPGA-NPU-LLM-kv260<span class="w"> </span>--dry-run
-
-<span class="c1"># Parse the last run&#39;s reports (useful when Vivado was launched manually).</span>
-pccx_analyze<span class="w"> </span>--run-synth<span class="w"> </span>~/rtl/pccx-FPGA-NPU-LLM-kv260<span class="w"> </span>--parse-only
-<span class="c1"># ───────────────────────────────────────────────────────────</span>
-<span class="c1"># pccx_analyze · synth (parse-only mode)</span>
-<span class="c1"># ───────────────────────────────────────────────────────────</span>
-<span class="c1"># utilisation: LUT=  5611 DSP=   4 URAM= 56 BRAM36= 80</span>
-<span class="c1"># timing     : WNS=-9.792 ns · worst clk core_clk · (NOT met)</span>
-
-<span class="c1"># Run the real thing — spawns vivado, streams stdout, parses reports.</span>
-pccx_analyze<span class="w"> </span>--run-synth<span class="w"> </span>~/rtl/pccx-FPGA-NPU-LLM-kv260<span class="w"> </span>--target<span class="w"> </span>impl
-</pre></div>
-</div>
-</section>
-<section id="example-regression-gate">
-<h3>Example — regression gate<a class="headerlink" href="#example-regression-gate" title="Link to this heading">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fail CI if the candidate capture regresses &gt; 15 % on any metric.</span>
-pccx_analyze<span class="w"> </span>--compare<span class="w"> </span>baseline.pccx<span class="w"> </span>candidate.pccx<span class="w"> </span>--threshold-pct<span class="w"> </span><span class="m">15</span>
-</pre></div>
-</div>
-</section>
-<section id="example-research-lineage">
-<h3>Example — research lineage<a class="headerlink" href="#example-research-lineage" title="Link to this heading">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Regenerate the RESEARCH.md page from the canonical registry.</span>
-pccx_analyze<span class="w"> </span>--research-list<span class="w"> </span>&gt;<span class="w"> </span>docs/Lab/research.md
-
-<span class="c1"># Explain what drives the kv_cache_pressure analyzer.</span>
-pccx_analyze<span class="w"> </span>--explain<span class="w"> </span>kv_cache_pressure
-</pre></div>
-</div>
-</section>
-<section id="exit-codes">
-<h3>Exit codes<a class="headerlink" href="#exit-codes" title="Link to this heading">¶</a></h3>
-<div class="table-wrapper colwidths-auto docutils container">
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>Code</p></th>
-<th class="head"><p>Meaning</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>Success.  Non-empty trace, analyzers ran, Vivado (if invoked) exited clean.</p></td>
-</tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>Runtime failure — trace parse error, Vivado ERROR line, JSON encode failure, regression detected.</p></td>
-</tr>
-<tr class="row-even"><td><p>2</p></td>
-<td><p>Bad invocation — missing argument, unknown flag.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="environment">
-<h3>Environment<a class="headerlink" href="#environment" title="Link to this heading">¶</a></h3>
-<p>None required.  <code class="docutils literal notranslate"><span class="pre">--run-synth</span></code> picks up <code class="docutils literal notranslate"><span class="pre">VIVADO_HOME</span></code> if set, but the
-wrapper script at <code class="docutils literal notranslate"><span class="pre">hw/vivado/build.sh</span></code> handles the actual PATH setup.</p>
-</section>
-</section>
-<section id="pccx-cli">
-<h2><code class="docutils literal notranslate"><span class="pre">pccx_cli</span></code><a class="headerlink" href="#pccx-cli" title="Link to this heading">¶</a></h2>
-<p>Original interactive / Vivado-shaped CLI.  Kept for the headless TCL
-script mode used by some Vivado batch pipelines.  <strong>Prefer
-<code class="docutils literal notranslate"><span class="pre">pccx_analyze</span></code> for new workflows</strong> — it has structured JSON output
-and machine-readable exit codes.</p>
 </section>
 <section id="from-xsim-log">
 <h2><code class="docutils literal notranslate"><span class="pre">from_xsim_log</span></code><a class="headerlink" href="#from-xsim-log" title="Link to this heading">¶</a></h2>
-<p>Converts an <code class="docutils literal notranslate"><span class="pre">xsim</span></code> testbench stdout stream into a <code class="docutils literal notranslate"><span class="pre">.pccx</span></code> trace.
-Invoked automatically by <code class="docutils literal notranslate"><span class="pre">hw/sim/run_verification.sh</span></code>; not normally
-run by hand.</p>
+<p>Converts a Xilinx <code class="docutils literal notranslate"><span class="pre">xsim</span></code> simulation log into a <code class="docutils literal notranslate"><span class="pre">.pccx</span></code> trace the UI
+can load.  Invoked automatically by <code class="docutils literal notranslate"><span class="pre">hw/sim/run_verification.sh</span></code> in
+the RTL repo; not normally run by hand.</p>
+<section id="id2">
+<h3>Synopsis<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>from_xsim_log --log &lt;xsim.log&gt; --output &lt;out.pccx&gt;
+              [--core-id &lt;u32&gt;] [--testbench &lt;name&gt;]
+</pre></div>
+</div>
+<p>Recognised patterns (emitted by the pccx-FPGA testbenches):</p>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Log pattern</p></th>
+<th class="head"><p>Emitted events</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">PASS:</span> <span class="pre">&lt;N&gt;</span> <span class="pre">cycles,</span> <span class="pre">...</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">×</span> <span class="pre">MAC_COMPUTE</span></code> on <code class="docutils literal notranslate"><span class="pre">--core-id</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">FAIL:</span> <span class="pre">&lt;E&gt;</span> <span class="pre">mismatches</span> <span class="pre">over</span> <span class="pre">&lt;N&gt;</span> <span class="pre">cycles.</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">×</span> <span class="pre">MAC_COMPUTE</span></code> + <code class="docutils literal notranslate"><span class="pre">E</span> <span class="pre">×</span> <span class="pre">SYSTOLIC_STALL</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </section>
-<section id="board-bringup-scripts">
-<h2>Board bringup scripts<a class="headerlink" href="#board-bringup-scripts" title="Link to this heading">¶</a></h2>
-<p>Under <code class="docutils literal notranslate"><span class="pre">pccx-FPGA-NPU-LLM-kv260/scripts/board/</span></code>:</p>
+</section>
+<section id="pccx-golden-diff">
+<h2><code class="docutils literal notranslate"><span class="pre">pccx_golden_diff</span></code><a class="headerlink" href="#pccx-golden-diff" title="Link to this heading">¶</a></h2>
+<p>End-to-end correctness gate (NVIDIA-report §6.2 shape) that compares
+a candidate <code class="docutils literal notranslate"><span class="pre">.pccx</span></code> trace against a JSONL reference profile.</p>
+<section id="id3">
+<h3>Synopsis<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>pccx_golden_diff --emit-profile &lt;trace.pccx&gt; [--tolerance-pct N] &gt; ref.jsonl
+pccx_golden_diff --check        ref.jsonl &lt;trace.pccx&gt; [--json]
+</pre></div>
+</div>
+<p>Two modes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--emit-profile</span></code> — self-calibration.  Loads a known-good trace,
+buckets it by <code class="docutils literal notranslate"><span class="pre">API_CALL</span></code> boundary, and writes a JSONL reference
+with observed counts + configurable tolerance.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--check</span></code> — regression gate.  Loads a reference JSONL + candidate
+trace, runs <code class="docutils literal notranslate"><span class="pre">golden_diff::diff</span></code>, prints a one-line verdict + per-step
+metric table, exits 1 if any step drifts outside its tolerance.</p></li>
+</ul>
+<p>Tolerances live on the reference rows so the PyTorch-side reference
+pipeline (forthcoming) controls strictness without flag explosion on
+the pccx-lab side.</p>
+</section>
+</section>
+<section id="board-bringup-scripts-rtl-repo">
+<h2>Board bringup scripts (RTL repo)<a class="headerlink" href="#board-bringup-scripts-rtl-repo" title="Link to this heading">¶</a></h2>
+<p>Under <code class="docutils literal notranslate"><span class="pre">pccx-FPGA-NPU-LLM-kv260/scripts/board/</span></code> — independent of
+pccx-lab, listed here for convenience:</p>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
@@ -638,30 +650,49 @@ run by hand.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">health_check.sh</span></code></p></td>
-<td><p>SSH reachability + kernel + fpga_manager + memory free</p></td>
+<td><p>SSH reachability + kernel + fpga_manager + free RAM.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">load_bitstream.sh</span></code></p></td>
-<td><p>scp .bit → <code class="docutils literal notranslate"><span class="pre">/lib/firmware/</span></code> → program PL</p></td>
+<td><p>scp .bit to <code class="docutils literal notranslate"><span class="pre">/lib/firmware/</span></code>, then program PL.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">run_inference.sh</span></code></p></td>
-<td><p>Run <code class="docutils literal notranslate"><span class="pre">pccx_host</span></code> on board, optionally emit a trace</p></td>
+<td><p>Run <code class="docutils literal notranslate"><span class="pre">pccx_host</span></code> on board, optionally emit a trace.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">capture_trace.sh</span></code></p></td>
-<td><p>Pull a .pccx from the board back to host</p></td>
+<td><p>Pull a <code class="docutils literal notranslate"><span class="pre">.pccx</span></code> from the board back to the host.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bringup.sh</span></code></p></td>
-<td><p>Orchestrates all four in sequence</p></td>
+<td><p>Orchestrates the above four in sequence.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </section>
+<section id="surfaces-not-yet-re-landed">
+<h2>Surfaces not yet re-landed<a class="headerlink" href="#surfaces-not-yet-re-landed" title="Link to this heading">¶</a></h2>
+<p>Tracked for future re-landing in whichever crate makes the most sense
+(likely a combination of <code class="docutils literal notranslate"><span class="pre">pccx-reports</span></code> and a new analytics crate):</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--json</span></code> adjacently-tagged structured output.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--compare</span> <span class="pre">BASE</span> <span class="pre">CAND</span></code> regression gate with <code class="docutils literal notranslate"><span class="pre">--threshold-pct</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--run-synth</span></code>, <code class="docutils literal notranslate"><span class="pre">--dry-run</span></code>, <code class="docutils literal notranslate"><span class="pre">--parse-only</span></code> Vivado wrapper
+(the RTL repo’s <code class="docutils literal notranslate"><span class="pre">hw/vivado/build.sh</span></code> still works standalone).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--research-list</span></code> citation-registry exporter (see
+<a class="reference internal" href="research.html"><span class="std std-doc">research lineage</span></a> for why this is pending).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--explain</span> <span class="pre">&lt;id&gt;</span></code> long-form analyzer / strategy documentation.</p></li>
+</ul>
+</section>
+<section id="exit-codes">
+<h2>Exit codes<a class="headerlink" href="#exit-codes" title="Link to this heading">¶</a></h2>
+<p>The four binaries follow the conventional Rust shape: <code class="docutils literal notranslate"><span class="pre">0</span></code> on success,
+non-zero on runtime failure.  <code class="docutils literal notranslate"><span class="pre">pccx_golden_diff</span> <span class="pre">--check</span></code> exits <code class="docutils literal notranslate"><span class="pre">1</span></code>
+when any row drifts outside its tolerance — the canonical CI regression
+gate for now.</p>
+</section>
 <section id="cite-this-page">
 <h2>Cite this page<a class="headerlink" href="#cite-this-page" title="Link to this heading">¶</a></h2>
-<p>When documenting a pipeline that calls <code class="docutils literal notranslate"><span class="pre">pccx_analyze</span></code> — whether in
-a paper, internal report, or AI-generated walkthrough — please cite:</p>
 <div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@misc</span><span class="p">{</span><span class="nl">pccx_lab_cli_2026</span><span class="p">,</span>
-<span class="w">  </span><span class="na">title</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="s">{pccx\_analyze: a CI-friendly CLI for open-NPU trace analysis and Vivado synthesis gating}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">title</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="s">{pccx-lab command-line binaries after the Phase 1 workspace split: pccx\_cli, generator, from\_xsim\_log, pccx\_golden\_diff}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">author</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{Kim, Hwangwoo}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">year</span><span class="w">         </span><span class="p">=</span><span class="w"> </span><span class="s">{2026}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">howpublished</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{\url{https://hwkim-dev.github.io/pccx/en/docs/Lab/cli.html}}</span><span class="p">,</span>
@@ -669,9 +700,8 @@ a paper, internal report, or AI-generated walkthrough — please cite:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">pccx_analyze</span></code> is the canonical CLI entry point for the pccx
-reference implementation documented at
-<a class="reference external" href="https://hwkim-dev.github.io/pccx/">https://hwkim-dev.github.io/pccx/</a>.</p>
+<p>Each binary’s source lives under its owning crate at
+<a class="reference external" href="https://github.com/hwkim-dev/pccx-lab">https://github.com/hwkim-dev/pccx-lab</a>.</p>
 </section>
 </section>
 
@@ -743,21 +773,28 @@ reference implementation documented at
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">CLI Reference</a><ul>
-<li><a class="reference internal" href="#pccx-analyze"><code class="docutils literal notranslate"><span class="pre">pccx_analyze</span></code></a><ul>
+<li><a class="reference internal" href="#binaries-distributed-across-crates">Binaries distributed across crates</a></li>
+<li><a class="reference internal" href="#pccx-cli"><code class="docutils literal notranslate"><span class="pre">pccx_cli</span></code></a><ul>
 <li><a class="reference internal" href="#synopsis">Synopsis</a></li>
-<li><a class="reference internal" href="#modes">Modes</a></li>
-<li><a class="reference internal" href="#example-pretty-trace-analysis">Example — pretty trace analysis</a></li>
-<li><a class="reference internal" href="#example-ci-ready-json">Example — CI-ready JSON</a></li>
-<li><a class="reference internal" href="#example-vivado-synthesis-pipeline">Example — Vivado synthesis pipeline</a></li>
-<li><a class="reference internal" href="#example-regression-gate">Example — regression gate</a></li>
-<li><a class="reference internal" href="#example-research-lineage">Example — research lineage</a></li>
-<li><a class="reference internal" href="#exit-codes">Exit codes</a></li>
-<li><a class="reference internal" href="#environment">Environment</a></li>
+<li><a class="reference internal" href="#flag-reference">Flag reference</a></li>
+<li><a class="reference internal" href="#example-pretty-trace-inspection">Example — pretty trace inspection</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#pccx-cli"><code class="docutils literal notranslate"><span class="pre">pccx_cli</span></code></a></li>
-<li><a class="reference internal" href="#from-xsim-log"><code class="docutils literal notranslate"><span class="pre">from_xsim_log</span></code></a></li>
-<li><a class="reference internal" href="#board-bringup-scripts">Board bringup scripts</a></li>
+<li><a class="reference internal" href="#generator"><code class="docutils literal notranslate"><span class="pre">generator</span></code></a><ul>
+<li><a class="reference internal" href="#id1">Synopsis</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#from-xsim-log"><code class="docutils literal notranslate"><span class="pre">from_xsim_log</span></code></a><ul>
+<li><a class="reference internal" href="#id2">Synopsis</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pccx-golden-diff"><code class="docutils literal notranslate"><span class="pre">pccx_golden_diff</span></code></a><ul>
+<li><a class="reference internal" href="#id3">Synopsis</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#board-bringup-scripts-rtl-repo">Board bringup scripts (RTL repo)</a></li>
+<li><a class="reference internal" href="#surfaces-not-yet-re-landed">Surfaces not yet re-landed</a></li>
+<li><a class="reference internal" href="#exit-codes">Exit codes</a></li>
 <li><a class="reference internal" href="#cite-this-page">Cite this page</a></li>
 </ul>
 </li>

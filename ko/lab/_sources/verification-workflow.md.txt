@@ -104,7 +104,7 @@ $display("FAIL: %0d mismatches over %0d cycles.", errors, N_CYCLES);
 
 ## End-to-end 테스트
 
-`src/ui/e2e/` pytest suite 는 파이프라인 각 단계를 커버:
+`ui/e2e/` pytest suite 는 파이프라인 각 단계를 커버:
 
 | 테스트 | 검증 내용 |
 |--------|-----------|
@@ -116,5 +116,5 @@ $display("FAIL: %0d mismatches over %0d cycles.", errors, N_CYCLES);
 실행:
 
 ```bash
-cd src/ui/e2e && .venv/bin/pytest -v
+cd ui/e2e && .venv/bin/pytest -v
 ```

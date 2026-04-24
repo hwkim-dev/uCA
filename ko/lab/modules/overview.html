@@ -243,44 +243,46 @@
         <article role="main" id="furo-main-content">
           <section id="id1">
 <h1>모듈 개요<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">pccx-lab</span></code> 은 Tauri 2 데스크톱 앱으로, 엄격히 분리된 4개의 Rust /
-TypeScript 모듈을 하나의 <strong>pccx</strong> NPU 검증·프로파일링 IDE 로 묶어줍니다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">pccx-lab</span></code> 은 <strong>pccx</strong> NPU 아키텍처의 검증·프로파일링 Tauri 2 데스크톱
+앱입니다.  Phase 1 에서 원래 단일 덩어리였던 코어를 <code class="docutils literal notranslate"><span class="pre">crates/</span></code> 하위의
+9 개 집중형 Rust crate 와 최상위 React <code class="docutils literal notranslate"><span class="pre">ui/</span></code> 트리로 분리했습니다.
+각 crate 를 열거하는 대신 본 개요는 네 개의 개념 레이어로 묶어
+보여줍니다 — 전체 목록은 <a class="reference internal" href="../design/rationale.html"><span class="std std-doc">design/rationale</span></a>,
+의존성 그래프는 <a class="reference internal" href="#../design/phase1_crate_split.md"><span class="xref myst">design/phase1_crate_split</span></a>
+을 참고하십시오 (후자는 영어 전용).</p>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>모듈</p></th>
-<th class="head"><p>언어</p></th>
-<th class="head"><p>의존</p></th>
+<tr class="row-odd"><th class="head"><p>레이어</p></th>
+<th class="head"><p>crate</p></th>
 <th class="head"><p>역할</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">core/</span></code></p></td>
-<td><p>Rust</p></td>
-<td><p>—</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">.pccx</span></code> 포맷, 트레이스 분석, roofline / bottleneck / synth-report 파서</p></td>
+<tr class="row-even"><td><p>코어</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pccx-core</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.pccx</span></code> 포맷, 트레이스 파싱, 하드웨어 모델, roofline / bottleneck / synth-report 파서</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ui/</span></code></p></td>
-<td><p>TypeScript (React + Tauri)</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">core/</span></code> (IPC 경유)</p></td>
-<td><p>쉘, 시각화, 리포트 대시보드</p></td>
+<tr class="row-odd"><td><p>파생</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pccx-reports</span></code>, <code class="docutils literal notranslate"><span class="pre">pccx-verification</span></code>, <code class="docutils literal notranslate"><span class="pre">pccx-authoring</span></code>, <code class="docutils literal notranslate"><span class="pre">pccx-evolve</span></code></p></td>
+<td><p>코어 표면을 소비하는 특화 생산자 (리포트, CI 게이트, ISA/API TOML 컴파일러, EAGLE 계열 프리미티브)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">uvm_bridge/</span></code></p></td>
-<td><p>Rust + DPI-C</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">core/</span></code></p></td>
-<td><p>SystemVerilog / UVM ↔ <code class="docutils literal notranslate"><span class="pre">core/</span></code> 경계</p></td>
+<tr class="row-even"><td><p>IDE · 서비스</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pccx-ide</span></code> (Tauri 쉘), <code class="docutils literal notranslate"><span class="pre">pccx-lsp</span></code> (IntelliSense façade), <code class="docutils literal notranslate"><span class="pre">pccx-remote</span></code> (Phase 3 데몬 스캐폴드), <code class="docutils literal notranslate"><span class="pre">ui/</span></code> (React + Vite)</p></td>
+<td><p>경험 표면과, 그 위에 꽂히는 네트워크 / 언어 서버 레인</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ai_copilot/</span></code></p></td>
-<td><p>Rust</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">core/</span></code> 트레이스 타입만</p></td>
-<td><p>LLM + UVM-전략 생성기 래퍼</p></td>
+<tr class="row-odd"><td><p>브릿지</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pccx-uvm-bridge</span></code>, <code class="docutils literal notranslate"><span class="pre">pccx-ai-copilot</span></code></p></td>
+<td><p>비-Rust 경계: DPI-C 로 오가는 SystemVerilog/UVM, LLM 호출 래퍼</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>의존성은 <strong>내부 방향으로만</strong> 흐릅니다. <code class="docutils literal notranslate"><span class="pre">core/</span></code> 는 UI / 프레임워크
-크레이트를 절대 import 하지 않고, <code class="docutils literal notranslate"><span class="pre">ui/</span></code> 는 <code class="docutils literal notranslate"><span class="pre">core/</span></code> 의 공개 API 를
-Tauri 커맨드 브릿지 경유로만 사용합니다.</p>
+<p>의존성은 <strong>안쪽으로만</strong> 흐릅니다 — 모든 비-코어 crate 는 <code class="docutils literal notranslate"><span class="pre">pccx-core</span></code>
+에 의존(전이적으로 아무것도 없음)하고, 어느 crate 도 <code class="docutils literal notranslate"><span class="pre">pccx-ide</span></code> 또는
+<code class="docutils literal notranslate"><span class="pre">pccx-remote</span></code> 에 의존하지 않습니다 (둘 다 터미널 바이너리).
+<code class="docutils literal notranslate"><span class="pre">pccx-core</span></code> 는 UI / 프레임워크 crate 를 import 해선 안 되며, <code class="docutils literal notranslate"><span class="pre">ui/</span></code> 는
+<code class="docutils literal notranslate"><span class="pre">pccx-ide</span></code> 와 Tauri IPC 브릿지로만 통신합니다.</p>
 <section id="id2">
 <h2>쉘 한눈에<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
 <p>기본 레이아웃은 모던 EDA IDE (VTune / Nsight 스타일) 를 모방합니다.

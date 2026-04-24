@@ -201,6 +201,11 @@
 <li class="toctree-l1"><a class="reference internal" href="modules/overview.html">Module Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules/node-editor.html">Node Editor</a></li>
 <li class="toctree-l1"><a class="reference internal" href="design/rationale.html">Design Rationale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design/phase1_crate_split.html">Phase 1 — Workspace / Crate Split Proposal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design/phase2_intellisense.html">Phase 2 — IntelliSense-Level Intelligence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design/phase3_remote_backend.html">Phase 3 — Secure Remote Backend</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design/phase4_insane_reports.html">Phase 4 — Insane-Level Reports &amp; Concept-to-RTL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design/phase5_alphaevolve.html">Phase 5 — AlphaEvolve → OpenEvolve</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pccx-format.html">.pccx File Format Specification</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Verification Workflow</a></li>
 </ul>
@@ -396,7 +401,7 @@ endpoints / timing-met verdict on the worst clock.</p></li>
 </section>
 <section id="end-to-end-testing">
 <h2>End-to-end testing<a class="headerlink" href="#end-to-end-testing" title="Link to this heading">¶</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">src/ui/e2e/</span></code> pytest suite covers every step of the pipeline:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">ui/e2e/</span></code> pytest suite covers every step of the pipeline:</p>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
@@ -421,7 +426,7 @@ endpoints / timing-met verdict on the worst clock.</p></li>
 </table>
 </div>
 <p>Run with:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>src/ui/e2e<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>.venv/bin/pytest<span class="w"> </span>-v
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>ui/e2e<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>.venv/bin/pytest<span class="w"> </span>-v
 </pre></div>
 </div>
 </section>

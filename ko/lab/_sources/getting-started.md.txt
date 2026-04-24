@@ -18,7 +18,7 @@
 ## 1 단계 — pccx-lab 실행
 
 ```bash
-cd src/ui
+cd ui
 npm install            # 최초 1 회
 npx tauri dev
 ```

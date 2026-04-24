@@ -7,12 +7,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://hwkim-dev.github.io/pccx/docs/Lab/copilot.html" />
 <meta property="og:site_name" content="pccx — Parallel Compute Core eXecutor" />
-<meta property="og:description" content="Copilot 구조체는 pccx-lab 의 모든 AI 구동 워크플로우의 canonical 진입점이다. 다음을 래핑한다: 현재 로딩된 NpuTrace 에 대한 선택적 참조, pccx KV260 레퍼런스 HardwareModel, pccx-core 의 전체 TraceAnalyzer 레지스트리, pccx-ai-copilot::uvm 의 UvmStrategy..." />
+<meta property="og:description" content="페이지 과도기 상태. pccx-lab HEAD 기준 2026-04-24 재정비. Phase 1 이전의 Copilot 구조체 ( investigate(), investigate_summary(), explain(), rank_by_severity(), suggest_fix(), generate_report()) 는 폐기되었다. 오늘 pccx-ai-cop..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="https://hwkim-dev.github.io/pccx/_images/social_previews/summary_docs_Lab_copilot_33d17f5a.png" />
-<meta property="og:image:alt" content="Copilot 구조체는 pccx-lab 의 모든 AI 구동 워크플로우의 canonical 진입점이다. 다음을 래핑한다: 현재 로딩된 NpuTrace 에 대한 선택적 참조, pccx KV260 레퍼런스 HardwareModel, pccx-core 의 전체 TraceAnalyzer 레지스트리, pccx-ai-copilot::uvm 의 UvmStrategy..." />
-<meta name="description" content="Copilot 구조체는 pccx-lab 의 모든 AI 구동 워크플로우의 canonical 진입점이다. 다음을 래핑한다: 현재 로딩된 NpuTrace 에 대한 선택적 참조, pccx KV260 레퍼런스 HardwareModel, pccx-core 의 전체 TraceAnalyzer 레지스트리, pccx-ai-copilot::uvm 의 UvmStrategy..." />
+<meta property="og:image" content="https://hwkim-dev.github.io/pccx/_images/social_previews/summary_docs_Lab_copilot_4435125e.png" />
+<meta property="og:image:alt" content="페이지 과도기 상태. pccx-lab HEAD 기준 2026-04-24 재정비. Phase 1 이전의 Copilot 구조체 ( investigate(), investigate_summary(), explain(), rank_by_severity(), suggest_fix(), generate_report()) 는 폐기되었다. 오늘 pccx-ai-cop..." />
+<meta name="description" content="페이지 과도기 상태. pccx-lab HEAD 기준 2026-04-24 재정비. Phase 1 이전의 Copilot 구조체 ( investigate(), investigate_summary(), explain(), rank_by_severity(), suggest_fix(), generate_report()) 는 폐기되었다. 오늘 pccx-ai-cop..." />
 <meta name="twitter:card" content="summary_large_image" />
 
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://hwkim-dev.github.io/pccx/","inLanguage":["ko","en","ko"],"author":{"@type":"Person","name":"Hwangwoo Kim","url":"https://hwkim-dev.github.io/hwkim-dev/"},"publisher":{"@type":"Person","name":"Hwangwoo Kim","url":"https://hwkim-dev.github.io/hwkim-dev/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"Copilot API","name":"Copilot API","url":"https://hwkim-dev.github.io/pccx/ko/docs/Lab/copilot.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://hwkim-dev.github.io/pccx/ko/docs/Lab/copilot.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://hwkim-dev.github.io/pccx/"},"author":{"@type":"Person","name":"Hwangwoo Kim","url":"https://hwkim-dev.github.io/hwkim-dev/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://hwkim-dev.github.io/pccx/"},"datePublished":"2026-04-24","dateModified":"2026-04-24","description":"pccx documentation page: Copilot API. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"ko","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://hwkim-dev.github.io/pccx/","author":"Hwangwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="색인" href="../../genindex.html"><link rel="search" title="검색" href="../../search.html"><link rel="next" title="pccx-lab 연구 계보" href="research.html"><link rel="prev" title="분석기 API" href="analyzer_api.html">
@@ -457,204 +457,208 @@
         <article role="main" id="furo-main-content">
           <section class="tex2jax_ignore mathjax_ignore" id="copilot-api">
 <h1>Copilot API<a class="headerlink" href="#copilot-api" title="Link to this heading">¶</a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">Copilot</span></code> 구조체는 pccx-lab 의 모든 AI 구동 워크플로우의 canonical
-진입점이다. 다음을 래핑한다:</p>
-<ul class="simple">
-<li><p>현재 로딩된 <code class="docutils literal notranslate"><span class="pre">NpuTrace</span></code> 에 대한 선택적 참조</p></li>
-<li><p>pccx KV260 레퍼런스 <code class="docutils literal notranslate"><span class="pre">HardwareModel</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pccx-core</span></code> 의 전체 <code class="docutils literal notranslate"><span class="pre">TraceAnalyzer</span></code> 레지스트리</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pccx-ai-copilot::uvm</span></code> 의 <code class="docutils literal notranslate"><span class="pre">UvmStrategy</span></code> 레지스트리</p></li>
-</ul>
-<p>소비자는 트레이스 로드당 한 인스턴스를 생성해 아래 메서드로 구동한다.</p>
-<section id="id1">
-<h2>생성<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
-<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">pccx_ai_copilot</span><span class="p">::</span><span class="n">Copilot</span><span class="p">;</span>
+<p><em>페이지 과도기 상태. pccx-lab HEAD 기준 2026-04-24 재정비.</em></p>
+<p>Phase 1 이전의 <code class="docutils literal notranslate"><span class="pre">Copilot</span></code> 구조체 (<code class="docutils literal notranslate"><span class="pre">investigate()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">investigate_summary()</span></code>, <code class="docutils literal notranslate"><span class="pre">explain()</span></code>, <code class="docutils literal notranslate"><span class="pre">rank_by_severity()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">suggest_fix()</span></code>, <code class="docutils literal notranslate"><span class="pre">generate_report()</span></code>) 는 폐기되었다. 오늘
+<code class="docutils literal notranslate"><span class="pre">pccx-ai-copilot</span></code> 은 Tauri UI 용 얇은 정적 헬퍼 세트와 Phase 2 / Phase 5
+오케스트레이션이 착륙할 unstable 트레이트 스캐폴드 두 개를 출하한다.
+AI 구동 자연어 → UVM 워크플로우는 Phase 2 <strong>pccx-lsp 파사드</strong> 위에
+재구축 중이다 — A-슬라이스 (<code class="docutils literal notranslate"><span class="pre">LspMultiplexer</span></code> + <code class="docutils literal notranslate"><span class="pre">NoopBackend</span></code>) 와
+B-슬라이스 (async 컴패니언, <code class="docutils literal notranslate"><span class="pre">BlockingBridge</span></code>, <code class="docutils literal notranslate"><span class="pre">SpawnConfig</span></code> /
+<code class="docutils literal notranslate"><span class="pre">LspSubprocess</span></code>) 가 Phase 2 M2.1 에서 착륙했다.</p>
+<p>이 페이지는 오늘 출하 가능한 표면을 문서화한다. 구체 verible /
+rust-analyzer / Claude 백엔드가 lsp provider 트레이트에 꽂히면 더 풍부한
+파사드로 갱신된다.</p>
+<section id="pccx-ai-copilot">
+<h2>정적 헬퍼 (<code class="docutils literal notranslate"><span class="pre">pccx-ai-copilot</span></code>)<a class="headerlink" href="#pccx-ai-copilot" title="Link to this heading">¶</a></h2>
+<p>네 개 함수 + 레지스트리 상수 하나. 모두 구조체 생성 없이 호출 가능.
+과거 Copilot 표면 중 Tauri UI 가 여전히 필요한 서브셋을 커버한다.</p>
+<section id="compress-context-cycles-u64-bottlenecks-usize-string">
+<h3><code class="docutils literal notranslate"><span class="pre">compress_context(cycles:</span> <span class="pre">u64,</span> <span class="pre">bottlenecks:</span> <span class="pre">usize)</span> <span class="pre">-&gt;</span> <span class="pre">String</span></code><a class="headerlink" href="#compress-context-cycles-u64-bottlenecks-usize-string" title="Link to this heading">¶</a></h3>
+<p>트레이스 통계를 간결한 LLM 프롬프트 프리픽스로 압축. 출력은 약
+300 자 — 임의 사용자 질의 앞에 prepend 해도 안전.</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">pccx_ai_copilot</span><span class="p">::</span><span class="n">compress_context</span><span class="p">;</span>
 
-<span class="kd">let</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Copilot</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="nb">Some</span><span class="p">(</span><span class="o">&amp;</span><span class="n">trace</span><span class="p">));</span>
-<span class="c1">// 또는</span>
-<span class="kd">let</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Copilot</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="nb">None</span><span class="p">);</span><span class="w">   </span><span class="c1">// 트레이스 미로드; investigate() 는 [] 반환</span>
-</pre></div>
-</div>
-<p>분석기 레지스트리를 확장하려면 첫 <code class="docutils literal notranslate"><span class="pre">investigate()</span></code> 호출 전에
-<code class="docutils literal notranslate"><span class="pre">c.analyzers.push(...)</span></code> 한다.</p>
-</section>
-<section id="id2">
-<h2>메서드<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
-<section id="investigate-vec-analysisreport">
-<h3><code class="docutils literal notranslate"><span class="pre">investigate()</span> <span class="pre">-&gt;</span> <span class="pre">Vec&lt;AnalysisReport&gt;</span></code><a class="headerlink" href="#investigate-vec-analysisreport" title="Link to this heading">¶</a></h3>
-<p>등록된 모든 분석기를 트레이스에 대해 실행. 레지스트리 순서대로 리포트
-반환. 트레이스 미로드 시 빈 Vec.</p>
-</section>
-<section id="investigate-summary-string">
-<h3><code class="docutils literal notranslate"><span class="pre">investigate_summary()</span> <span class="pre">-&gt;</span> <span class="pre">String</span></code><a class="headerlink" href="#investigate-summary-string" title="Link to this heading">¶</a></h3>
-<p>모든 리포트를 단일 LLM 용 시스템 프롬프트로 압축. 각 라인은
-<code class="docutils literal notranslate"><span class="pre">&quot;-</span> <span class="pre">[&lt;analyzer_id&gt;]</span> <span class="pre">&lt;summary&gt;&quot;</span></code>; 총 길이는 분석기 수 × summary 당
-500 chars 로 바운드.</p>
-<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="n">prompt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">investigate_summary</span><span class="p">();</span>
-<span class="c1">// Trace analysis summary (automated):</span>
-<span class="c1">// - [roofline] AI 0.69 ops/byte · 321.4 GOPS (0% of peak) · memory-bound</span>
-<span class="c1">// - [dma_util] DMA SATURATED: read 46% + write 46% pinned — compute only 4%</span>
-<span class="c1">// - [bottleneck] 19179 windows · DmaRead×12787, DmaWrite×6392</span>
-<span class="c1">// ...</span>
-</pre></div>
-</div>
-<p>LLM 의 <code class="docutils literal notranslate"><span class="pre">system</span></code> 채널에 그대로 투입.</p>
-</section>
-<section id="rank-by-severity-vec-analysisreport">
-<h3><code class="docutils literal notranslate"><span class="pre">rank_by_severity()</span> <span class="pre">-&gt;</span> <span class="pre">Vec&lt;AnalysisReport&gt;</span></code><a class="headerlink" href="#rank-by-severity-vec-analysisreport" title="Link to this heading">¶</a></h3>
-<p>대시보드 severity 정렬의 서버사이드 등가물. error 급 발견이 먼저, 그
-다음 warning, 마지막에 정보성 엔트리 순으로 정렬된 리포트 반환.
-동점은 레지스트리 선언 순서로 깨 안정적 출력 보장.</p>
-<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="n">top</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">rank_by_severity</span><span class="p">();</span>
-<span class="fm">println!</span><span class="p">(</span><span class="s">&quot;가장 시급: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">top</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">summary</span><span class="p">);</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">ctx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">compress_context</span><span class="p">(</span><span class="mi">5_423_940</span><span class="p">,</span><span class="w"> </span><span class="mi">19_179</span><span class="p">);</span>
+<span class="c1">// &quot;NPU trace: 5423940 total simulation cycles across a 32×32 systolic</span>
+<span class="c1">//  MAC array with 32 cores at 1 GHz (est. 5423.9 µs wall-time). 19179</span>
+<span class="c1">//  high-occupancy DMA bottleneck intervals detected. AXI bus contention</span>
+<span class="c1">//  visible during simultaneous multi-core DMA. Peak theoretical: 2.05</span>
+<span class="c1">//  TOPS.&quot;</span>
 </pre></div>
 </div>
 </section>
-<section id="explain-analyzer-id-str-option-string">
-<h3><code class="docutils literal notranslate"><span class="pre">explain(analyzer_id:</span> <span class="pre">&amp;str)</span> <span class="pre">-&gt;</span> <span class="pre">Option&lt;String&gt;</span></code><a class="headerlink" href="#explain-analyzer-id-str-option-string" title="Link to this heading">¶</a></h3>
-<p>단일 분석기에 대한 long-form Markdown 설명. 매칭되는 모든
-<code class="docutils literal notranslate"><span class="pre">research::Citation</span></code> 을 당겨와 description + 최신 발견과 함께 포맷.</p>
-<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="n">md</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">explain</span><span class="p">(</span><span class="s">&quot;kv_cache_pressure&quot;</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span>
-<span class="c1">// # KV-Cache Pressure (kv_cache_pressure)</span>
-<span class="c1">// Projects per-decode KV-cache footprint against L2 URAM; cites …</span>
+<section id="generate-uvm-sequence-strategy-str-string">
+<h3><code class="docutils literal notranslate"><span class="pre">generate_uvm_sequence(strategy:</span> <span class="pre">&amp;str)</span> <span class="pre">-&gt;</span> <span class="pre">String</span></code><a class="headerlink" href="#generate-uvm-sequence-strategy-str-string" title="Link to this heading">¶</a></h3>
+<p>명명된 완화 전략에 대해 SystemVerilog UVM 시퀀스 스텁 반환. 미지원
+slug 은 <code class="docutils literal notranslate"><span class="pre">generic_opt_seq</span></code> TODO 스텁으로 fallback.</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">pccx_ai_copilot</span><span class="p">::</span><span class="n">generate_uvm_sequence</span><span class="p">;</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="n">sv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">generate_uvm_sequence</span><span class="p">(</span><span class="s">&quot;l2_prefetch&quot;</span><span class="p">);</span>
+<span class="c1">// class l2_prefetch_seq extends uvm_sequence;</span>
+<span class="c1">//   `uvm_object_utils(l2_prefetch_seq)</span>
 <span class="c1">//</span>
-<span class="c1">// ## Latest finding</span>
-<span class="c1">// HBM-SPILL: decode 512 tokens → 60000 KB KV …</span>
-<span class="c1">//</span>
-<span class="c1">// ## Research lineage</span>
-<span class="c1">// - **QServe …** (2024) — [2405.04532](…). _Why_: …</span>
+<span class="c1">//   task body();</span>
+<span class="c1">//     // Stagger DMA requests by AXI transaction overhead (15 cycles)</span>
+<span class="c1">//     foreach (cores[i]) begin ...</span>
+<span class="c1">//   endtask</span>
+<span class="c1">// endclass : l2_prefetch_seq</span>
 </pre></div>
 </div>
-<p>id 가 레지스트리에 없으면 <code class="docutils literal notranslate"><span class="pre">None</span></code> 반환 → UI 가 “미지원 id” 와 “트레이스
-미로드” 를 구분.</p>
 </section>
-<section id="suggest-fix-intent-str-string-string">
-<h3><code class="docutils literal notranslate"><span class="pre">suggest_fix(intent:</span> <span class="pre">&amp;str)</span> <span class="pre">-&gt;</span> <span class="pre">(String,</span> <span class="pre">String)</span></code><a class="headerlink" href="#suggest-fix-intent-str-string-string" title="Link to this heading">¶</a></h3>
-<p>자연어 의도 → (strategy_slug, SystemVerilog 스텁). slug 가 의도에
-포함되지 않으면 키워드 규칙 사용.</p>
-<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="p">(</span><span class="n">slug</span><span class="p">,</span><span class="w"> </span><span class="n">sv</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">suggest_fix</span><span class="p">(</span><span class="s">&quot;please reduce DMA barrier contention&quot;</span><span class="p">);</span>
-<span class="c1">// slug == &quot;barrier_reduction&quot;</span>
-<span class="c1">// sv   == &quot;class barrier_reduction_seq extends uvm_sequence; …&quot;</span>
-</pre></div>
-</div>
-<p><strong>키워드 라우팅</strong> — Copilot 이 (우선순위 순) 확인하는 서브스트링과 해당
-canonical 전략:</p>
+<section id="list-uvm-strategies-vec-static-str">
+<h3><code class="docutils literal notranslate"><span class="pre">list_uvm_strategies()</span> <span class="pre">-&gt;</span> <span class="pre">Vec&lt;&amp;'static</span> <span class="pre">str&gt;</span></code><a class="headerlink" href="#list-uvm-strategies-vec-static-str" title="Link to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">generate_uvm_sequence</span></code> 가 인식하는 모든 전략 slug 을 열거. UI 피커와
+향후 LSP / 에이전트 오케스트레이터가 match arm 을 하드코딩하지
+않기 위해 사용.</p>
+<p>현재 목록 (Phase 1 HEAD):</p>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>의도 키워드</p></th>
-<th class="head"><p>전략</p></th>
-<th class="head"><p>연구 계보</p></th>
+<tr class="row-odd"><th class="head"><p>slug</p></th>
+<th class="head"><p>바디 동작</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">barrier</span></code>, <code class="docutils literal notranslate"><span class="pre">sync</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">barrier_reduction</span></code></p></td>
-<td><p>—</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">l2_prefetch</span></code></p></td>
+<td><p>DMA 읽기를 AXI 트랜잭션 오버헤드로 staggering.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">prefetch</span></code>, <code class="docutils literal notranslate"><span class="pre">dma</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">l2_prefetch</span></code></p></td>
-<td><p>Packing-Prefetch (arxiv 2508.08457)</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">barrier_reduction</span></code></p></td>
+<td><p>글로벌 sync 대신 wavefront barrier.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">thermal</span></code>, <code class="docutils literal notranslate"><span class="pre">tdp</span></code>, <code class="docutils literal notranslate"><span class="pre">power</span></code>, <code class="docutils literal notranslate"><span class="pre">heat</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">back_pressure_gate</span></code></p></td>
-<td><p>KV260 7 W PL TDP; Hybrid-Systolic ISLPED 2025</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">dma_double_buffer</span></code></p></td>
+<td><p>인접 타일에 대해 compute / DMA ping-pong.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">latency</span></code>, <code class="docutils literal notranslate"><span class="pre">tail</span></code>, <code class="docutils literal notranslate"><span class="pre">p95</span></code>, <code class="docutils literal notranslate"><span class="pre">p99</span></code>, <code class="docutils literal notranslate"><span class="pre">jitter</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">kv_cache_thrash_probe</span></code></p></td>
-<td><p>HERMES 2025 tail-latency model</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">systolic_pipeline_warmup</span></code></p></td>
+<td><p>첫 실제 타일 전에 MAC 어레이 pre-roll.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">early</span> <span class="pre">exit</span></code>, <code class="docutils literal notranslate"><span class="pre">edge-cloud</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">early_exit_decoder</span></code></p></td>
-<td><p>arxiv 2505.21594</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">speculative</span></code>, <code class="docutils literal notranslate"><span class="pre">draft</span></code>, <code class="docutils literal notranslate"><span class="pre">spec</span> <span class="pre">decode</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">speculative_draft_probe</span></code></p></td>
-<td><p>OpenPangu NPU (arxiv 2603.03383 — 1.35×)</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">evict</span></code>, <code class="docutils literal notranslate"><span class="pre">sparsif</span></code>, <code class="docutils literal notranslate"><span class="pre">kv</span> <span class="pre">drop</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">sparsified_kv_eviction</span></code></p></td>
-<td><p>LoopServe + EVICPRESS</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">w4a8</span></code>, <code class="docutils literal notranslate"><span class="pre">kv4</span></code>, <code class="docutils literal notranslate"><span class="pre">quantize</span></code>, <code class="docutils literal notranslate"><span class="pre">qserve</span></code>, <code class="docutils literal notranslate"><span class="pre">qoq</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">qoq_kv4_quantize</span></code></p></td>
-<td><p>QServe (arxiv 2405.04532) + QQQ</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">matryoshka</span></code>, <code class="docutils literal notranslate"><span class="pre">subnet</span></code>, <code class="docutils literal notranslate"><span class="pre">e2b</span></code>, <code class="docutils literal notranslate"><span class="pre">e4b</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">matryoshka_subnet_switch</span></code></p></td>
-<td><p>arxiv 2205.13147</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">wavelet</span></code>, <code class="docutils literal notranslate"><span class="pre">low-rank</span></code>, <code class="docutils literal notranslate"><span class="pre">long</span> <span class="pre">context</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">wavelet_attention_probe</span></code></p></td>
-<td><p>arxiv 2312.07590</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">flash</span></code>, <code class="docutils literal notranslate"><span class="pre">tile</span></code>, <code class="docutils literal notranslate"><span class="pre">softmax</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">flash_attention_tile_probe</span></code></p></td>
-<td><p>FlashAttention-2/3</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">moe</span></code>, <code class="docutils literal notranslate"><span class="pre">expert</span></code>, <code class="docutils literal notranslate"><span class="pre">mixture</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">kv_cache_thrash_probe</span></code></p></td>
-<td><p>Switch Transformer (arxiv 2101.03961)</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">throughput</span></code>, <code class="docutils literal notranslate"><span class="pre">core</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">back_pressure_gate</span></code></p></td>
-<td><p>—</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">weight_fifo_preload</span></code></p></td>
+<td><p>셋업 윈도 동안 HP weight FIFO front-load.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
+<p>다섯 개로, Phase 1 이전 문서의 13 행 의도 라우팅 테이블보다 축소되었다.
+더 풍부한 전략 세트 (<code class="docutils literal notranslate"><span class="pre">back_pressure_gate</span></code>, <code class="docutils literal notranslate"><span class="pre">kv_cache_thrash_probe</span></code>,
+<code class="docutils literal notranslate"><span class="pre">speculative_draft_probe</span></code>, …) 는 재착륙되지 않았다 — pccx-lab
+<code class="docutils literal notranslate"><span class="pre">docs/design/phase5_alphaevolve.md</span></code> 에서 진행 상황을 추적.</p>
 </section>
-<section id="generate-report-synth-option-synthreport-string">
-<h3><code class="docutils literal notranslate"><span class="pre">generate_report(synth:</span> <span class="pre">Option&lt;&amp;SynthReport&gt;)</span> <span class="pre">-&gt;</span> <span class="pre">String</span></code><a class="headerlink" href="#generate-report-synth-option-synthreport-string" title="Link to this heading">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">pccx-core::report::render_markdown</span></code> 에 위임.
-<code class="docutils literal notranslate"><span class="pre">synth_report::load_from_files</span></code> 또는 <code class="docutils literal notranslate"><span class="pre">synth_runner::run</span></code> 이 파싱한
-<code class="docutils literal notranslate"><span class="pre">SynthReport</span></code> 를 넘기면 utilisation + timing 테이블 포함.</p>
+<section id="get-available-extensions-vec-extension">
+<h3><code class="docutils literal notranslate"><span class="pre">get_available_extensions()</span> <span class="pre">-&gt;</span> <span class="pre">Vec&lt;Extension&gt;</span></code><a class="headerlink" href="#get-available-extensions-vec-extension" title="Link to this heading">¶</a></h3>
+<p>Tauri UI 의 Extensions 탭이 렌더하는 확장 카탈로그 반환. 로컬 LLM,
+하드웨어 가속 플러그인, 클라우드 브리지, 분석 플러그인, 내보내기
+플러그인을 커버. enum 표면은 크레이트 소스의 <code class="docutils literal notranslate"><span class="pre">ExtensionCategory</span></code> 참고.</p>
 </section>
 </section>
-<section id="id3">
-<h2>레지스트리 확장<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
-<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="c1">// investigate() 전에 임의의 분석기 런타임 등록.</span>
-<span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Copilot</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="nb">Some</span><span class="p">(</span><span class="o">&amp;</span><span class="n">trace</span><span class="p">));</span>
-<span class="n">c</span><span class="p">.</span><span class="n">analyzers</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="nb">Box</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="n">MyCustomAnalyzer</span><span class="p">));</span>
-<span class="kd">let</span><span class="w"> </span><span class="n">reports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">investigate</span><span class="p">();</span>
-</pre></div>
-</div>
-<p>전략 레지스트리는 <code class="docutils literal notranslate"><span class="pre">uvm::strategies_for_analyzer(id)</span></code> 로 질의 가능 —
-Copilot 이 임의 분석기의 발견을 하드코딩 키워드 매칭 없이 후보 완화
-집합으로 매핑할 때 사용.</p>
-</section>
-<section id="id4">
-<h2>자동화에서 사용<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
-<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">pccx_ai_copilot</span><span class="p">::</span><span class="n">Copilot</span><span class="p">;</span>
-<span class="k">use</span><span class="w"> </span><span class="n">pccx_core</span><span class="p">::{</span><span class="n">PccxFile</span><span class="p">,</span><span class="w"> </span><span class="n">NpuTrace</span><span class="p">};</span>
-<span class="k">use</span><span class="w"> </span><span class="n">std</span><span class="p">::</span><span class="n">fs</span><span class="p">::</span><span class="n">File</span><span class="p">;</span>
+<section id="unstable-phase-1-m1-2">
+<h2>Unstable 트레이트 (Phase 1 M1.2)<a class="headerlink" href="#unstable-phase-1-m1-2" title="Link to this heading">¶</a></h2>
+<p>Phase 2 IntelliSense 와 Phase 5 에이전트 오케스트레이션이 구현할 두
+개 스캐폴드. 둘 다 public 이지만 크레이트의 “v0.3 까지 unstable”
+마커를 달고 <code class="docutils literal notranslate"><span class="pre">plugin-api</span></code> 피처 뒤에 게이트되어 있다.</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="sd">/// 채팅 기록, 트레이스 요약, 문서 발췌용 토큰 버짓 컴프레서.</span>
+<span class="sd">/// 결정론적 head/tail 트리머와 학습된 LLMLingua 계열 컴프레서</span>
+<span class="sd">/// 모두 이 트레이트를 구현.</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">ContextCompressor</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">compress</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">,</span><span class="w"> </span><span class="n">target_tokens</span><span class="p">:</span><span class="w"> </span><span class="kt">usize</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">String</span><span class="p">;</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="p">;</span>
+<span class="p">}</span>
 
-<span class="k">fn</span><span class="w"> </span><span class="nf">summarise</span><span class="p">(</span><span class="n">path</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">anyhow</span><span class="p">::</span><span class="nb">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">File</span><span class="p">::</span><span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">pccx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PccxFile</span><span class="p">::</span><span class="n">read</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">f</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">trace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NpuTrace</span><span class="p">::</span><span class="n">from_payload</span><span class="p">(</span><span class="o">&amp;</span><span class="n">pccx</span><span class="p">.</span><span class="n">payload</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Copilot</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="nb">Some</span><span class="p">(</span><span class="o">&amp;</span><span class="n">trace</span><span class="p">));</span>
-<span class="w">    </span><span class="nb">Ok</span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="n">investigate_summary</span><span class="p">())</span>
+<span class="sd">/// 단일 서브에이전트 태스크 (log-grinder, research-scout,</span>
+<span class="sd">/// doc-drafter) 를 실행해 응답 반환. pccx-ide 와 pccx-remote 가</span>
+<span class="sd">/// 공유하는 parallel-subagent 패턴을 구동.</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">SubagentRunner</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">task</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">,</span><span class="w"> </span><span class="n">context</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">anyhow</span><span class="p">::</span><span class="nb">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>CI 파이프라인에서 <code class="docutils literal notranslate"><span class="pre">pccx_analyze</span> <span class="pre">&lt;trace.pccx&gt;</span></code> 와 자연스럽게 짝을 이룬다
-— CLI 는 기본적으로 <code class="docutils literal notranslate"><span class="pre">investigate_summary()</span></code> 와 동등한 출력을 프린트.</p>
+<p>pccx-lab v0.2.x 에는 구체 구현이 동봉되지 않는다 — Phase 2 / Phase 5
+진행에 따라 착륙한다. 다운스트림 소비자는 pccx-lab v0.3 까지 이
+시그니처가 변경 대상임을 전제해야 한다.</p>
 </section>
-<section id="id5">
-<h2>오류 처리<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">Copilot</span></code> 은 설계상 infallible 이다. 트레이스가 없어도 모든 메서드는
-값을 반환 (빈 <code class="docutils literal notranslate"><span class="pre">Vec</span></code> / <code class="docutils literal notranslate"><span class="pre">&quot;No</span> <span class="pre">trace</span> <span class="pre">loaded&quot;</span></code> 문자열 / 빈 SV 스텁 /
-<code class="docutils literal notranslate"><span class="pre">explain</span></code> 의 <code class="docutils literal notranslate"><span class="pre">None</span></code>). 웰컴 스크린, 토스트, CI 스킵 렌더 결정은 호출자의
-empty-state 브랜치 몫이다 — copilot 내부가 아니다.</p>
+<section id="pccx-lsp-phase-2-m2-1">
+<h2>pccx-lsp (Phase 2 M2.1)<a class="headerlink" href="#pccx-lsp-phase-2-m2-1" title="Link to this heading">¶</a></h2>
+<p>IntelliSense 파사드는 앞으로 AI / LSP / 캐시 팬아웃이 사는 곳이다.
+sync provider 트레이트 세 개 + async 컴패니언:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">CompletionProvider</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">complete</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">language</span><span class="p">:</span><span class="w"> </span><span class="nc">Language</span><span class="p">,</span><span class="w"> </span><span class="n">file</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">,</span>
+<span class="w">                </span><span class="n">pos</span><span class="p">:</span><span class="w"> </span><span class="nc">SourcePos</span><span class="p">,</span><span class="w"> </span><span class="n">source</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">)</span>
+<span class="w">        </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="n">Completion</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">LspError</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">HoverProvider</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">hover</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">language</span><span class="p">:</span><span class="w"> </span><span class="nc">Language</span><span class="p">,</span><span class="w"> </span><span class="n">file</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">,</span>
+<span class="w">             </span><span class="n">pos</span><span class="p">:</span><span class="w"> </span><span class="nc">SourcePos</span><span class="p">,</span><span class="w"> </span><span class="n">source</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">)</span>
+<span class="w">        </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="nb">Option</span><span class="o">&lt;</span><span class="n">Hover</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">LspError</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">LocationProvider</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">definitions</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">language</span><span class="p">:</span><span class="w"> </span><span class="nc">Language</span><span class="p">,</span><span class="w"> </span><span class="n">file</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">,</span>
+<span class="w">                   </span><span class="n">pos</span><span class="p">:</span><span class="w"> </span><span class="nc">SourcePos</span><span class="p">,</span><span class="w"> </span><span class="n">source</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">)</span>
+<span class="w">        </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="n">SourceRange</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">LspError</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">references</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">language</span><span class="p">:</span><span class="w"> </span><span class="nc">Language</span><span class="p">,</span><span class="w"> </span><span class="n">file</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">,</span>
+<span class="w">                  </span><span class="n">pos</span><span class="p">:</span><span class="w"> </span><span class="nc">SourcePos</span><span class="p">,</span><span class="w"> </span><span class="n">source</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">)</span>
+<span class="w">        </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="n">SourceRange</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">LspError</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>라우팅은 <code class="docutils literal notranslate"><span class="pre">LspMultiplexer</span></code> 를 거친다:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">pccx_lsp</span><span class="p">::{</span><span class="n">Language</span><span class="p">,</span><span class="w"> </span><span class="n">LspMultiplexer</span><span class="p">,</span><span class="w"> </span><span class="n">NoopBackend</span><span class="p">};</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LspMultiplexer</span><span class="p">::</span><span class="n">new</span><span class="p">();</span>
+<span class="n">m</span><span class="p">.</span><span class="n">register</span><span class="p">(</span>
+<span class="w">    </span><span class="n">Language</span><span class="p">::</span><span class="n">SystemVerilog</span><span class="p">,</span>
+<span class="w">    </span><span class="nb">Box</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="n">NoopBackend</span><span class="p">),</span><span class="w">   </span><span class="c1">// 이후: verible 래퍼</span>
+<span class="w">    </span><span class="nb">Box</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="n">NoopBackend</span><span class="p">),</span>
+<span class="w">    </span><span class="nb">Box</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="n">NoopBackend</span><span class="p">),</span>
+<span class="p">);</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">completions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m</span><span class="p">.</span><span class="n">complete</span><span class="p">(</span>
+<span class="w">    </span><span class="n">Language</span><span class="p">::</span><span class="n">SystemVerilog</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;foo.sv&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SourcePos</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">line</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">character</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="s">&quot;module foo;&quot;</span><span class="p">,</span>
+<span class="p">)</span><span class="o">?</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">NoopBackend</span></code> 는 빈 결과를 반환 — 실제 백엔드가 wire-up 되는 동안
+쓰는 의도적인 “여기 아무것도 없다” 응답이다. async 워크플로우에서는
+<code class="docutils literal notranslate"><span class="pre">BlockingBridge&lt;P&gt;</span></code> 가 <code class="docutils literal notranslate"><span class="pre">tokio::task::spawn_blocking</span></code> 을 거쳐 임의 sync
+provider 를 <code class="docutils literal notranslate"><span class="pre">AsyncCompletionProvider</span></code> / <code class="docutils literal notranslate"><span class="pre">AsyncHoverProvider</span></code> /
+<code class="docutils literal notranslate"><span class="pre">AsyncLocationProvider</span></code> 로 끌어올린다. 외부 LSP 서버 (verible,
+rust-analyzer, clangd) 는 <code class="docutils literal notranslate"><span class="pre">SpawnConfig</span></code> + <code class="docutils literal notranslate"><span class="pre">LspSubprocess</span></code> 로 spawn;
+그 파이프 위의 JSON-RPC 코덱은 후속 슬라이스에 착륙한다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">CompletionSource</span></code> enum 은 결과의 출처 — 상류 LSP, Claude-Haiku 빠른
+예측기, Claude-Sonnet 깊은 예측기, AST-해시 캐시 — 를 구분한다. 향후
+AI 파이프라인이 이 enum 으로 feedback 되므로 UI 는 모든 제안 옆에
+provenance 배지를 렌더할 수 있다.</p>
+<p>엔드 스테이트 디자인 (AI 팬아웃, tower-lsp 어댑터, Monaco 와이어링) 은
+pccx-lab <code class="docutils literal notranslate"><span class="pre">docs/design/phase2_intellisense.md</span></code> 참고.</p>
 </section>
-<section id="id6">
-<h2>이 페이지 인용<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h2>
-<p>pccx-lab Copilot 의 의도 라우팅, <code class="docutils literal notranslate"><span class="pre">UvmStrategy</span></code> 레지스트리, 또는
-연구 인용 surface 를 논문이나 AI 요약에서 참조한다면 다음을 인용해
-주세요:</p>
+<section id="ui">
+<h2>UI 지향 정적 커맨드<a class="headerlink" href="#ui" title="Link to this heading">¶</a></h2>
+<p>전면 파사드 도입 전까지 Tauri UI 는 <code class="docutils literal notranslate"><span class="pre">invoke(&quot;compress_context&quot;,</span> <span class="pre">…)</span></code>,
+<code class="docutils literal notranslate"><span class="pre">invoke(&quot;generate_uvm_sequence&quot;,</span> <span class="pre">…)</span></code>, <code class="docutils literal notranslate"><span class="pre">invoke(&quot;list_uvm_strategies&quot;)</span></code>
+로 정적 헬퍼를 직접 호출한다. 브리지는 <code class="docutils literal notranslate"><span class="pre">ui/src-tauri/src/lib.rs</span></code> 에서
+함수당 한 줄짜리다. 단일 <code class="docutils literal notranslate"><span class="pre">invoke(&quot;copilot_investigate&quot;,</span> <span class="pre">…)</span></code> 우산 호출은
+더 이상 존재하지 않는다.</p>
+</section>
+<section id="id1">
+<h2>관련 문서<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="analyzer_api.html"><span class="std std-doc">분석기 API</span></a> — 모든 크레이트별 플러그인 트레이트
+(<code class="docutils literal notranslate"><span class="pre">ContextCompressor</span></code> / <code class="docutils literal notranslate"><span class="pre">SubagentRunner</span></code> 포함) 가 걸리는 플러그인
+레지스트리 프리미티브.</p></li>
+<li><p><a class="reference internal" href="cli.html"><span class="std std-doc">CLI 레퍼런스</span></a> — 현재 출하 중인 바이너리. 과거
+<code class="docutils literal notranslate"><span class="pre">pccx_analyze</span></code> 우산은 오늘 존재하지 않는다.</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2>이 페이지 인용<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
 <div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@misc</span><span class="p">{</span><span class="nl">pccx_lab_copilot_2026</span><span class="p">,</span>
-<span class="w">  </span><span class="na">title</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="s">{The pccx-lab Copilot: natural-language to UVM strategy routing grounded in research citations}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">title</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="s">{pccx-ai-copilot and pccx-lsp: current AI / IntelliSense surface of pccx-lab after Phase 1}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">author</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{Kim, Hwangwoo}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">year</span><span class="w">         </span><span class="p">=</span><span class="w"> </span><span class="s">{2026}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">howpublished</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{\url{https://hwkim-dev.github.io/pccx/ko/docs/Lab/copilot.html}}</span><span class="p">,</span>
@@ -662,9 +666,11 @@ empty-state 브랜치 몫이다 — copilot 내부가 아니다.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Copilot 은 <a class="reference external" href="https://hwkim-dev.github.io/pccx/">https://hwkim-dev.github.io/pccx/</a> 에 문서화된 의도→전략
-매핑의 레퍼런스 구현이다. 각 UVM 전략은 <a class="reference internal" href="research.html"><span class="std std-doc">연구 계보 테이블</span></a>
-의 논문에 grounding 되어 있다.</p>
+<p>이 페이지가 문서화하는 헬퍼는
+<a class="reference external" href="https://github.com/hwkim-dev/pccx-lab/blob/main/crates/ai_copilot/src/lib.rs">https://github.com/hwkim-dev/pccx-lab/blob/main/crates/ai_copilot/src/lib.rs</a>
+에 위치하고, LSP 파사드는
+<a class="reference external" href="https://github.com/hwkim-dev/pccx-lab/blob/main/crates/lsp/src/lib.rs">https://github.com/hwkim-dev/pccx-lab/blob/main/crates/lsp/src/lib.rs</a>
+에 있다.</p>
 </section>
 </section>
 
@@ -736,20 +742,18 @@ empty-state 브랜치 몫이다 — copilot 내부가 아니다.</p>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Copilot API</a><ul>
-<li><a class="reference internal" href="#id1">생성</a></li>
-<li><a class="reference internal" href="#id2">메서드</a><ul>
-<li><a class="reference internal" href="#investigate-vec-analysisreport"><code class="docutils literal notranslate"><span class="pre">investigate()</span> <span class="pre">-&gt;</span> <span class="pre">Vec&lt;AnalysisReport&gt;</span></code></a></li>
-<li><a class="reference internal" href="#investigate-summary-string"><code class="docutils literal notranslate"><span class="pre">investigate_summary()</span> <span class="pre">-&gt;</span> <span class="pre">String</span></code></a></li>
-<li><a class="reference internal" href="#rank-by-severity-vec-analysisreport"><code class="docutils literal notranslate"><span class="pre">rank_by_severity()</span> <span class="pre">-&gt;</span> <span class="pre">Vec&lt;AnalysisReport&gt;</span></code></a></li>
-<li><a class="reference internal" href="#explain-analyzer-id-str-option-string"><code class="docutils literal notranslate"><span class="pre">explain(analyzer_id:</span> <span class="pre">&amp;str)</span> <span class="pre">-&gt;</span> <span class="pre">Option&lt;String&gt;</span></code></a></li>
-<li><a class="reference internal" href="#suggest-fix-intent-str-string-string"><code class="docutils literal notranslate"><span class="pre">suggest_fix(intent:</span> <span class="pre">&amp;str)</span> <span class="pre">-&gt;</span> <span class="pre">(String,</span> <span class="pre">String)</span></code></a></li>
-<li><a class="reference internal" href="#generate-report-synth-option-synthreport-string"><code class="docutils literal notranslate"><span class="pre">generate_report(synth:</span> <span class="pre">Option&lt;&amp;SynthReport&gt;)</span> <span class="pre">-&gt;</span> <span class="pre">String</span></code></a></li>
+<li><a class="reference internal" href="#pccx-ai-copilot">정적 헬퍼 (<code class="docutils literal notranslate"><span class="pre">pccx-ai-copilot</span></code>)</a><ul>
+<li><a class="reference internal" href="#compress-context-cycles-u64-bottlenecks-usize-string"><code class="docutils literal notranslate"><span class="pre">compress_context(cycles:</span> <span class="pre">u64,</span> <span class="pre">bottlenecks:</span> <span class="pre">usize)</span> <span class="pre">-&gt;</span> <span class="pre">String</span></code></a></li>
+<li><a class="reference internal" href="#generate-uvm-sequence-strategy-str-string"><code class="docutils literal notranslate"><span class="pre">generate_uvm_sequence(strategy:</span> <span class="pre">&amp;str)</span> <span class="pre">-&gt;</span> <span class="pre">String</span></code></a></li>
+<li><a class="reference internal" href="#list-uvm-strategies-vec-static-str"><code class="docutils literal notranslate"><span class="pre">list_uvm_strategies()</span> <span class="pre">-&gt;</span> <span class="pre">Vec&lt;&amp;'static</span> <span class="pre">str&gt;</span></code></a></li>
+<li><a class="reference internal" href="#get-available-extensions-vec-extension"><code class="docutils literal notranslate"><span class="pre">get_available_extensions()</span> <span class="pre">-&gt;</span> <span class="pre">Vec&lt;Extension&gt;</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id3">레지스트리 확장</a></li>
-<li><a class="reference internal" href="#id4">자동화에서 사용</a></li>
-<li><a class="reference internal" href="#id5">오류 처리</a></li>
-<li><a class="reference internal" href="#id6">이 페이지 인용</a></li>
+<li><a class="reference internal" href="#unstable-phase-1-m1-2">Unstable 트레이트 (Phase 1 M1.2)</a></li>
+<li><a class="reference internal" href="#pccx-lsp-phase-2-m2-1">pccx-lsp (Phase 2 M2.1)</a></li>
+<li><a class="reference internal" href="#ui">UI 지향 정적 커맨드</a></li>
+<li><a class="reference internal" href="#id1">관련 문서</a></li>
+<li><a class="reference internal" href="#id2">이 페이지 인용</a></li>
 </ul>
 </li>
 </ul>

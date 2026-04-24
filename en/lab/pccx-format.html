@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Verification Workflow" href="verification-workflow.html"><link rel="prev" title="Design Rationale" href="design/rationale.html">
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Verification Workflow" href="verification-workflow.html"><link rel="prev" title="Phase 5 — AlphaEvolve → OpenEvolve" href="design/phase5_alphaevolve.html">
         <link rel="canonical" href="https://hwkim-dev.github.io/pccx/en/lab/pccx-format.html">
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
@@ -201,6 +201,11 @@
 <li class="toctree-l1"><a class="reference internal" href="modules/overview.html">Module Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules/node-editor.html">Node Editor</a></li>
 <li class="toctree-l1"><a class="reference internal" href="design/rationale.html">Design Rationale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design/phase1_crate_split.html">Phase 1 — Workspace / Crate Split Proposal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design/phase2_intellisense.html">Phase 2 — IntelliSense-Level Intelligence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design/phase3_remote_backend.html">Phase 3 — Secure Remote Backend</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design/phase4_insane_reports.html">Phase 4 — Insane-Level Reports &amp; Concept-to-RTL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design/phase5_alphaevolve.html">Phase 5 — AlphaEvolve → OpenEvolve</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">.pccx File Format Specification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="verification-workflow.html">Verification Workflow</a></li>
 </ul>
@@ -246,7 +251,7 @@
 <blockquote>
 <div><p><strong>Version:</strong> 0.2 (format major: 0x01, minor: 0x01)<br />
 <strong>Status:</strong> Active<br />
-<strong>Source of truth:</strong> <code class="docutils literal notranslate"><span class="pre">src/core/src/pccx_format.rs</span></code></p>
+<strong>Source of truth:</strong> <code class="docutils literal notranslate"><span class="pre">crates/core/src/pccx_format.rs</span></code></p>
 </div></blockquote>
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
@@ -512,14 +517,14 @@ raw payload bytes. Parsers may use it to detect accidental corruption:</p>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="design/rationale.html">
+          <a class="prev-page" href="design/phase5_alphaevolve.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Design Rationale</div>
+                <div class="title">Phase 5 — AlphaEvolve → OpenEvolve</div>
                 
               </div>
             </a>

@@ -462,9 +462,12 @@ NPU. It ingests <code class="docutils literal notranslate"><span class="pre">.pc
 suite on the companion <code class="docutils literal notranslate"><span class="pre">pccx-FPGA-NPU-LLM-kv260</span></code> RTL repo and surfaces
 the timeline, roofline, bottleneck windows, waveform, Vivado synth
 reports, and AI-driven UVM strategies in a single Tauri v2 window.</p>
-<p>This section documents the tool’s internal surface — the <code class="docutils literal notranslate"><span class="pre">TraceAnalyzer</span></code>
-registry, the <code class="docutils literal notranslate"><span class="pre">Copilot</span></code> automation facade, the command-line binaries,
-and the research lineage that grounds each analyzer in a published paper.</p>
+<p>This section documents the tool’s internal surface — the Phase 1
+plugin-registry primitive every crate hangs trait objects off, the
+current <code class="docutils literal notranslate"><span class="pre">pccx-ai-copilot</span></code> + <code class="docutils literal notranslate"><span class="pre">pccx-lsp</span></code> IntelliSense façade, the
+command-line binaries distributed across crates after the workspace
+split, and the research-lineage placeholder that will refresh once the
+citation registry lands in its new home.</p>
 <p>For the user-facing desktop app itself, see the separate
 <a class="reference external" href="https://hwkim-dev.github.io/pccx/en/lab/">pccx-lab site</a>.</p>
 <div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
@@ -483,9 +486,9 @@ and the research lineage that grounds each analyzer in a published paper.</p>
 <div class="sd-card-body docutils">
 <div class="sd-card-title sd-font-weight-bold docutils">
 <svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-terminal sd-mr-1" viewBox="0 0 16 16" aria-hidden="true"><path d="M0 2.75C0 1.784.784 1 1.75 1h12.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 14.25 15H1.75A1.75 1.75 0 0 1 0 13.25Zm1.75-.25a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25V2.75a.25.25 0 0 0-.25-.25ZM7.25 8a.749.749 0 0 1-.22.53l-2.25 2.25a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L5.44 8 3.72 6.28a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l2.25 2.25c.141.14.22.331.22.53Zm1.5 1.5h3a.75.75 0 0 1 0 1.5h-3a.75.75 0 0 1 0-1.5Z"></path></svg> CLI reference</div>
-<p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">pccx_analyze</span></code> modes (pretty / JSON / Markdown / synth /
-<code class="docutils literal notranslate"><span class="pre">--compare</span></code> / <code class="docutils literal notranslate"><span class="pre">--research-list</span></code> / <code class="docutils literal notranslate"><span class="pre">--explain</span></code>), plus
-<code class="docutils literal notranslate"><span class="pre">pccx_cli</span></code> and <code class="docutils literal notranslate"><span class="pre">from_xsim_log</span></code>.</p>
+<p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">pccx_cli</span></code>, <code class="docutils literal notranslate"><span class="pre">generator</span></code>, <code class="docutils literal notranslate"><span class="pre">from_xsim_log</span></code>,
+<code class="docutils literal notranslate"><span class="pre">pccx_golden_diff</span></code> — the four binaries pccx-lab ships today
+and the surfaces still awaiting re-landing.</p>
 </div>
 <a class="sd-stretched-link sd-hide-link-text reference internal" href="cli.html"><span class="doc">CLI Reference</span></a></div>
 </div>
@@ -494,8 +497,9 @@ and the research lineage that grounds each analyzer in a published paper.</p>
 <div class="sd-card-body docutils">
 <div class="sd-card-title sd-font-weight-bold docutils">
 <svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-graph sd-mr-1" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 1.75V13.5h13.75a.75.75 0 0 1 0 1.5H.75a.75.75 0 0 1-.75-.75V1.75a.75.75 0 0 1 1.5 0Zm14.28 2.53-5.25 5.25a.75.75 0 0 1-1.06 0L7 7.06 4.28 9.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.25-3.25a.75.75 0 0 1 1.06 0L10 7.94l4.72-4.72a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Z"></path></svg> Analyzer API</div>
-<p class="sd-card-text">The <code class="docutils literal notranslate"><span class="pre">TraceAnalyzer</span></code> trait, the 16-entry built-in registry, and
-how to land a new analysis in one file.</p>
+<p class="sd-card-text">The <code class="docutils literal notranslate"><span class="pre">PluginRegistry&lt;P&gt;</span></code> primitive, its <code class="docutils literal notranslate"><span class="pre">Plugin</span></code> /
+<code class="docutils literal notranslate"><span class="pre">PluginMetadata</span></code> supertraits, and how each crate hangs its own
+plugin trait off it.</p>
 </div>
 <a class="sd-stretched-link sd-hide-link-text reference internal" href="analyzer_api.html"><span class="doc">Analyzer API</span></a></div>
 </div>
@@ -504,9 +508,9 @@ how to land a new analysis in one file.</p>
 <div class="sd-card-body docutils">
 <div class="sd-card-title sd-font-weight-bold docutils">
 <svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-beaker sd-mr-1" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 5.782V2.5h-.25a.75.75 0 0 1 0-1.5h6.5a.75.75 0 0 1 0 1.5H11v3.282l3.666 5.76C15.619 13.04 14.543 15 12.767 15H3.233c-1.776 0-2.852-1.96-1.899-3.458Zm-2.4 6.565a.75.75 0 0 0 .633 1.153h9.534a.75.75 0 0 0 .633-1.153L12.225 10.5h-8.45ZM9.5 2.5h-3V6c0 .143-.04.283-.117.403L4.73 9h6.54L9.617 6.403A.746.746 0 0 1 9.5 6Z"></path></svg> Copilot API</div>
-<p class="sd-card-text">The <code class="docutils literal notranslate"><span class="pre">Copilot</span></code> struct — <code class="docutils literal notranslate"><span class="pre">investigate()</span></code>, <code class="docutils literal notranslate"><span class="pre">explain(id)</span></code>,
-<code class="docutils literal notranslate"><span class="pre">rank_by_severity()</span></code>, <code class="docutils literal notranslate"><span class="pre">suggest_fix(intent)</span></code> — and the intent
-keyword routing table.</p>
+<p class="sd-card-text">The <code class="docutils literal notranslate"><span class="pre">pccx-ai-copilot</span></code> static helpers (<code class="docutils literal notranslate"><span class="pre">compress_context</span></code>,
+<code class="docutils literal notranslate"><span class="pre">generate_uvm_sequence</span></code>, <code class="docutils literal notranslate"><span class="pre">list_uvm_strategies</span></code>) and the
+Phase 2 <code class="docutils literal notranslate"><span class="pre">pccx-lsp</span></code> provider traits + <code class="docutils literal notranslate"><span class="pre">LspMultiplexer</span></code>.</p>
 </div>
 <a class="sd-stretched-link sd-hide-link-text reference internal" href="copilot.html"><span class="doc">Copilot API</span></a></div>
 </div>
@@ -515,8 +519,9 @@ keyword routing table.</p>
 <div class="sd-card-body docutils">
 <div class="sd-card-title sd-font-weight-bold docutils">
 <svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-milestone sd-mr-1" viewBox="0 0 16 16" aria-hidden="true"><path d="M7.75 0a.75.75 0 0 1 .75.75V3h3.634c.414 0 .814.147 1.13.414l2.07 1.75a1.75 1.75 0 0 1 0 2.672l-2.07 1.75a1.75 1.75 0 0 1-1.13.414H8.5v5.25a.75.75 0 0 1-1.5 0V10H2.75A1.75 1.75 0 0 1 1 8.25v-3.5C1 3.784 1.784 3 2.75 3H7V.75A.75.75 0 0 1 7.75 0Zm4.384 8.5a.25.25 0 0 0 .161-.06l2.07-1.75a.248.248 0 0 0 0-.38l-2.07-1.75a.25.25 0 0 0-.161-.06H2.75a.25.25 0 0 0-.25.25v3.5c0 .138.112.25.25.25h9.384Z"></path></svg> Research lineage</div>
-<p class="sd-card-text">Auto-generated table of every arxiv paper each analyzer / UVM
-strategy implements. Updated via <code class="docutils literal notranslate"><span class="pre">pccx_analyze</span> <span class="pre">--research-list</span></code>.</p>
+<p class="sd-card-text">Placeholder while the citation registry is rebuilt — the
+pre-Phase-1 <code class="docutils literal notranslate"><span class="pre">pccx_core::research::CITATIONS</span></code> module was
+removed in the module exodus and has not yet re-landed.</p>
 </div>
 <a class="sd-stretched-link sd-hide-link-text reference internal" href="research.html"><span class="doc">pccx-lab research lineage</span></a></div>
 </div>

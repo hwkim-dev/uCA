@@ -462,9 +462,12 @@
 방출하는 <code class="docutils literal notranslate"><span class="pre">.pccx</span></code> 바이너리 트레이스를 수집하여 타임라인 / roofline /
 bottleneck 윈도 / waveform / Vivado 합성 리포트 / AI 구동 UVM 전략을
 단일 Tauri v2 창에 표면화한다.</p>
-<p>이 섹션은 툴의 내부 표면 — <code class="docutils literal notranslate"><span class="pre">TraceAnalyzer</span></code> 레지스트리, <code class="docutils literal notranslate"><span class="pre">Copilot</span></code>
-자동화 파사드, 커맨드라인 바이너리, 그리고 각 분석기를 논문에 연결
-시키는 연구 계보 — 를 문서화한다.</p>
+<p>이 섹션은 툴의 내부 표면 — 모든 크레이트가 trait object 를 걸기 위해
+사용하는 Phase 1 플러그인 레지스트리 프리미티브, 현재
+<code class="docutils literal notranslate"><span class="pre">pccx-ai-copilot</span></code> + <code class="docutils literal notranslate"><span class="pre">pccx-lsp</span></code> IntelliSense 파사드, 워크스페이스
+분할 이후 크레이트에 분산된 커맨드라인 바이너리, 그리고 인용
+레지스트리가 새 홈에 착륙할 때 갱신될 연구 계보 플레이스홀더 — 를
+문서화한다.</p>
 <p>사용자 지향 데스크톱 앱 자체는 별도
 <a class="reference external" href="https://hwkim-dev.github.io/pccx/ko/lab/">pccx-lab 사이트</a> 참고.</p>
 <div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
@@ -483,9 +486,9 @@ bottleneck 윈도 / waveform / Vivado 합성 리포트 / AI 구동 UVM 전략을
 <div class="sd-card-body docutils">
 <div class="sd-card-title sd-font-weight-bold docutils">
 <svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-terminal sd-mr-1" viewBox="0 0 16 16" aria-hidden="true"><path d="M0 2.75C0 1.784.784 1 1.75 1h12.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 14.25 15H1.75A1.75 1.75 0 0 1 0 13.25Zm1.75-.25a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25V2.75a.25.25 0 0 0-.25-.25ZM7.25 8a.749.749 0 0 1-.22.53l-2.25 2.25a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L5.44 8 3.72 6.28a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l2.25 2.25c.141.14.22.331.22.53Zm1.5 1.5h3a.75.75 0 0 1 0 1.5h-3a.75.75 0 0 1 0-1.5Z"></path></svg> CLI 레퍼런스</div>
-<p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">pccx_analyze</span></code> 모드 (pretty / JSON / Markdown / synth /
-<code class="docutils literal notranslate"><span class="pre">--compare</span></code> / <code class="docutils literal notranslate"><span class="pre">--research-list</span></code> / <code class="docutils literal notranslate"><span class="pre">--explain</span></code>),
-<code class="docutils literal notranslate"><span class="pre">pccx_cli</span></code>, <code class="docutils literal notranslate"><span class="pre">from_xsim_log</span></code>.</p>
+<p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">pccx_cli</span></code>, <code class="docutils literal notranslate"><span class="pre">generator</span></code>, <code class="docutils literal notranslate"><span class="pre">from_xsim_log</span></code>,
+<code class="docutils literal notranslate"><span class="pre">pccx_golden_diff</span></code> — 오늘 pccx-lab 이 출하하는 네 바이너리와
+재착륙 대기 중인 표면.</p>
 </div>
 <a class="sd-stretched-link sd-hide-link-text reference internal" href="cli.html"><span class="doc">CLI 레퍼런스</span></a></div>
 </div>
@@ -494,8 +497,9 @@ bottleneck 윈도 / waveform / Vivado 합성 리포트 / AI 구동 UVM 전략을
 <div class="sd-card-body docutils">
 <div class="sd-card-title sd-font-weight-bold docutils">
 <svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-graph sd-mr-1" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 1.75V13.5h13.75a.75.75 0 0 1 0 1.5H.75a.75.75 0 0 1-.75-.75V1.75a.75.75 0 0 1 1.5 0Zm14.28 2.53-5.25 5.25a.75.75 0 0 1-1.06 0L7 7.06 4.28 9.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.25-3.25a.75.75 0 0 1 1.06 0L10 7.94l4.72-4.72a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Z"></path></svg> 분석기 API</div>
-<p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">TraceAnalyzer</span></code> 트레이트, 16 개 빌트인 레지스트리,
-단일 파일로 신규 분석을 랜딩하는 법.</p>
+<p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">PluginRegistry&lt;P&gt;</span></code> 프리미티브, <code class="docutils literal notranslate"><span class="pre">Plugin</span></code> /
+<code class="docutils literal notranslate"><span class="pre">PluginMetadata</span></code> 슈퍼트레이트, 각 크레이트가 자체 플러그인
+트레이트를 거기에 거는 방법.</p>
 </div>
 <a class="sd-stretched-link sd-hide-link-text reference internal" href="analyzer_api.html"><span class="doc">분석기 API</span></a></div>
 </div>
@@ -504,9 +508,9 @@ bottleneck 윈도 / waveform / Vivado 합성 리포트 / AI 구동 UVM 전략을
 <div class="sd-card-body docutils">
 <div class="sd-card-title sd-font-weight-bold docutils">
 <svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-beaker sd-mr-1" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 5.782V2.5h-.25a.75.75 0 0 1 0-1.5h6.5a.75.75 0 0 1 0 1.5H11v3.282l3.666 5.76C15.619 13.04 14.543 15 12.767 15H3.233c-1.776 0-2.852-1.96-1.899-3.458Zm-2.4 6.565a.75.75 0 0 0 .633 1.153h9.534a.75.75 0 0 0 .633-1.153L12.225 10.5h-8.45ZM9.5 2.5h-3V6c0 .143-.04.283-.117.403L4.73 9h6.54L9.617 6.403A.746.746 0 0 1 9.5 6Z"></path></svg> Copilot API</div>
-<p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">Copilot</span></code> 구조체 — <code class="docutils literal notranslate"><span class="pre">investigate()</span></code>, <code class="docutils literal notranslate"><span class="pre">explain(id)</span></code>,
-<code class="docutils literal notranslate"><span class="pre">rank_by_severity()</span></code>, <code class="docutils literal notranslate"><span class="pre">suggest_fix(intent)</span></code> — 와 의도
-키워드 라우팅 테이블.</p>
+<p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">pccx-ai-copilot</span></code> 정적 헬퍼 (<code class="docutils literal notranslate"><span class="pre">compress_context</span></code>,
+<code class="docutils literal notranslate"><span class="pre">generate_uvm_sequence</span></code>, <code class="docutils literal notranslate"><span class="pre">list_uvm_strategies</span></code>) 와
+Phase 2 <code class="docutils literal notranslate"><span class="pre">pccx-lsp</span></code> provider 트레이트 + <code class="docutils literal notranslate"><span class="pre">LspMultiplexer</span></code>.</p>
 </div>
 <a class="sd-stretched-link sd-hide-link-text reference internal" href="copilot.html"><span class="doc">Copilot API</span></a></div>
 </div>
@@ -515,8 +519,9 @@ bottleneck 윈도 / waveform / Vivado 합성 리포트 / AI 구동 UVM 전략을
 <div class="sd-card-body docutils">
 <div class="sd-card-title sd-font-weight-bold docutils">
 <svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-milestone sd-mr-1" viewBox="0 0 16 16" aria-hidden="true"><path d="M7.75 0a.75.75 0 0 1 .75.75V3h3.634c.414 0 .814.147 1.13.414l2.07 1.75a1.75 1.75 0 0 1 0 2.672l-2.07 1.75a1.75 1.75 0 0 1-1.13.414H8.5v5.25a.75.75 0 0 1-1.5 0V10H2.75A1.75 1.75 0 0 1 1 8.25v-3.5C1 3.784 1.784 3 2.75 3H7V.75A.75.75 0 0 1 7.75 0Zm4.384 8.5a.25.25 0 0 0 .161-.06l2.07-1.75a.248.248 0 0 0 0-.38l-2.07-1.75a.25.25 0 0 0-.161-.06H2.75a.25.25 0 0 0-.25.25v3.5c0 .138.112.25.25.25h9.384Z"></path></svg> 연구 계보</div>
-<p class="sd-card-text">각 분석기 / UVM 전략이 구현하는 arxiv 논문의 자동 생성 테이블.
-<code class="docutils literal notranslate"><span class="pre">pccx_analyze</span> <span class="pre">--research-list</span></code> 로 갱신.</p>
+<p class="sd-card-text">인용 레지스트리 재구축 동안의 플레이스홀더 — Phase 1 이전의
+<code class="docutils literal notranslate"><span class="pre">pccx_core::research::CITATIONS</span></code> 모듈은 모듈 이주에서 제거되어
+아직 재착륙하지 않았다.</p>
 </div>
 <a class="sd-stretched-link sd-hide-link-text reference internal" href="research.html"><span class="doc">pccx-lab 연구 계보</span></a></div>
 </div>

@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title=".pccx File Format Specification" href="../pccx-format.html"><link rel="prev" title="Node Editor" href="../modules/node-editor.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Phase 1 — Workspace / Crate Split Proposal" href="phase1_crate_split.html"><link rel="prev" title="Node Editor" href="../modules/node-editor.html">
         <link rel="canonical" href="https://hwkim-dev.github.io/pccx/en/lab/design/rationale.html">
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
@@ -201,6 +201,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../modules/overview.html">Module Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../modules/node-editor.html">Node Editor</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Design Rationale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase1_crate_split.html">Phase 1 — Workspace / Crate Split Proposal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase2_intellisense.html">Phase 2 — IntelliSense-Level Intelligence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase3_remote_backend.html">Phase 3 — Secure Remote Backend</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase4_insane_reports.html">Phase 4 — Insane-Level Reports &amp; Concept-to-RTL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase5_alphaevolve.html">Phase 5 — AlphaEvolve → OpenEvolve</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../pccx-format.html">.pccx File Format Specification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../verification-workflow.html">Verification Workflow</a></li>
 </ul>
@@ -253,17 +258,25 @@
 </section>
 <section id="module-boundary-rules">
 <h2>Module Boundary Rules<a class="headerlink" href="#module-boundary-rules" title="Link to this heading">¶</a></h2>
-<p>To prevent the downside of a monorepo (spaghetti code), we enforce strict module boundaries based on directories:</p>
+<p>To prevent the downside of a monorepo (spaghetti code), we enforce strict module boundaries.  Phase 1 split the original monolithic <code class="docutils literal notranslate"><span class="pre">core/</span></code> into nine focused crates under <code class="docutils literal notranslate"><span class="pre">crates/</span></code> plus a top-level <code class="docutils literal notranslate"><span class="pre">ui/</span></code>; dependency edges are unidirectional and <code class="docutils literal notranslate"><span class="pre">pccx-core</span></code> is the single sink of the workspace graph (see <code class="docutils literal notranslate"><span class="pre">docs/design/phase1_crate_split.md</span></code> § 3 for the full diagram).</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">core/</span></code>: Pure Rust module. Minimizes external dependencies and strictly forbids importing UI frameworks.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ui/</span></code>: Tauri + React-based module. Only uses the public APIs of <code class="docutils literal notranslate"><span class="pre">core/</span></code> to handle visualization.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">uvm_bridge/</span></code>: The boundary between SystemVerilog/UVM and <code class="docutils literal notranslate"><span class="pre">core/</span></code>. Uses DPI-C or FFI.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ai_copilot/</span></code>: LLM invocation wrapper module. Depends solely on the trace format (e.g., JSON) of <code class="docutils literal notranslate"><span class="pre">core/</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pccx-core</span></code> (<code class="docutils literal notranslate"><span class="pre">crates/core/</span></code>): pure Rust core — .pccx format, trace parsing, hardware model, roofline, bottleneck detection, VCD / chrome-trace writers, step-snapshot IPC, Vivado timing ingest.  Depends on no other workspace crate.  Strictly forbids importing UI frameworks.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pccx-reports</span></code> (<code class="docutils literal notranslate"><span class="pre">crates/reports/</span></code>): Markdown / HTML / PDF report rendering.  Depends on <code class="docutils literal notranslate"><span class="pre">pccx-core</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pccx-verification</span></code> (<code class="docutils literal notranslate"><span class="pre">crates/verification/</span></code>): golden-diff + robust reader gates used by CI and pccx-ide.  Depends on <code class="docutils literal notranslate"><span class="pre">pccx-core</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pccx-authoring</span></code> (<code class="docutils literal notranslate"><span class="pre">crates/authoring/</span></code>): ISA and API TOML compilers.  Depends on <code class="docutils literal notranslate"><span class="pre">pccx-core</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pccx-evolve</span></code> (<code class="docutils literal notranslate"><span class="pre">crates/evolve/</span></code>): speculative-decoding primitives for EAGLE-family strategies; future home of the Phase 5 DSE + surrogate + PRM loop.  Depends on <code class="docutils literal notranslate"><span class="pre">pccx-core</span></code> and <code class="docutils literal notranslate"><span class="pre">pccx-verification</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pccx-lsp</span></code> (<code class="docutils literal notranslate"><span class="pre">crates/lsp/</span></code>): Phase 2 IntelliSense façade — sync and async provider traits, multiplexers, <code class="docutils literal notranslate"><span class="pre">NoopBackend</span></code>, <code class="docutils literal notranslate"><span class="pre">BlockingBridge</span></code>, <code class="docutils literal notranslate"><span class="pre">LspSubprocess</span></code>.  Depends on <code class="docutils literal notranslate"><span class="pre">pccx-core</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pccx-remote</span></code> (<code class="docutils literal notranslate"><span class="pre">crates/remote/</span></code>): Phase 3 backend-daemon scaffold (WireGuard / OIDC / RBAC land later).  Depends on <code class="docutils literal notranslate"><span class="pre">pccx-core</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pccx-uvm-bridge</span></code> (<code class="docutils literal notranslate"><span class="pre">crates/uvm_bridge/</span></code>): DPI-C / FFI boundary between SystemVerilog/UVM and <code class="docutils literal notranslate"><span class="pre">pccx-core</span></code>.  Depends on <code class="docutils literal notranslate"><span class="pre">pccx-core</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pccx-ai-copilot</span></code> (<code class="docutils literal notranslate"><span class="pre">crates/ai_copilot/</span></code>): LLM invocation wrapper.  Depends only on <code class="docutils literal notranslate"><span class="pre">pccx-core</span></code>’s trace surface (JSON or typed).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pccx-ide</span></code> (<code class="docutils literal notranslate"><span class="pre">ui/src-tauri/</span></code>): Tauri shell that consumes <code class="docutils literal notranslate"><span class="pre">pccx-core</span></code>, <code class="docutils literal notranslate"><span class="pre">pccx-reports</span></code>, and <code class="docutils literal notranslate"><span class="pre">pccx-ai-copilot</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ui/</span></code> (non-Cargo): React + Vite frontend; reads from <code class="docutils literal notranslate"><span class="pre">pccx-ide</span></code> over Tauri IPC only.</p></li>
 </ul>
+<p>No crate depends on <code class="docutils literal notranslate"><span class="pre">pccx-ide</span></code> or <code class="docutils literal notranslate"><span class="pre">pccx-remote</span></code> — both are terminal binaries.  The React tree is not a Cargo member; it is outside the workspace graph by design.</p>
 </section>
 <section id="conditions-for-future-separation">
 <h2>Conditions for Future Separation<a class="headerlink" href="#conditions-for-future-separation" title="Link to this heading">¶</a></h2>
-<p>If a specific module (e.g., <code class="docutils literal notranslate"><span class="pre">core/</span></code>) becomes generic enough to be used independently in other projects outside of pccx-lab, we will then consider publishing it as a crate or separating it into its own repository.</p>
+<p>If a specific crate (e.g. <code class="docutils literal notranslate"><span class="pre">pccx-core</span></code> or <code class="docutils literal notranslate"><span class="pre">pccx-verification</span></code>) becomes generic enough to be used independently outside pccx-lab, we will publish it to crates.io or extract it into its own repository.  The Phase 1 split was done with this in mind: every non-core crate already exposes an unstable trait surface (<code class="docutils literal notranslate"><span class="pre">ReportFormat</span></code>, <code class="docutils literal notranslate"><span class="pre">VerificationGate</span></code>, <code class="docutils literal notranslate"><span class="pre">IsaCompiler</span></code>, <code class="docutils literal notranslate"><span class="pre">ApiCompiler</span></code>, <code class="docutils literal notranslate"><span class="pre">CompletionProvider</span></code>, etc.), so “carve out” is a follow-on release task rather than an architectural refactor.</p>
 </section>
 </section>
 
@@ -272,12 +285,12 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../pccx-format.html">
+          <a class="next-page" href="phase1_crate_split.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">.pccx File Format Specification</div>
+                <div class="title">Phase 1 — Workspace / Crate Split Proposal</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>

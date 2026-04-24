@@ -1,18 +1,25 @@
 # 모듈 개요
 
-`pccx-lab` 은 Tauri 2 데스크톱 앱으로, 엄격히 분리된 4개의 Rust /
-TypeScript 모듈을 하나의 **pccx** NPU 검증·프로파일링 IDE 로 묶어줍니다.
+`pccx-lab` 은 **pccx** NPU 아키텍처의 검증·프로파일링 Tauri 2 데스크톱
+앱입니다.  Phase 1 에서 원래 단일 덩어리였던 코어를 `crates/` 하위의
+9 개 집중형 Rust crate 와 최상위 React `ui/` 트리로 분리했습니다.
+각 crate 를 열거하는 대신 본 개요는 네 개의 개념 레이어로 묶어
+보여줍니다 — 전체 목록은 [design/rationale](../design/rationale.md),
+의존성 그래프는 [design/phase1_crate_split](../design/phase1_crate_split.md)
+을 참고하십시오 (후자는 영어 전용).
 
-| 모듈 | 언어 | 의존 | 역할 |
-|------|------|------|------|
-| `core/`        | Rust       | —       | `.pccx` 포맷, 트레이스 분석, roofline / bottleneck / synth-report 파서 |
-| `ui/`          | TypeScript (React + Tauri) | `core/` (IPC 경유) | 쉘, 시각화, 리포트 대시보드 |
-| `uvm_bridge/`  | Rust + DPI-C | `core/` | SystemVerilog / UVM ↔ `core/` 경계 |
-| `ai_copilot/`  | Rust       | `core/` 트레이스 타입만 | LLM + UVM-전략 생성기 래퍼 |
+| 레이어 | crate | 역할 |
+|--------|-------|------|
+| 코어        | `pccx-core`                                                 | `.pccx` 포맷, 트레이스 파싱, 하드웨어 모델, roofline / bottleneck / synth-report 파서 |
+| 파생        | `pccx-reports`, `pccx-verification`, `pccx-authoring`, `pccx-evolve` | 코어 표면을 소비하는 특화 생산자 (리포트, CI 게이트, ISA/API TOML 컴파일러, EAGLE 계열 프리미티브) |
+| IDE · 서비스| `pccx-ide` (Tauri 쉘), `pccx-lsp` (IntelliSense façade), `pccx-remote` (Phase 3 데몬 스캐폴드), `ui/` (React + Vite) | 경험 표면과, 그 위에 꽂히는 네트워크 / 언어 서버 레인 |
+| 브릿지      | `pccx-uvm-bridge`, `pccx-ai-copilot`                        | 비-Rust 경계: DPI-C 로 오가는 SystemVerilog/UVM, LLM 호출 래퍼 |
 
-의존성은 **내부 방향으로만** 흐릅니다. `core/` 는 UI / 프레임워크
-크레이트를 절대 import 하지 않고, `ui/` 는 `core/` 의 공개 API 를
-Tauri 커맨드 브릿지 경유로만 사용합니다.
+의존성은 **안쪽으로만** 흐릅니다 — 모든 비-코어 crate 는 `pccx-core`
+에 의존(전이적으로 아무것도 없음)하고, 어느 crate 도 `pccx-ide` 또는
+`pccx-remote` 에 의존하지 않습니다 (둘 다 터미널 바이너리).
+`pccx-core` 는 UI / 프레임워크 crate 를 import 해선 안 되며, `ui/` 는
+`pccx-ide` 와 Tauri IPC 브릿지로만 통신합니다.
 
 ## 쉘 한눈에
 

@@ -108,7 +108,7 @@ to **Verification → Synth Status**. Three widgets appear:
 
 ## End-to-end testing
 
-The `src/ui/e2e/` pytest suite covers every step of the pipeline:
+The `ui/e2e/` pytest suite covers every step of the pipeline:
 
 | Test | What it proves |
 |------|----------------|
@@ -120,7 +120,7 @@ The `src/ui/e2e/` pytest suite covers every step of the pipeline:
 Run with:
 
 ```bash
-cd src/ui/e2e && .venv/bin/pytest -v
+cd ui/e2e && .venv/bin/pytest -v
 ```
 
 ## Failure modes and debugging

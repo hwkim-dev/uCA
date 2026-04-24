@@ -18,7 +18,7 @@
 ## Step 1 — Launch pccx-lab
 
 ```bash
-cd src/ui
+cd ui
 npm install            # first time only
 npx tauri dev
 ```
@@ -102,7 +102,7 @@ Press **`?`** or **`F1`** anywhere in the app to open a modal that
 lists every registered shortcut.
 
 The shortcut registry is a single source of truth
-(`src/ui/src/useShortcuts.ts`); combined with the `aria-label` pass
+(`ui/src/useShortcuts.ts`); combined with the `aria-label` pass
 (WCAG 2.2 SC 2.1.1 Keyboard, WAI-ARIA 1.2 §5.2.8.4 `aria-label`) you
 can drive the full IDE without a mouse.
 

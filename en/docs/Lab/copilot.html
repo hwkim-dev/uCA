@@ -7,12 +7,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://hwkim-dev.github.io/pccx/docs/Lab/copilot.html" />
 <meta property="og:site_name" content="pccx — Parallel Compute Core eXecutor" />
-<meta property="og:description" content="The Copilot struct is the canonical entry point for every AI-driven workflow in pccx-lab. It wraps: an optional reference to the currently-loaded NpuTrace, the pccx KV260 reference HardwareModel, t..." />
+<meta property="og:description" content="Page in flux. Refreshed 2026-04-24 to match pccx-lab HEAD. The pre-Phase-1 Copilot struct (with investigate(), investigate_summary(), explain(), rank_by_severity(), suggest_fix(), generate_report()..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="https://hwkim-dev.github.io/pccx/_images/social_previews/summary_docs_Lab_copilot_0619088d.png" />
-<meta property="og:image:alt" content="The Copilot struct is the canonical entry point for every AI-driven workflow in pccx-lab. It wraps: an optional reference to the currently-loaded NpuTrace, the pccx KV260 reference HardwareModel, t..." />
-<meta name="description" content="The Copilot struct is the canonical entry point for every AI-driven workflow in pccx-lab. It wraps: an optional reference to the currently-loaded NpuTrace, the pccx KV260 reference HardwareModel, t..." />
+<meta property="og:image" content="https://hwkim-dev.github.io/pccx/_images/social_previews/summary_docs_Lab_copilot_3a64b436.png" />
+<meta property="og:image:alt" content="Page in flux. Refreshed 2026-04-24 to match pccx-lab HEAD. The pre-Phase-1 Copilot struct (with investigate(), investigate_summary(), explain(), rank_by_severity(), suggest_fix(), generate_report()..." />
+<meta name="description" content="Page in flux. Refreshed 2026-04-24 to match pccx-lab HEAD. The pre-Phase-1 Copilot struct (with investigate(), investigate_summary(), explain(), rank_by_severity(), suggest_fix(), generate_report()..." />
 <meta name="twitter:card" content="summary_large_image" />
 
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://hwkim-dev.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hwangwoo Kim","url":"https://hwkim-dev.github.io/hwkim-dev/"},"publisher":{"@type":"Person","name":"Hwangwoo Kim","url":"https://hwkim-dev.github.io/hwkim-dev/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"Copilot API","name":"Copilot API","url":"https://hwkim-dev.github.io/pccx/en/docs/Lab/copilot.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://hwkim-dev.github.io/pccx/en/docs/Lab/copilot.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://hwkim-dev.github.io/pccx/"},"author":{"@type":"Person","name":"Hwangwoo Kim","url":"https://hwkim-dev.github.io/hwkim-dev/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://hwkim-dev.github.io/pccx/"},"datePublished":"2026-04-24","dateModified":"2026-04-24","description":"pccx documentation page: Copilot API. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://hwkim-dev.github.io/pccx/","author":"Hwangwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="pccx-lab research lineage" href="research.html"><link rel="prev" title="Analyzer API" href="analyzer_api.html">
@@ -457,208 +457,213 @@
         <article role="main" id="furo-main-content">
           <section class="tex2jax_ignore mathjax_ignore" id="copilot-api">
 <h1>Copilot API<a class="headerlink" href="#copilot-api" title="Link to this heading">¶</a></h1>
-<p>The <code class="docutils literal notranslate"><span class="pre">Copilot</span></code> struct is the canonical entry point for every
-AI-driven workflow in pccx-lab.  It wraps:</p>
-<ul class="simple">
-<li><p>an optional reference to the currently-loaded <code class="docutils literal notranslate"><span class="pre">NpuTrace</span></code></p></li>
-<li><p>the pccx KV260 reference <code class="docutils literal notranslate"><span class="pre">HardwareModel</span></code></p></li>
-<li><p>the full <code class="docutils literal notranslate"><span class="pre">TraceAnalyzer</span></code> registry from <code class="docutils literal notranslate"><span class="pre">pccx-core</span></code></p></li>
-<li><p>the <code class="docutils literal notranslate"><span class="pre">UvmStrategy</span></code> registry from <code class="docutils literal notranslate"><span class="pre">pccx-ai-copilot::uvm</span></code></p></li>
-</ul>
-<p>Consumers construct one instance per trace load and then drive it
-through the methods below.</p>
-<section id="construction">
-<h2>Construction<a class="headerlink" href="#construction" title="Link to this heading">¶</a></h2>
-<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">pccx_ai_copilot</span><span class="p">::</span><span class="n">Copilot</span><span class="p">;</span>
+<p><em>Page in flux.  Refreshed 2026-04-24 to match pccx-lab HEAD.</em></p>
+<p>The pre-Phase-1 <code class="docutils literal notranslate"><span class="pre">Copilot</span></code> struct (with <code class="docutils literal notranslate"><span class="pre">investigate()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">investigate_summary()</span></code>, <code class="docutils literal notranslate"><span class="pre">explain()</span></code>, <code class="docutils literal notranslate"><span class="pre">rank_by_severity()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">suggest_fix()</span></code>, <code class="docutils literal notranslate"><span class="pre">generate_report()</span></code>) has been retired.  Today
+<code class="docutils literal notranslate"><span class="pre">pccx-ai-copilot</span></code> ships a thin set of static helpers for the Tauri UI
+plus two unstable trait scaffolds on which Phase 2 / Phase 5 orchestration
+will land.  The AI-driven natural-language-to-UVM workflow is being
+rebuilt on top of the Phase 2 <strong>pccx-lsp façade</strong> — which landed its
+A-slice (<code class="docutils literal notranslate"><span class="pre">LspMultiplexer</span></code> + <code class="docutils literal notranslate"><span class="pre">NoopBackend</span></code>) and B-slice (async companions,
+<code class="docutils literal notranslate"><span class="pre">BlockingBridge</span></code>, <code class="docutils literal notranslate"><span class="pre">SpawnConfig</span></code> / <code class="docutils literal notranslate"><span class="pre">LspSubprocess</span></code>) in Phase 2 M2.1.</p>
+<p>This page documents what is shippable today.  The richer façade will
+be refreshed as the concrete verible / rust-analyzer / Claude backends
+land against the lsp provider traits.</p>
+<section id="static-helpers-pccx-ai-copilot">
+<h2>Static helpers (<code class="docutils literal notranslate"><span class="pre">pccx-ai-copilot</span></code>)<a class="headerlink" href="#static-helpers-pccx-ai-copilot" title="Link to this heading">¶</a></h2>
+<p>Four functions + one registry constant, all callable without any struct
+construction.  Covers the subset of the old Copilot surface that the
+Tauri UI still needs today.</p>
+<section id="compress-context-cycles-u64-bottlenecks-usize-string">
+<h3><code class="docutils literal notranslate"><span class="pre">compress_context(cycles:</span> <span class="pre">u64,</span> <span class="pre">bottlenecks:</span> <span class="pre">usize)</span> <span class="pre">-&gt;</span> <span class="pre">String</span></code><a class="headerlink" href="#compress-context-cycles-u64-bottlenecks-usize-string" title="Link to this heading">¶</a></h3>
+<p>Compresses trace statistics into a concise LLM prompt prefix.  Output
+is ~300 characters — safe to prepend to any user query.</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">pccx_ai_copilot</span><span class="p">::</span><span class="n">compress_context</span><span class="p">;</span>
 
-<span class="kd">let</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Copilot</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="nb">Some</span><span class="p">(</span><span class="o">&amp;</span><span class="n">trace</span><span class="p">));</span>
-<span class="c1">// or</span>
-<span class="kd">let</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Copilot</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="nb">None</span><span class="p">);</span><span class="w">   </span><span class="c1">// no trace yet; investigate() returns []</span>
-</pre></div>
-</div>
-<p>Callers that want to extend the analyzer registry mutate
-<code class="docutils literal notranslate"><span class="pre">c.analyzers.push(...)</span></code> before the first <code class="docutils literal notranslate"><span class="pre">investigate()</span></code> call.</p>
-</section>
-<section id="methods">
-<h2>Methods<a class="headerlink" href="#methods" title="Link to this heading">¶</a></h2>
-<section id="investigate-vec-analysisreport">
-<h3><code class="docutils literal notranslate"><span class="pre">investigate()</span> <span class="pre">-&gt;</span> <span class="pre">Vec&lt;AnalysisReport&gt;</span></code><a class="headerlink" href="#investigate-vec-analysisreport" title="Link to this heading">¶</a></h3>
-<p>Runs every registered analyzer against the trace.  Returns reports
-in registry order.  Empty when no trace is loaded.</p>
-</section>
-<section id="investigate-summary-string">
-<h3><code class="docutils literal notranslate"><span class="pre">investigate_summary()</span> <span class="pre">-&gt;</span> <span class="pre">String</span></code><a class="headerlink" href="#investigate-summary-string" title="Link to this heading">¶</a></h3>
-<p>Collapses all reports into a single LLM-ready system prompt.  Each
-line is <code class="docutils literal notranslate"><span class="pre">&quot;-</span> <span class="pre">[&lt;analyzer_id&gt;]</span> <span class="pre">&lt;summary&gt;&quot;</span></code>; total length is bounded by
-the number of analyzers × 500 chars per summary.</p>
-<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="n">prompt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">investigate_summary</span><span class="p">();</span>
-<span class="c1">// Trace analysis summary (automated):</span>
-<span class="c1">// - [roofline] AI 0.69 ops/byte · 321.4 GOPS (0% of peak) · memory-bound</span>
-<span class="c1">// - [dma_util] DMA SATURATED: read 46% + write 46% pinned — compute only 4%</span>
-<span class="c1">// - [bottleneck] 19179 windows · DmaRead×12787, DmaWrite×6392</span>
-<span class="c1">// ...</span>
-</pre></div>
-</div>
-<p>Feed this straight into an LLM’s <code class="docutils literal notranslate"><span class="pre">system</span></code> channel.</p>
-</section>
-<section id="rank-by-severity-vec-analysisreport">
-<h3><code class="docutils literal notranslate"><span class="pre">rank_by_severity()</span> <span class="pre">-&gt;</span> <span class="pre">Vec&lt;AnalysisReport&gt;</span></code><a class="headerlink" href="#rank-by-severity-vec-analysisreport" title="Link to this heading">¶</a></h3>
-<p>Server-side equivalent of the dashboard’s severity sort.  Returns the
-reports reordered so error-class findings come first, then warnings,
-then informational entries.  Ties break on registry declaration order
-so the output is stable across repeated calls.</p>
-<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="n">top</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">rank_by_severity</span><span class="p">();</span>
-<span class="fm">println!</span><span class="p">(</span><span class="s">&quot;most urgent: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">top</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">summary</span><span class="p">);</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">ctx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">compress_context</span><span class="p">(</span><span class="mi">5_423_940</span><span class="p">,</span><span class="w"> </span><span class="mi">19_179</span><span class="p">);</span>
+<span class="c1">// &quot;NPU trace: 5423940 total simulation cycles across a 32×32 systolic</span>
+<span class="c1">//  MAC array with 32 cores at 1 GHz (est. 5423.9 µs wall-time). 19179</span>
+<span class="c1">//  high-occupancy DMA bottleneck intervals detected. AXI bus contention</span>
+<span class="c1">//  visible during simultaneous multi-core DMA. Peak theoretical: 2.05</span>
+<span class="c1">//  TOPS.&quot;</span>
 </pre></div>
 </div>
 </section>
-<section id="explain-analyzer-id-str-option-string">
-<h3><code class="docutils literal notranslate"><span class="pre">explain(analyzer_id:</span> <span class="pre">&amp;str)</span> <span class="pre">-&gt;</span> <span class="pre">Option&lt;String&gt;</span></code><a class="headerlink" href="#explain-analyzer-id-str-option-string" title="Link to this heading">¶</a></h3>
-<p>Long-form Markdown explainer for a single analyzer.  Pulls every
-matching <code class="docutils literal notranslate"><span class="pre">research::Citation</span></code> and formats them alongside the analyzer’s
-description and its latest finding.</p>
-<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="n">md</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">explain</span><span class="p">(</span><span class="s">&quot;kv_cache_pressure&quot;</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span>
-<span class="c1">// # KV-Cache Pressure (kv_cache_pressure)</span>
-<span class="c1">// Projects per-decode KV-cache footprint against L2 URAM; cites …</span>
+<section id="generate-uvm-sequence-strategy-str-string">
+<h3><code class="docutils literal notranslate"><span class="pre">generate_uvm_sequence(strategy:</span> <span class="pre">&amp;str)</span> <span class="pre">-&gt;</span> <span class="pre">String</span></code><a class="headerlink" href="#generate-uvm-sequence-strategy-str-string" title="Link to this heading">¶</a></h3>
+<p>Returns a SystemVerilog UVM sequence stub for a named mitigation
+strategy.  Unknown slugs fall back to a <code class="docutils literal notranslate"><span class="pre">generic_opt_seq</span></code> TODO stub.</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">pccx_ai_copilot</span><span class="p">::</span><span class="n">generate_uvm_sequence</span><span class="p">;</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="n">sv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">generate_uvm_sequence</span><span class="p">(</span><span class="s">&quot;l2_prefetch&quot;</span><span class="p">);</span>
+<span class="c1">// class l2_prefetch_seq extends uvm_sequence;</span>
+<span class="c1">//   `uvm_object_utils(l2_prefetch_seq)</span>
 <span class="c1">//</span>
-<span class="c1">// ## Latest finding</span>
-<span class="c1">// HBM-SPILL: decode 512 tokens → 60000 KB KV …</span>
-<span class="c1">//</span>
-<span class="c1">// ## Research lineage</span>
-<span class="c1">// - **QServe …** (2024) — [2405.04532](…). _Why_: …</span>
+<span class="c1">//   task body();</span>
+<span class="c1">//     // Stagger DMA requests by AXI transaction overhead (15 cycles)</span>
+<span class="c1">//     foreach (cores[i]) begin ...</span>
+<span class="c1">//   endtask</span>
+<span class="c1">// endclass : l2_prefetch_seq</span>
 </pre></div>
 </div>
-<p>Returns <code class="docutils literal notranslate"><span class="pre">None</span></code> when the id is not in the registry, so the UI can
-distinguish “unknown id” from “no trace loaded”.</p>
 </section>
-<section id="suggest-fix-intent-str-string-string">
-<h3><code class="docutils literal notranslate"><span class="pre">suggest_fix(intent:</span> <span class="pre">&amp;str)</span> <span class="pre">-&gt;</span> <span class="pre">(String,</span> <span class="pre">String)</span></code><a class="headerlink" href="#suggest-fix-intent-str-string-string" title="Link to this heading">¶</a></h3>
-<p>Natural-language intent → (strategy_slug, SystemVerilog_stub).
-Uses keyword rules when the slug isn’t in the intent verbatim.</p>
-<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="p">(</span><span class="n">slug</span><span class="p">,</span><span class="w"> </span><span class="n">sv</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">suggest_fix</span><span class="p">(</span><span class="s">&quot;please reduce DMA barrier contention&quot;</span><span class="p">);</span>
-<span class="c1">// slug == &quot;barrier_reduction&quot;</span>
-<span class="c1">// sv   == &quot;class barrier_reduction_seq extends uvm_sequence; …&quot;</span>
-</pre></div>
-</div>
-<p><strong>Keyword routing</strong> — the Copilot looks for these substrings (in
-priority order) and maps them to a canonical strategy:</p>
+<section id="list-uvm-strategies-vec-static-str">
+<h3><code class="docutils literal notranslate"><span class="pre">list_uvm_strategies()</span> <span class="pre">-&gt;</span> <span class="pre">Vec&lt;&amp;'static</span> <span class="pre">str&gt;</span></code><a class="headerlink" href="#list-uvm-strategies-vec-static-str" title="Link to this heading">¶</a></h3>
+<p>Enumerates every strategy slug <code class="docutils literal notranslate"><span class="pre">generate_uvm_sequence</span></code> recognises.  Used
+by UI pickers and by the forthcoming LSP / agent orchestrator to avoid
+hard-coding the match arms.</p>
+<p>Current list (Phase 1 HEAD):</p>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>Intent keywords</p></th>
-<th class="head"><p>Strategy</p></th>
-<th class="head"><p>Research lineage</p></th>
+<tr class="row-odd"><th class="head"><p>slug</p></th>
+<th class="head"><p>what the body does</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">barrier</span></code>, <code class="docutils literal notranslate"><span class="pre">sync</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">barrier_reduction</span></code></p></td>
-<td><p>—</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">l2_prefetch</span></code></p></td>
+<td><p>Stagger DMA reads by AXI transaction overhead.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">prefetch</span></code>, <code class="docutils literal notranslate"><span class="pre">dma</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">l2_prefetch</span></code></p></td>
-<td><p>Packing-Prefetch (arxiv 2508.08457)</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">barrier_reduction</span></code></p></td>
+<td><p>Wavefront barrier in place of global sync.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">thermal</span></code>, <code class="docutils literal notranslate"><span class="pre">tdp</span></code>, <code class="docutils literal notranslate"><span class="pre">power</span></code>, <code class="docutils literal notranslate"><span class="pre">heat</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">back_pressure_gate</span></code></p></td>
-<td><p>KV260 7 W PL TDP; Hybrid-Systolic ISLPED 2025</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">dma_double_buffer</span></code></p></td>
+<td><p>Ping-pong compute / DMA across adjacent tiles.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">latency</span></code>, <code class="docutils literal notranslate"><span class="pre">tail</span></code>, <code class="docutils literal notranslate"><span class="pre">p95</span></code>, <code class="docutils literal notranslate"><span class="pre">p99</span></code>, <code class="docutils literal notranslate"><span class="pre">jitter</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">kv_cache_thrash_probe</span></code></p></td>
-<td><p>HERMES 2025 tail-latency model</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">systolic_pipeline_warmup</span></code></p></td>
+<td><p>Pre-roll the MAC array before the first real tile.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">early</span> <span class="pre">exit</span></code>, <code class="docutils literal notranslate"><span class="pre">edge-cloud</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">early_exit_decoder</span></code></p></td>
-<td><p>arxiv 2505.21594</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">speculative</span></code>, <code class="docutils literal notranslate"><span class="pre">draft</span></code>, <code class="docutils literal notranslate"><span class="pre">spec</span> <span class="pre">decode</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">speculative_draft_probe</span></code></p></td>
-<td><p>OpenPangu NPU (arxiv 2603.03383 — 1.35×)</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">evict</span></code>, <code class="docutils literal notranslate"><span class="pre">sparsif</span></code>, <code class="docutils literal notranslate"><span class="pre">kv</span> <span class="pre">drop</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">sparsified_kv_eviction</span></code></p></td>
-<td><p>LoopServe + EVICPRESS</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">w4a8</span></code>, <code class="docutils literal notranslate"><span class="pre">kv4</span></code>, <code class="docutils literal notranslate"><span class="pre">quantize</span></code>, <code class="docutils literal notranslate"><span class="pre">qserve</span></code>, <code class="docutils literal notranslate"><span class="pre">qoq</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">qoq_kv4_quantize</span></code></p></td>
-<td><p>QServe (arxiv 2405.04532) + QQQ</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">matryoshka</span></code>, <code class="docutils literal notranslate"><span class="pre">subnet</span></code>, <code class="docutils literal notranslate"><span class="pre">e2b</span></code>, <code class="docutils literal notranslate"><span class="pre">e4b</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">matryoshka_subnet_switch</span></code></p></td>
-<td><p>arxiv 2205.13147</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">wavelet</span></code>, <code class="docutils literal notranslate"><span class="pre">low-rank</span></code>, <code class="docutils literal notranslate"><span class="pre">long</span> <span class="pre">context</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">wavelet_attention_probe</span></code></p></td>
-<td><p>arxiv 2312.07590</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">flash</span></code>, <code class="docutils literal notranslate"><span class="pre">tile</span></code>, <code class="docutils literal notranslate"><span class="pre">softmax</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">flash_attention_tile_probe</span></code></p></td>
-<td><p>FlashAttention-2/3</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">moe</span></code>, <code class="docutils literal notranslate"><span class="pre">expert</span></code>, <code class="docutils literal notranslate"><span class="pre">mixture</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">kv_cache_thrash_probe</span></code></p></td>
-<td><p>Switch Transformer (arxiv 2101.03961)</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">throughput</span></code>, <code class="docutils literal notranslate"><span class="pre">core</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">back_pressure_gate</span></code></p></td>
-<td><p>—</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">weight_fifo_preload</span></code></p></td>
+<td><p>Front-load HP weight FIFOs during setup window.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
+<p>Five entries, down from the thirteen-row intent-routing table in the
+pre-Phase-1 doc.  The richer strategy set (<code class="docutils literal notranslate"><span class="pre">back_pressure_gate</span></code>,
+<code class="docutils literal notranslate"><span class="pre">kv_cache_thrash_probe</span></code>, <code class="docutils literal notranslate"><span class="pre">speculative_draft_probe</span></code>, …) has not been
+re-landed; track progress in pccx-lab
+<code class="docutils literal notranslate"><span class="pre">docs/design/phase5_alphaevolve.md</span></code>.</p>
 </section>
-<section id="generate-report-synth-option-synthreport-string">
-<h3><code class="docutils literal notranslate"><span class="pre">generate_report(synth:</span> <span class="pre">Option&lt;&amp;SynthReport&gt;)</span> <span class="pre">-&gt;</span> <span class="pre">String</span></code><a class="headerlink" href="#generate-report-synth-option-synthreport-string" title="Link to this heading">¶</a></h3>
-<p>Delegates to <code class="docutils literal notranslate"><span class="pre">pccx-core::report::render_markdown</span></code>.  Pass a parsed
-<code class="docutils literal notranslate"><span class="pre">SynthReport</span></code> (from <code class="docutils literal notranslate"><span class="pre">synth_report::load_from_files</span></code> or
-<code class="docutils literal notranslate"><span class="pre">synth_runner::run</span></code>) to include utilisation + timing tables.</p>
+<section id="get-available-extensions-vec-extension">
+<h3><code class="docutils literal notranslate"><span class="pre">get_available_extensions()</span> <span class="pre">-&gt;</span> <span class="pre">Vec&lt;Extension&gt;</span></code><a class="headerlink" href="#get-available-extensions-vec-extension" title="Link to this heading">¶</a></h3>
+<p>Returns the extension catalogue the Tauri UI’s Extensions tab renders.
+Covers local LLMs, hardware-acceleration plugins, cloud bridges,
+analysis plugins, and export plugins.  See <code class="docutils literal notranslate"><span class="pre">ExtensionCategory</span></code> in the
+crate source for the enum surface.</p>
 </section>
 </section>
-<section id="registry-extension">
-<h2>Registry extension<a class="headerlink" href="#registry-extension" title="Link to this heading">¶</a></h2>
-<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="c1">// Runtime-register an extra analyzer before investigate().</span>
-<span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Copilot</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="nb">Some</span><span class="p">(</span><span class="o">&amp;</span><span class="n">trace</span><span class="p">));</span>
-<span class="n">c</span><span class="p">.</span><span class="n">analyzers</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="nb">Box</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="n">MyCustomAnalyzer</span><span class="p">));</span>
-<span class="kd">let</span><span class="w"> </span><span class="n">reports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">investigate</span><span class="p">();</span>
-</pre></div>
-</div>
-<p>Strategy registry is queried via <code class="docutils literal notranslate"><span class="pre">uvm::strategies_for_analyzer(id)</span></code> —
-the Copilot uses this to map any analyzer’s findings to a candidate
-mitigation set without hard-coded keyword matching.</p>
-</section>
-<section id="using-it-from-automation">
-<h2>Using it from automation<a class="headerlink" href="#using-it-from-automation" title="Link to this heading">¶</a></h2>
-<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">pccx_ai_copilot</span><span class="p">::</span><span class="n">Copilot</span><span class="p">;</span>
-<span class="k">use</span><span class="w"> </span><span class="n">pccx_core</span><span class="p">::{</span><span class="n">PccxFile</span><span class="p">,</span><span class="w"> </span><span class="n">NpuTrace</span><span class="p">};</span>
-<span class="k">use</span><span class="w"> </span><span class="n">std</span><span class="p">::</span><span class="n">fs</span><span class="p">::</span><span class="n">File</span><span class="p">;</span>
+<section id="unstable-traits-phase-1-m1-2">
+<h2>Unstable traits (Phase 1 M1.2)<a class="headerlink" href="#unstable-traits-phase-1-m1-2" title="Link to this heading">¶</a></h2>
+<p>Two scaffolds that Phase 2 IntelliSense and Phase 5 agent orchestration
+will implement.  Both are public but carry the crate’s “unstable until
+v0.3” marker and are gated behind the <code class="docutils literal notranslate"><span class="pre">plugin-api</span></code> feature.</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="sd">/// Token-budgeted compressor for chat history, trace summary, or doc</span>
+<span class="sd">/// excerpts.  Deterministic head/tail trimmers and learned</span>
+<span class="sd">/// LLMLingua-style compressors both implement this.</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">ContextCompressor</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">compress</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">,</span><span class="w"> </span><span class="n">target_tokens</span><span class="p">:</span><span class="w"> </span><span class="kt">usize</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">String</span><span class="p">;</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="p">;</span>
+<span class="p">}</span>
 
-<span class="k">fn</span><span class="w"> </span><span class="nf">summarise</span><span class="p">(</span><span class="n">path</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">anyhow</span><span class="p">::</span><span class="nb">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">File</span><span class="p">::</span><span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">pccx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PccxFile</span><span class="p">::</span><span class="n">read</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">f</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">trace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NpuTrace</span><span class="p">::</span><span class="n">from_payload</span><span class="p">(</span><span class="o">&amp;</span><span class="n">pccx</span><span class="p">.</span><span class="n">payload</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Copilot</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="nb">Some</span><span class="p">(</span><span class="o">&amp;</span><span class="n">trace</span><span class="p">));</span>
-<span class="w">    </span><span class="nb">Ok</span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="n">investigate_summary</span><span class="p">())</span>
+<span class="sd">/// Runs a single subagent task (log-grinder, research-scout,</span>
+<span class="sd">/// doc-drafter) and returns its reply.  Drives the parallel-subagent</span>
+<span class="sd">/// pattern pccx-ide and pccx-remote share.</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">SubagentRunner</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">task</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">,</span><span class="w"> </span><span class="n">context</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">anyhow</span><span class="p">::</span><span class="nb">Result</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Pairs naturally with <code class="docutils literal notranslate"><span class="pre">pccx_analyze</span> <span class="pre">&lt;trace.pccx&gt;</span></code> for CI pipelines —
-the CLI prints the equivalent of <code class="docutils literal notranslate"><span class="pre">investigate_summary()</span></code> by default.</p>
+<p>No concrete implementations ship with pccx-lab v0.2.x — they land as
+Phase 2 / Phase 5 progress.  Every downstream consumer should treat
+these signatures as subject to change until pccx-lab v0.3.</p>
 </section>
-<section id="error-handling">
-<h2>Error handling<a class="headerlink" href="#error-handling" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">Copilot</span></code> is infallible by design.  Every method returns a value even
-when the trace is missing (empty <code class="docutils literal notranslate"><span class="pre">Vec</span></code> / <code class="docutils literal notranslate"><span class="pre">&quot;No</span> <span class="pre">trace</span> <span class="pre">loaded&quot;</span></code> string /
-empty SV stub / <code class="docutils literal notranslate"><span class="pre">None</span></code> from <code class="docutils literal notranslate"><span class="pre">explain</span></code>).  The caller’s empty-state
-branch is the correct place to decide whether to render a welcome
-screen, toast, or CI skip — never inside the copilot.</p>
+<section id="pccx-lsp-phase-2-m2-1">
+<h2>pccx-lsp (Phase 2 M2.1)<a class="headerlink" href="#pccx-lsp-phase-2-m2-1" title="Link to this heading">¶</a></h2>
+<p>The IntelliSense façade is where the AI / LSP / cache fan-out lives
+going forward.  Three sync provider traits plus their async companions:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">CompletionProvider</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">complete</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">language</span><span class="p">:</span><span class="w"> </span><span class="nc">Language</span><span class="p">,</span><span class="w"> </span><span class="n">file</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">,</span>
+<span class="w">                </span><span class="n">pos</span><span class="p">:</span><span class="w"> </span><span class="nc">SourcePos</span><span class="p">,</span><span class="w"> </span><span class="n">source</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">)</span>
+<span class="w">        </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="n">Completion</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">LspError</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">HoverProvider</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">hover</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">language</span><span class="p">:</span><span class="w"> </span><span class="nc">Language</span><span class="p">,</span><span class="w"> </span><span class="n">file</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">,</span>
+<span class="w">             </span><span class="n">pos</span><span class="p">:</span><span class="w"> </span><span class="nc">SourcePos</span><span class="p">,</span><span class="w"> </span><span class="n">source</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">)</span>
+<span class="w">        </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="nb">Option</span><span class="o">&lt;</span><span class="n">Hover</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">LspError</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">LocationProvider</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">definitions</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">language</span><span class="p">:</span><span class="w"> </span><span class="nc">Language</span><span class="p">,</span><span class="w"> </span><span class="n">file</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">,</span>
+<span class="w">                   </span><span class="n">pos</span><span class="p">:</span><span class="w"> </span><span class="nc">SourcePos</span><span class="p">,</span><span class="w"> </span><span class="n">source</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">)</span>
+<span class="w">        </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="n">SourceRange</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">LspError</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">references</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">language</span><span class="p">:</span><span class="w"> </span><span class="nc">Language</span><span class="p">,</span><span class="w"> </span><span class="n">file</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">,</span>
+<span class="w">                  </span><span class="n">pos</span><span class="p">:</span><span class="w"> </span><span class="nc">SourcePos</span><span class="p">,</span><span class="w"> </span><span class="n">source</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">)</span>
+<span class="w">        </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="n">SourceRange</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">LspError</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Routing happens through <code class="docutils literal notranslate"><span class="pre">LspMultiplexer</span></code>:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">pccx_lsp</span><span class="p">::{</span><span class="n">Language</span><span class="p">,</span><span class="w"> </span><span class="n">LspMultiplexer</span><span class="p">,</span><span class="w"> </span><span class="n">NoopBackend</span><span class="p">};</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LspMultiplexer</span><span class="p">::</span><span class="n">new</span><span class="p">();</span>
+<span class="n">m</span><span class="p">.</span><span class="n">register</span><span class="p">(</span>
+<span class="w">    </span><span class="n">Language</span><span class="p">::</span><span class="n">SystemVerilog</span><span class="p">,</span>
+<span class="w">    </span><span class="nb">Box</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="n">NoopBackend</span><span class="p">),</span><span class="w">   </span><span class="c1">// later: verible wrapper</span>
+<span class="w">    </span><span class="nb">Box</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="n">NoopBackend</span><span class="p">),</span>
+<span class="w">    </span><span class="nb">Box</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="n">NoopBackend</span><span class="p">),</span>
+<span class="p">);</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">completions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">m</span><span class="p">.</span><span class="n">complete</span><span class="p">(</span>
+<span class="w">    </span><span class="n">Language</span><span class="p">::</span><span class="n">SystemVerilog</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;foo.sv&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">SourcePos</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">line</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">character</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="s">&quot;module foo;&quot;</span><span class="p">,</span>
+<span class="p">)</span><span class="o">?</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">NoopBackend</span></code> returns empty results — the deliberate “I have nothing
+here” answer used while a real backend is being wired up.  For async
+workflows, <code class="docutils literal notranslate"><span class="pre">BlockingBridge&lt;P&gt;</span></code> lifts any sync provider into the
+<code class="docutils literal notranslate"><span class="pre">AsyncCompletionProvider</span></code> / <code class="docutils literal notranslate"><span class="pre">AsyncHoverProvider</span></code> / <code class="docutils literal notranslate"><span class="pre">AsyncLocationProvider</span></code>
+trait via <code class="docutils literal notranslate"><span class="pre">tokio::task::spawn_blocking</span></code>.  External LSP servers
+(verible, rust-analyzer, clangd) spawn through <code class="docutils literal notranslate"><span class="pre">SpawnConfig</span></code> +
+<code class="docutils literal notranslate"><span class="pre">LspSubprocess</span></code>; the JSON-RPC codec on top of those pipes lands in a
+follow-on slice.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">CompletionSource</span></code> enum distinguishes results from an upstream LSP,
+a Claude-Haiku fast predictor, a Claude-Sonnet deep predictor, or an
+AST-hash cache — the future AI pipeline feeds back into this enum so
+the UI can render provenance badges next to every suggestion.</p>
+<p>See pccx-lab’s <code class="docutils literal notranslate"><span class="pre">docs/design/phase2_intellisense.md</span></code> for the end-state
+design (AI fan-out, tower-lsp adapter, Monaco wiring).</p>
+</section>
+<section id="ui-facing-static-commands">
+<h2>UI-facing static commands<a class="headerlink" href="#ui-facing-static-commands" title="Link to this heading">¶</a></h2>
+<p>Between now and the full façade, the Tauri UI calls directly into the
+static helpers via <code class="docutils literal notranslate"><span class="pre">invoke(&quot;compress_context&quot;,</span> <span class="pre">…)</span></code>,
+<code class="docutils literal notranslate"><span class="pre">invoke(&quot;generate_uvm_sequence&quot;,</span> <span class="pre">…)</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">invoke(&quot;list_uvm_strategies&quot;)</span></code>.  The bridge is a one-liner per
+function in <code class="docutils literal notranslate"><span class="pre">ui/src-tauri/src/lib.rs</span></code>.  There is no longer a
+single <code class="docutils literal notranslate"><span class="pre">invoke(&quot;copilot_investigate&quot;,</span> <span class="pre">…)</span></code> umbrella call.</p>
+</section>
+<section id="related">
+<h2>Related<a class="headerlink" href="#related" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="analyzer_api.html"><span class="std std-doc">Analyzer API</span></a> — the plugin-registry primitive all
+per-crate plugin traits (including <code class="docutils literal notranslate"><span class="pre">ContextCompressor</span></code> /
+<code class="docutils literal notranslate"><span class="pre">SubagentRunner</span></code>) hang off.</p></li>
+<li><p><a class="reference internal" href="cli.html"><span class="std std-doc">CLI reference</span></a> — the binaries currently shipping; the old
+<code class="docutils literal notranslate"><span class="pre">pccx_analyze</span></code> umbrella does not exist today.</p></li>
+</ul>
 </section>
 <section id="cite-this-page">
 <h2>Cite this page<a class="headerlink" href="#cite-this-page" title="Link to this heading">¶</a></h2>
-<p>If you reference the pccx-lab Copilot’s intent routing, the
-<code class="docutils literal notranslate"><span class="pre">UvmStrategy</span></code> registry, or the research citation surface in a paper
-or AI summary, please cite:</p>
 <div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@misc</span><span class="p">{</span><span class="nl">pccx_lab_copilot_2026</span><span class="p">,</span>
-<span class="w">  </span><span class="na">title</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="s">{The pccx-lab Copilot: natural-language to UVM strategy routing grounded in research citations}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">title</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="s">{pccx-ai-copilot and pccx-lsp: current AI / IntelliSense surface of pccx-lab after Phase 1}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">author</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{Kim, Hwangwoo}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">year</span><span class="w">         </span><span class="p">=</span><span class="w"> </span><span class="s">{2026}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">howpublished</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{\url{https://hwkim-dev.github.io/pccx/en/docs/Lab/copilot.html}}</span><span class="p">,</span>
@@ -666,10 +671,10 @@ or AI summary, please cite:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The Copilot is the reference implementation of the intent→strategy
-mapping documented at <a class="reference external" href="https://hwkim-dev.github.io/pccx/">https://hwkim-dev.github.io/pccx/</a>.  Each UVM
-strategy is grounded in a paper listed in the
-<a class="reference internal" href="research.html"><span class="std std-doc">research lineage table</span></a>.</p>
+<p>The helpers documented here live at
+<a class="reference external" href="https://github.com/hwkim-dev/pccx-lab/blob/main/crates/ai_copilot/src/lib.rs">https://github.com/hwkim-dev/pccx-lab/blob/main/crates/ai_copilot/src/lib.rs</a>;
+the LSP façade at
+<a class="reference external" href="https://github.com/hwkim-dev/pccx-lab/blob/main/crates/lsp/src/lib.rs">https://github.com/hwkim-dev/pccx-lab/blob/main/crates/lsp/src/lib.rs</a>.</p>
 </section>
 </section>
 
@@ -741,19 +746,17 @@ strategy is grounded in a paper listed in the
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Copilot API</a><ul>
-<li><a class="reference internal" href="#construction">Construction</a></li>
-<li><a class="reference internal" href="#methods">Methods</a><ul>
-<li><a class="reference internal" href="#investigate-vec-analysisreport"><code class="docutils literal notranslate"><span class="pre">investigate()</span> <span class="pre">-&gt;</span> <span class="pre">Vec&lt;AnalysisReport&gt;</span></code></a></li>
-<li><a class="reference internal" href="#investigate-summary-string"><code class="docutils literal notranslate"><span class="pre">investigate_summary()</span> <span class="pre">-&gt;</span> <span class="pre">String</span></code></a></li>
-<li><a class="reference internal" href="#rank-by-severity-vec-analysisreport"><code class="docutils literal notranslate"><span class="pre">rank_by_severity()</span> <span class="pre">-&gt;</span> <span class="pre">Vec&lt;AnalysisReport&gt;</span></code></a></li>
-<li><a class="reference internal" href="#explain-analyzer-id-str-option-string"><code class="docutils literal notranslate"><span class="pre">explain(analyzer_id:</span> <span class="pre">&amp;str)</span> <span class="pre">-&gt;</span> <span class="pre">Option&lt;String&gt;</span></code></a></li>
-<li><a class="reference internal" href="#suggest-fix-intent-str-string-string"><code class="docutils literal notranslate"><span class="pre">suggest_fix(intent:</span> <span class="pre">&amp;str)</span> <span class="pre">-&gt;</span> <span class="pre">(String,</span> <span class="pre">String)</span></code></a></li>
-<li><a class="reference internal" href="#generate-report-synth-option-synthreport-string"><code class="docutils literal notranslate"><span class="pre">generate_report(synth:</span> <span class="pre">Option&lt;&amp;SynthReport&gt;)</span> <span class="pre">-&gt;</span> <span class="pre">String</span></code></a></li>
+<li><a class="reference internal" href="#static-helpers-pccx-ai-copilot">Static helpers (<code class="docutils literal notranslate"><span class="pre">pccx-ai-copilot</span></code>)</a><ul>
+<li><a class="reference internal" href="#compress-context-cycles-u64-bottlenecks-usize-string"><code class="docutils literal notranslate"><span class="pre">compress_context(cycles:</span> <span class="pre">u64,</span> <span class="pre">bottlenecks:</span> <span class="pre">usize)</span> <span class="pre">-&gt;</span> <span class="pre">String</span></code></a></li>
+<li><a class="reference internal" href="#generate-uvm-sequence-strategy-str-string"><code class="docutils literal notranslate"><span class="pre">generate_uvm_sequence(strategy:</span> <span class="pre">&amp;str)</span> <span class="pre">-&gt;</span> <span class="pre">String</span></code></a></li>
+<li><a class="reference internal" href="#list-uvm-strategies-vec-static-str"><code class="docutils literal notranslate"><span class="pre">list_uvm_strategies()</span> <span class="pre">-&gt;</span> <span class="pre">Vec&lt;&amp;'static</span> <span class="pre">str&gt;</span></code></a></li>
+<li><a class="reference internal" href="#get-available-extensions-vec-extension"><code class="docutils literal notranslate"><span class="pre">get_available_extensions()</span> <span class="pre">-&gt;</span> <span class="pre">Vec&lt;Extension&gt;</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#registry-extension">Registry extension</a></li>
-<li><a class="reference internal" href="#using-it-from-automation">Using it from automation</a></li>
-<li><a class="reference internal" href="#error-handling">Error handling</a></li>
+<li><a class="reference internal" href="#unstable-traits-phase-1-m1-2">Unstable traits (Phase 1 M1.2)</a></li>
+<li><a class="reference internal" href="#pccx-lsp-phase-2-m2-1">pccx-lsp (Phase 2 M2.1)</a></li>
+<li><a class="reference internal" href="#ui-facing-static-commands">UI-facing static commands</a></li>
+<li><a class="reference internal" href="#related">Related</a></li>
 <li><a class="reference internal" href="#cite-this-page">Cite this page</a></li>
 </ul>
 </li>

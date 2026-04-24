@@ -2,7 +2,7 @@
 
 > **Version:** 0.2 (format major: 0x01, minor: 0x01)  
 > **Status:** Active  
-> **Source of truth:** `src/core/src/pccx_format.rs`
+> **Source of truth:** `crates/core/src/pccx_format.rs`
 
 ## Overview
 

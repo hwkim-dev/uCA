@@ -201,6 +201,11 @@
 <li class="toctree-l1"><a class="reference internal" href="modules/overview.html">Module Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules/node-editor.html">Node Editor</a></li>
 <li class="toctree-l1"><a class="reference internal" href="design/rationale.html">Design Rationale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design/phase1_crate_split.html">Phase 1 — Workspace / Crate Split Proposal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design/phase2_intellisense.html">Phase 2 — IntelliSense-Level Intelligence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design/phase3_remote_backend.html">Phase 3 — Secure Remote Backend</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design/phase4_insane_reports.html">Phase 4 — Insane-Level Reports &amp; Concept-to-RTL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design/phase5_alphaevolve.html">Phase 5 — AlphaEvolve → OpenEvolve</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pccx-format.html">.pccx File Format Specification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="verification-workflow.html">Verification Workflow</a></li>
 </ul>
@@ -262,7 +267,7 @@ checkout. Run that first if you do not yet have a trace.</p></li>
 <hr class="docutils" />
 <section id="step-1-launch-pccx-lab">
 <h2>Step 1 — Launch pccx-lab<a class="headerlink" href="#step-1-launch-pccx-lab" title="Link to this heading">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>src/ui
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>ui
 npm<span class="w"> </span>install<span class="w">            </span><span class="c1"># first time only</span>
 npx<span class="w"> </span>tauri<span class="w"> </span>dev
 </pre></div>
@@ -335,7 +340,7 @@ surfaces the dominant contended window with an AI recommendation.</p></li>
 <p>Press <strong><code class="docutils literal notranslate"><span class="pre">?</span></code></strong> or <strong><code class="docutils literal notranslate"><span class="pre">F1</span></code></strong> anywhere in the app to open a modal that
 lists every registered shortcut.</p>
 <p>The shortcut registry is a single source of truth
-(<code class="docutils literal notranslate"><span class="pre">src/ui/src/useShortcuts.ts</span></code>); combined with the <code class="docutils literal notranslate"><span class="pre">aria-label</span></code> pass
+(<code class="docutils literal notranslate"><span class="pre">ui/src/useShortcuts.ts</span></code>); combined with the <code class="docutils literal notranslate"><span class="pre">aria-label</span></code> pass
 (WCAG 2.2 SC 2.1.1 Keyboard, WAI-ARIA 1.2 §5.2.8.4 <code class="docutils literal notranslate"><span class="pre">aria-label</span></code>) you
 can drive the full IDE without a mouse.</p>
 </section>

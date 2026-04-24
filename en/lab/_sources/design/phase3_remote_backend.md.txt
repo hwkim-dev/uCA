@@ -69,7 +69,7 @@ event yanks the namespace in ~100 ms.
 
 ## 5. REST + WebSocket surface
 
-Already drafted in `src/remote/openapi.yaml`.  Five endpoint families:
+Already drafted in `crates/remote/openapi.yaml`.  Five endpoint families:
 
 | Family | Prefix | Purpose |
 |---|---|---|

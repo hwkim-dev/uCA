@@ -7,12 +7,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://hwkim-dev.github.io/pccx/docs/Lab/architecture.html" />
 <meta property="og:site_name" content="pccx — Parallel Compute Core eXecutor" />
-<meta property="og:description" content="Last revised: 2026-04-22. pccx-lab is the desktop profiler + verification IDE for the pccx v002 NPU architecture. It ingests.pccx binary traces emitted by xsim testbenches on the companion pccx-FPG..." />
+<meta property="og:description" content="Last revised: 2026-04-24. pccx-lab is the desktop profiler + verification IDE for the pccx v002 NPU architecture. It ingests.pccx binary traces emitted by xsim testbenches on the companion pccx-FPG..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="https://hwkim-dev.github.io/pccx/_images/social_previews/summary_docs_Lab_architecture_d02b14e8.png" />
-<meta property="og:image:alt" content="Last revised: 2026-04-22. pccx-lab is the desktop profiler + verification IDE for the pccx v002 NPU architecture. It ingests.pccx binary traces emitted by xsim testbenches on the companion pccx-FPG..." />
-<meta name="description" content="Last revised: 2026-04-22. pccx-lab is the desktop profiler + verification IDE for the pccx v002 NPU architecture. It ingests.pccx binary traces emitted by xsim testbenches on the companion pccx-FPG..." />
+<meta property="og:image" content="https://hwkim-dev.github.io/pccx/_images/social_previews/summary_docs_Lab_architecture_387f81e8.png" />
+<meta property="og:image:alt" content="Last revised: 2026-04-24. pccx-lab is the desktop profiler + verification IDE for the pccx v002 NPU architecture. It ingests.pccx binary traces emitted by xsim testbenches on the companion pccx-FPG..." />
+<meta name="description" content="Last revised: 2026-04-24. pccx-lab is the desktop profiler + verification IDE for the pccx v002 NPU architecture. It ingests.pccx binary traces emitted by xsim testbenches on the companion pccx-FPG..." />
 <meta name="twitter:card" content="summary_large_image" />
 
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://hwkim-dev.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hwangwoo Kim","url":"https://hwkim-dev.github.io/hwkim-dev/"},"publisher":{"@type":"Person","name":"Hwangwoo Kim","url":"https://hwkim-dev.github.io/hwkim-dev/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"Architecture Overview","name":"Architecture Overview","url":"https://hwkim-dev.github.io/pccx/en/docs/Lab/architecture.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://hwkim-dev.github.io/pccx/en/docs/Lab/architecture.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://hwkim-dev.github.io/pccx/"},"author":{"@type":"Person","name":"Hwangwoo Kim","url":"https://hwkim-dev.github.io/hwkim-dev/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://hwkim-dev.github.io/pccx/"},"datePublished":"2026-04-24","dateModified":"2026-04-24","description":"pccx documentation page: Architecture Overview. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://hwkim-dev.github.io/pccx/","author":"Hwangwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="CLI Reference" href="cli.html"><link rel="prev" title="pccx-lab Handbook" href="index.html">
@@ -457,7 +457,7 @@
         <article role="main" id="furo-main-content">
           <section class="tex2jax_ignore mathjax_ignore" id="architecture-overview">
 <h1>Architecture Overview<a class="headerlink" href="#architecture-overview" title="Link to this heading">¶</a></h1>
-<p><em>Last revised: 2026-04-22.</em></p>
+<p><em>Last revised: 2026-04-24.</em></p>
 <p>pccx-lab is the <strong>desktop profiler + verification IDE</strong> for the pccx v002
 NPU architecture.  It ingests <code class="docutils literal notranslate"><span class="pre">.pccx</span></code> binary traces emitted by xsim
 testbenches on the companion <code class="docutils literal notranslate"><span class="pre">pccx-FPGA-NPU-LLM-kv260</span></code> RTL repo and
@@ -466,75 +466,76 @@ windows, hardware block diagram, Vivado synth utilisation / timing,
 waveform, ISA replay — in a single frameless Tauri v2 window.</p>
 <p>This document is a flat map of the code base; the “why” of each
 subsystem lives in-line in the source.</p>
+<section id="phase-status">
+<h2>Phase status<a class="headerlink" href="#phase-status" title="Link to this heading">¶</a></h2>
+<p>Phase 1 (workspace split + stable API contracts + plugin registry +
+per-crate CHANGELOG) is complete.  Phase 2 (IntelliSense façade) has
+landed as scaffolding plus the M2.1 A-slice (<code class="docutils literal notranslate"><span class="pre">LspMultiplexer</span></code> +
+<code class="docutils literal notranslate"><span class="pre">NoopBackend</span></code>); <code class="docutils literal notranslate"><span class="pre">tower-lsp</span></code> / <code class="docutils literal notranslate"><span class="pre">lsp-types</span></code> integration is deferred to
+Phase 2 proper.  Phases 3 (remote backend), 4 (insane reports), and
+5 (AlphaEvolve loop) are design-doc-only — see
+<code class="docutils literal notranslate"><span class="pre">docs/design/phase{3,4,5}_*.md</span></code> in the pccx-lab repo.</p>
+</section>
 <section id="repo-layout">
 <h2>Repo layout<a class="headerlink" href="#repo-layout" title="Link to this heading">¶</a></h2>
+<p>After the Phase 1 workspace split, pccx-lab is a 10-member Cargo
+workspace. Each crate exposes an <code class="docutils literal notranslate"><span class="pre">#[unstable]</span></code> trait surface under
+its own <code class="docutils literal notranslate"><span class="pre">plugin-api</span></code> feature so downstream consumers (CLI, IDE,
+remote daemon) can depend on the contract without pulling the whole
+crate.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pccx-lab/
+├── Cargo.toml          Cargo workspace (10 members)
 ├── src/
-│   ├── core/            — pccx-core: headless Rust, no GUI deps
-│   │   ├── src/
-│   │   │   ├── lib.rs            single public surface
-│   │   │   ├── pccx_format.rs    on-disk binary format
-│   │   │   ├── trace.rs          NpuTrace + NpuEvent
-│   │   │   ├── hw_model.rs       KV260 reference constants
-│   │   │   ├── analyzer.rs       TraceAnalyzer trait + 16 builtins ★
-│   │   │   ├── research.rs       Citation registry ★
-│   │   │   ├── synth_runner.rs   Vivado spawn + log parse
-│   │   │   ├── compare.rs        two-trace regression gate
-│   │   │   ├── roofline.rs       Williams/Waterman + hierarchical
-│   │   │   ├── bottleneck.rs     sliding-window contention detector
-│   │   │   ├── report.rs         Markdown renderer
-│   │   │   ├── live_window.rs    rolling stats for PerfChart
-│   │   │   ├── step_snapshot.rs  deterministic cycle → registers
-│   │   │   ├── vivado_timing.rs  report_timing_summary parser
-│   │   │   ├── synth_report.rs   utilisation + timing summaries
-│   │   │   ├── coverage.rs       UVM coverage JSONL merger
-│   │   │   ├── vcd{,_writer}.rs  VCD ingest + emit
-│   │   │   ├── chrome_trace.rs   Perfetto JSON writer
-│   │   │   ├── isa_replay.rs     Spike-style commit log parser
-│   │   │   ├── api_ring.rs       uca_* call ring buffer
-│   │   │   └── bin/
-│   │   │       ├── pccx_cli.rs       Vivado-shaped TCL runner
-│   │   │       ├── pccx_analyze.rs   one-shot analysis CLI ★
-│   │   │       ├── from_xsim_log.rs  xsim log → .pccx converter
-│   │   │       └── generator.rs      synthetic trace generator
-│   │   └── tests/       cross-module integration tests
-│   ├── ai_copilot/      — LLM orchestration, depends on core
-│   │   └── src/
-│   │       ├── lib.rs            catalogue, extensions, uca_sync helper
-│   │       ├── copilot.rs        Copilot struct + investigate/explain/rank ★
-│   │       └── uvm.rs            UvmStrategy trait + 16 strategies ★
-│   ├── uvm_bridge/      — SV / UVM DPI-C adapter, depends on core
-│   └── ui/              — Tauri v2 + React 19 desktop shell
-│       ├── src/                  TypeScript React components
-│       └── src-tauri/            Rust Tauri shell + IPC commands
-├── docs/                — Sphinx source + handbook (migrated here)
-└── scripts/             — local tooling
+│   ├── core/           — pccx-core: headless Rust, no GUI deps
+│   │                     (.pccx format, trace, roofline, bottleneck,
+│   │                     live_window, step_snapshot, synth_report,
+│   │                     vivado_timing, coverage, vcd, chrome_trace,
+│   │                     isa_replay, plugin registry)
+│   ├── reports/        — pccx-reports: Markdown report generator
+│   ├── verification/   — pccx-verification: golden_diff + robust_reader
+│   ├── authoring/      — pccx-authoring: ISA / API TOML compilers
+│   ├── evolve/         — pccx-evolve: speculative-decoding primitives
+│   │                     (EAGLE-family strategies; Phase 5 seed)
+│   ├── remote/         — pccx-remote: Phase 3 backend daemon scaffold
+│   ├── lsp/            — pccx-lsp: Phase 2 IntelliSense façade
+│   │                     (LspMultiplexer + NoopBackend A-slice)
+│   ├── uvm_bridge/     — pccx-uvm-bridge: SV / UVM DPI-C adapter
+│   ├── ai_copilot/     — pccx-ai-copilot: LLM orchestration
+│   └── ui/src-tauri/   — Tauri v2 desktop shell + IPC
+├── ui/                  React 19 + TypeScript + Vite 7 (outside workspace)
+├── docs/                Sphinx source — handbook + Phase 1–5 design docs
+└── scripts/             local tooling
 </pre></div>
 </div>
-<p>★ = research-driven additions (2026-Q2 literature sweep).</p>
 </section>
 <section id="layer-contract">
 <h2>Layer contract<a class="headerlink" href="#layer-contract" title="Link to this heading">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>┌──────────────────────────────────────────────────────────────┐
-│  ui/              React 19 + TypeScript + Vite 7             │
-│                   Calls into Rust via `invoke(&quot;cmd&quot;, args)`. │
+│  ui/                React 19 + TypeScript + Vite 7           │
+│                     Calls into Rust via `invoke(&quot;cmd&quot;,…)`.   │
 ├──────────────────────────────────────────────────────────────┤
-│  src-tauri/       Tauri v2 shell (Rust).  Thin layer — the   │
-│                   real business logic lives in core/.        │
+│  ui/src-tauri/      Tauri v2 shell.  Thin layer — real       │
+│                     logic lives in the workspace crates.     │
 ├──────────────────────────────────────────────────────────────┤
-│  ai_copilot/      Copilot struct; uses core&#39;s analyzer       │
-│  uvm_bridge/      registry.  No UI deps.                     │
+│  ai_copilot/, lsp/, remote/, uvm_bridge/                     │
+│                     Host-facing surfaces.  No UI deps.       │
 ├──────────────────────────────────────────────────────────────┤
-│  core/            Pure Rust.  Zero dependency on ui/ or      │
-│                   ai_copilot/ — the analyser surface is      │
-│                   usable by any host binary.                 │
+│  reports/, verification/, authoring/, evolve/                │
+│                     Analytics / authoring crates.  Depend    │
+│                     only on core/ (and, for evolve, on       │
+│                     verification/).                          │
+├──────────────────────────────────────────────────────────────┤
+│  core/              Pure Rust.  Single sink of the           │
+│                     dependency graph; zero upstream deps.    │
 └──────────────────────────────────────────────────────────────┘
 </pre></div>
 </div>
-<p><strong>Cardinal rule</strong>: <code class="docutils literal notranslate"><span class="pre">core/</span></code> never depends on anything upstream.  New
-analyses live in <code class="docutils literal notranslate"><span class="pre">core/src/analyzer.rs</span></code> and are exposed through
-the <code class="docutils literal notranslate"><span class="pre">TraceAnalyzer</span></code> trait — the UI / Copilot / CLI all pick them up
-automatically.</p>
+<p><strong>Cardinal rule</strong>: <code class="docutils literal notranslate"><span class="pre">core/</span></code> never depends on anything upstream.  The
+workspace graph is acyclic — <code class="docutils literal notranslate"><span class="pre">core/</span></code> is the single sink, and the
+Tauri / remote binaries are terminal.  Cross-crate surfaces are
+trait-based (<code class="docutils literal notranslate"><span class="pre">ReportFormat</span></code>, <code class="docutils literal notranslate"><span class="pre">VerificationGate</span></code>, <code class="docutils literal notranslate"><span class="pre">IsaCompiler</span></code> /
+<code class="docutils literal notranslate"><span class="pre">ApiCompiler</span></code>, <code class="docutils literal notranslate"><span class="pre">SurrogateModel</span></code> / <code class="docutils literal notranslate"><span class="pre">EvoOperator</span></code> / <code class="docutils literal notranslate"><span class="pre">PRMGate</span></code>,
+<code class="docutils literal notranslate"><span class="pre">LspBackend</span></code>) so host consumers can stub or swap implementations.</p>
 </section>
 <section id="data-flow-single-trace">
 <h2>Data flow (single trace)<a class="headerlink" href="#data-flow-single-trace" title="Link to this heading">¶</a></h2>
@@ -564,39 +565,75 @@ automatically.</p>
 </section>
 <section id="extension-hooks">
 <h2>Extension hooks<a class="headerlink" href="#extension-hooks" title="Link to this heading">¶</a></h2>
-<p><strong>Add a new analyzer</strong> (<code class="docutils literal notranslate"><span class="pre">core/</span></code>):</p>
-<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">MyAnalyzer</span><span class="p">;</span>
-<span class="k">impl</span><span class="w"> </span><span class="n">TraceAnalyzer</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">MyAnalyzer</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">id</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="w">            </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;my_analyzer&quot;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">display_name</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;My Analysis&quot;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">description</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="w">   </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;...&quot;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">analyze</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">trace</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">NpuTrace</span><span class="p">,</span><span class="w"> </span><span class="n">hw</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">HardwareModel</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">AnalysisReport</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// ...</span>
+<p><strong>Add a new plugin.</strong>  Phase 1 replaced the monolithic
+<code class="docutils literal notranslate"><span class="pre">TraceAnalyzer</span></code> / <code class="docutils literal notranslate"><span class="pre">analyzer::builtin_analyzers()</span></code> pattern with a
+generic plugin registry in <code class="docutils literal notranslate"><span class="pre">pccx-core::plugin</span></code>.  Each consumer crate
+exposes its own trait alongside the shared <code class="docutils literal notranslate"><span class="pre">Plugin</span></code> supertrait that
+every plugin implements:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">pccx_core</span><span class="p">::</span><span class="n">plugin</span><span class="p">::{</span><span class="n">Plugin</span><span class="p">,</span><span class="w"> </span><span class="n">PluginMetadata</span><span class="p">,</span><span class="w"> </span><span class="n">PLUGIN_API_VERSION</span><span class="p">};</span>
+<span class="k">use</span><span class="w"> </span><span class="n">pccx_reports</span><span class="p">::</span><span class="n">ReportFormat</span><span class="p">;</span>
+
+<span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">MyMarkdownFlavor</span><span class="p">;</span>
+
+<span class="k">impl</span><span class="w"> </span><span class="n">Plugin</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">MyMarkdownFlavor</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">metadata</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">PluginMetadata</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">PluginMetadata</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;markdown-myco&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="n">api_version</span><span class="p">:</span><span class="w"> </span><span class="nc">PLUGIN_API_VERSION</span><span class="p">,</span>
+<span class="w">            </span><span class="n">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Markdown report with company header template&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">impl</span><span class="w"> </span><span class="n">ReportFormat</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">MyMarkdownFlavor</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">render</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">ReportInput</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="fm">todo!</span><span class="p">()</span><span class="w"> </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Register it in <code class="docutils literal notranslate"><span class="pre">analyzer::builtin_analyzers()</span></code> — the CLI and UI pick
-it up instantly.  See the <a class="reference internal" href="analyzer_api.html"><span class="std std-doc">Analyzer API page</span></a> for the
-full recipe plus a reference <code class="docutils literal notranslate"><span class="pre">DmaLatencyAnalyzer</span></code> implementation.</p>
-<p><strong>Add a new UVM strategy</strong> (<code class="docutils literal notranslate"><span class="pre">ai_copilot/</span></code>):</p>
-<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">MyFix</span><span class="p">;</span>
-<span class="k">impl</span><span class="w"> </span><span class="n">UvmStrategy</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">MyFix</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">id</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="w">   </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;my_fix&quot;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">category</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">UvmCategory</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">UvmCategory</span><span class="p">::</span><span class="n">Memory</span><span class="w"> </span><span class="p">}</span>
-<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">applies_to_analyzers</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="p">[</span><span class="o">&amp;&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="p">]</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="o">&amp;</span><span class="p">[</span><span class="s">&quot;my_analyzer&quot;</span><span class="p">]</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">generate</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">GeneratedStub</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* ... */</span><span class="w"> </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
+<p>Register in a <code class="docutils literal notranslate"><span class="pre">PluginRegistry</span></code> on host startup — the CLI, IDE, and
+remote daemon all walk the same registry, so a new plug appears in
+every surface at once.  Plug-trait surfaces available today, by
+consumer crate:</p>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Crate</p></th>
+<th class="head"><p>Plug trait</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-reports</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ReportFormat</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-verification</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">VerificationGate</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-authoring</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">IsaCompiler</span></code>, <code class="docutils literal notranslate"><span class="pre">ApiCompiler</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-evolve</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SurrogateModel</span></code>, <code class="docutils literal notranslate"><span class="pre">EvoOperator</span></code>, <code class="docutils literal notranslate"><span class="pre">PRMGate</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-lsp</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CompletionProvider</span></code>, <code class="docutils literal notranslate"><span class="pre">HoverProvider</span></code>, <code class="docutils literal notranslate"><span class="pre">LocationProvider</span></code> (sync) + their <code class="docutils literal notranslate"><span class="pre">Async*Provider</span></code> companions</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-ai-copilot</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ContextCompressor</span></code>, <code class="docutils literal notranslate"><span class="pre">SubagentRunner</span></code></p></td>
+</tr>
+</tbody>
+</table>
 </div>
-<p>Append to <code class="docutils literal notranslate"><span class="pre">uvm::builtin_strategies()</span></code>.  The Copilot will now map
-“my_analyzer” findings → “my_fix” automatically.</p>
-<p><strong>Add a new Tauri command</strong>: edit <code class="docutils literal notranslate"><span class="pre">src-tauri/src/lib.rs</span></code>, add the
-<code class="docutils literal notranslate"><span class="pre">#[tauri::command]</span></code>-annotated fn, register in <code class="docutils literal notranslate"><span class="pre">invoke_handler!</span></code>.
-<code class="docutils literal notranslate"><span class="pre">Copilot</span></code> already exposes the analyzer surface, so wiring is usually
-just a one-line bridge.</p>
+<p>See the <a class="reference internal" href="analyzer_api.html"><span class="std std-doc">Analyzer API page</span></a> for the full
+registration walkthrough.</p>
+<p><strong>Add a new UVM sequence strategy</strong>: <code class="docutils literal notranslate"><span class="pre">pccx-ai-copilot</span></code> ships a
+curated list of named strategies exposed by <code class="docutils literal notranslate"><span class="pre">list_uvm_strategies()</span></code>.
+Extend the list and the five current strategies’ dispatcher per the
+recipe on the <a class="reference internal" href="copilot.html"><span class="std std-doc">Copilot page</span></a>.</p>
+<p><strong>Add a new Tauri command</strong>: edit <code class="docutils literal notranslate"><span class="pre">ui/src-tauri/src/lib.rs</span></code>, add the
+<code class="docutils literal notranslate"><span class="pre">#[tauri::command]</span></code>-annotated fn, and register it in <code class="docutils literal notranslate"><span class="pre">invoke_handler!</span></code>.
+The workspace crates already expose the reports / verification /
+lsp / copilot surfaces, so the Tauri command is usually a one-line
+bridge over a single library call.</p>
 </section>
 <section id="cross-repo-boundaries">
 <h2>Cross-repo boundaries<a class="headerlink" href="#cross-repo-boundaries" title="Link to this heading">¶</a></h2>
@@ -610,14 +647,13 @@ board bringup scripts drive it read-only.</p></li>
 generators + the <code class="docutils literal notranslate"><span class="pre">reg_golden</span></code> UVM strategy.</p></li>
 </ul>
 </section>
-<section id="build-state-today">
-<h2>Build state (today)<a class="headerlink" href="#build-state-today" title="Link to this heading">¶</a></h2>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>cargo test --workspace                → 131 passed (90 core lib + 25 core bin + 10 uvm + 6 copilot)
-cargo check (src-tauri)               → 0 error
-npx tsc --noEmit -p src/ui            → 0 error
-npm run build (vite)                  → 3.6 MB main chunk + 14 split, 38 s
-</pre></div>
-</div>
+<section id="build-state">
+<h2>Build state<a class="headerlink" href="#build-state" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">cargo</span> <span class="pre">test</span> <span class="pre">--workspace</span></code>, <code class="docutils literal notranslate"><span class="pre">cargo</span> <span class="pre">check</span></code> (including <code class="docutils literal notranslate"><span class="pre">src/ui/src-tauri</span></code>),
+<code class="docutils literal notranslate"><span class="pre">npx</span> <span class="pre">tsc</span> <span class="pre">--noEmit</span> <span class="pre">-p</span> <span class="pre">src/ui</span></code>, and <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">run</span> <span class="pre">build</span></code> (Vite) must pass
+before any PR merge. Per-crate test counts have been in flux since
+the Phase 1 split; each crate’s <code class="docutils literal notranslate"><span class="pre">CHANGELOG.md</span></code> records the numbers
+at the time of its most recent release.</p>
 <p>See <a class="reference internal" href="cli.html"><span class="std std-doc">CLI reference</span></a> for command reference and
 <a class="reference internal" href="copilot.html"><span class="std std-doc">Copilot API</span></a> for the AI automation surface.</p>
 </section>
@@ -709,12 +745,13 @@ the tool, please link back to the canonical site.</p>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Architecture Overview</a><ul>
+<li><a class="reference internal" href="#phase-status">Phase status</a></li>
 <li><a class="reference internal" href="#repo-layout">Repo layout</a></li>
 <li><a class="reference internal" href="#layer-contract">Layer contract</a></li>
 <li><a class="reference internal" href="#data-flow-single-trace">Data flow (single trace)</a></li>
 <li><a class="reference internal" href="#extension-hooks">Extension hooks</a></li>
 <li><a class="reference internal" href="#cross-repo-boundaries">Cross-repo boundaries</a></li>
-<li><a class="reference internal" href="#build-state-today">Build state (today)</a></li>
+<li><a class="reference internal" href="#build-state">Build state</a></li>
 <li><a class="reference internal" href="#cite-this-page">Cite this page</a></li>
 </ul>
 </li>

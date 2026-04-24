@@ -9,13 +9,22 @@ In the initial design, we considered a 5-repo structure (simulator / frontend / 
 
 ## Module Boundary Rules
 
-To prevent the downside of a monorepo (spaghetti code), we enforce strict module boundaries based on directories:
+To prevent the downside of a monorepo (spaghetti code), we enforce strict module boundaries.  Phase 1 split the original monolithic `core/` into nine focused crates under `crates/` plus a top-level `ui/`; dependency edges are unidirectional and `pccx-core` is the single sink of the workspace graph (see `docs/design/phase1_crate_split.md` § 3 for the full diagram).
 
-- `core/`: Pure Rust module. Minimizes external dependencies and strictly forbids importing UI frameworks.
-- `ui/`: Tauri + React-based module. Only uses the public APIs of `core/` to handle visualization.
-- `uvm_bridge/`: The boundary between SystemVerilog/UVM and `core/`. Uses DPI-C or FFI.
-- `ai_copilot/`: LLM invocation wrapper module. Depends solely on the trace format (e.g., JSON) of `core/`.
+- `pccx-core` (`crates/core/`): pure Rust core — .pccx format, trace parsing, hardware model, roofline, bottleneck detection, VCD / chrome-trace writers, step-snapshot IPC, Vivado timing ingest.  Depends on no other workspace crate.  Strictly forbids importing UI frameworks.
+- `pccx-reports` (`crates/reports/`): Markdown / HTML / PDF report rendering.  Depends on `pccx-core`.
+- `pccx-verification` (`crates/verification/`): golden-diff + robust reader gates used by CI and pccx-ide.  Depends on `pccx-core`.
+- `pccx-authoring` (`crates/authoring/`): ISA and API TOML compilers.  Depends on `pccx-core`.
+- `pccx-evolve` (`crates/evolve/`): speculative-decoding primitives for EAGLE-family strategies; future home of the Phase 5 DSE + surrogate + PRM loop.  Depends on `pccx-core` and `pccx-verification`.
+- `pccx-lsp` (`crates/lsp/`): Phase 2 IntelliSense façade — sync and async provider traits, multiplexers, `NoopBackend`, `BlockingBridge`, `LspSubprocess`.  Depends on `pccx-core`.
+- `pccx-remote` (`crates/remote/`): Phase 3 backend-daemon scaffold (WireGuard / OIDC / RBAC land later).  Depends on `pccx-core`.
+- `pccx-uvm-bridge` (`crates/uvm_bridge/`): DPI-C / FFI boundary between SystemVerilog/UVM and `pccx-core`.  Depends on `pccx-core`.
+- `pccx-ai-copilot` (`crates/ai_copilot/`): LLM invocation wrapper.  Depends only on `pccx-core`'s trace surface (JSON or typed).
+- `pccx-ide` (`ui/src-tauri/`): Tauri shell that consumes `pccx-core`, `pccx-reports`, and `pccx-ai-copilot`.
+- `ui/` (non-Cargo): React + Vite frontend; reads from `pccx-ide` over Tauri IPC only.
+
+No crate depends on `pccx-ide` or `pccx-remote` — both are terminal binaries.  The React tree is not a Cargo member; it is outside the workspace graph by design.
 
 ## Conditions for Future Separation
 
-If a specific module (e.g., `core/`) becomes generic enough to be used independently in other projects outside of pccx-lab, we will then consider publishing it as a crate or separating it into its own repository.
+If a specific crate (e.g. `pccx-core` or `pccx-verification`) becomes generic enough to be used independently outside pccx-lab, we will publish it to crates.io or extract it into its own repository.  The Phase 1 split was done with this in mind: every non-core crate already exposes an unstable trait surface (`ReportFormat`, `VerificationGate`, `IsaCompiler`, `ApiCompiler`, `CompletionProvider`, etc.), so "carve out" is a follow-on release task rather than an architectural refactor.

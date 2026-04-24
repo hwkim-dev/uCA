@@ -201,6 +201,11 @@
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Module Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="node-editor.html">Node Editor</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../design/rationale.html">Design Rationale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/phase1_crate_split.html">Phase 1 — Workspace / Crate Split Proposal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/phase2_intellisense.html">Phase 2 — IntelliSense-Level Intelligence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/phase3_remote_backend.html">Phase 3 — Secure Remote Backend</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/phase4_insane_reports.html">Phase 4 — Insane-Level Reports &amp; Concept-to-RTL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/phase5_alphaevolve.html">Phase 5 — AlphaEvolve → OpenEvolve</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../pccx-format.html">.pccx File Format Specification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../verification-workflow.html">Verification Workflow</a></li>
 </ul>
@@ -243,45 +248,47 @@
         <article role="main" id="furo-main-content">
           <section id="module-overview">
 <h1>Module Overview<a class="headerlink" href="#module-overview" title="Link to this heading">¶</a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">pccx-lab</span></code> is a Tauri 2 desktop app that bundles four strictly-separated
-Rust / TypeScript modules into a single verification + profiling IDE
-for the <strong>pccx</strong> NPU architecture.</p>
+<p><code class="docutils literal notranslate"><span class="pre">pccx-lab</span></code> is a Tauri 2 desktop app for verification and profiling
+of the <strong>pccx</strong> NPU architecture.  Phase 1 of the roadmap split the
+original monolithic core into nine focused Rust crates under
+<code class="docutils literal notranslate"><span class="pre">crates/</span></code> plus a top-level React <code class="docutils literal notranslate"><span class="pre">ui/</span></code> tree.  Rather than enumerate
+each crate here, the overview groups them into four conceptual
+layers — see <a class="reference internal" href="../design/rationale.html"><span class="std std-doc">design/rationale</span></a> for the full
+list and <a class="reference internal" href="../design/phase1_crate_split.html"><span class="std std-doc">design/phase1_crate_split</span></a>
+for the dependency graph.</p>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>Module</p></th>
-<th class="head"><p>Language</p></th>
-<th class="head"><p>Depends on</p></th>
+<tr class="row-odd"><th class="head"><p>Layer</p></th>
+<th class="head"><p>Crates</p></th>
 <th class="head"><p>Role</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">core/</span></code></p></td>
-<td><p>Rust</p></td>
-<td><p>—</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">.pccx</span></code> format, trace analysis, roofline + bottleneck + synth-report parsers</p></td>
+<tr class="row-even"><td><p>Core</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pccx-core</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">.pccx</span></code> format, trace parsing, hardware model, roofline + bottleneck + synth-report parsers</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ui/</span></code></p></td>
-<td><p>TypeScript (React + Tauri)</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">core/</span></code> (via IPC)</p></td>
-<td><p>shell, visualisations, report dashboard</p></td>
+<tr class="row-odd"><td><p>Derivatives</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pccx-reports</span></code>, <code class="docutils literal notranslate"><span class="pre">pccx-verification</span></code>, <code class="docutils literal notranslate"><span class="pre">pccx-authoring</span></code>, <code class="docutils literal notranslate"><span class="pre">pccx-evolve</span></code></p></td>
+<td><p>specialised producers that consume the core surface (reports, CI gates, ISA/API TOML compilers, EAGLE-family primitives)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">uvm_bridge/</span></code></p></td>
-<td><p>Rust + DPI-C</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">core/</span></code></p></td>
-<td><p>SystemVerilog / UVM ↔ <code class="docutils literal notranslate"><span class="pre">core/</span></code> boundary</p></td>
+<tr class="row-even"><td><p>IDE + services</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pccx-ide</span></code> (Tauri shell), <code class="docutils literal notranslate"><span class="pre">pccx-lsp</span></code> (IntelliSense façade), <code class="docutils literal notranslate"><span class="pre">pccx-remote</span></code> (Phase 3 daemon scaffold), <code class="docutils literal notranslate"><span class="pre">ui/</span></code> (React + Vite)</p></td>
+<td><p>the experience surface and the network / language-server lanes that plug into it</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ai_copilot/</span></code></p></td>
-<td><p>Rust</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">core/</span></code> trace types only</p></td>
-<td><p>LLM + UVM-strategy generator wrappers</p></td>
+<tr class="row-odd"><td><p>Bridges</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pccx-uvm-bridge</span></code>, <code class="docutils literal notranslate"><span class="pre">pccx-ai-copilot</span></code></p></td>
+<td><p>non-Rust boundaries: SystemVerilog/UVM over DPI-C, and LLM invocation wrappers</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>Dependencies flow <strong>inwards only</strong>. <code class="docutils literal notranslate"><span class="pre">core/</span></code> must never import a UI or
-framework crate; <code class="docutils literal notranslate"><span class="pre">ui/</span></code> only uses <code class="docutils literal notranslate"><span class="pre">core/</span></code>’s public API via the Tauri
-command bridge.</p>
+<p>Dependencies flow <strong>inwards only</strong> — every non-core crate depends
+on <code class="docutils literal notranslate"><span class="pre">pccx-core</span></code> (transitively on none), and no crate depends on
+<code class="docutils literal notranslate"><span class="pre">pccx-ide</span></code> or <code class="docutils literal notranslate"><span class="pre">pccx-remote</span></code> (both are terminal binaries).  <code class="docutils literal notranslate"><span class="pre">pccx-core</span></code>
+must never import a UI or framework crate; <code class="docutils literal notranslate"><span class="pre">ui/</span></code> only talks to
+<code class="docutils literal notranslate"><span class="pre">pccx-ide</span></code> through the Tauri IPC bridge.</p>
 <section id="shell-at-a-glance">
 <h2>Shell at a glance<a class="headerlink" href="#shell-at-a-glance" title="Link to this heading">¶</a></h2>
 <p>The default layout mirrors a modern EDA IDE (think VTune / Nsight):

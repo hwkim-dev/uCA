@@ -7,12 +7,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://hwkim-dev.github.io/pccx/docs/Lab/analyzer_api.html" />
 <meta property="og:site_name" content="pccx — Parallel Compute Core eXecutor" />
-<meta property="og:description" content="TraceAnalyzer 트레이트는 pccx-lab 의 모든 분석이 구현하는 단일 추상화이다. 소비자 (UI / CLI / Copilot / 확장) 는 더 이상 개별 roofline::analyze()/ bottleneck::detect() free 함수를 호출하지 않는다 — 레지스트리를 iterate 하며 AnalysisPayload 변형에 patt..." />
+<meta property="og:description" content="페이지 과도기 상태. pccx-lab HEAD 기준 2026-04-24 재정비. Phase 1 은 분할 이전의 TraceAnalyzer 트레이트와 모놀리식 analyzer::builtin_analyzers() 목록을 폐기했다. 대신 pccx-core 는 모든 워크스페이스 크레이트 (reports, verification, authoring, evolv..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="https://hwkim-dev.github.io/pccx/_images/social_previews/summary_docs_Lab_analyzer_api_3884dd0f.png" />
-<meta property="og:image:alt" content="TraceAnalyzer 트레이트는 pccx-lab 의 모든 분석이 구현하는 단일 추상화이다. 소비자 (UI / CLI / Copilot / 확장) 는 더 이상 개별 roofline::analyze()/ bottleneck::detect() free 함수를 호출하지 않는다 — 레지스트리를 iterate 하며 AnalysisPayload 변형에 patt..." />
-<meta name="description" content="TraceAnalyzer 트레이트는 pccx-lab 의 모든 분석이 구현하는 단일 추상화이다. 소비자 (UI / CLI / Copilot / 확장) 는 더 이상 개별 roofline::analyze()/ bottleneck::detect() free 함수를 호출하지 않는다 — 레지스트리를 iterate 하며 AnalysisPayload 변형에 patt..." />
+<meta property="og:image" content="https://hwkim-dev.github.io/pccx/_images/social_previews/summary_docs_Lab_analyzer_api_142384a4.png" />
+<meta property="og:image:alt" content="페이지 과도기 상태. pccx-lab HEAD 기준 2026-04-24 재정비. Phase 1 은 분할 이전의 TraceAnalyzer 트레이트와 모놀리식 analyzer::builtin_analyzers() 목록을 폐기했다. 대신 pccx-core 는 모든 워크스페이스 크레이트 (reports, verification, authoring, evolv..." />
+<meta name="description" content="페이지 과도기 상태. pccx-lab HEAD 기준 2026-04-24 재정비. Phase 1 은 분할 이전의 TraceAnalyzer 트레이트와 모놀리식 analyzer::builtin_analyzers() 목록을 폐기했다. 대신 pccx-core 는 모든 워크스페이스 크레이트 (reports, verification, authoring, evolv..." />
 <meta name="twitter:card" content="summary_large_image" />
 
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://hwkim-dev.github.io/pccx/","inLanguage":["ko","en","ko"],"author":{"@type":"Person","name":"Hwangwoo Kim","url":"https://hwkim-dev.github.io/hwkim-dev/"},"publisher":{"@type":"Person","name":"Hwangwoo Kim","url":"https://hwkim-dev.github.io/hwkim-dev/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"분석기 API","name":"분석기 API","url":"https://hwkim-dev.github.io/pccx/ko/docs/Lab/analyzer_api.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://hwkim-dev.github.io/pccx/ko/docs/Lab/analyzer_api.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://hwkim-dev.github.io/pccx/"},"author":{"@type":"Person","name":"Hwangwoo Kim","url":"https://hwkim-dev.github.io/hwkim-dev/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://hwkim-dev.github.io/pccx/"},"datePublished":"2026-04-24","dateModified":"2026-04-24","description":"pccx documentation page: 분석기 API. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"ko","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://hwkim-dev.github.io/pccx/","author":"Hwangwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="색인" href="../../genindex.html"><link rel="search" title="검색" href="../../search.html"><link rel="next" title="Copilot API" href="copilot.html"><link rel="prev" title="CLI 레퍼런스" href="cli.html">
@@ -457,220 +457,189 @@
         <article role="main" id="furo-main-content">
           <section class="tex2jax_ignore mathjax_ignore" id="api">
 <h1>분석기 API<a class="headerlink" href="#api" title="Link to this heading">¶</a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">TraceAnalyzer</span></code> 트레이트는 pccx-lab 의 모든 분석이 구현하는 단일
-추상화이다. 소비자 (UI / CLI / Copilot / 확장) 는 더 이상 개별
-<code class="docutils literal notranslate"><span class="pre">roofline::analyze()</span></code> / <code class="docutils literal notranslate"><span class="pre">bottleneck::detect()</span></code> free 함수를 호출하지
-않는다 — 레지스트리를 iterate 하며 <code class="docutils literal notranslate"><span class="pre">AnalysisPayload</span></code> 변형에
-pattern-match 한다.</p>
+<p><em>페이지 과도기 상태. pccx-lab HEAD 기준 2026-04-24 재정비.</em></p>
+<p>Phase 1 은 분할 이전의 <code class="docutils literal notranslate"><span class="pre">TraceAnalyzer</span></code> 트레이트와 모놀리식
+<code class="docutils literal notranslate"><span class="pre">analyzer::builtin_analyzers()</span></code> 목록을 폐기했다. 대신 pccx-core 는
+모든 워크스페이스 크레이트 (reports, verification, authoring, evolve,
+lsp, ai_copilot, …) 가 자기 자신의 trait-object 플러그인을 걸기 위해
+재사용하는 작은 제네릭 <strong>플러그인 레지스트리 프리미티브</strong> 를 출하한다.
+호출자는 더 이상 고정 빌트인 목록을 호출하지 않고 크레이트별
+<code class="docutils literal notranslate"><span class="pre">PluginRegistry&lt;P&gt;</span></code> 에 플러그인을 등록한다.</p>
+<p>이 페이지는 프리미티브 자체와 소비 크레이트가 자신의 플러그인 트레이트를
+거기 어떻게 거는지를 문서화한다. Phase 1 이전의 16 개 큐레이션 분석기
+카탈로그는 아직 재착륙되지 않았다 — 돌아올 때는 분석 크레이트 중 하나
+(reports 또는 신설 <code class="docutils literal notranslate"><span class="pre">pccx-analytics</span></code>) 안에 자리 잡고 이 프리미티브로
+등록될 것이다. 그때까지 pccx-core 는 날(raw) free 함수
+(<code class="docutils literal notranslate"><span class="pre">roofline::analyze</span></code>, <code class="docutils literal notranslate"><span class="pre">bottleneck::detect</span></code>, …) 와 얇은
+<code class="docutils literal notranslate"><span class="pre">pccx-reports::render_markdown</span></code> 래퍼를 그대로 노출한다.</p>
 <section id="id1">
-<h2>트레이트<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
-<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">TraceAnalyzer</span><span class="p">:</span><span class="w"> </span><span class="nb">Send</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">Sync</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">id</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w">           </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="p">;</span><span class="w">        </span><span class="c1">// 안정 id</span>
-<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">display_name</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="p">;</span><span class="w">        </span><span class="c1">// 메뉴 라벨</span>
-<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">description</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w">  </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="p">;</span><span class="w">        </span><span class="c1">// 한 줄 설명</span>
-<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">analyze</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">trace</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">NpuTrace</span><span class="p">,</span><span class="w"> </span><span class="n">hw</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">HardwareModel</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">AnalysisReport</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p><strong>Purity 요구사항</strong>: <code class="docutils literal notranslate"><span class="pre">analyze()</span></code> 는 외부 상태를 변경하거나 IPC 를 수행
-해선 안 된다. 레지스트리는 미래에 호출을 병렬화할 권리를 보존한다.</p>
-</section>
-<section id="shape">
-<h2>반환 shape<a class="headerlink" href="#shape" title="Link to this heading">¶</a></h2>
-<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">AnalysisReport</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">analyzer_id</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span><span class="w">       </span><span class="c1">// == analyzer 의 id()</span>
-<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">summary</span><span class="p">:</span><span class="w">     </span><span class="nb">String</span><span class="p">,</span><span class="w">       </span><span class="c1">// ≤ 500 chars — LLM 용</span>
-<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">payload</span><span class="p">:</span><span class="w">     </span><span class="nc">AnalysisPayload</span><span class="p">,</span>
+<h2>프리미티브<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="c1">// pccx_core::plugin</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">PLUGIN_API_VERSION</span><span class="p">:</span><span class="w"> </span><span class="kt">u32</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+
+<span class="cp">#[derive(Debug, Clone, Copy)]</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">PluginMetadata</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">id</span><span class="p">:</span><span class="w">           </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="p">,</span><span class="w">  </span><span class="c1">// 안정 식별자</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">api_version</span><span class="p">:</span><span class="w">  </span><span class="kt">u32</span><span class="p">,</span><span class="w">           </span><span class="c1">// PLUGIN_API_VERSION 과 일치 필수</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">description</span><span class="p">:</span><span class="w">  </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="p">,</span><span class="w">  </span><span class="c1">// 한 줄 설명</span>
 <span class="p">}</span>
 
-<span class="k">pub</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="nc">AnalysisPayload</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">Roofline</span><span class="p">(</span><span class="n">RooflinePointPayload</span><span class="p">),</span>
-<span class="w">    </span><span class="n">RooflineHierarchical</span><span class="p">(</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="n">RooflineBand</span><span class="o">&gt;</span><span class="p">),</span>
-<span class="w">    </span><span class="n">Bottleneck</span><span class="p">(</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="n">BottleneckInterval</span><span class="o">&gt;</span><span class="p">),</span>
-<span class="w">    </span><span class="n">Custom</span><span class="p">(</span><span class="n">serde_json</span><span class="p">::</span><span class="n">Value</span><span class="p">),</span><span class="w">   </span><span class="c1">// 타입드 변형이 없는 신규 분석기용</span>
-<span class="w">    </span><span class="n">Text</span><span class="p">,</span><span class="w">                        </span><span class="c1">// summary 가 전체 결과</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">Plugin</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">metadata</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">PluginMetadata</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">PluginRegistry</span><span class="o">&lt;</span><span class="n">P</span><span class="p">:</span><span class="w"> </span><span class="nc">Plugin</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="cm">/* private Vec&lt;P&gt; */</span>
+<span class="p">}</span>
+
+<span class="k">impl</span><span class="o">&lt;</span><span class="n">P</span><span class="p">:</span><span class="w"> </span><span class="nc">Plugin</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PluginRegistry</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">new</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">Self</span><span class="p">;</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">register</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">plugin</span><span class="p">:</span><span class="w"> </span><span class="nc">P</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="n">PluginError</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">all</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w">  </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="p">[</span><span class="n">P</span><span class="p">];</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">find</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Option</span><span class="o">&lt;&amp;</span><span class="n">P</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">len</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w">  </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">usize</span><span class="p">;</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">is_empty</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">bool</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">Custom</span></code> 은 탈출구다 — 실험적 분석기는 core enum 수정 없이 임의의
-JSON-serialisable 페이로드를 실어 나를 수 있다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">register</span></code> 만 실패 가능하며 — <code class="docutils literal notranslate"><span class="pre">api_version</span></code> 이 <code class="docutils literal notranslate"><span class="pre">PLUGIN_API_VERSION</span></code> 과
+다른 플러그인은 거부된다. 오래된 헤더로 빌드된 외부 dylib 가 로드 전에
+걸러진다. 중복 id 는 허용되며 <code class="docutils literal notranslate"><span class="pre">find</span></code> 는 먼저 등록된 쪽이 이긴다. 스레드
+안전성은 호출자 책임이다 — 스레드 간 공유 시 <code class="docutils literal notranslate"><span class="pre">Mutex</span></code> / <code class="docutils literal notranslate"><span class="pre">RwLock</span></code> 으로
+감쌀 것.</p>
+</section>
+<section id="p">
+<h2>왜 <code class="docutils literal notranslate"><span class="pre">P</span></code> 에 제네릭인가?<a class="headerlink" href="#p" title="Link to this heading">¶</a></h2>
+<p>단일 레지스트리 타입이 각 크레이트가 정의하는 모든 플러그인 종류를
+수용한다 — <code class="docutils literal notranslate"><span class="pre">ReportFormat</span></code> (reports), <code class="docutils literal notranslate"><span class="pre">VerificationGate</span></code>
+(verification), <code class="docutils literal notranslate"><span class="pre">IsaCompiler</span></code> / <code class="docutils literal notranslate"><span class="pre">ApiCompiler</span></code> (authoring),
+<code class="docutils literal notranslate"><span class="pre">SurrogateModel</span></code> / <code class="docutils literal notranslate"><span class="pre">EvoOperator</span></code> / <code class="docutils literal notranslate"><span class="pre">PRMGate</span></code> (evolve),
+<code class="docutils literal notranslate"><span class="pre">CompletionProvider</span></code> / <code class="docutils literal notranslate"><span class="pre">HoverProvider</span></code> / <code class="docutils literal notranslate"><span class="pre">LocationProvider</span></code> (lsp),
+<code class="docutils literal notranslate"><span class="pre">ContextCompressor</span></code> / <code class="docutils literal notranslate"><span class="pre">SubagentRunner</span></code> (ai_copilot). 각 크레이트의
+unstable 트레이트는 <code class="docutils literal notranslate"><span class="pre">Plugin</span></code> 의 서브트레이트이며, 자체 인스턴스의
+<code class="docutils literal notranslate"><span class="pre">PluginRegistry&lt;CrateTrait&gt;</span></code> 를 가지고, 호출 지점에서 독립적으로
+iterate 된다.</p>
 </section>
 <section id="id2">
-<h2>빌트인 레지스트리<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<h2>플러그인 등록<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<p>소비 크레이트는 자체 트레이트를 정의해 <code class="docutils literal notranslate"><span class="pre">Plugin</span></code> 의 서브트레이트로 삼고,
+호스트에 레지스트리 인스턴스를 제공한다:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">pccx_core</span><span class="p">::</span><span class="n">plugin</span><span class="p">::{</span><span class="n">Plugin</span><span class="p">,</span><span class="w"> </span><span class="n">PluginMetadata</span><span class="p">,</span><span class="w"> </span><span class="n">PluginRegistry</span><span class="p">,</span>
+<span class="w">                        </span><span class="n">PLUGIN_API_VERSION</span><span class="p">};</span>
+
+<span class="c1">// 1.  크레이트 트레이트 — `Plugin` 을 확장.</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">ReportFormat</span><span class="p">:</span><span class="w"> </span><span class="nc">Plugin</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">render</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">trace</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">NpuTrace</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">String</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// 2.  구체 구현.</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">MarkdownReport</span><span class="p">;</span>
+
+<span class="k">impl</span><span class="w"> </span><span class="n">Plugin</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">MarkdownReport</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">metadata</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">PluginMetadata</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">PluginMetadata</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">id</span><span class="p">:</span><span class="w">          </span><span class="s">&quot;markdown&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="n">api_version</span><span class="p">:</span><span class="w"> </span><span class="nc">PLUGIN_API_VERSION</span><span class="p">,</span>
+<span class="w">            </span><span class="n">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;GitHub-flavoured Markdown 리포트 렌더러&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">impl</span><span class="w"> </span><span class="n">ReportFormat</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">MarkdownReport</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">render</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">trace</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">NpuTrace</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* … */</span><span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// 3.  호스트가 구체 플러그인 타입으로 키잉된 레지스트리를 만들고</span>
+<span class="c1">//     인스턴스를 등록한다.</span>
+<span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">reports</span><span class="p">:</span><span class="w"> </span><span class="nc">PluginRegistry</span><span class="o">&lt;</span><span class="n">MarkdownReport</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PluginRegistry</span><span class="p">::</span><span class="n">new</span><span class="p">();</span>
+<span class="n">reports</span><span class="p">.</span><span class="n">register</span><span class="p">(</span><span class="n">MarkdownReport</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>한 trait object 뒤에 이질적 플러그인을 두고 싶은 크레이트는 (a) 각
+구체 타입을 감싸는 얇은 enum 에 <code class="docutils literal notranslate"><span class="pre">Plugin</span></code> 을 구현하거나, (b) Phase 2/4
+를 기다리면 된다 — 다가오는 dylib 로더가 C-ABI 계약 안정화 시점에
+<code class="docutils literal notranslate"><span class="pre">Box&lt;dyn</span> <span class="pre">CrateTrait&gt;</span></code> 형태의 등록을 지원한다.</p>
+<p>호출자는 <code class="docutils literal notranslate"><span class="pre">registry.all()</span></code> 로 순회하거나 <code class="docutils literal notranslate"><span class="pre">registry.find(&quot;markdown&quot;)</span></code>
+으로 id 조회한다.</p>
+</section>
+<section id="id3">
+<h2>오류 표면<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="cp">#[derive(Debug, Clone, thiserror::Error)]</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="nc">PluginError</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="cp">#[error(</span><span class="s">&quot;plugin &#39;{id}&#39; declares API version {got}; \</span>
+<span class="s">             host expects {expected}&quot;</span><span class="cp">)]</span>
+<span class="w">    </span><span class="n">ApiMismatch</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">expected</span><span class="p">:</span><span class="w"> </span><span class="kt">u32</span><span class="p">,</span><span class="w"> </span><span class="n">got</span><span class="p">:</span><span class="w"> </span><span class="kt">u32</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="w"> </span><span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>오늘 런타임 오류는 <code class="docutils literal notranslate"><span class="pre">ApiMismatch</span></code> 하나뿐이다. dylib 로드 실패 (심벌
+누락, C-ABI 불일치, unload 패닉) 는 Phase 2/4 동적 로더가 도착하면
+같은 enum 에 들어온다 — 그때 레지스트리에 in-process <code class="docutils literal notranslate"><span class="pre">register</span></code> 위에
+<code class="docutils literal notranslate"><span class="pre">load_dylib(path)</span></code> 가 추가된다.</p>
+</section>
+<section id="id4">
+<h2>안정성<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">pccx_core::plugin</span></code> 의 모든 것은 <strong>pccx-lab v0.3 까지 unstable</strong> 이다.
+enum 은 정신상 <code class="docutils literal notranslate"><span class="pre">#[non_exhaustive]</span></code> 이며 — Phase 1/2 창 동안 SemVer
+major 범프 없이 신규 variant 가 추가된다.</p>
+<p>Dylib 로딩 기계 (libloading + C-ABI <code class="docutils literal notranslate"><span class="pre">register()</span></code> 심볼 + unload 시
+안전한 drop) 는 <strong>아직 미구현</strong> 이다. 아웃오브트리 플러그인이 실제로
+출하될 때 Phase 2/4 중에 착륙한다. 그때까지 모든 레지스트리는
+in-process <code class="docutils literal notranslate"><span class="pre">Vec&lt;Box&lt;dyn</span> <span class="pre">T&gt;&gt;</span></code> 이다.</p>
+</section>
+<section id="phase-1">
+<h2>Phase 1 시점 크로스 크레이트 플러그인 트레이트<a class="headerlink" href="#phase-1" title="Link to this heading">¶</a></h2>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>id</p></th>
-<th class="head"><p>표시명</p></th>
-<th class="head"><p>페이로드</p></th>
-<th class="head"><p>보고 내용</p></th>
+<tr class="row-odd"><th class="head"><p>크레이트</p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">Plugin</span></code> 으로 게이트된 트레이트</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">roofline</span></code></p></td>
-<td><p>Roofline</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Roofline</span></code></p></td>
-<td><p>Williams/Waterman AI vs. achieved GOPS</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-reports</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ReportFormat</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">roofline_hier</span></code></p></td>
-<td><p>Hierarchical Roofline</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">RooflineHierarchical</span></code></p></td>
-<td><p>메모리 티어별 dwell (Ilic 2014, Yang 2020)</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-verification</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">VerificationGate</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bottleneck</span></code></p></td>
-<td><p>Bottleneck Windows</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Bottleneck</span></code></p></td>
-<td><p>Sliding-window contention detector</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-authoring</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">IsaCompiler</span></code>, <code class="docutils literal notranslate"><span class="pre">ApiCompiler</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dma_util</span></code></p></td>
-<td><p>DMA Utilisation</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Custom</span></code> (<code class="docutils literal notranslate"><span class="pre">DmaUtilisationPayload</span></code>)</p></td>
-<td><p>Read/write/MAC 사이클 share, starved vs. saturated</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-evolve</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SurrogateModel</span></code>, <code class="docutils literal notranslate"><span class="pre">EvoOperator</span></code>, <code class="docutils literal notranslate"><span class="pre">PRMGate</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">stall_histogram</span></code></p></td>
-<td><p>Stall Histogram</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Custom</span></code> (<code class="docutils literal notranslate"><span class="pre">StallHistogramPayload</span></code>)</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">SYSTOLIC_STALL</span></code> 지속의 log-bucket 분포</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-lsp</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CompletionProvider</span></code>, <code class="docutils literal notranslate"><span class="pre">HoverProvider</span></code>, <code class="docutils literal notranslate"><span class="pre">LocationProvider</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">per_core_throughput</span></code></p></td>
-<td><p>Per-Core Throughput</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Custom</span></code> (<code class="docutils literal notranslate"><span class="pre">PerCoreThroughputPayload</span></code>)</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">core_id</span></code> 별 MAC share + balance σ</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">latency_distribution</span></code></p></td>
-<td><p>Latency Distribution</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Custom</span></code> (<code class="docutils literal notranslate"><span class="pre">LatencyDistributionPayload</span></code>)</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">API_CALL</span></code> 지속의 P50/P95/P99 + 최악 callers</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">power_estimate</span></code></p></td>
-<td><p>Power Estimate</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Custom</span></code> (<code class="docutils literal notranslate"><span class="pre">PowerEstimatePayload</span></code>)</p></td>
-<td><p>동적 W + KV260 7 W TDP 비율; thermal-bound 플래그</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kv_cache_pressure</span></code></p></td>
-<td><p>KV-Cache Pressure</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Custom</span></code> (<code class="docutils literal notranslate"><span class="pre">KvCachePressurePayload</span></code>)</p></td>
-<td><p>디코드당 KV footprint vs L2 URAM; HBM spill 플래그</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">phase_classifier</span></code></p></td>
-<td><p>Prefill/Decode Phase</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Custom</span></code> (<code class="docutils literal notranslate"><span class="pre">PhaseClassifierPayload</span></code>)</p></td>
-<td><p>prefill/decode/idle span 태깅; wall-clock split</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ai_trend</span></code></p></td>
-<td><p>Arithmetic Intensity Trend</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Custom</span></code> (<code class="docutils literal notranslate"><span class="pre">AiTrendPayload</span></code>)</p></td>
-<td><p>롤링 윈도우 AI (ops/byte); prefill→decode collapse 플래그</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dma_burst_efficiency</span></code></p></td>
-<td><p>DMA Burst Efficiency</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Custom</span></code> (<code class="docutils literal notranslate"><span class="pre">DmaBurstEfficiencyPayload</span></code>)</p></td>
-<td><p>AXI overhead 상쇄 후 effective BW</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">matryoshka_footprint</span></code></p></td>
-<td><p>Matryoshka Subnet</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Custom</span></code> (<code class="docutils literal notranslate"><span class="pre">MatryoshkaFootprintPayload</span></code>)</p></td>
-<td><p>Gemma-3N E2B/E4B 스왑 절감 projection</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">moe_sparsity</span></code></p></td>
-<td><p>MoE Expert Sparsity</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Custom</span></code> (<code class="docutils literal notranslate"><span class="pre">MoESparsityPayload</span></code>)</p></td>
-<td><p>전문가당 활성화율; over-sparse 라우팅 플래그</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">flash_attention_tile</span></code></p></td>
-<td><p>FlashAttention Tile Efficiency</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Custom</span></code> (<code class="docutils literal notranslate"><span class="pre">FlashAttentionTilePayload</span></code>)</p></td>
-<td><p>타일 임계치 충족 MAC burst 비율</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dual_hp_port_balance</span></code></p></td>
-<td><p>Dual-HP-Port Balance</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Custom</span></code> (<code class="docutils literal notranslate"><span class="pre">DualHpPortBalancePayload</span></code>)</p></td>
-<td><p>HP0/1 vs HP2/3 traffic share; 단일 포트 starvation</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-ai-copilot</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ContextCompressor</span></code>, <code class="docutils literal notranslate"><span class="pre">SubagentRunner</span></code></p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<section id="id3">
-<h3>연구 계보<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
-<p>2025 이후 분석기는 최신 논문에 grounding 되어 있어, UVM Copilot 이
-발견을 설명할 때 근거를 인용할 수 있다. 전체 자동 생성 인용 테이블은
-<a class="reference internal" href="research.html"><span class="std std-doc">연구 계보 페이지</span></a> 참고.</p>
-</section>
-</section>
-<section id="id4">
-<h2>전부 실행<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
-<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">pccx_core</span><span class="p">::{</span><span class="n">analyze_all</span><span class="p">,</span><span class="w"> </span><span class="n">HardwareModel</span><span class="p">,</span><span class="w"> </span><span class="n">NpuTrace</span><span class="p">};</span>
-
-<span class="kd">let</span><span class="w"> </span><span class="n">hw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HardwareModel</span><span class="p">::</span><span class="n">pccx_reference</span><span class="p">();</span>
-<span class="k">for</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">analyze_all</span><span class="p">(</span><span class="o">&amp;</span><span class="n">trace</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">hw</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;[{}] {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">report</span><span class="p">.</span><span class="n">analyzer_id</span><span class="p">,</span><span class="w"> </span><span class="n">report</span><span class="p">.</span><span class="n">summary</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-</div>
+<p>이 테이블의 모든 트레이트는 크레이트 자체 <code class="docutils literal notranslate"><span class="pre">plugin-api</span></code> 피처 뒤에
+스캐폴딩 되어 있다. 구체 구현은 Phase 2–5 워크스트림 진행에 따라
+점진적으로 착륙한다. 트레이트별 착륙 타임라인은 각 크레이트의
+<code class="docutils literal notranslate"><span class="pre">CHANGELOG.md</span></code> 참고.</p>
 </section>
 <section id="id5">
-<h2>신규 분석기 작성<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h2>
-<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">pccx_core</span><span class="p">::</span><span class="n">analyzer</span><span class="p">::{</span><span class="n">TraceAnalyzer</span><span class="p">,</span><span class="w"> </span><span class="n">AnalysisReport</span><span class="p">,</span><span class="w"> </span><span class="n">AnalysisPayload</span><span class="p">};</span>
-<span class="k">use</span><span class="w"> </span><span class="n">pccx_core</span><span class="p">::{</span><span class="n">NpuTrace</span><span class="p">,</span><span class="w"> </span><span class="n">HardwareModel</span><span class="p">};</span>
-
-<span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">DmaLatencyAnalyzer</span><span class="p">;</span>
-
-<span class="k">impl</span><span class="w"> </span><span class="n">TraceAnalyzer</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">DmaLatencyAnalyzer</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">id</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="w">           </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;dma_latency&quot;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">display_name</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;DMA Latency Distribution&quot;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">description</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="w">  </span><span class="p">{</span>
-<span class="w">        </span><span class="s">&quot;Distribution of DMA_READ durations; flags long-tail outliers.&quot;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">analyze</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">trace</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">NpuTrace</span><span class="p">,</span><span class="w"> </span><span class="n">_hw</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">HardwareModel</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">AnalysisReport</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">durs</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">u64</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">trace</span><span class="p">.</span><span class="n">events</span><span class="p">.</span><span class="n">iter</span><span class="p">()</span>
-<span class="w">            </span><span class="p">.</span><span class="n">filter</span><span class="p">(</span><span class="o">|</span><span class="n">e</span><span class="o">|</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">event_type</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;DMA_READ&quot;</span><span class="p">)</span>
-<span class="w">            </span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="o">|</span><span class="n">e</span><span class="o">|</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">duration</span><span class="p">)</span>
-<span class="w">            </span><span class="p">.</span><span class="n">collect</span><span class="p">();</span>
-<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">max</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">durs</span><span class="p">.</span><span class="n">iter</span><span class="p">().</span><span class="n">copied</span><span class="p">().</span><span class="n">max</span><span class="p">().</span><span class="n">unwrap_or</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">mean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">durs</span><span class="p">.</span><span class="n">is_empty</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mf">0.0</span><span class="w"> </span><span class="p">}</span>
-<span class="w">                   </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">durs</span><span class="p">.</span><span class="n">iter</span><span class="p">().</span><span class="n">sum</span><span class="p">::</span><span class="o">&lt;</span><span class="kt">u64</span><span class="o">&gt;</span><span class="p">()</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">f64</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">durs</span><span class="p">.</span><span class="n">len</span><span class="p">()</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">f64</span><span class="w"> </span><span class="p">};</span>
-<span class="w">        </span><span class="n">AnalysisReport</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">analyzer_id</span><span class="p">:</span><span class="w"> </span><span class="nc">self</span><span class="p">.</span><span class="n">id</span><span class="p">().</span><span class="n">to_string</span><span class="p">(),</span>
-<span class="w">            </span><span class="n">summary</span><span class="p">:</span><span class="w"> </span><span class="nc">format</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{} DMA reads · mean {:.0} cy · max {} cy&quot;</span><span class="p">,</span>
-<span class="w">                             </span><span class="n">durs</span><span class="p">.</span><span class="n">len</span><span class="p">(),</span><span class="w"> </span><span class="n">mean</span><span class="p">,</span><span class="w"> </span><span class="n">max</span><span class="p">),</span>
-<span class="w">            </span><span class="n">payload</span><span class="p">:</span><span class="w"> </span><span class="nc">AnalysisPayload</span><span class="p">::</span><span class="n">Text</span><span class="p">,</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p><strong>출하하려면</strong>:</p>
-<ol class="arabic simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">builtin_analyzers()</span></code> 에 <code class="docutils literal notranslate"><span class="pre">Box::new(DmaLatencyAnalyzer)</span></code> 추가.</p></li>
-<li><p>소비자가 직접 타입을 생성하려면 <code class="docutils literal notranslate"><span class="pre">lib.rs</span></code> 에서 re-export.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">analyzer::tests</span></code> 에 단위 테스트 추가.</p></li>
-<li><p>(선택) <code class="docutils literal notranslate"><span class="pre">core/src/research.rs</span></code> 에 <code class="docutils literal notranslate"><span class="pre">Citation</span></code> 엔트리 추가.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">cargo</span> <span class="pre">test</span> <span class="pre">-p</span> <span class="pre">pccx-core</span></code> 통과 확인.</p></li>
-</ol>
-<p>Copilot 은 레지스트리를 통해 신규 분석기를 집어들고; UI 는 동일한
-<code class="docutils literal notranslate"><span class="pre">invoke(&quot;run_all_analyzers&quot;,</span> <span class="pre">...)</span></code> Tauri 커맨드로 본다.</p>
-</section>
-<section id="summary">
-<h2>Summary 포맷 관행<a class="headerlink" href="#summary" title="Link to this heading">¶</a></h2>
+<h2>관련 문서<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">summary</span></code> 는 ≤ 500 chars.</p></li>
-<li><p>메트릭으로 시작: <code class="docutils literal notranslate"><span class="pre">&quot;AI</span> <span class="pre">0.69</span> <span class="pre">ops/byte</span> <span class="pre">·</span> <span class="pre">321.4</span> <span class="pre">GOPS</span> <span class="pre">(0%</span> <span class="pre">of</span> <span class="pre">peak)</span> <span class="pre">·</span> <span class="pre">memory-bound&quot;</span></code>.</p></li>
-<li><p>예약된 대문자 접두사는 UI 심각도 색상을 결정한다:</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">error:</span></code> / <code class="docutils literal notranslate"><span class="pre">HBM-SPILL</span></code> / <code class="docutils literal notranslate"><span class="pre">OVER-SPARSE</span></code> / <code class="docutils literal notranslate"><span class="pre">PORT-STARVED</span></code> / <code class="docutils literal notranslate"><span class="pre">TILE-BOUND</span></code> / <code class="docutils literal notranslate"><span class="pre">AI-COLLAPSE</span></code> / <code class="docutils literal notranslate"><span class="pre">OVERHEAD-BOUND</span></code> → 빨강</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">THERMAL-BOUND</span></code> / <code class="docutils literal notranslate"><span class="pre">PREFILL-BOUND</span></code> / <code class="docutils literal notranslate"><span class="pre">DECODE-BOUND</span></code> / <code class="docutils literal notranslate"><span class="pre">SWAP-E2B</span></code> → 주황</p></li>
-</ul>
-</li>
-<li><p>Copilot 은 모든 summary 를 하나의 LLM 시스템 프롬프트로 합치므로,
-각 summary 는 독자 문맥 없이도 스스로 성립해야 한다.</p></li>
+<li><p><a class="reference internal" href="cli.html"><span class="std std-doc">CLI 레퍼런스</span></a> — 워크스페이스 분할 이후 오늘 존재하는
+바이너리와 각각이 실제로 담당하는 표면.</p></li>
+<li><p><a class="reference internal" href="copilot.html"><span class="std std-doc">Copilot API</span></a> — 현재 <code class="docutils literal notranslate"><span class="pre">pccx-ai-copilot</span></code> 의 정적 헬퍼와
+Phase 2 pccx-lsp provider 트레이트.</p></li>
+<li><p><a class="reference internal" href="research.html"><span class="std std-doc">연구 계보</span></a> — 현재 플레이스홀더. 인용 레지스트리는
+<code class="docutils literal notranslate"><span class="pre">core/src/research.rs</span></code> 에 있었으며 Phase 1 에서 제거되었다.</p></li>
 </ul>
 </section>
 <section id="id6">
 <h2>이 페이지 인용<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h2>
-<p>pccx-lab <code class="docutils literal notranslate"><span class="pre">TraceAnalyzer</span></code> 레지스트리 또는 16 개 빌트인 분석기를
-논문, 블로그 게시물, AI 요약에서 참조한다면 다음을 인용해 주세요:</p>
+<p>pccx-core 플러그인 레지스트리 프리미티브를 논문, 블로그, AI 요약에서
+참조한다면 다음을 인용해 주세요:</p>
 <div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@misc</span><span class="p">{</span><span class="nl">pccx_lab_analyzer_api_2026</span><span class="p">,</span>
-<span class="w">  </span><span class="na">title</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="s">{pccx-lab Analyzer API: a trait-based registry of 16 research-grounded NPU trace analyzers}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">title</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="s">{pccx-core plugin registry: the generic primitive every pccx-lab crate hangs its trait-object plugins off}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">author</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{Kim, Hwangwoo}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">year</span><span class="w">         </span><span class="p">=</span><span class="w"> </span><span class="s">{2026}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">howpublished</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{\url{https://hwkim-dev.github.io/pccx/ko/docs/Lab/analyzer_api.html}}</span><span class="p">,</span>
@@ -678,9 +647,9 @@ JSON-serialisable 페이로드를 실어 나를 수 있다.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>분석기 레지스트리는 <a class="reference internal" href="research.html"><span class="std std-doc">연구 계보 테이블</span></a> 에 기술된 분석의
-레퍼런스 구현이다 —
-<a class="reference external" href="https://hwkim-dev.github.io/pccx/ko/docs/Lab/research.html">https://hwkim-dev.github.io/pccx/ko/docs/Lab/research.html</a>.</p>
+<p>프리미티브 소스는
+<a class="reference external" href="https://github.com/hwkim-dev/pccx-lab/blob/main/crates/core/src/plugin.rs">https://github.com/hwkim-dev/pccx-lab/blob/main/crates/core/src/plugin.rs</a>
+에 있다.</p>
 </section>
 </section>
 
@@ -752,15 +721,13 @@ JSON-serialisable 페이로드를 실어 나를 수 있다.</p>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">분석기 API</a><ul>
-<li><a class="reference internal" href="#id1">트레이트</a></li>
-<li><a class="reference internal" href="#shape">반환 shape</a></li>
-<li><a class="reference internal" href="#id2">빌트인 레지스트리</a><ul>
-<li><a class="reference internal" href="#id3">연구 계보</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#id4">전부 실행</a></li>
-<li><a class="reference internal" href="#id5">신규 분석기 작성</a></li>
-<li><a class="reference internal" href="#summary">Summary 포맷 관행</a></li>
+<li><a class="reference internal" href="#id1">프리미티브</a></li>
+<li><a class="reference internal" href="#p">왜 <code class="docutils literal notranslate"><span class="pre">P</span></code> 에 제네릭인가?</a></li>
+<li><a class="reference internal" href="#id2">플러그인 등록</a></li>
+<li><a class="reference internal" href="#id3">오류 표면</a></li>
+<li><a class="reference internal" href="#id4">안정성</a></li>
+<li><a class="reference internal" href="#phase-1">Phase 1 시점 크로스 크레이트 플러그인 트레이트</a></li>
+<li><a class="reference internal" href="#id5">관련 문서</a></li>
 <li><a class="reference internal" href="#id6">이 페이지 인용</a></li>
 </ul>
 </li>

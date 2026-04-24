@@ -1,19 +1,26 @@
 # Module Overview
 
-`pccx-lab` is a Tauri 2 desktop app that bundles four strictly-separated
-Rust / TypeScript modules into a single verification + profiling IDE
-for the **pccx** NPU architecture.
+`pccx-lab` is a Tauri 2 desktop app for verification and profiling
+of the **pccx** NPU architecture.  Phase 1 of the roadmap split the
+original monolithic core into nine focused Rust crates under
+`crates/` plus a top-level React `ui/` tree.  Rather than enumerate
+each crate here, the overview groups them into four conceptual
+layers — see [design/rationale](../design/rationale.md) for the full
+list and [design/phase1_crate_split](../design/phase1_crate_split.md)
+for the dependency graph.
 
-| Module | Language | Depends on | Role |
-|--------|----------|------------|------|
-| `core/`        | Rust       | —       | `.pccx` format, trace analysis, roofline + bottleneck + synth-report parsers |
-| `ui/`          | TypeScript (React + Tauri) | `core/` (via IPC) | shell, visualisations, report dashboard |
-| `uvm_bridge/`  | Rust + DPI-C | `core/` | SystemVerilog / UVM ↔ `core/` boundary |
-| `ai_copilot/`  | Rust       | `core/` trace types only | LLM + UVM-strategy generator wrappers |
+| Layer | Crates | Role |
+|-------|--------|------|
+| Core          | `pccx-core`                                                 | `.pccx` format, trace parsing, hardware model, roofline + bottleneck + synth-report parsers |
+| Derivatives   | `pccx-reports`, `pccx-verification`, `pccx-authoring`, `pccx-evolve` | specialised producers that consume the core surface (reports, CI gates, ISA/API TOML compilers, EAGLE-family primitives) |
+| IDE + services| `pccx-ide` (Tauri shell), `pccx-lsp` (IntelliSense façade), `pccx-remote` (Phase 3 daemon scaffold), `ui/` (React + Vite)   | the experience surface and the network / language-server lanes that plug into it |
+| Bridges       | `pccx-uvm-bridge`, `pccx-ai-copilot`                        | non-Rust boundaries: SystemVerilog/UVM over DPI-C, and LLM invocation wrappers |
 
-Dependencies flow **inwards only**. `core/` must never import a UI or
-framework crate; `ui/` only uses `core/`'s public API via the Tauri
-command bridge.
+Dependencies flow **inwards only** — every non-core crate depends
+on `pccx-core` (transitively on none), and no crate depends on
+`pccx-ide` or `pccx-remote` (both are terminal binaries).  `pccx-core`
+must never import a UI or framework crate; `ui/` only talks to
+`pccx-ide` through the Tauri IPC bridge.
 
 ## Shell at a glance
 

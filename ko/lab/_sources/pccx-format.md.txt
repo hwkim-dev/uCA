@@ -2,7 +2,7 @@
 
 > **버전:** 0.2 (포맷 메이저: 0x01, 마이너: 0x01)  
 > **상태:** 활성 (Active)  
-> **진실의 원본 (Source of Truth):** `src/core/src/pccx_format.rs`
+> **진실의 원본 (Source of Truth):** `crates/core/src/pccx_format.rs`
 
 ## 개요
 

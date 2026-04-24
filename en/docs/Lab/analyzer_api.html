@@ -7,12 +7,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://hwkim-dev.github.io/pccx/docs/Lab/analyzer_api.html" />
 <meta property="og:site_name" content="pccx — Parallel Compute Core eXecutor" />
-<meta property="og:description" content="The TraceAnalyzer trait is the single abstraction every analysis in pccx-lab implements. Consumers (UI / CLI / Copilot / extensions) never call individual roofline::analyze()/ bottleneck::detect() ..." />
+<meta property="og:description" content="Page in flux. Refreshed 2026-04-24 to match pccx-lab HEAD. Phase 1 retired the pre-split TraceAnalyzer trait and the monolithic analyzer::builtin_analyzers() list. In its place pccx-core ships a sm..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="https://hwkim-dev.github.io/pccx/_images/social_previews/summary_docs_Lab_analyzer_api_9cb19e86.png" />
-<meta property="og:image:alt" content="The TraceAnalyzer trait is the single abstraction every analysis in pccx-lab implements. Consumers (UI / CLI / Copilot / extensions) never call individual roofline::analyze()/ bottleneck::detect() ..." />
-<meta name="description" content="The TraceAnalyzer trait is the single abstraction every analysis in pccx-lab implements. Consumers (UI / CLI / Copilot / extensions) never call individual roofline::analyze()/ bottleneck::detect() ..." />
+<meta property="og:image" content="https://hwkim-dev.github.io/pccx/_images/social_previews/summary_docs_Lab_analyzer_api_ca01724b.png" />
+<meta property="og:image:alt" content="Page in flux. Refreshed 2026-04-24 to match pccx-lab HEAD. Phase 1 retired the pre-split TraceAnalyzer trait and the monolithic analyzer::builtin_analyzers() list. In its place pccx-core ships a sm..." />
+<meta name="description" content="Page in flux. Refreshed 2026-04-24 to match pccx-lab HEAD. Phase 1 retired the pre-split TraceAnalyzer trait and the monolithic analyzer::builtin_analyzers() list. In its place pccx-core ships a sm..." />
 <meta name="twitter:card" content="summary_large_image" />
 
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://hwkim-dev.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hwangwoo Kim","url":"https://hwkim-dev.github.io/hwkim-dev/"},"publisher":{"@type":"Person","name":"Hwangwoo Kim","url":"https://hwkim-dev.github.io/hwkim-dev/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"Analyzer API","name":"Analyzer API","url":"https://hwkim-dev.github.io/pccx/en/docs/Lab/analyzer_api.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://hwkim-dev.github.io/pccx/en/docs/Lab/analyzer_api.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://hwkim-dev.github.io/pccx/"},"author":{"@type":"Person","name":"Hwangwoo Kim","url":"https://hwkim-dev.github.io/hwkim-dev/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://hwkim-dev.github.io/pccx/"},"datePublished":"2026-04-24","dateModified":"2026-04-24","description":"pccx documentation page: Analyzer API. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://hwkim-dev.github.io/pccx/","author":"Hwangwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Copilot API" href="copilot.html"><link rel="prev" title="CLI Reference" href="cli.html">
@@ -457,222 +457,190 @@
         <article role="main" id="furo-main-content">
           <section class="tex2jax_ignore mathjax_ignore" id="analyzer-api">
 <h1>Analyzer API<a class="headerlink" href="#analyzer-api" title="Link to this heading">¶</a></h1>
-<p>The <code class="docutils literal notranslate"><span class="pre">TraceAnalyzer</span></code> trait is the single abstraction every analysis
-in pccx-lab implements.  Consumers (UI / CLI / Copilot / extensions)
-never call individual <code class="docutils literal notranslate"><span class="pre">roofline::analyze()</span></code> / <code class="docutils literal notranslate"><span class="pre">bottleneck::detect()</span></code>
-free functions anymore — they iterate the registry and pattern-match
-on <code class="docutils literal notranslate"><span class="pre">AnalysisPayload</span></code> variants.</p>
-<section id="trait">
-<h2>Trait<a class="headerlink" href="#trait" title="Link to this heading">¶</a></h2>
-<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">TraceAnalyzer</span><span class="p">:</span><span class="w"> </span><span class="nb">Send</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">Sync</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">id</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w">           </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="p">;</span><span class="w">        </span><span class="c1">// stable id</span>
-<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">display_name</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="p">;</span><span class="w">        </span><span class="c1">// menu label</span>
-<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">description</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w">  </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="p">;</span><span class="w">        </span><span class="c1">// one-sentence blurb</span>
-<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">analyze</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">trace</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">NpuTrace</span><span class="p">,</span><span class="w"> </span><span class="n">hw</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">HardwareModel</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">AnalysisReport</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p><strong>Purity requirement</strong>: <code class="docutils literal notranslate"><span class="pre">analyze()</span></code> must not mutate external state or
-issue IPC.  The registry reserves the right to parallelise calls.</p>
-</section>
-<section id="return-shape">
-<h2>Return shape<a class="headerlink" href="#return-shape" title="Link to this heading">¶</a></h2>
-<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">AnalysisReport</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">analyzer_id</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span><span class="w">       </span><span class="c1">// == analyzer&#39;s id()</span>
-<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">summary</span><span class="p">:</span><span class="w">     </span><span class="nb">String</span><span class="p">,</span><span class="w">       </span><span class="c1">// ≤ 500 chars — LLM-ready</span>
-<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">payload</span><span class="p">:</span><span class="w">     </span><span class="nc">AnalysisPayload</span><span class="p">,</span>
+<p><em>Page in flux.  Refreshed 2026-04-24 to match pccx-lab HEAD.</em></p>
+<p>Phase 1 retired the pre-split <code class="docutils literal notranslate"><span class="pre">TraceAnalyzer</span></code> trait and the monolithic
+<code class="docutils literal notranslate"><span class="pre">analyzer::builtin_analyzers()</span></code> list.  In its place pccx-core ships a
+small generic <strong>plugin-registry primitive</strong> that every workspace crate
+(reports, verification, authoring, evolve, lsp, ai_copilot, …) reuses
+for its own trait-object plugins.  Callers now register plugins against
+a per-crate <code class="docutils literal notranslate"><span class="pre">PluginRegistry&lt;P&gt;</span></code> instead of calling a fixed builtin list.</p>
+<p>This page documents the primitive and how a consuming crate hangs its
+plugin trait off it.  The 16-entry curated analyzer catalogue from
+pre-Phase-1 has not been re-landed yet — when it returns it will live
+inside one of the analytics crates (reports or a new <code class="docutils literal notranslate"><span class="pre">pccx-analytics</span></code>)
+and be registered via this primitive.  Until then pccx-core exposes the
+raw free functions (<code class="docutils literal notranslate"><span class="pre">roofline::analyze</span></code>, <code class="docutils literal notranslate"><span class="pre">bottleneck::detect</span></code>, …) and a
+thin <code class="docutils literal notranslate"><span class="pre">pccx-reports::render_markdown</span></code> wrapper.</p>
+<section id="primitive">
+<h2>Primitive<a class="headerlink" href="#primitive" title="Link to this heading">¶</a></h2>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="c1">// pccx_core::plugin</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">PLUGIN_API_VERSION</span><span class="p">:</span><span class="w"> </span><span class="kt">u32</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+
+<span class="cp">#[derive(Debug, Clone, Copy)]</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">PluginMetadata</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">id</span><span class="p">:</span><span class="w">           </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="p">,</span><span class="w">  </span><span class="c1">// stable identifier</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">api_version</span><span class="p">:</span><span class="w">  </span><span class="kt">u32</span><span class="p">,</span><span class="w">           </span><span class="c1">// must equal PLUGIN_API_VERSION</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">description</span><span class="p">:</span><span class="w">  </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="p">,</span><span class="w">  </span><span class="c1">// one-line blurb</span>
 <span class="p">}</span>
 
-<span class="k">pub</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="nc">AnalysisPayload</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">Roofline</span><span class="p">(</span><span class="n">RooflinePointPayload</span><span class="p">),</span>
-<span class="w">    </span><span class="n">RooflineHierarchical</span><span class="p">(</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="n">RooflineBand</span><span class="o">&gt;</span><span class="p">),</span>
-<span class="w">    </span><span class="n">Bottleneck</span><span class="p">(</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="n">BottleneckInterval</span><span class="o">&gt;</span><span class="p">),</span>
-<span class="w">    </span><span class="n">Custom</span><span class="p">(</span><span class="n">serde_json</span><span class="p">::</span><span class="n">Value</span><span class="p">),</span><span class="w">   </span><span class="c1">// for new analyzers without a typed variant</span>
-<span class="w">    </span><span class="n">Text</span><span class="p">,</span><span class="w">                        </span><span class="c1">// summary is the whole result</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">Plugin</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">metadata</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">PluginMetadata</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">PluginRegistry</span><span class="o">&lt;</span><span class="n">P</span><span class="p">:</span><span class="w"> </span><span class="nc">Plugin</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="cm">/* private Vec&lt;P&gt; */</span>
+<span class="p">}</span>
+
+<span class="k">impl</span><span class="o">&lt;</span><span class="n">P</span><span class="p">:</span><span class="w"> </span><span class="nc">Plugin</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PluginRegistry</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">new</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">Self</span><span class="p">;</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">register</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">plugin</span><span class="p">:</span><span class="w"> </span><span class="nc">P</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="n">PluginError</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">all</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w">  </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="p">[</span><span class="n">P</span><span class="p">];</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">find</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Option</span><span class="o">&lt;&amp;</span><span class="n">P</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">len</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w">  </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">usize</span><span class="p">;</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span><span class="w"> </span><span class="nf">is_empty</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">bool</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">Custom</span></code> is the escape hatch — experimental analyzers can carry any
-JSON-serialisable payload without modifying the core enum.</p>
+<p><code class="docutils literal notranslate"><span class="pre">register</span></code> is the only fallible entry point; it rejects any plugin
+whose <code class="docutils literal notranslate"><span class="pre">api_version</span></code> differs from <code class="docutils literal notranslate"><span class="pre">PLUGIN_API_VERSION</span></code> so out-of-tree
+dylibs built against a stale header are refused up front.  Duplicate
+ids are permitted — first registration wins on <code class="docutils literal notranslate"><span class="pre">find</span></code>.  Thread-safety
+is the caller’s responsibility; wrap in a <code class="docutils literal notranslate"><span class="pre">Mutex</span></code> / <code class="docutils literal notranslate"><span class="pre">RwLock</span></code> when
+sharing across threads.</p>
 </section>
-<section id="built-in-registry">
-<h2>Built-in registry<a class="headerlink" href="#built-in-registry" title="Link to this heading">¶</a></h2>
+<section id="why-generic-over-p">
+<h2>Why generic over <code class="docutils literal notranslate"><span class="pre">P</span></code>?<a class="headerlink" href="#why-generic-over-p" title="Link to this heading">¶</a></h2>
+<p>A single registry type accommodates every plugin kind each crate
+defines — <code class="docutils literal notranslate"><span class="pre">ReportFormat</span></code> (reports), <code class="docutils literal notranslate"><span class="pre">VerificationGate</span></code> (verification),
+<code class="docutils literal notranslate"><span class="pre">IsaCompiler</span></code> / <code class="docutils literal notranslate"><span class="pre">ApiCompiler</span></code> (authoring), <code class="docutils literal notranslate"><span class="pre">SurrogateModel</span></code> /
+<code class="docutils literal notranslate"><span class="pre">EvoOperator</span></code> / <code class="docutils literal notranslate"><span class="pre">PRMGate</span></code> (evolve), <code class="docutils literal notranslate"><span class="pre">CompletionProvider</span></code> /
+<code class="docutils literal notranslate"><span class="pre">HoverProvider</span></code> / <code class="docutils literal notranslate"><span class="pre">LocationProvider</span></code> (lsp), <code class="docutils literal notranslate"><span class="pre">ContextCompressor</span></code> /
+<code class="docutils literal notranslate"><span class="pre">SubagentRunner</span></code> (ai_copilot).  Each crate’s unstable trait is a
+supertrait of <code class="docutils literal notranslate"><span class="pre">Plugin</span></code>, gets its own <code class="docutils literal notranslate"><span class="pre">PluginRegistry&lt;CrateTrait&gt;</span></code>
+instance, and is iterated independently at the call site.</p>
+</section>
+<section id="registering-a-plugin">
+<h2>Registering a plugin<a class="headerlink" href="#registering-a-plugin" title="Link to this heading">¶</a></h2>
+<p>A consumer crate defines its own trait, makes it a supertrait of
+<code class="docutils literal notranslate"><span class="pre">Plugin</span></code>, and offers a registry instance to its host:</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">pccx_core</span><span class="p">::</span><span class="n">plugin</span><span class="p">::{</span><span class="n">Plugin</span><span class="p">,</span><span class="w"> </span><span class="n">PluginMetadata</span><span class="p">,</span><span class="w"> </span><span class="n">PluginRegistry</span><span class="p">,</span>
+<span class="w">                        </span><span class="n">PLUGIN_API_VERSION</span><span class="p">};</span>
+
+<span class="c1">// 1.  Crate trait — extend `Plugin`.</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">ReportFormat</span><span class="p">:</span><span class="w"> </span><span class="nc">Plugin</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">render</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">trace</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">NpuTrace</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">String</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// 2.  Concrete implementation.</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">MarkdownReport</span><span class="p">;</span>
+
+<span class="k">impl</span><span class="w"> </span><span class="n">Plugin</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">MarkdownReport</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">metadata</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">PluginMetadata</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">PluginMetadata</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">id</span><span class="p">:</span><span class="w">          </span><span class="s">&quot;markdown&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="n">api_version</span><span class="p">:</span><span class="w"> </span><span class="nc">PLUGIN_API_VERSION</span><span class="p">,</span>
+<span class="w">            </span><span class="n">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;GitHub-flavoured Markdown report renderer&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">impl</span><span class="w"> </span><span class="n">ReportFormat</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">MarkdownReport</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">render</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">trace</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">NpuTrace</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* … */</span><span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// 3.  Host constructs a registry keyed on the concrete plugin type</span>
+<span class="c1">//     and registers instances.</span>
+<span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">reports</span><span class="p">:</span><span class="w"> </span><span class="nc">PluginRegistry</span><span class="o">&lt;</span><span class="n">MarkdownReport</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PluginRegistry</span><span class="p">::</span><span class="n">new</span><span class="p">();</span>
+<span class="n">reports</span><span class="p">.</span><span class="n">register</span><span class="p">(</span><span class="n">MarkdownReport</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Crates that want heterogeneous plugins behind one trait object can
+either (a) wrap each concrete type and implement <code class="docutils literal notranslate"><span class="pre">Plugin</span></code> for a thin
+enum, or (b) wait for Phase 2/4 — the upcoming dylib loader lands
+<code class="docutils literal notranslate"><span class="pre">Box&lt;dyn</span> <span class="pre">CrateTrait&gt;</span></code>-shaped registration when the C-ABI contract
+stabilises.</p>
+<p>Callers iterate with <code class="docutils literal notranslate"><span class="pre">registry.all()</span></code> or look up by id with
+<code class="docutils literal notranslate"><span class="pre">registry.find(&quot;markdown&quot;)</span></code>.</p>
+</section>
+<section id="error-surface">
+<h2>Error surface<a class="headerlink" href="#error-surface" title="Link to this heading">¶</a></h2>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="cp">#[derive(Debug, Clone, thiserror::Error)]</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="nc">PluginError</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="cp">#[error(</span><span class="s">&quot;plugin &#39;{id}&#39; declares API version {got}; \</span>
+<span class="s">             host expects {expected}&quot;</span><span class="cp">)]</span>
+<span class="w">    </span><span class="n">ApiMismatch</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">expected</span><span class="p">:</span><span class="w"> </span><span class="kt">u32</span><span class="p">,</span><span class="w"> </span><span class="n">got</span><span class="p">:</span><span class="w"> </span><span class="kt">u32</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="w"> </span><span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ApiMismatch</span></code> is the only runtime error today.  Dylib load failures
+(symbol missing, C-ABI mismatch, unload panic) will reuse this enum
+when the Phase 2/4 dynamic loader arrives — the registry will then
+gain <code class="docutils literal notranslate"><span class="pre">load_dylib(path)</span></code> on top of the in-process <code class="docutils literal notranslate"><span class="pre">register</span></code>.</p>
+</section>
+<section id="stability">
+<h2>Stability<a class="headerlink" href="#stability" title="Link to this heading">¶</a></h2>
+<p>Everything in <code class="docutils literal notranslate"><span class="pre">pccx_core::plugin</span></code> is <strong>unstable until pccx-lab v0.3</strong>.
+The enum is <code class="docutils literal notranslate"><span class="pre">#[non_exhaustive]</span></code> in spirit — new variants land without a
+SemVer major bump during the Phase 1/2 window.</p>
+<p>Dylib-loading machinery (libloading + C-ABI <code class="docutils literal notranslate"><span class="pre">register()</span></code> symbol + safe
+drop on unload) is <strong>not yet implemented</strong>; it lands during Phase 2/4
+once an out-of-tree plugin actually ships.  Until then every registry
+is an in-process <code class="docutils literal notranslate"><span class="pre">Vec&lt;Box&lt;dyn</span> <span class="pre">T&gt;&gt;</span></code>.</p>
+</section>
+<section id="cross-crate-plugin-traits-as-of-phase-1">
+<h2>Cross-crate plugin traits as of Phase 1<a class="headerlink" href="#cross-crate-plugin-traits-as-of-phase-1" title="Link to this heading">¶</a></h2>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>id</p></th>
-<th class="head"><p>display</p></th>
-<th class="head"><p>payload</p></th>
-<th class="head"><p>what it reports</p></th>
+<tr class="row-odd"><th class="head"><p>Crate</p></th>
+<th class="head"><p>Trait(s) gated behind <code class="docutils literal notranslate"><span class="pre">Plugin</span></code></p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">roofline</span></code></p></td>
-<td><p>Roofline</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Roofline</span></code></p></td>
-<td><p>Williams/Waterman AI vs. achieved GOPS</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-reports</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ReportFormat</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">roofline_hier</span></code></p></td>
-<td><p>Hierarchical Roofline</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">RooflineHierarchical</span></code></p></td>
-<td><p>Per-memory-tier dwell (Ilic 2014, Yang 2020)</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-verification</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">VerificationGate</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bottleneck</span></code></p></td>
-<td><p>Bottleneck Windows</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Bottleneck</span></code></p></td>
-<td><p>Sliding-window contention detector</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-authoring</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">IsaCompiler</span></code>, <code class="docutils literal notranslate"><span class="pre">ApiCompiler</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dma_util</span></code></p></td>
-<td><p>DMA Utilisation</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Custom</span></code> (<code class="docutils literal notranslate"><span class="pre">DmaUtilisationPayload</span></code>)</p></td>
-<td><p>Read/write/MAC cycle share, starved vs. saturated flags</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-evolve</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SurrogateModel</span></code>, <code class="docutils literal notranslate"><span class="pre">EvoOperator</span></code>, <code class="docutils literal notranslate"><span class="pre">PRMGate</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">stall_histogram</span></code></p></td>
-<td><p>Stall Histogram</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Custom</span></code> (<code class="docutils literal notranslate"><span class="pre">StallHistogramPayload</span></code>)</p></td>
-<td><p>Log-bucket distribution of <code class="docutils literal notranslate"><span class="pre">SYSTOLIC_STALL</span></code> durations</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-lsp</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CompletionProvider</span></code>, <code class="docutils literal notranslate"><span class="pre">HoverProvider</span></code>, <code class="docutils literal notranslate"><span class="pre">LocationProvider</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">per_core_throughput</span></code></p></td>
-<td><p>Per-Core Throughput</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Custom</span></code> (<code class="docutils literal notranslate"><span class="pre">PerCoreThroughputPayload</span></code>)</p></td>
-<td><p>MAC share per <code class="docutils literal notranslate"><span class="pre">core_id</span></code> + balance σ</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">latency_distribution</span></code></p></td>
-<td><p>Latency Distribution</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Custom</span></code> (<code class="docutils literal notranslate"><span class="pre">LatencyDistributionPayload</span></code>)</p></td>
-<td><p>P50/P95/P99 of <code class="docutils literal notranslate"><span class="pre">API_CALL</span></code> durations + worst callers</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">power_estimate</span></code></p></td>
-<td><p>Power Estimate</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Custom</span></code> (<code class="docutils literal notranslate"><span class="pre">PowerEstimatePayload</span></code>)</p></td>
-<td><p>Dynamic W + % of KV260 7 W TDP; thermal-bound flag</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kv_cache_pressure</span></code></p></td>
-<td><p>KV-Cache Pressure</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Custom</span></code> (<code class="docutils literal notranslate"><span class="pre">KvCachePressurePayload</span></code>)</p></td>
-<td><p>Per-decode KV footprint vs L2 URAM; flags HBM spill</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">phase_classifier</span></code></p></td>
-<td><p>Prefill/Decode Phase</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Custom</span></code> (<code class="docutils literal notranslate"><span class="pre">PhaseClassifierPayload</span></code>)</p></td>
-<td><p>Tags spans as prefill/decode/idle; wall-clock split</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ai_trend</span></code></p></td>
-<td><p>Arithmetic Intensity Trend</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Custom</span></code> (<code class="docutils literal notranslate"><span class="pre">AiTrendPayload</span></code>)</p></td>
-<td><p>Rolling-window AI (ops/byte); flags prefill→decode collapse</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dma_burst_efficiency</span></code></p></td>
-<td><p>DMA Burst Efficiency</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Custom</span></code> (<code class="docutils literal notranslate"><span class="pre">DmaBurstEfficiencyPayload</span></code>)</p></td>
-<td><p>AXI effective BW after overhead amortisation</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">matryoshka_footprint</span></code></p></td>
-<td><p>Matryoshka Subnet</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Custom</span></code> (<code class="docutils literal notranslate"><span class="pre">MatryoshkaFootprintPayload</span></code>)</p></td>
-<td><p>Gemma-3N E2B/E4B swap savings projection</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">moe_sparsity</span></code></p></td>
-<td><p>MoE Expert Sparsity</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Custom</span></code> (<code class="docutils literal notranslate"><span class="pre">MoESparsityPayload</span></code>)</p></td>
-<td><p>Per-expert activation rate; flags over-sparse routing</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">flash_attention_tile</span></code></p></td>
-<td><p>FlashAttention Tile Efficiency</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Custom</span></code> (<code class="docutils literal notranslate"><span class="pre">FlashAttentionTilePayload</span></code>)</p></td>
-<td><p>Share of MAC bursts meeting tile threshold</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dual_hp_port_balance</span></code></p></td>
-<td><p>Dual-HP-Port Balance</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Custom</span></code> (<code class="docutils literal notranslate"><span class="pre">DualHpPortBalancePayload</span></code>)</p></td>
-<td><p>HP0/1 vs HP2/3 traffic share; one-port starvation</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-ai-copilot</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ContextCompressor</span></code>, <code class="docutils literal notranslate"><span class="pre">SubagentRunner</span></code></p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<section id="research-lineage">
-<h3>Research lineage<a class="headerlink" href="#research-lineage" title="Link to this heading">¶</a></h3>
-<p>The post-2025 analyzers are grounded in recent literature so the
-UVM Copilot can cite evidence when narrating findings.  See the
-<a class="reference internal" href="research.html"><span class="std std-doc">Research lineage page</span></a> for the complete auto-generated
-citation table.</p>
+<p>Every trait in this table is scaffolded behind the crate’s
+<code class="docutils literal notranslate"><span class="pre">plugin-api</span></code> feature flag; concrete implementations land incrementally
+as the Phase 2–5 workstreams complete.  See each crate’s
+<code class="docutils literal notranslate"><span class="pre">CHANGELOG.md</span></code> for the per-trait landing timeline.</p>
 </section>
-</section>
-<section id="running-everything">
-<h2>Running everything<a class="headerlink" href="#running-everything" title="Link to this heading">¶</a></h2>
-<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">pccx_core</span><span class="p">::{</span><span class="n">analyze_all</span><span class="p">,</span><span class="w"> </span><span class="n">HardwareModel</span><span class="p">,</span><span class="w"> </span><span class="n">NpuTrace</span><span class="p">};</span>
-
-<span class="kd">let</span><span class="w"> </span><span class="n">hw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HardwareModel</span><span class="p">::</span><span class="n">pccx_reference</span><span class="p">();</span>
-<span class="k">for</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">analyze_all</span><span class="p">(</span><span class="o">&amp;</span><span class="n">trace</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">hw</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;[{}] {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">report</span><span class="p">.</span><span class="n">analyzer_id</span><span class="p">,</span><span class="w"> </span><span class="n">report</span><span class="p">.</span><span class="n">summary</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</section>
-<section id="writing-a-new-analyzer">
-<h2>Writing a new analyzer<a class="headerlink" href="#writing-a-new-analyzer" title="Link to this heading">¶</a></h2>
-<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">pccx_core</span><span class="p">::</span><span class="n">analyzer</span><span class="p">::{</span><span class="n">TraceAnalyzer</span><span class="p">,</span><span class="w"> </span><span class="n">AnalysisReport</span><span class="p">,</span><span class="w"> </span><span class="n">AnalysisPayload</span><span class="p">};</span>
-<span class="k">use</span><span class="w"> </span><span class="n">pccx_core</span><span class="p">::{</span><span class="n">NpuTrace</span><span class="p">,</span><span class="w"> </span><span class="n">HardwareModel</span><span class="p">};</span>
-
-<span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">DmaLatencyAnalyzer</span><span class="p">;</span>
-
-<span class="k">impl</span><span class="w"> </span><span class="n">TraceAnalyzer</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">DmaLatencyAnalyzer</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">id</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="w">           </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;dma_latency&quot;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">display_name</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s">&quot;DMA Latency Distribution&quot;</span><span class="w"> </span><span class="p">}</span>
-<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">description</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span><span class="w"> </span><span class="kt">str</span><span class="w">  </span><span class="p">{</span>
-<span class="w">        </span><span class="s">&quot;Distribution of DMA_READ durations; flags long-tail outliers.&quot;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">analyze</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">trace</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">NpuTrace</span><span class="p">,</span><span class="w"> </span><span class="n">_hw</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">HardwareModel</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nc">AnalysisReport</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">durs</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">u64</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">trace</span><span class="p">.</span><span class="n">events</span><span class="p">.</span><span class="n">iter</span><span class="p">()</span>
-<span class="w">            </span><span class="p">.</span><span class="n">filter</span><span class="p">(</span><span class="o">|</span><span class="n">e</span><span class="o">|</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">event_type</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;DMA_READ&quot;</span><span class="p">)</span>
-<span class="w">            </span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="o">|</span><span class="n">e</span><span class="o">|</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">duration</span><span class="p">)</span>
-<span class="w">            </span><span class="p">.</span><span class="n">collect</span><span class="p">();</span>
-<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">max</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">durs</span><span class="p">.</span><span class="n">iter</span><span class="p">().</span><span class="n">copied</span><span class="p">().</span><span class="n">max</span><span class="p">().</span><span class="n">unwrap_or</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">mean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">durs</span><span class="p">.</span><span class="n">is_empty</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mf">0.0</span><span class="w"> </span><span class="p">}</span>
-<span class="w">                   </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">durs</span><span class="p">.</span><span class="n">iter</span><span class="p">().</span><span class="n">sum</span><span class="p">::</span><span class="o">&lt;</span><span class="kt">u64</span><span class="o">&gt;</span><span class="p">()</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">f64</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">durs</span><span class="p">.</span><span class="n">len</span><span class="p">()</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">f64</span><span class="w"> </span><span class="p">};</span>
-<span class="w">        </span><span class="n">AnalysisReport</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">analyzer_id</span><span class="p">:</span><span class="w"> </span><span class="nc">self</span><span class="p">.</span><span class="n">id</span><span class="p">().</span><span class="n">to_string</span><span class="p">(),</span>
-<span class="w">            </span><span class="n">summary</span><span class="p">:</span><span class="w"> </span><span class="nc">format</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{} DMA reads · mean {:.0} cy · max {} cy&quot;</span><span class="p">,</span>
-<span class="w">                             </span><span class="n">durs</span><span class="p">.</span><span class="n">len</span><span class="p">(),</span><span class="w"> </span><span class="n">mean</span><span class="p">,</span><span class="w"> </span><span class="n">max</span><span class="p">),</span>
-<span class="w">            </span><span class="n">payload</span><span class="p">:</span><span class="w"> </span><span class="nc">AnalysisPayload</span><span class="p">::</span><span class="n">Text</span><span class="p">,</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p><strong>To ship it</strong>:</p>
-<ol class="arabic simple">
-<li><p>Append <code class="docutils literal notranslate"><span class="pre">Box::new(DmaLatencyAnalyzer)</span></code> to <code class="docutils literal notranslate"><span class="pre">builtin_analyzers()</span></code>.</p></li>
-<li><p>Re-export from <code class="docutils literal notranslate"><span class="pre">lib.rs</span></code> if consumers will construct the type directly.</p></li>
-<li><p>Add a unit test in <code class="docutils literal notranslate"><span class="pre">analyzer::tests</span></code>.</p></li>
-<li><p>(Optional) Add a <code class="docutils literal notranslate"><span class="pre">Citation</span></code> entry in <code class="docutils literal notranslate"><span class="pre">core/src/research.rs</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">cargo</span> <span class="pre">test</span> <span class="pre">-p</span> <span class="pre">pccx-core</span></code> should pass.</p></li>
-</ol>
-<p>The Copilot picks up the new analyzer through the registry; the UI
-sees it via the same <code class="docutils literal notranslate"><span class="pre">invoke(&quot;run_all_analyzers&quot;,</span> <span class="pre">...)</span></code> Tauri command.</p>
-</section>
-<section id="summary-formatting-convention">
-<h2>Summary formatting convention<a class="headerlink" href="#summary-formatting-convention" title="Link to this heading">¶</a></h2>
+<section id="related">
+<h2>Related<a class="headerlink" href="#related" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p>Keep <code class="docutils literal notranslate"><span class="pre">summary</span></code> ≤ 500 chars.</p></li>
-<li><p>Start with the metric: <code class="docutils literal notranslate"><span class="pre">&quot;AI</span> <span class="pre">0.69</span> <span class="pre">ops/byte</span> <span class="pre">·</span> <span class="pre">321.4</span> <span class="pre">GOPS</span> <span class="pre">(0%</span> <span class="pre">of</span> <span class="pre">peak)</span> <span class="pre">·</span> <span class="pre">memory-bound&quot;</span></code>.</p></li>
-<li><p>Reserved uppercase prefixes drive the UI severity colour:</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">error:</span></code> / <code class="docutils literal notranslate"><span class="pre">HBM-SPILL</span></code> / <code class="docutils literal notranslate"><span class="pre">OVER-SPARSE</span></code> / <code class="docutils literal notranslate"><span class="pre">PORT-STARVED</span></code> / <code class="docutils literal notranslate"><span class="pre">TILE-BOUND</span></code> / <code class="docutils literal notranslate"><span class="pre">AI-COLLAPSE</span></code> / <code class="docutils literal notranslate"><span class="pre">OVERHEAD-BOUND</span></code> → red</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">THERMAL-BOUND</span></code> / <code class="docutils literal notranslate"><span class="pre">PREFILL-BOUND</span></code> / <code class="docutils literal notranslate"><span class="pre">DECODE-BOUND</span></code> / <code class="docutils literal notranslate"><span class="pre">SWAP-E2B</span></code> → amber</p></li>
-</ul>
-</li>
-<li><p>The Copilot joins all summaries into one LLM system prompt; this
-is why each one must stand on its own without reader context.</p></li>
+<li><p><a class="reference internal" href="cli.html"><span class="std std-doc">CLI reference</span></a> — which binaries exist today after the
+workspace split, and what surface each one actually covers.</p></li>
+<li><p><a class="reference internal" href="copilot.html"><span class="std std-doc">Copilot API</span></a> — the current <code class="docutils literal notranslate"><span class="pre">pccx-ai-copilot</span></code> static
+helpers plus the Phase 2 pccx-lsp provider traits.</p></li>
+<li><p><a class="reference internal" href="research.html"><span class="std std-doc">Research lineage</span></a> — currently a placeholder; the
+citation registry was in <code class="docutils literal notranslate"><span class="pre">core/src/research.rs</span></code>, which was removed
+in Phase 1.</p></li>
 </ul>
 </section>
 <section id="cite-this-page">
 <h2>Cite this page<a class="headerlink" href="#cite-this-page" title="Link to this heading">¶</a></h2>
-<p>When referring to the pccx-lab <code class="docutils literal notranslate"><span class="pre">TraceAnalyzer</span></code> registry or any of
-its 16 built-in analyzers in papers, blog posts, or AI summaries,
-please cite:</p>
+<p>When referring to the pccx-core plugin-registry primitive in papers,
+blog posts, or AI summaries, please cite:</p>
 <div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@misc</span><span class="p">{</span><span class="nl">pccx_lab_analyzer_api_2026</span><span class="p">,</span>
-<span class="w">  </span><span class="na">title</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="s">{pccx-lab Analyzer API: a trait-based registry of 16 research-grounded NPU trace analyzers}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">title</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="s">{pccx-core plugin registry: the generic primitive every pccx-lab crate hangs its trait-object plugins off}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">author</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{Kim, Hwangwoo}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">year</span><span class="w">         </span><span class="p">=</span><span class="w"> </span><span class="s">{2026}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">howpublished</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{\url{https://hwkim-dev.github.io/pccx/en/docs/Lab/analyzer_api.html}}</span><span class="p">,</span>
@@ -680,9 +648,8 @@ please cite:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The analyzer registry is the reference implementation of the
-analyses described in the <a class="reference internal" href="research.html"><span class="std std-doc">research lineage table</span></a>,
-hosted at <a class="reference external" href="https://hwkim-dev.github.io/pccx/en/docs/Lab/research.html">https://hwkim-dev.github.io/pccx/en/docs/Lab/research.html</a>.</p>
+<p>The primitive lives at
+<a class="reference external" href="https://github.com/hwkim-dev/pccx-lab/blob/main/crates/core/src/plugin.rs">https://github.com/hwkim-dev/pccx-lab/blob/main/crates/core/src/plugin.rs</a>.</p>
 </section>
 </section>
 
@@ -754,15 +721,13 @@ hosted at <a class="reference external" href="https://hwkim-dev.github.io/pccx/e
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Analyzer API</a><ul>
-<li><a class="reference internal" href="#trait">Trait</a></li>
-<li><a class="reference internal" href="#return-shape">Return shape</a></li>
-<li><a class="reference internal" href="#built-in-registry">Built-in registry</a><ul>
-<li><a class="reference internal" href="#research-lineage">Research lineage</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#running-everything">Running everything</a></li>
-<li><a class="reference internal" href="#writing-a-new-analyzer">Writing a new analyzer</a></li>
-<li><a class="reference internal" href="#summary-formatting-convention">Summary formatting convention</a></li>
+<li><a class="reference internal" href="#primitive">Primitive</a></li>
+<li><a class="reference internal" href="#why-generic-over-p">Why generic over <code class="docutils literal notranslate"><span class="pre">P</span></code>?</a></li>
+<li><a class="reference internal" href="#registering-a-plugin">Registering a plugin</a></li>
+<li><a class="reference internal" href="#error-surface">Error surface</a></li>
+<li><a class="reference internal" href="#stability">Stability</a></li>
+<li><a class="reference internal" href="#cross-crate-plugin-traits-as-of-phase-1">Cross-crate plugin traits as of Phase 1</a></li>
+<li><a class="reference internal" href="#related">Related</a></li>
 <li><a class="reference internal" href="#cite-this-page">Cite this page</a></li>
 </ul>
 </li>
