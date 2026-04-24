@@ -23,10 +23,10 @@ lands you at a running profiler with a real capture loaded.
 
 | Artefact | Produced by | Opens with |
 |---|---|---|
-| `.pccx` trace (16-token Gemma-3N decode) | `pccx-FPGA-NPU-LLM-kv260/hw/sim/run_verification.sh` | `pccx-lab` (Tauri app) |
+| `.pccx` trace (16-token Gemma-3N decode) | `pccx-FPGA-NPU-LLM-kv260/hw/sim/run_verification.sh` | `pccx-lab` (Tauri app), `pccx_cli` |
 | Sail ISA model (type-checked)            | `pccx-FPGA-NPU-LLM-kv260/formal/sail/`                | `sail`, `sail --doc` |
-| Vivado synth + timing reports            | `pccx-FPGA-NPU-LLM-kv260/vivado/build.sh synth`       | `pccx_analyze --synth` |
-| AnalyzerDashboard findings               | `pccx-lab` workspace                                  | 16 built-in analyzers |
+| Vivado synth + timing reports            | `pccx-FPGA-NPU-LLM-kv260/vivado/build.sh synth`       | `pccx-lab` IDE → Verification → Synth Status |
+| Trace analytics                          | `pccx-lab` workspace                                  | `pccx_cli --roofline --report-md`, IDE analyzer tabs |
 
 ## 1. Prerequisites
 
@@ -56,23 +56,13 @@ git clone https://github.com/hwkim-dev/pccx-lab.git                 # profiler +
 
 ## 3. One-command reproducer (Docker)
 
-```bash
-cd ~/pccx-ws/pccx-lab
-docker compose -f scripts/docker/quickstart.yml up
-```
+```{admonition} Planned — not yet shipped
+:class: warning
 
-The container:
-
-1. Builds `pccx-core` and the `pccx_analyze` CLI.
-2. Runs the bundled xsim smoke TB (takes ~30 s on a recent laptop).
-3. Writes the resulting `.pccx` to `./out/smoke.pccx`.
-4. Prints the 16 analyzer summaries to stdout.
-5. Exits 0 on success — ready for CI pipe.
-
-Pipe it to a report:
-
-```bash
-docker compose ... > report.txt 2>&1
+The Docker reproducer (`scripts/docker/quickstart.yml`) is tracked on
+the pccx-lab roadmap but has not landed on `main` yet.  Until it does,
+follow the [native path below](#4-native-path-no-docker) — it is
+identical to what the container will run internally.
 ```
 
 ## 4. Native path (no Docker)
@@ -85,12 +75,13 @@ make check                           # type-check; < 5 s
 
 # ── pccx-core + CLI ────────────────────────────────────────────
 cd ~/pccx-ws/pccx-lab
-cargo build -p pccx-core --bin pccx_cli --release
+cargo build -p pccx-reports --bin pccx_cli --release
 ./target/release/pccx_cli \
-    samples/gemma3n_16tok_smoke.pccx    # header + roofline + bottleneck
+    samples/gemma3n_16tok_smoke.pccx \
+    --roofline --report-md          # header + roofline + bottleneck
 
 # ── pccx-lab (Tauri desktop app) ───────────────────────────────
-cd src/ui
+cd ui
 npm ci && npm run tauri dev
 ```
 
