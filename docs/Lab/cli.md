@@ -169,7 +169,7 @@ gate for now.
 ```bibtex
 @misc{pccx_lab_cli_2026,
   title        = {pccx-lab command-line binaries after the Phase 1 workspace split: pccx\_cli, generator, from\_xsim\_log, pccx\_golden\_diff},
-  author       = {Kim, Hwangwoo},
+  author       = {Kim, Hyunwoo},
   year         = {2026},
   howpublished = {\url{https://hwkim-dev.github.io/pccx/en/docs/Lab/cli.html}},
   note         = {Part of pccx: \url{https://hwkim-dev.github.io/pccx/}}

@@ -120,7 +120,7 @@ cd ~/pccx-ws/pccx-FPGA-NPU-LLM-kv260/scripts/board
 ```bibtex
 @misc{pccx_quickstart_2026,
   title        = {pccx Quickstart: one-command reproducer for the open NPU},
-  author       = {Kim, Hwangwoo},
+  author       = {Kim, Hyunwoo},
   year         = {2026},
   howpublished = {\url{https://hwkim-dev.github.io/pccx/ko/docs/quickstart.html}},
   note         = {Part of pccx: \url{https://hwkim-dev.github.io/pccx/}}

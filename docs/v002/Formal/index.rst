@@ -101,7 +101,7 @@ authoritative source:
 
    @misc{pccx_sail_2026,
      title        = {The pccx Sail ISA model: a formal specification of an open W4A8 NPU},
-     author       = {Kim, Hwangwoo},
+     author       = {Kim, Hyunwoo},
      year         = {2026},
      howpublished = {\url{https://hwkim-dev.github.io/pccx/en/docs/v002/Formal/index.html}},
      note         = {Authored in Sail (https://sail-lang.org/) — the ISA semantics language used for RISC-V, Arm, CHERI, and Morello.}

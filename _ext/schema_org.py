@@ -48,12 +48,12 @@ def _website_entry(app: Sphinx) -> dict[str, Any]:
         "inLanguage": [app.config.language or "en", "en", "ko"],
         "author": {
             "@type": "Person",
-            "name": "Hwangwoo Kim",
+            "name": "Hyunwoo Kim",
             "url": "https://hwkim-dev.github.io/hwkim-dev/",
         },
         "publisher": {
             "@type": "Person",
-            "name": "Hwangwoo Kim",
+            "name": "Hyunwoo Kim",
             "url": "https://hwkim-dev.github.io/hwkim-dev/",
         },
         "description": (
@@ -119,7 +119,7 @@ def _article_entry(app: Sphinx, pagename: str, context: dict[str, Any]) -> dict[
         },
         "author": {
             "@type": "Person",
-            "name": "Hwangwoo Kim",
+            "name": "Hyunwoo Kim",
             "url": "https://hwkim-dev.github.io/hwkim-dev/",
         },
         "publisher": {
@@ -138,7 +138,7 @@ def _article_entry(app: Sphinx, pagename: str, context: dict[str, Any]) -> dict[
             "@type": "CreativeWork",
             "name": "pccx: Parallel Compute Core eXecutor",
             "url": _CANONICAL_ROOT,
-            "author": "Hwangwoo Kim",
+            "author": "Hyunwoo Kim",
             "datePublished": "2026",
         },
     }
