@@ -84,9 +84,11 @@ M_AXIS_ACP_RESULT    ◄────────  │  Shared L2 Cache (URAM 1.7
 | L1 (Activation row buffer) | Block RAM | per-core | Systolic / GEMV lanes |
 | L2 (Shared cache) | URAM | 1.75 MB (114,688 × 128-bit) | All cores + mem_dispatcher |
 | Weight stream | HP AXI port × 4 | DDR4 bandwidth | HP0/1 → GEMM, HP2/3 → GEMV |
-| KV Cache | DDR4 (off-chip) | Up to 10–12 GB | ACP coherent port |
+| KV Cache | External / off-chip memory model | System-dependent capacity | ACP / coherent access path |
 
 > **KV cache bandwidth wall:** At 32K context (Gemma 3N E4B), the accumulated KV cache reaches ~1.31 GB. Mitigation: KV quantization (FP16→INT8/INT4), attention sink eviction, and a driver-enforced `KV_MAX_TOKENS` hard cap.
+>
+> The capacity field above is a system-level memory model, not a guaranteed on-board KV260 figure. Reproducible board measurements will be reported separately with the board configuration, model, context length, precision, and benchmark command.
 
 ---
 
