@@ -90,6 +90,18 @@ Isabelle / Coq export             planned phase 3
    make check                   # 모든 모듈 타입체크
    sail --project pccx.sail_project --all-modules --just-check
 
+지속 통합
+---------
+
+RTL 레포는 사용자 노출용 CI 워크플로우를 하나
+(``.github/workflows/sail-check.yml``) 출하한다. ``formal/sail/``
+혹은 워크플로우 자체를 건드리는 모든 PR 에 대해 ``make check``
+를 재실행한다. 잡은 ``opam`` + ``sail`` (Sail 툴체인의 ``Cargo.lock``
+대응 버전) 과 ``z3`` (Sail 0.20.1 의 SMT 백엔드 타입 체커가 요구) 를
+설치한 다음 ``pccx.sail_project`` 의 모든 모듈을 타입 체크한다.
+타입 체크 실패는 머지를 차단한다 — SV ``typedef`` 과 Sail ``type``
+간 width drift 는 ``main`` 에 도달할 수 없다.
+
 이 페이지 인용
 --------------
 

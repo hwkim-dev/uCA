@@ -7,10 +7,11 @@ Phase 1 이전의 `Copilot` 구조체 (`investigate()`,
 `suggest_fix()`, `generate_report()`) 는 폐기되었다. 오늘
 `pccx-ai-copilot` 은 Tauri UI 용 얇은 정적 헬퍼 세트와 Phase 2 / Phase 5
 오케스트레이션이 착륙할 unstable 트레이트 스캐폴드 두 개를 출하한다.
-AI 구동 자연어 → UVM 워크플로우는 Phase 2 **pccx-lsp 파사드** 위에
-재구축 중이다 — A-슬라이스 (`LspMultiplexer` + `NoopBackend`) 와
-B-슬라이스 (async 컴패니언, `BlockingBridge`, `SpawnConfig` /
-`LspSubprocess`) 가 Phase 2 M2.1 에서 착륙했다.
+자연어 → UVM 워크플로우는 Phase 2 **pccx-lsp 파사드** 위에 재구축
+중이다 — M2.1 의 A 부터 D 슬라이스 (`LspMultiplexer` + `NoopBackend`,
+async 컴패니언 + `BlockingBridge`, `encode_frame` / `decode_frame`
+JSON-RPC 와이어 프레이밍, async framed IO) 와 M2.2 (`SvKeywordProvider`,
+`SvHoverProvider`, `sv_completions` Tauri 커맨드) 까지 착륙했다.
 
 이 페이지는 오늘 출하 가능한 표면을 문서화한다. 구체 verible /
 rust-analyzer / cloud LLM 백엔드가 lsp provider 트레이트에 꽂히면 더 풍부한
@@ -111,10 +112,10 @@ pccx-lab v0.2.x 에는 구체 구현이 동봉되지 않는다 — Phase 2 / Pha
 진행에 따라 착륙한다. 다운스트림 소비자는 pccx-lab v0.3 까지 이
 시그니처가 변경 대상임을 전제해야 한다.
 
-## pccx-lsp (Phase 2 M2.1)
+## pccx-lsp (Phase 2 M2.1 + M2.2)
 
-IntelliSense 파사드는 앞으로 AI / LSP / 캐시 팬아웃이 사는 곳이다.
-sync provider 트레이트 세 개 + async 컴패니언:
+LSP 파사드는 앞으로 LSP / 캐시 라우팅이 사는 곳이다. sync provider
+트레이트 세 개 + async 컴패니언:
 
 ```rust
 pub trait CompletionProvider {
@@ -171,10 +172,10 @@ rust-analyzer, clangd) 는 `SpawnConfig` + `LspSubprocess` 로 spawn;
 
 `CompletionSource` enum 은 결과의 출처 — 상류 LSP, 빠른 cloud 예측기,
 깊은 cloud 예측기, AST-해시 캐시 — 를 구분한다. 향후
-AI 파이프라인이 이 enum 으로 feedback 되므로 UI 는 모든 제안 옆에
+예측 파이프라인이 이 enum 으로 feedback 되므로 UI 는 모든 제안 옆에
 provenance 배지를 렌더할 수 있다.
 
-엔드 스테이트 디자인 (AI 팬아웃, tower-lsp 어댑터, Monaco 와이어링) 은
+엔드 스테이트 디자인 (LSP 라우팅, tower-lsp 어댑터, Monaco 와이어링) 은
 pccx-lab `docs/design/phase2_intellisense.md` 참고.
 
 ## UI 지향 정적 커맨드
@@ -184,6 +185,11 @@ pccx-lab `docs/design/phase2_intellisense.md` 참고.
 로 정적 헬퍼를 직접 호출한다. 브리지는 `ui/src-tauri/src/lib.rs` 에서
 함수당 한 줄짜리다. 단일 `invoke("copilot_investigate", …)` 우산 호출은
 더 이상 존재하지 않는다.
+
+전체 Tauri 커맨드 카탈로그 (load / mmap / analytics / verification /
+lsp / synth / copilot 카테고리에 걸친 48 개 커맨드) 와 IPC 경계
+규칙 (u64 → String, generation_id, 원시 트레이스의 IPC 통과 금지) 은
+[IPC 레퍼런스](ipc.md) 참고.
 
 ## 관련 문서
 

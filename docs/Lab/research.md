@@ -41,11 +41,19 @@ Active design surfaces that will feed the rebuilt lineage:
   `Lsp` / `AiFast` / `AiDeep` / `Cache`; when the AI-fast / AI-deep
   backends land they will need their own provenance lineage.
 
-All three design documents (`docs/design/phase2_intellisense.md`,
+The four design documents (`docs/design/phase2_intellisense.md`,
 `phase3_remote_backend.md`, `phase4_insane_reports.md`,
-`phase5_alphaevolve.md`) in the pccx-lab repo call out the papers
-their work inherits from.  Those docs are the closest thing to a live
-lineage until the on-disk registry returns.
+`phase5_alphaevolve.md`) plus `phase6_dev_docs_generation.md` in the
+pccx-lab repo call out the papers their work inherits from.  Those
+docs are the closest thing to a live lineage until the on-disk
+registry returns.
+
+The `knowledge/sail_language/` corpus inside pccx-lab tracks the
+Cambridge Sail ISA specification language — the Phase 4 finale
+(M4.8–M4.10 "Sail finale") and the Phase 5 PRM gate both rely on
+Sail for formal RTL refinement, so the design docs cite it heavily.
+The pccx-FPGA repo also ships a Sail model under `formal/sail/` (see
+the [Formal section](../v002/Formal/index.rst)).
 
 ## When this page refreshes
 
@@ -64,7 +72,7 @@ binary replaces the old `pccx_analyze --research-list` surface
 
 - pccx-lab repo: <https://github.com/hkimw/pccx-lab>
 - Phase 1 change log: `crates/*/CHANGELOG.md`
-- Per-phase design docs: `docs/design/phase{1,2,3,4,5}_*.md`
+- Per-phase design docs: `docs/design/phase{1,2,3,4,5,6}_*.md`
 
 ## Cite this page
 

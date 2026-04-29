@@ -93,6 +93,7 @@ cores **broadcast** the same vector among themselves.
    clock. Because ``W`` is INT4, the 16 possible ``A × w`` products are
    pre-computed in the LUT; the actual weight bits only *select* the
    matching entry.
+
 3.3 Reduction Tree
 -------------------
 

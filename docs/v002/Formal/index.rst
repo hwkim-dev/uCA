@@ -90,6 +90,19 @@ Running the model
    make check                   # type-check every module
    sail --project pccx.sail_project --all-modules --just-check
 
+Continuous integration
+----------------------
+
+The RTL repo ships a single user-facing CI workflow at
+``.github/workflows/sail-check.yml`` that re-runs ``make check``
+on every PR touching ``formal/sail/`` or the workflow itself. The
+job installs ``opam`` + ``sail`` (pinned at the ``Cargo.lock``
+equivalent of the Sail toolchain) and ``z3`` (required by Sail
+0.20.1's SMT-backed type-checker), then types every module in
+``pccx.sail_project``. A failed type-check blocks merge — width
+drift between SV ``typedef`` and Sail ``type`` cannot reach
+``main``.
+
 Cite this page
 --------------
 

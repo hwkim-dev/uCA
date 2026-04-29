@@ -20,3 +20,9 @@ development requires a manual clone:
    npu_top
    compute_cores
    controller
+   frontend
+   memory_l2
+   memory_dispatch
+   preprocess
+   packages
+   library

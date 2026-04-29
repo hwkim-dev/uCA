@@ -118,6 +118,16 @@ By the same argument, the upper 25-bit region safely accumulates
    accumulation sessions. The split unit is decided at the driver /
    compiler level.
 
+.. note::
+
+   The companion RTL repo's README quotes a tighter drain bound of
+   ``2¹⁰ ≈ 1024`` cycles for ``GEMM_accumulator`` (post-synth guard-band
+   limited). The 4,096 figure above is the upper bound from the
+   23-bit lower-region budget; whether the deployed design uses the
+   conservative 1,024 or the analytical 4,096 is tracked in the RTL
+   repo's ``TODO.md`` §1.2 and will be settled once post-synth timing
+   margin is finalised.
+
 4. Negative Accumulation and the Borrow Effect
 ================================================
 

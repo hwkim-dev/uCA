@@ -7,10 +7,12 @@ The pre-Phase-1 `Copilot` struct (with `investigate()`,
 `suggest_fix()`, `generate_report()`) has been retired.  Today
 `pccx-ai-copilot` ships a thin set of static helpers for the Tauri UI
 plus two unstable trait scaffolds on which Phase 2 / Phase 5 orchestration
-will land.  The AI-driven natural-language-to-UVM workflow is being
-rebuilt on top of the Phase 2 **pccx-lsp façade** — which landed its
-A-slice (`LspMultiplexer` + `NoopBackend`) and B-slice (async companions,
-`BlockingBridge`, `SpawnConfig` / `LspSubprocess`) in Phase 2 M2.1.
+will land.  The natural-language-to-UVM workflow is being rebuilt on
+top of the Phase 2 **pccx-lsp façade** — which landed M2.1 slices
+A through D (`LspMultiplexer` + `NoopBackend`, async companions +
+`BlockingBridge`, JSON-RPC wire framing via `encode_frame` /
+`decode_frame`, async framed IO) and M2.2 (`SvKeywordProvider`,
+`SvHoverProvider`, `sv_completions` Tauri command).
 
 This page documents what is shippable today.  The richer façade will
 be refreshed as the concrete verible / rust-analyzer / cloud LLM backends
@@ -114,10 +116,10 @@ No concrete implementations ship with pccx-lab v0.2.x — they land as
 Phase 2 / Phase 5 progress.  Every downstream consumer should treat
 these signatures as subject to change until pccx-lab v0.3.
 
-## pccx-lsp (Phase 2 M2.1)
+## pccx-lsp (Phase 2 M2.1 + M2.2)
 
-The IntelliSense façade is where the AI / LSP / cache fan-out lives
-going forward.  Three sync provider traits plus their async companions:
+The LSP façade is where the LSP / cache routing lives going forward.
+Three sync provider traits plus their async companions:
 
 ```rust
 pub trait CompletionProvider {
@@ -179,7 +181,7 @@ AST-hash cache — the future AI pipeline feeds back into this enum so
 the UI can render provenance badges next to every suggestion.
 
 See pccx-lab's `docs/design/phase2_intellisense.md` for the end-state
-design (AI fan-out, tower-lsp adapter, Monaco wiring).
+design (LSP routing, tower-lsp adapter, Monaco wiring).
 
 ## UI-facing static commands
 
@@ -189,6 +191,11 @@ static helpers via `invoke("compress_context", …)`,
 `invoke("list_uvm_strategies")`.  The bridge is a one-liner per
 function in `ui/src-tauri/src/lib.rs`.  There is no longer a
 single `invoke("copilot_investigate", …)` umbrella call.
+
+The full Tauri command catalogue (48 commands across load / mmap /
+analytics / verification / lsp / synth / copilot) lives at
+[IPC reference](ipc.md), along with the IPC boundary rules
+(u64-as-string, generation_id, raw-trace-never-crosses).
 
 ## Related
 

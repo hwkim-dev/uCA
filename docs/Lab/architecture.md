@@ -15,25 +15,27 @@ subsystem lives in-line in the source.
 ## Phase status
 
 Phase 1 (workspace split + stable API contracts + plugin registry +
-per-crate CHANGELOG) is complete.  Phase 2 (IntelliSense façade) has
-landed as scaffolding plus the M2.1 A-slice (`LspMultiplexer` +
-`NoopBackend`); `tower-lsp` / `lsp-types` integration is deferred to
-Phase 2 proper.  Phases 3 (remote backend), 4 (insane reports), and
-5 (AlphaEvolve loop) are design-doc-only — see
-`docs/design/phase{3,4,5}_*.md` in the pccx-lab repo.
+per-crate CHANGELOG) is complete.  Phase 2 (LSP façade) has landed
+through the M2.1 A/B/C/D slices (`LspMultiplexer` + `NoopBackend`,
+async companions + `BlockingBridge`, JSON-RPC wire framing, async
+framed IO) and M2.2 (`SvKeywordProvider`, `SvHoverProvider`,
+`sv_completions` Tauri command).  Phases 3 (remote backend),
+4 (insane reports), 5 (AlphaEvolve loop), and 6 (dev-phase doc
+generation) are design-doc-only — see
+`docs/design/phase{3,4,5,6}_*.md` in the pccx-lab repo.
 
 ## Repo layout
 
-After the Phase 1 workspace split, pccx-lab is a 10-member Cargo
-workspace. Each crate exposes an `#[unstable]` trait surface under
-its own `plugin-api` feature so downstream consumers (CLI, IDE,
-remote daemon) can depend on the contract without pulling the whole
-crate.
+After the Phase 1 workspace split, pccx-lab is an 11-member Cargo
+workspace — 10 functional crates plus the Tauri shell.  Each crate
+exposes an `#[unstable]` trait surface under its own `plugin-api`
+feature so downstream consumers (CLI, IDE, remote daemon) can depend
+on the contract without pulling the whole crate.
 
 ```
 pccx-lab/
-├── Cargo.toml          Cargo workspace (10 members)
-├── src/
+├── Cargo.toml          Cargo workspace (10 crates + Tauri shell)
+├── crates/
 │   ├── core/           — pccx-core: headless Rust, no GUI deps
 │   │                     (.pccx format, trace, roofline, bottleneck,
 │   │                     live_window, step_snapshot, synth_report,
@@ -45,13 +47,17 @@ pccx-lab/
 │   ├── evolve/         — pccx-evolve: speculative-decoding primitives
 │   │                     (EAGLE-family strategies; Phase 5 seed)
 │   ├── remote/         — pccx-remote: Phase 3 backend daemon scaffold
-│   ├── lsp/            — pccx-lsp: Phase 2 IntelliSense façade
-│   │                     (LspMultiplexer + NoopBackend A-slice)
+│   ├── lsp/            — pccx-lsp: Phase 2 LSP façade
+│   │                     (LspMultiplexer + JSON-RPC wire + SV providers)
 │   ├── uvm_bridge/     — pccx-uvm-bridge: SV / UVM DPI-C adapter
-│   ├── ai_copilot/     — pccx-ai-copilot: LLM orchestration
-│   └── ui/src-tauri/   — Tauri v2 desktop shell + IPC
-├── ui/                  React 19 + TypeScript + Vite 7 (outside workspace)
-├── docs/                Sphinx source — handbook + Phase 1–5 design docs
+│   ├── schema/         — pccx-schema: central IPC DTO + ts-rs TypeScript
+│   │                     auto-export
+│   └── ai_copilot/     — pccx-ai-copilot: LLM orchestration
+├── ui/
+│   ├── src/            React 19 + TypeScript + Vite 7
+│   └── src-tauri/      Tauri v2 desktop shell + IPC
+├── docs/                Sphinx source — handbook + Phase 1–6 design docs
+├── cycle/               self-evolution round artefacts (rounds 1–6)
 └── scripts/             local tooling
 ```
 
@@ -172,22 +178,32 @@ bridge over a single library call.
 
 - **pccx**: canonical v002 spec (you are reading it now).  Numbers,
   bit widths, opcode tables — always match this source.
-- **pccx-FPGA-NPU-LLM-kv260**: the RTL repo pccx-lab profiles.  We
-  never modify it from pccx-lab's CI; instead `synth_runner` and the
-  board bringup scripts drive it read-only.
+- **pccx-FPGA-NPU-LLM-kv260**: the RTL repo pccx-lab profiles.  pccx-lab
+  CI does not modify it; `synth_runner` and the board bringup scripts
+  drive it read-only.
 - **llm-lite**: CPU reference for golden comparisons.  Used by TB
   generators + the `reg_golden` UVM strategy.
+- **CX_language**: extracted from `pccx-lab/crates/cx/` on 2026-04-29
+  to a sibling repo (`~/Desktop/CX_language/`).  Downstream consumer
+  of the ISA / API specs that `pccx-authoring` compiles; no longer
+  part of the pccx-lab workspace.
 
 ## Build state
 
-`cargo test --workspace`, `cargo check` (including `src/ui/src-tauri`),
-`npx tsc --noEmit -p src/ui`, and `npm run build` (Vite) must pass
-before any PR merge. Per-crate test counts have been in flux since
-the Phase 1 split; each crate's `CHANGELOG.md` records the numbers
-at the time of its most recent release.
+The full pre-merge gate is four commands:
+
+| Command | Scope |
+|---|---|
+| ``cargo test --workspace`` | All crate unit + integration tests |
+| ``cargo check -p <crate>`` | Per-crate compile (incl. ``ui/src-tauri``) |
+| ``npx tsc --noEmit -p ui`` | Frontend type check |
+| ``npm run build`` | Vite production build |
+
+Per-crate test counts shift between releases — each crate's
+``CHANGELOG.md`` records the count at the time of its last cut.
 
 See [CLI reference](cli.md) for command reference and
-[Copilot API](copilot.md) for the AI automation surface.
+[Copilot API](copilot.md) for the LLM automation surface.
 
 ## Cite this page
 
