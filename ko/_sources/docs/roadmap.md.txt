@@ -1,15 +1,5 @@
 # 로드맵 (Two-Track)
 
-:::{dropdown} 빠른 탐색
-:open:
-
-```{contents}
-:local:
-:depth: 2
-:backlinks: none
-```
-:::
-
 pccx는 2026-04-20 기준으로 **두 트랙 병렬**로 진행된다. v002는 현재 active
 아키텍처이고 v003은 다음 세대 타겟 모델(Gemma 4 E4B)을 위해 설계된다.
 두 트랙은 RTL 자산 (sparse weight fetcher, SSD dispatcher, tree mask generator,

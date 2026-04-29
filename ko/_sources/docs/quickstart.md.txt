@@ -13,11 +13,6 @@ myst:
 이 페이지는 **재현기** 이다: `docker compose up` 한 번으로 샘플
 캡처가 로딩된 프로파일러가 실행 상태로 떠야 한다.
 
-```{contents} 이 페이지 목차
-:depth: 2
-:backlinks: none
-```
-
 ## 0. 얻게 되는 산출물
 
 ```{mermaid}

@@ -1,15 +1,5 @@
 # Roadmap (Two-Track)
 
-:::{dropdown} Quick Navigation
-:open:
-
-```{contents}
-:local:
-:depth: 2
-:backlinks: none
-```
-:::
-
 As of 2026-04-20, pccx is developed along **two parallel tracks**. v002 is
 the currently active architecture; v003 targets the next-generation model
 (Gemma 4 E4B) on the same KV260 platform. The two tracks share RTL

@@ -7,12 +7,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://hkimw.github.io/pccx/docs/roadmap.html" />
 <meta property="og:site_name" content="pccx — Parallel Compute Core eXecutor" />
-<meta property="og:description" content="Quick Navigation 1. Common assumptions, 2. Track 1 — v002 Extended (Gemma 3N E4B, 20 tok/s)- Tiered targets, Phase plan, Decision points &amp; fallbacks., 3. Track 2 — v003 (Gemma 4 E4B, 12–15 tok/..." />
+<meta property="og:description" content="As of 2026-04-20, pccx is developed along two parallel tracks. v002 is the currently active architecture; v003 targets the next-generation model(Gemma 4 E4B) on the same KV260 platform. The two tra..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="https://hkimw.github.io/pccx/_images/social_previews/summary_docs_roadmap_908e783f.png" />
-<meta property="og:image:alt" content="Quick Navigation 1. Common assumptions, 2. Track 1 — v002 Extended (Gemma 3N E4B, 20 tok/s)- Tiered targets, Phase plan, Decision points &amp; fallbacks., 3. Track 2 — v003 (Gemma 4 E4B, 12–15 tok/..." />
-<meta name="description" content="Quick Navigation 1. Common assumptions, 2. Track 1 — v002 Extended (Gemma 3N E4B, 20 tok/s)- Tiered targets, Phase plan, Decision points &amp; fallbacks., 3. Track 2 — v003 (Gemma 4 E4B, 12–15 tok/..." />
+<meta property="og:image" content="https://hkimw.github.io/pccx/_images/social_previews/summary_docs_roadmap_4dd5b14a.png" />
+<meta property="og:image:alt" content="As of 2026-04-20, pccx is developed along two parallel tracks. v002 is the currently active architecture; v003 targets the next-generation model(Gemma 4 E4B) on the same KV260 platform. The two tra..." />
+<meta name="description" content="As of 2026-04-20, pccx is developed along two parallel tracks. v002 is the currently active architecture; v003 targets the next-generation model(Gemma 4 E4B) on the same KV260 platform. The two tra..." />
 <meta name="twitter:card" content="summary_large_image" />
 
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://hkimw.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"Roadmap (Two-Track)","name":"Roadmap (Two-Track)","url":"https://hkimw.github.io/pccx/en/docs/roadmap.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://hkimw.github.io/pccx/en/docs/roadmap.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://hkimw.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://hkimw.github.io/pccx/"},"datePublished":"2026-04-29","dateModified":"2026-04-29","description":"pccx documentation page: Roadmap (Two-Track). Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://hkimw.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="pccx v002 Architecture" href="v002/index.html"><link rel="prev" title="Evidence" href="Evidence/index.html">
@@ -476,47 +476,7 @@
         <article role="main" id="furo-main-content">
           <section class="tex2jax_ignore mathjax_ignore" id="roadmap-two-track">
 <h1>Roadmap (Two-Track)<a class="headerlink" href="#roadmap-two-track" title="Link to this heading">¶</a></h1>
-<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3" open="open">
-<summary class="sd-summary-title sd-card-header">
-<span class="sd-summary-text">Quick Navigation</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
-<nav class="contents local" id="contents">
-<ul class="simple">
-<li><p class="sd-card-text"><a class="reference internal" href="#common-assumptions" id="id3">1. Common assumptions</a></p></li>
-<li><p class="sd-card-text"><a class="reference internal" href="#track-1-v002-extended-gemma-3n-e4b-20-tok-s" id="id4">2. Track 1 — v002 Extended (Gemma 3N E4B, 20 tok/s)</a></p>
-<ul>
-<li><p class="sd-card-text"><a class="reference internal" href="#tiered-targets" id="id5">Tiered targets</a></p></li>
-<li><p class="sd-card-text"><a class="reference internal" href="#phase-plan" id="id6">Phase plan</a></p></li>
-<li><p class="sd-card-text"><a class="reference internal" href="#decision-points-fallbacks" id="id7">Decision points &amp; fallbacks</a></p></li>
-</ul>
-</li>
-<li><p class="sd-card-text"><a class="reference internal" href="#track-2-v003-gemma-4-e4b-1215-tok-s" id="id8">3. Track 2 — v003 (Gemma 4 E4B, 12–15 tok/s)</a></p>
-<ul>
-<li><p class="sd-card-text"><a class="reference internal" href="#id1" id="id9">Tiered targets</a></p></li>
-<li><p class="sd-card-text"><a class="reference internal" href="#id2" id="id10">Phase plan</a></p></li>
-<li><p class="sd-card-text"><a class="reference internal" href="#cross-track-asset-reuse" id="id11">Cross-track asset reuse</a></p></li>
-</ul>
-</li>
-<li><p class="sd-card-text"><a class="reference internal" href="#integrated-timeline-52-weeks" id="id12">4. Integrated timeline (52 weeks)</a></p></li>
-<li><p class="sd-card-text"><a class="reference internal" href="#compute-budget" id="id13">5. Compute budget</a></p></li>
-<li><p class="sd-card-text"><a class="reference internal" href="#year-2-auto-porting-pipeline-stretch" id="id14">6. Year 2 — Auto-Porting Pipeline α (stretch)</a></p>
-<ul>
-<li><p class="sd-card-text"><a class="reference internal" href="#technical-shape" id="id15">Technical shape</a></p></li>
-<li><p class="sd-card-text"><a class="reference internal" href="#target-priority" id="id16">Target priority</a></p></li>
-<li><p class="sd-card-text"><a class="reference internal" href="#schedule-week-53" id="id17">Schedule (Week 53+)</a></p></li>
-<li><p class="sd-card-text"><a class="reference internal" href="#publication-angle" id="id18">Publication angle</a></p></li>
-</ul>
-</li>
-<li><p class="sd-card-text"><a class="reference internal" href="#milestones" id="id19">7. Milestones</a></p>
-<ul>
-<li><p class="sd-card-text"><a class="reference internal" href="#year-1-kpis" id="id20">Year 1 KPIs</a></p></li>
-<li><p class="sd-card-text"><a class="reference internal" href="#year-2-kpis-auto-porting" id="id21">Year 2 KPIs (Auto-Porting α)</a></p></li>
-</ul>
-</li>
-<li><p class="sd-card-text"><a class="reference internal" href="#rtl-repository" id="id22">8. RTL repository</a></p></li>
-</ul>
-</nav>
-</div>
-</details><p>As of 2026-04-20, pccx is developed along <strong>two parallel tracks</strong>. v002 is
+<p>As of 2026-04-20, pccx is developed along <strong>two parallel tracks</strong>. v002 is
 the currently active architecture; v003 targets the next-generation model
 (Gemma 4 E4B) on the same KV260 platform. The two tracks share RTL
 assets — sparse weight fetcher, SSD dispatcher, tree mask generator,

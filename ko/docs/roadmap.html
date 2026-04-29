@@ -7,12 +7,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://hkimw.github.io/pccx/docs/roadmap.html" />
 <meta property="og:site_name" content="pccx — Parallel Compute Core eXecutor" />
-<meta property="og:description" content="빠른 탐색 1. 공통 전제, 2. Track 1 — v002 Extended (Gemma 3N E4B, 20 tok/s)- Tiered targets, Phase 구성, Exit 조건 &amp; Fallback., 3. Track 2 — v003 (Gemma 4 E4B, 12–15 tok/s)- Tiered targets, Phase 구성, Two-t..." />
+<meta property="og:description" content="pccx는 2026-04-20 기준으로 두 트랙 병렬 로 진행된다. v002는 현재 active 아키텍처이고 v003은 다음 세대 타겟 모델(Gemma 4 E4B)을 위해 설계된다. 두 트랙은 RTL 자산 (sparse weight fetcher, SSD dispatcher, tree mask generator, EAGLE 학습 파이프라인)을 상호 재..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="https://hkimw.github.io/pccx/_images/social_previews/summary_docs_roadmap_b5cd7e8d.png" />
-<meta property="og:image:alt" content="빠른 탐색 1. 공통 전제, 2. Track 1 — v002 Extended (Gemma 3N E4B, 20 tok/s)- Tiered targets, Phase 구성, Exit 조건 &amp; Fallback., 3. Track 2 — v003 (Gemma 4 E4B, 12–15 tok/s)- Tiered targets, Phase 구성, Two-t..." />
-<meta name="description" content="빠른 탐색 1. 공통 전제, 2. Track 1 — v002 Extended (Gemma 3N E4B, 20 tok/s)- Tiered targets, Phase 구성, Exit 조건 &amp; Fallback., 3. Track 2 — v003 (Gemma 4 E4B, 12–15 tok/s)- Tiered targets, Phase 구성, Two-t..." />
+<meta property="og:image" content="https://hkimw.github.io/pccx/_images/social_previews/summary_docs_roadmap_9951acee.png" />
+<meta property="og:image:alt" content="pccx는 2026-04-20 기준으로 두 트랙 병렬 로 진행된다. v002는 현재 active 아키텍처이고 v003은 다음 세대 타겟 모델(Gemma 4 E4B)을 위해 설계된다. 두 트랙은 RTL 자산 (sparse weight fetcher, SSD dispatcher, tree mask generator, EAGLE 학습 파이프라인)을 상호 재..." />
+<meta name="description" content="pccx는 2026-04-20 기준으로 두 트랙 병렬 로 진행된다. v002는 현재 active 아키텍처이고 v003은 다음 세대 타겟 모델(Gemma 4 E4B)을 위해 설계된다. 두 트랙은 RTL 자산 (sparse weight fetcher, SSD dispatcher, tree mask generator, EAGLE 학습 파이프라인)을 상호 재..." />
 <meta name="twitter:card" content="summary_large_image" />
 
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://hkimw.github.io/pccx/","inLanguage":["ko","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"로드맵 (Two-Track)","name":"로드맵 (Two-Track)","url":"https://hkimw.github.io/pccx/ko/docs/roadmap.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://hkimw.github.io/pccx/ko/docs/roadmap.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://hkimw.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://hkimw.github.io/pccx/"},"datePublished":"2026-04-29","dateModified":"2026-04-29","description":"pccx documentation page: 로드맵 (Two-Track). Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"ko","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://hkimw.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="색인" href="../genindex.html"><link rel="search" title="검색" href="../search.html"><link rel="next" title="pccx v002 아키텍처" href="v002/index.html"><link rel="prev" title="Evidence" href="Evidence/index.html">
@@ -476,54 +476,14 @@
         <article role="main" id="furo-main-content">
           <section class="tex2jax_ignore mathjax_ignore" id="two-track">
 <h1>로드맵 (Two-Track)<a class="headerlink" href="#two-track" title="Link to this heading">¶</a></h1>
-<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3" open="open">
-<summary class="sd-summary-title sd-card-header">
-<span class="sd-summary-text">빠른 탐색</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
-<nav class="contents local" id="id1">
-<ul class="simple">
-<li><p class="sd-card-text"><a class="reference internal" href="#id2" id="id11">1. 공통 전제</a></p></li>
-<li><p class="sd-card-text"><a class="reference internal" href="#track-1-v002-extended-gemma-3n-e4b-20-tok-s" id="id12">2. Track 1 — v002 Extended (Gemma 3N E4B, 20 tok/s)</a></p>
-<ul>
-<li><p class="sd-card-text"><a class="reference internal" href="#tiered-targets" id="id13">Tiered targets</a></p></li>
-<li><p class="sd-card-text"><a class="reference internal" href="#phase" id="id14">Phase 구성</a></p></li>
-<li><p class="sd-card-text"><a class="reference internal" href="#exit-fallback" id="id15">Exit 조건 &amp; Fallback</a></p></li>
-</ul>
-</li>
-<li><p class="sd-card-text"><a class="reference internal" href="#track-2-v003-gemma-4-e4b-1215-tok-s" id="id16">3. Track 2 — v003 (Gemma 4 E4B, 12–15 tok/s)</a></p>
-<ul>
-<li><p class="sd-card-text"><a class="reference internal" href="#id3" id="id17">Tiered targets</a></p></li>
-<li><p class="sd-card-text"><a class="reference internal" href="#id4" id="id18">Phase 구성</a></p></li>
-<li><p class="sd-card-text"><a class="reference internal" href="#id5" id="id19">Two-track 재사용 관계</a></p></li>
-</ul>
-</li>
-<li><p class="sd-card-text"><a class="reference internal" href="#id6" id="id20">4. 통합 타임라인 (52주)</a></p></li>
-<li><p class="sd-card-text"><a class="reference internal" href="#compute" id="id21">5. Compute 예산</a></p></li>
-<li><p class="sd-card-text"><a class="reference internal" href="#year-2-auto-porting-pipeline-stretch" id="id22">6. Year 2 목표 — Auto-Porting Pipeline α (Stretch)</a></p>
-<ul>
-<li><p class="sd-card-text"><a class="reference internal" href="#id7" id="id23">기술 구성</a></p></li>
-<li><p class="sd-card-text"><a class="reference internal" href="#id8" id="id24">지원 타겟 (우선순위)</a></p></li>
-<li><p class="sd-card-text"><a class="reference internal" href="#week-53" id="id25">일정 (Week 53+)</a></p></li>
-<li><p class="sd-card-text"><a class="reference internal" href="#id9" id="id26">논문 가능성</a></p></li>
-</ul>
-</li>
-<li><p class="sd-card-text"><a class="reference internal" href="#id10" id="id27">7. 마일스톤</a></p>
-<ul>
-<li><p class="sd-card-text"><a class="reference internal" href="#year-1-kpi" id="id28">Year 1 KPI</a></p></li>
-<li><p class="sd-card-text"><a class="reference internal" href="#year-2-kpi-auto-porting" id="id29">Year 2 KPI (Auto-Porting α)</a></p></li>
-</ul>
-</li>
-<li><p class="sd-card-text"><a class="reference internal" href="#rtl" id="id30">8. RTL 저장소</a></p></li>
-</ul>
-</nav>
-</div>
-</details><p>pccx는 2026-04-20 기준으로 <strong>두 트랙 병렬</strong>로 진행된다. v002는 현재 active
+<p>pccx는 2026-04-20 기준으로 <strong>두 트랙 병렬</strong>로 진행된다. v002는 현재 active
 아키텍처이고 v003은 다음 세대 타겟 모델(Gemma 4 E4B)을 위해 설계된다.
 두 트랙은 RTL 자산 (sparse weight fetcher, SSD dispatcher, tree mask generator,
 EAGLE 학습 파이프라인)을 상호 재사용한다.</p>
 <p>장기 목표는 임의의 transformer config → pccx ISA 스트림 자동 생성기
 (<strong>Auto-Porting Pipeline α</strong>)이며, 두 트랙이 안정화된 이후 Year 2 목표로 시작된다.</p>
-<section id="id2">
-<h2>1. 공통 전제<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<section id="id1">
+<h2>1. 공통 전제<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><strong>플랫폼</strong>: Xilinx Kria KV260 (Zynq UltraScale+ ZU5EV), bare-metal</p></li>
 <li><p><strong>양자화</strong>: W4A8 (INT4 weights × INT8 activations), KV cache INT4</p></li>
@@ -673,8 +633,8 @@ vanilla drafter 로 먼저 붙여 빠르게 검증한 뒤 acceptance 가 부족�
 <p>Gemma 4 E4B (42 layers, MQA, sliding + full attention, 128K 컨텍스트) 를
 동일 KV260 플랫폼에서 구동하는 트랙이다. v002의 RTL 자산을 재사용하여 Phase 2+
 구현 비용을 약 30% 단축한다.</p>
-<section id="id3">
-<h3>Tiered targets<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<section id="id2">
+<h3>Tiered targets<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
@@ -704,8 +664,8 @@ vanilla drafter 로 먼저 붙여 빠르게 검증한 뒤 acceptance 가 부족�
 </table>
 </div>
 </section>
-<section id="id4">
-<h3>Phase 구성<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<section id="id3">
+<h3>Phase 구성<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
@@ -745,8 +705,8 @@ vanilla drafter 로 먼저 붙여 빠르게 검증한 뒤 acceptance 가 부족�
 </table>
 </div>
 </section>
-<section id="id5">
-<h3>Two-track 재사용 관계<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
+<section id="id4">
+<h3>Two-track 재사용 관계<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
 <pre  class="mermaid">
         flowchart LR
   subgraph v002[&quot;v002 Extended — Gemma 3N E4B&quot;]
@@ -761,8 +721,8 @@ vanilla drafter 로 먼저 붙여 빠르게 검증한 뒤 acceptance 가 부족�
   I -. SSD dispatcher .-&gt; P4
     </pre></section>
 </section>
-<section id="id6">
-<h2>4. 통합 타임라인 (52주)<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h2>
+<section id="id5">
+<h2>4. 통합 타임라인 (52주)<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h2>
 <pre  class="mermaid">
         gantt
     title 통합 타임라인 (52주)
@@ -887,8 +847,8 @@ vanilla drafter 로 먼저 붙여 빠르게 검증한 뒤 acceptance 가 부족�
 <p>v002 + v003 안정화 후 시작하는 장기 목표. 임의 transformer 의 <code class="docutils literal notranslate"><span class="pre">config.json</span></code> +
 weight safetensors 를 받아 <strong>pccx 드라이버 API를 호출하는 C 코드 + 양자화된
 weight binary</strong>를 자동 생성하는 파이프라인이다.</p>
-<section id="id7">
-<h3>기술 구성<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
+<section id="id6">
+<h3>기술 구성<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
 <pre  class="mermaid">
         flowchart TD
   CFG[Transformer config.json] --&gt; P[Config Parser]
@@ -899,8 +859,8 @@ weight binary</strong>를 자동 생성하는 파이프라인이다.</p>
   W --&gt; C[C Stub Generator]
   C --&gt; V[Validator: Python golden vs RTL]
     </pre></section>
-<section id="id8">
-<h3>지원 타겟 (우선순위)<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h3>
+<section id="id7">
+<h3>지원 타겟 (우선순위)<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p><strong>Tier 1</strong>: 수동 포팅 완료한 모델 재생성 검증 — Gemma 3N E4B, Gemma 4 E4B</p></li>
 <li><p><strong>Tier 2</strong>: 표준 구조 — Llama 3.x, Qwen3, Mistral 7B</p></li>
@@ -927,14 +887,14 @@ weight binary</strong>를 자동 생성하는 파이프라인이다.</p>
 <li><p>Week 71–76: E2E 자동화, 웹 UI / CLI, 문서화</p></li>
 </ul>
 </section>
-<section id="id9">
-<h3>논문 가능성<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h3>
+<section id="id8">
+<h3>논문 가능성<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h3>
 <p><em>“Auto-Compilation of Transformer Inference Workloads to Custom NPU ISAs”</em> —
 ISCA / MICRO / HPCA / FCCM / FPGA 타겟.</p>
 </section>
 </section>
-<section id="id10">
-<h2>7. 마일스톤<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h2>
+<section id="id9">
+<h2>7. 마일스톤<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h2>
 <section id="year-1-kpi">
 <h3>Year 1 KPI<a class="headerlink" href="#year-1-kpi" title="Link to this heading">¶</a></h3>
 <ul class="contains-task-list simple">
@@ -1035,7 +995,7 @@ ISCA / MICRO / HPCA / FCCM / FPGA 타겟.</p>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">로드맵 (Two-Track)</a><ul>
-<li><a class="reference internal" href="#id2">1. 공통 전제</a></li>
+<li><a class="reference internal" href="#id1">1. 공통 전제</a></li>
 <li><a class="reference internal" href="#track-1-v002-extended-gemma-3n-e4b-20-tok-s">2. Track 1 — v002 Extended (Gemma 3N E4B, 20 tok/s)</a><ul>
 <li><a class="reference internal" href="#tiered-targets">Tiered targets</a></li>
 <li><a class="reference internal" href="#phase">Phase 구성</a></li>
@@ -1043,21 +1003,21 @@ ISCA / MICRO / HPCA / FCCM / FPGA 타겟.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#track-2-v003-gemma-4-e4b-1215-tok-s">3. Track 2 — v003 (Gemma 4 E4B, 12–15 tok/s)</a><ul>
-<li><a class="reference internal" href="#id3">Tiered targets</a></li>
-<li><a class="reference internal" href="#id4">Phase 구성</a></li>
-<li><a class="reference internal" href="#id5">Two-track 재사용 관계</a></li>
+<li><a class="reference internal" href="#id2">Tiered targets</a></li>
+<li><a class="reference internal" href="#id3">Phase 구성</a></li>
+<li><a class="reference internal" href="#id4">Two-track 재사용 관계</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id6">4. 통합 타임라인 (52주)</a></li>
+<li><a class="reference internal" href="#id5">4. 통합 타임라인 (52주)</a></li>
 <li><a class="reference internal" href="#compute">5. Compute 예산</a></li>
 <li><a class="reference internal" href="#year-2-auto-porting-pipeline-stretch">6. Year 2 목표 — Auto-Porting Pipeline α (Stretch)</a><ul>
-<li><a class="reference internal" href="#id7">기술 구성</a></li>
-<li><a class="reference internal" href="#id8">지원 타겟 (우선순위)</a></li>
+<li><a class="reference internal" href="#id6">기술 구성</a></li>
+<li><a class="reference internal" href="#id7">지원 타겟 (우선순위)</a></li>
 <li><a class="reference internal" href="#week-53">일정 (Week 53+)</a></li>
-<li><a class="reference internal" href="#id9">논문 가능성</a></li>
+<li><a class="reference internal" href="#id8">논문 가능성</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id10">7. 마일스톤</a><ul>
+<li><a class="reference internal" href="#id9">7. 마일스톤</a><ul>
 <li><a class="reference internal" href="#year-1-kpi">Year 1 KPI</a></li>
 <li><a class="reference internal" href="#year-2-kpi-auto-porting">Year 2 KPI (Auto-Porting α)</a></li>
 </ul>

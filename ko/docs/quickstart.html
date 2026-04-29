@@ -8,11 +8,11 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://hkimw.github.io/pccx/docs/quickstart.html" />
 <meta property="og:site_name" content="pccx — Parallel Compute Core eXecutor" />
-<meta property="og:description" content="git clone 에서 “pccx 트레이스를 보고 있다” 까지의 최단 경로. 이 페이지는 재현기 이다: docker compose up 한 번으로 샘플 캡처가 로딩된 프로파일러가 실행 상태로 떠야 한다. 이 페이지 목차: 퀵스타트- 0. 얻게 되는 산출물, 1. 사전 조건, 2. 세 레포 클론, 3. 원-커맨드 재현기 (Docker), 4. 네이티브 ..." />
+<meta property="og:description" content="git clone 에서 “pccx 트레이스를 보고 있다” 까지의 최단 경로. 이 페이지는 재현기 이다: docker compose up 한 번으로 샘플 캡처가 로딩된 프로파일러가 실행 상태로 떠야 한다. 0. 얻게 되는 산출물:,,, 산출물, 생성 주체, 여는 도구,,,.pccx 트레이스 (16-토큰 Gemma-3N 디코드), pccx-FPGA-NPU..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="https://hkimw.github.io/pccx/_images/social_previews/summary_docs_quickstart_b52e2dbd.png" />
-<meta property="og:image:alt" content="git clone 에서 “pccx 트레이스를 보고 있다” 까지의 최단 경로. 이 페이지는 재현기 이다: docker compose up 한 번으로 샘플 캡처가 로딩된 프로파일러가 실행 상태로 떠야 한다. 이 페이지 목차: 퀵스타트- 0. 얻게 되는 산출물, 1. 사전 조건, 2. 세 레포 클론, 3. 원-커맨드 재현기 (Docker), 4. 네이티브 ..." />
+<meta property="og:image" content="https://hkimw.github.io/pccx/_images/social_previews/summary_docs_quickstart_5023eb4d.png" />
+<meta property="og:image:alt" content="git clone 에서 “pccx 트레이스를 보고 있다” 까지의 최단 경로. 이 페이지는 재현기 이다: docker compose up 한 번으로 샘플 캡처가 로딩된 프로파일러가 실행 상태로 떠야 한다. 0. 얻게 되는 산출물:,,, 산출물, 생성 주체, 여는 도구,,,.pccx 트레이스 (16-토큰 Gemma-3N 디코드), pccx-FPGA-NPU..." />
 <meta name="twitter:card" content="summary_large_image" />
 
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://hkimw.github.io/pccx/","inLanguage":["ko","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"퀵스타트","name":"퀵스타트","url":"https://hkimw.github.io/pccx/ko/docs/quickstart.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://hkimw.github.io/pccx/ko/docs/quickstart.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://hkimw.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://hkimw.github.io/pccx/"},"datePublished":"2026-04-29","dateModified":"2026-04-29","description":"pccx documentation page: 퀵스타트. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"ko","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://hkimw.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="색인" href="../genindex.html"><link rel="search" title="검색" href="../search.html"><link rel="next" title="Evidence" href="Evidence/index.html"><link rel="prev" title="pccx: 병렬 컴퓨트 코어 익스큐터" href="index.html">
@@ -479,25 +479,8 @@
 <p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span></code> 에서 “pccx 트레이스를 보고 있다” 까지의 최단 경로.
 이 페이지는 <strong>재현기</strong> 이다: <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">compose</span> <span class="pre">up</span></code> 한 번으로 샘플
 캡처가 로딩된 프로파일러가 실행 상태로 떠야 한다.</p>
-<nav class="contents" id="id2">
-<p class="topic-title">이 페이지 목차</p>
-<ul class="simple">
-<li><p><a class="reference internal" href="#id1" id="id10">퀵스타트</a></p>
-<ul>
-<li><p><a class="reference internal" href="#id3" id="id11">0. 얻게 되는 산출물</a></p></li>
-<li><p><a class="reference internal" href="#id4" id="id12">1. 사전 조건</a></p></li>
-<li><p><a class="reference internal" href="#id5" id="id13">2. 세 레포 클론</a></p></li>
-<li><p><a class="reference internal" href="#docker" id="id14">3. 원-커맨드 재현기 (Docker)</a></p></li>
-<li><p><a class="reference internal" href="#id6" id="id15">4. 네이티브 경로 (Docker 없음)</a></p></li>
-<li><p><a class="reference internal" href="#id7" id="id16">5. 보드 경로 (선택)</a></p></li>
-<li><p><a class="reference internal" href="#id8" id="id17">6. 다음 단계</a></p></li>
-<li><p><a class="reference internal" href="#id9" id="id18">이 페이지 인용</a></p></li>
-</ul>
-</li>
-</ul>
-</nav>
-<section id="id3">
-<h2>0. 얻게 되는 산출물<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<section id="id2">
+<h2>0. 얻게 되는 산출물<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
 <pre  class="mermaid">
         flowchart LR
     A[RTL Repository&lt;br&gt;Vivado Synth] --&gt;|생성| B(16-토큰 .pccx 트레이스)
@@ -539,8 +522,8 @@
 </table>
 </div>
 </section>
-<section id="id4">
-<h2>1. 사전 조건<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
+<section id="id3">
+<h2>1. 사전 조건<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
 <p>단일 64-bit Linux 머신 (Ubuntu 24.04 검증):</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">git</span></code> ≥ 2.40</p></li>
@@ -552,8 +535,8 @@
 </ul>
 <p>앞의 4 개만으로 <strong>소프트웨어</strong> 절반 재현 가능. 보드 접근은 선택.</p>
 </section>
-<section id="id5">
-<h2>2. 세 레포 클론<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h2>
+<section id="id4">
+<h2>2. 세 레포 클론<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
 <p>pccx 는 <strong>3-레포 연합</strong> 이다 (<a class="reference internal" href="index.html"><span class="doc">pccx: 병렬 컴퓨트 코어 익스큐터</span></a> 의 에코시스템 섹션 참고).
 형제 디렉토리에 클론:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>~/pccx-ws<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>~/pccx-ws
@@ -569,12 +552,12 @@ git<span class="w"> </span>clone<span class="w"> </span>https://github.com/hkimw
 <p class="admonition-title">계획 단계 — 아직 미반영</p>
 <p>Docker 재현기 (<code class="docutils literal notranslate"><span class="pre">scripts/docker/quickstart.yml</span></code>) 는 pccx-lab 로드맵에
 올라가 있으나 아직 <code class="docutils literal notranslate"><span class="pre">main</span></code> 에 랜딩되지 않았다.  랜딩 전까지는 아래
-<a class="reference internal" href="#id6">네이티브 경로</a> 를 따르라 — 컨테이너가
+<a class="reference internal" href="#id5">네이티브 경로</a> 를 따르라 — 컨테이너가
 내부적으로 실행할 내용과 동일하다.</p>
 </div>
 </section>
-<section id="id6">
-<h2>4. 네이티브 경로 (Docker 없음)<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h2>
+<section id="id5">
+<h2>4. 네이티브 경로 (Docker 없음)<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># ── Sail 모델 ───────────────────────────────────────────────────</span>
 <span class="nb">eval</span><span class="w"> </span><span class="k">$(</span>opam<span class="w"> </span>env<span class="k">)</span>
 <span class="nb">cd</span><span class="w"> </span>~/pccx-ws/pccx-FPGA-NPU-LLM-kv260/formal/sail
@@ -599,8 +582,8 @@ npm<span class="w"> </span>ci<span class="w"> </span><span class="o">&amp;&amp;<
 <li><p><code class="docutils literal notranslate"><span class="pre">gemma3n_128tok_decode.pccx</span></code> (797 KB, 20,488 events) — steady-state decode.</p></li>
 </ul>
 </section>
-<section id="id7">
-<h2>5. 보드 경로 (선택)<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h2>
+<section id="id6">
+<h2>5. 보드 경로 (선택)<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 비트스트림 플래시 후 KV260 에서 16-토큰 디코드.</span>
 <span class="nb">cd</span><span class="w"> </span>~/pccx-ws/pccx-FPGA-NPU-LLM-kv260/scripts/board
 ./bringup.sh<span class="w"> </span>kv260.local
@@ -608,8 +591,8 @@ npm<span class="w"> </span>ci<span class="w"> </span><span class="o">&amp;&amp;<
 </pre></div>
 </div>
 </section>
-<section id="id8">
-<h2>6. 다음 단계<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h2>
+<section id="id7">
+<h2>6. 다음 단계<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>프로파일러 API surface 는 <a class="reference internal" href="Lab/index.html"><span class="doc std std-doc">pccx-lab 핸드북</span></a>.</p></li>
 <li><p>Sail 스캐폴드는 <a class="reference internal" href="v002/Formal/index.html"><span class="doc std std-doc">형식 모델 페이지</span></a>.</p></li>
@@ -617,8 +600,8 @@ npm<span class="w"> </span>ci<span class="w"> </span><span class="o">&amp;&amp;<
 실행 진행 중).</p></li>
 </ul>
 </section>
-<section id="id9">
-<h2>이 페이지 인용<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h2>
+<section id="id8">
+<h2>이 페이지 인용<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h2>
 <div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@misc</span><span class="p">{</span><span class="nl">pccx_quickstart_2026</span><span class="p">,</span>
 <span class="w">  </span><span class="na">title</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="s">{pccx Quickstart: one-command reproducer for the open NPU}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">author</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{Kim, Hyunwoo}</span><span class="p">,</span>
@@ -699,14 +682,14 @@ npm<span class="w"> </span>ci<span class="w"> </span><span class="o">&amp;&amp;<
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">퀵스타트</a><ul>
-<li><a class="reference internal" href="#id3">0. 얻게 되는 산출물</a></li>
-<li><a class="reference internal" href="#id4">1. 사전 조건</a></li>
-<li><a class="reference internal" href="#id5">2. 세 레포 클론</a></li>
+<li><a class="reference internal" href="#id2">0. 얻게 되는 산출물</a></li>
+<li><a class="reference internal" href="#id3">1. 사전 조건</a></li>
+<li><a class="reference internal" href="#id4">2. 세 레포 클론</a></li>
 <li><a class="reference internal" href="#docker">3. 원-커맨드 재현기 (Docker)</a></li>
-<li><a class="reference internal" href="#id6">4. 네이티브 경로 (Docker 없음)</a></li>
-<li><a class="reference internal" href="#id7">5. 보드 경로 (선택)</a></li>
-<li><a class="reference internal" href="#id8">6. 다음 단계</a></li>
-<li><a class="reference internal" href="#id9">이 페이지 인용</a></li>
+<li><a class="reference internal" href="#id5">4. 네이티브 경로 (Docker 없음)</a></li>
+<li><a class="reference internal" href="#id6">5. 보드 경로 (선택)</a></li>
+<li><a class="reference internal" href="#id7">6. 다음 단계</a></li>
+<li><a class="reference internal" href="#id8">이 페이지 인용</a></li>
 </ul>
 </li>
 </ul>

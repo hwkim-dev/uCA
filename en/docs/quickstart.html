@@ -8,11 +8,11 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://hkimw.github.io/pccx/docs/quickstart.html" />
 <meta property="og:site_name" content="pccx — Parallel Compute Core eXecutor" />
-<meta property="og:description" content="The shortest path from “git clone” to “I’m looking at a pccx trace”. Everything on this page is the reproducer: docker compose up lands you at a running profiler with a real capture loaded. On this..." />
+<meta property="og:description" content="The shortest path from “git clone” to “I’m looking at a pccx trace”. Everything on this page is the reproducer: docker compose up lands you at a running profiler with a real capture loaded. 0. What..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
 <meta property="og:image" content="https://hkimw.github.io/pccx/_images/social_previews/summary_docs_quickstart_3ef8cd12.png" />
-<meta property="og:image:alt" content="The shortest path from “git clone” to “I’m looking at a pccx trace”. Everything on this page is the reproducer: docker compose up lands you at a running profiler with a real capture loaded. On this..." />
+<meta property="og:image:alt" content="The shortest path from “git clone” to “I’m looking at a pccx trace”. Everything on this page is the reproducer: docker compose up lands you at a running profiler with a real capture loaded. 0. What..." />
 <meta name="twitter:card" content="summary_large_image" />
 
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://hkimw.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"Quickstart","name":"Quickstart","url":"https://hkimw.github.io/pccx/en/docs/quickstart.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://hkimw.github.io/pccx/en/docs/quickstart.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://hkimw.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://hkimw.github.io/pccx/"},"datePublished":"2026-04-29","dateModified":"2026-04-29","description":"pccx documentation page: Quickstart. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://hkimw.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Evidence" href="Evidence/index.html"><link rel="prev" title="pccx: Parallel Compute Core eXecutor" href="index.html">
@@ -479,23 +479,6 @@
 <p>The shortest path from “git clone” to “I’m looking at a pccx trace”.
 Everything on this page is the <strong>reproducer</strong>: <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">compose</span> <span class="pre">up</span></code>
 lands you at a running profiler with a real capture loaded.</p>
-<nav class="contents" id="on-this-page">
-<p class="topic-title">On this page</p>
-<ul class="simple">
-<li><p><a class="reference internal" href="#quickstart" id="id1">Quickstart</a></p>
-<ul>
-<li><p><a class="reference internal" href="#what-you-get" id="id2">0. What you get</a></p></li>
-<li><p><a class="reference internal" href="#prerequisites" id="id3">1. Prerequisites</a></p></li>
-<li><p><a class="reference internal" href="#clone-all-three-repos" id="id4">2. Clone all three repos</a></p></li>
-<li><p><a class="reference internal" href="#one-command-reproducer-docker" id="id5">3. One-command reproducer (Docker)</a></p></li>
-<li><p><a class="reference internal" href="#native-path-no-docker" id="id6">4. Native path (no Docker)</a></p></li>
-<li><p><a class="reference internal" href="#board-path-optional" id="id7">5. Board path (optional)</a></p></li>
-<li><p><a class="reference internal" href="#where-to-go-next" id="id8">6. Where to go next</a></p></li>
-<li><p><a class="reference internal" href="#cite-this-page" id="id9">Cite this page</a></p></li>
-</ul>
-</li>
-</ul>
-</nav>
 <section id="what-you-get">
 <h2>0. What you get<a class="headerlink" href="#what-you-get" title="Link to this heading">¶</a></h2>
 <pre  class="mermaid">
