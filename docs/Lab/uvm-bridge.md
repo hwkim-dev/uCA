@@ -164,7 +164,7 @@ unit tests and the high-level wrapper functions `estimate_gemm` and
   title        = {pccx-lab UVM Bridge: DPI-C adapter exposing the pccx cycle estimator to SystemVerilog testbenches},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://hkimw.github.io/pccx/en/docs/Lab/uvm-bridge.html}},
-  note         = {Part of pccx: \url{https://hkimw.github.io/pccx/}}
+  howpublished = {\url{https://pccxai.github.io/pccx/en/docs/Lab/uvm-bridge.html}},
+  note         = {Part of pccx: \url{https://pccxai.github.io/pccx/}}
 }
 ```

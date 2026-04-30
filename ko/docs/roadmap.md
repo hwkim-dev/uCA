@@ -246,7 +246,7 @@ ISCA / MICRO / HPCA / FCCM / FPGA 타겟.
 
 ## 8. RTL 저장소
 
-Track 1 과 Track 2 모두 [`hkimw/pccx-FPGA-NPU-LLM-kv260`](https://github.com/hkimw/pccx-FPGA-NPU-LLM-kv260)
+Track 1 과 Track 2 모두 [`pccxai/pccx-FPGA-NPU-LLM-kv260`](https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260)
 에서 구현된다. v002 freeze 시점에 `codes/v002/` 스냅샷을 이 문서 repo 에
 고정하고 (§8.4 cutover ceremony), v003 브랜치를 분기한다.
 

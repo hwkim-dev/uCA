@@ -40,7 +40,7 @@ binaries.
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/hkimw/pccx-lab.git
+git clone https://github.com/pccxai/pccx-lab.git
 cd pccx-lab
 
 # 2. Build the full Rust workspace (includes headless CLI binaries)
@@ -160,7 +160,7 @@ Press `?` or `F1` anywhere in the app to open the full shortcut modal.
   title        = {pccx-lab Quickstart: installing the profiler and loading the first trace},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://hkimw.github.io/pccx/en/docs/Lab/quickstart.html}},
-  note         = {Part of pccx: \url{https://hkimw.github.io/pccx/}}
+  howpublished = {\url{https://pccxai.github.io/pccx/en/docs/Lab/quickstart.html}},
+  note         = {Part of pccx: \url{https://pccxai.github.io/pccx/}}
 }
 ```

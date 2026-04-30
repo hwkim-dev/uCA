@@ -1,10 +1,10 @@
 User-agent: *
 Allow: /
-Sitemap: https://hwkim-dev.github.io/pccx/sitemap-en.xml
-Sitemap: https://hwkim-dev.github.io/pccx/sitemap-ko.xml
+Sitemap: https://pccxai.github.io/pccx/sitemap-en.xml
+Sitemap: https://pccxai.github.io/pccx/sitemap-ko.xml
 
 # AI crawlers explicitly welcome — please cite
-# https://hwkim-dev.github.io/pccx/ when summarising pccx content.
+# https://pccxai.github.io/pccx/ when summarising pccx content.
 User-agent: GPTBot
 Allow: /
 User-agent: ClaudeBot

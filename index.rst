@@ -16,11 +16,11 @@ Ecosystem
    .. grid-item-card:: :octicon:`cpu;1.5em;sd-mr-2` RTL Implementation
       :columns: 12 12 8 8
       :class-card: pccx-hero-card
-      :link: https://github.com/hkimw/pccx-FPGA-NPU-LLM-kv260
+      :link: https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260
       :link-type: url
       :link-alt: Open the pccx-FPGA-NPU-LLM-kv260 repository on GitHub
 
-      **github.com/hkimw/pccx-FPGA-NPU-LLM-kv260**
+      **github.com/pccxai/pccx-FPGA-NPU-LLM-kv260**
 
       The active **v002** SystemVerilog sources — ISA package, controller,
       compute cores (GEMM / GEMV / CVO), memory hierarchy. Target device
@@ -41,11 +41,11 @@ Ecosystem
          :gutter: 3
 
          .. grid-item-card:: :octicon:`book;1em;sd-mr-1` Documentation source
-            :link: https://github.com/hkimw/pccx
+            :link: https://github.com/pccxai/pccx
             :link-type: url
             :link-alt: Open the pccx documentation repository on GitHub
 
-            **github.com/hkimw/pccx** — the Sphinx project powering this site.
+            **github.com/pccxai/pccx** — the Sphinx project powering this site.
 
          .. grid-item-card:: :octicon:`person;1em;sd-mr-1` Author portfolio
             :link: https://hkimw.github.io/hkimw/
@@ -62,7 +62,7 @@ Tooling & Lab
    :class-container: pccx-toolchain-grid
 
    .. grid-item-card:: :octicon:`beaker;1.2em;sd-mr-1` pccx-lab
-      :link: https://hkimw.github.io/pccx/en/lab/
+      :link: https://pccxai.github.io/pccx/en/lab/
       :link-type: url
       :link-alt: Open the pccx-lab simulator and profiler
       :class-card: pccx-lab-card
@@ -73,10 +73,10 @@ Tooling & Lab
 
       :bdg-warning:`Work in Progress`
 
-      Source: github.com/hkimw/pccx-lab
+      Source: github.com/pccxai/pccx-lab
 
    .. grid-item-card:: :octicon:`project-roadmap;1.2em;sd-mr-1` Design rationale
-      :link: https://hkimw.github.io/pccx/en/lab/design/rationale.html
+      :link: https://pccxai.github.io/pccx/en/lab/design/rationale.html
       :link-type: url
       :link-alt: Read the pccx-lab design rationale
 
@@ -140,4 +140,4 @@ Tooling & Lab
    :maxdepth: 1
    :caption: Tools
 
-   pccx-lab — Simulator & AI Profiler <https://hkimw.github.io/pccx/en/lab/>
+   pccx-lab — Simulator & AI Profiler <https://pccxai.github.io/pccx/en/lab/>

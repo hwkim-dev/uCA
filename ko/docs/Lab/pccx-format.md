@@ -5,7 +5,7 @@ _최근 개정: 2026-04-29._
 `.pccx` 는 pccx-lab 이 생성하는 NPU 프로파일링 트레이스, 하드웨어 설정,
 세션 메타데이터의 공식 컨테이너 포맷이다.
 소스 정의: `crates/core/src/pccx_format.rs`
-([hkimw/pccx-lab](https://github.com/hkimw/pccx-lab)).
+([pccxai/pccx-lab](https://github.com/pccxai/pccx-lab)).
 현재 버전: major `0x01`, minor `0x01`.
 
 설계 목표 네 가지:
@@ -175,10 +175,10 @@ pub fn fnv1a_64(data: &[u8]) -> u64 {
   title        = {.pccx Binary Format Specification: container format for NPU profiling traces},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://hkimw.github.io/pccx/ko/docs/Lab/pccx-format.html}},
-  note         = {Part of pccx: \url{https://hkimw.github.io/pccx/}}
+  howpublished = {\url{https://pccxai.github.io/pccx/ko/docs/Lab/pccx-format.html}},
+  note         = {Part of pccx: \url{https://pccxai.github.io/pccx/}}
 }
 ```
 
-소스 정의는 [hkimw/pccx-lab](https://github.com/hkimw/pccx-lab) 의
+소스 정의는 [pccxai/pccx-lab](https://github.com/pccxai/pccx-lab) 의
 `crates/core/src/pccx_format.rs` 에 위치한다.

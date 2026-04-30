@@ -8,7 +8,7 @@
 #   freeze_active.sh <tag> <target-version>
 #
 #   <tag>             a tag (or branch) in the external RTL repo
-#                     hkimw/pccx-FPGA-NPU-LLM-kv260 from which the
+#                     pccxai/pccx-FPGA-NPU-LLM-kv260 from which the
 #                     snapshot is taken. Example: v2.0.0 .
 #   <target-version>  vNNN triple — the pccx archive slot to populate.
 #                     Example: v002 .
@@ -21,7 +21,7 @@
 # Why
 # ---
 # Each pccx architecture version is authored live in the external repo
-# hkimw/pccx-FPGA-NPU-LLM-kv260. When development moves on to the
+# pccxai/pccx-FPGA-NPU-LLM-kv260. When development moves on to the
 # next version, the previous version has to be frozen somewhere stable
 # so the archived docs (e.g. docs/archive/experimental_v00N/) keep
 # resolving their literalinclude paths years from now. That stable
@@ -51,7 +51,7 @@
 
 set -euo pipefail
 
-RTL_REPO_URL="${RTL_REPO_URL:-https://github.com/hkimw/pccx-FPGA-NPU-LLM-kv260}"
+RTL_REPO_URL="${RTL_REPO_URL:-https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260}"
 
 usage() {
     cat >&2 <<EOF

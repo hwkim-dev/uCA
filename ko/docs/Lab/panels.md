@@ -335,9 +335,9 @@ FPS를 노출한다. `get_license_info`는 App 레벨에서 호출되고
                   hardware view, verification, and editing components},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://hkimw.github.io/pccx/ko/docs/Lab/panels.html}},
-  note         = {Part of pccx: \url{https://hkimw.github.io/pccx/}}
+  howpublished = {\url{https://pccxai.github.io/pccx/ko/docs/Lab/panels.html}},
+  note         = {Part of pccx: \url{https://pccxai.github.io/pccx/}}
 }
 ```
 
-패널 소스는 <https://github.com/hkimw/pccx-lab/tree/main/ui/src/> 에 있다.
+패널 소스는 <https://github.com/pccxai/pccx-lab/tree/main/ui/src/> 에 있다.

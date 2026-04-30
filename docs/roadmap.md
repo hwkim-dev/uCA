@@ -250,7 +250,7 @@ target venues ISCA / MICRO / HPCA / FCCM / FPGA.
 
 ## 8. RTL repository
 
-Both tracks are implemented in [`hkimw/pccx-FPGA-NPU-LLM-kv260`](https://github.com/hkimw/pccx-FPGA-NPU-LLM-kv260).
+Both tracks are implemented in [`pccxai/pccx-FPGA-NPU-LLM-kv260`](https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260).
 At v002 freeze the `codes/v002/` snapshot is pinned into this docs repo
 (see the version-cutover ceremony), then v003 branches off.
 

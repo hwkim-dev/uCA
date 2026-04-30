@@ -70,7 +70,7 @@ binary replaces the old `pccx_analyze --research-list` surface
 
 ## Roadmap pointers
 
-- pccx-lab repo: <https://github.com/hkimw/pccx-lab>
+- pccx-lab repo: <https://github.com/pccxai/pccx-lab>
 - Phase 1 change log: `crates/*/CHANGELOG.md`
 - Per-phase design docs: `docs/design/phase{1,2,3,4,5,6}_*.md`
 
@@ -81,8 +81,8 @@ binary replaces the old `pccx_analyze --research-list` surface
   title        = {pccx-lab research lineage (placeholder): registry rebuild underway after Phase 1 module exodus},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://hkimw.github.io/pccx/en/docs/Lab/research.html}},
-  note         = {Part of pccx: \url{https://hkimw.github.io/pccx/}}
+  howpublished = {\url{https://pccxai.github.io/pccx/en/docs/Lab/research.html}},
+  note         = {Part of pccx: \url{https://pccxai.github.io/pccx/}}
 }
 ```
 

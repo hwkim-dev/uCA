@@ -5,7 +5,7 @@ _Last revised: 2026-04-29._
 `.pccx` is the official container format for NPU profiling traces, hardware
 configurations, and session metadata produced by pccx-lab.
 Source of truth: `crates/core/src/pccx_format.rs`
-([hkimw/pccx-lab](https://github.com/hkimw/pccx-lab)).
+([pccxai/pccx-lab](https://github.com/pccxai/pccx-lab)).
 Current version: major `0x01`, minor `0x01`.
 
 Four design properties:
@@ -179,10 +179,10 @@ Current values: `MAJOR_VERSION = 0x01`, `MINOR_VERSION = 0x01`
   title        = {.pccx Binary Format Specification: container format for NPU profiling traces},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://hkimw.github.io/pccx/en/docs/Lab/pccx-format.html}},
-  note         = {Part of pccx: \url{https://hkimw.github.io/pccx/}}
+  howpublished = {\url{https://pccxai.github.io/pccx/en/docs/Lab/pccx-format.html}},
+  note         = {Part of pccx: \url{https://pccxai.github.io/pccx/}}
 }
 ```
 
 Source definition lives at `crates/core/src/pccx_format.rs` in
-[hkimw/pccx-lab](https://github.com/hkimw/pccx-lab).
+[pccxai/pccx-lab](https://github.com/pccxai/pccx-lab).

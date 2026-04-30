@@ -184,7 +184,7 @@ header → binary payload. Current version: `MAJOR_VERSION = 0x01`,
   title        = {pccx-core module reference: public modules of the pccx-lab Rust core crate},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://hkimw.github.io/pccx/en/docs/Lab/core-modules.html}},
-  note         = {Part of pccx: \url{https://hkimw.github.io/pccx/}}
+  howpublished = {\url{https://pccxai.github.io/pccx/en/docs/Lab/core-modules.html}},
+  note         = {Part of pccx: \url{https://pccxai.github.io/pccx/}}
 }
 ```

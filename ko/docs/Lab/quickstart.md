@@ -37,7 +37,7 @@ pccx-lab 은 Rust 워크스페이스(`crates/`) + React/Vite 프론트엔드(`ui
 
 ```bash
 # 1. 저장소 클론
-git clone https://github.com/hkimw/pccx-lab.git
+git clone https://github.com/pccxai/pccx-lab.git
 cd pccx-lab
 
 # 2. Rust 워크스페이스 전체 빌드 (헤드리스 CLI 포함)
@@ -155,7 +155,7 @@ Timeline 주요 단축키: `Ctrl+Scroll` 로 사이클 축 줌, 드래그로 팬
   title        = {pccx-lab Quickstart: installing the profiler and loading the first trace},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://hkimw.github.io/pccx/ko/docs/Lab/quickstart.html}},
-  note         = {Part of pccx: \url{https://hkimw.github.io/pccx/}}
+  howpublished = {\url{https://pccxai.github.io/pccx/ko/docs/Lab/quickstart.html}},
+  note         = {Part of pccx: \url{https://pccxai.github.io/pccx/}}
 }
 ```

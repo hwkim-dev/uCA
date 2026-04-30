@@ -13,4 +13,4 @@ and this project follows [Semantic Versioning](https://semver.org/).
   and specification snapshot of the current `docs/v002/` tree plus the
   ISA reference (`main.tex` → `_static/downloads/pccx-isa-v002.pdf`).
 
-[Unreleased]: https://github.com/hkimw/pccx/compare/HEAD...HEAD
+[Unreleased]: https://github.com/pccxai/pccx/compare/HEAD...HEAD

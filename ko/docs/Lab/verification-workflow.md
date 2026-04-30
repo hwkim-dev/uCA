@@ -197,10 +197,10 @@ IPC 커맨드 레퍼런스:
   title        = {pccx-lab Verification Workflow: RTL to .pccx to golden-diff gate},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://hkimw.github.io/pccx/ko/docs/Lab/verification-workflow.html}},
-  note         = {Part of pccx: \url{https://hkimw.github.io/pccx/}}
+  howpublished = {\url{https://pccxai.github.io/pccx/ko/docs/Lab/verification-workflow.html}},
+  note         = {Part of pccx: \url{https://pccxai.github.io/pccx/}}
 }
 ```
 
-소스는 [hkimw/pccx-lab](https://github.com/hkimw/pccx-lab) 의
+소스는 [pccxai/pccx-lab](https://github.com/pccxai/pccx-lab) 의
 `crates/verification/` 크레이트에 위치한다.

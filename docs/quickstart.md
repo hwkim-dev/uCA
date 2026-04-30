@@ -58,9 +58,9 @@ pccx is a **three-repo federation** (see the ecosystem section on
 
 ```bash
 mkdir -p ~/pccx-ws && cd ~/pccx-ws
-git clone https://github.com/hkimw/pccx.git                    # docs (this site)
-git clone https://github.com/hkimw/pccx-FPGA-NPU-LLM-kv260.git  # RTL + Sail model
-git clone https://github.com/hkimw/pccx-lab.git                 # profiler + UVM Copilot
+git clone https://github.com/pccxai/pccx.git                    # docs (this site)
+git clone https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260.git  # RTL + Sail model
+git clone https://github.com/pccxai/pccx-lab.git                 # profiler + UVM Copilot
 ```
 
 ## 3. One-command reproducer (Docker)
@@ -95,7 +95,7 @@ npm ci && npm run tauri dev
 ```
 
 The `samples/` directory ships two pre-captured traces — see
-[`samples/README.md`](https://github.com/hkimw/pccx-lab/blob/main/samples/README.md):
+[`samples/README.md`](https://github.com/pccxai/pccx-lab/blob/main/samples/README.md):
 
 - `gemma3n_16tok_smoke.pccx`   (101 KB, 2,568 events)  — CI smoke size.
 - `gemma3n_128tok_decode.pccx` (797 KB, 20,488 events) — steady-state decode.
@@ -123,7 +123,7 @@ cd ~/pccx-ws/pccx-FPGA-NPU-LLM-kv260/scripts/board
   title        = {pccx Quickstart: one-command reproducer for the open NPU},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://hkimw.github.io/pccx/en/docs/quickstart.html}},
-  note         = {Part of pccx: \url{https://hkimw.github.io/pccx/}}
+  howpublished = {\url{https://pccxai.github.io/pccx/en/docs/quickstart.html}},
+  note         = {Part of pccx: \url{https://pccxai.github.io/pccx/}}
 }
 ```
