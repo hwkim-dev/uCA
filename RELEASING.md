@@ -8,7 +8,7 @@ the FPGA-oriented LLM inference accelerator stack.  Releases are
 
 - Pre-1.0 (`0.x.y`): minor bumps may carry breaking spec changes.
 - Tag format: `vX.Y.Z[-alpha|-beta|-rc]`.
-- The documentation site (`hkimw.github.io/pccx`) tracks `main`;
+- The documentation site (`pccxai.github.io/pccx`) tracks `main`;
   tagged releases are also published as immutable snapshots through
   `sphinx-multiversion` (see `conf_common.py` `smv_*` allowlists).
 - The first tag is planned as `v0.1.0-alpha` — see `CHANGELOG.md`.
@@ -23,7 +23,7 @@ the FPGA-oriented LLM inference accelerator stack.  Releases are
 
 A release does **not** include built HTML output, RTL source, or
 bitstreams.  Implementation artefacts live in
-[`pccx-FPGA-NPU-LLM-kv260`](https://github.com/hkimw/pccx-FPGA-NPU-LLM-kv260)
+[`pccx-FPGA-NPU-LLM-kv260`](https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260)
 and follow that repository's own cadence.
 
 ## Pre-flight checks

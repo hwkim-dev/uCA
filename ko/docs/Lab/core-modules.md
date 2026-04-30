@@ -167,7 +167,7 @@ UTF-8 JSON 헤더 → 바이너리 페이로드. 현재 포맷 버전은 `MAJOR_
   title        = {pccx-core module reference: public modules of the pccx-lab Rust core crate},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://hkimw.github.io/pccx/ko/docs/Lab/core-modules.html}},
-  note         = {Part of pccx: \url{https://hkimw.github.io/pccx/}}
+  howpublished = {\url{https://pccxai.github.io/pccx/ko/docs/Lab/core-modules.html}},
+  note         = {Part of pccx: \url{https://pccxai.github.io/pccx/}}
 }
 ```

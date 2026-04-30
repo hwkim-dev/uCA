@@ -209,10 +209,10 @@ IPC command reference:
   title        = {pccx-lab Verification Workflow: RTL to .pccx to golden-diff gate},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://hkimw.github.io/pccx/en/docs/Lab/verification-workflow.html}},
-  note         = {Part of pccx: \url{https://hkimw.github.io/pccx/}}
+  howpublished = {\url{https://pccxai.github.io/pccx/en/docs/Lab/verification-workflow.html}},
+  note         = {Part of pccx: \url{https://pccxai.github.io/pccx/}}
 }
 ```
 
 Source lives under the `crates/verification/` crate at
-[hkimw/pccx-lab](https://github.com/hkimw/pccx-lab).
+[pccxai/pccx-lab](https://github.com/pccxai/pccx-lab).

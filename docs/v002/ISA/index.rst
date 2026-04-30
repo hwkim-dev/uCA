@@ -38,7 +38,7 @@ three principles:
 
    The authoritative ISA type definitions live in the v002 RTL repo at
    :file:`hw/rtl/NPU_Controller/NPU_Control_Unit/ISA_PACKAGE/isa_pkg.sv`
-   (external: `hkimw/pccx-FPGA-NPU-LLM-kv260
-   <https://github.com/hkimw/pccx-FPGA-NPU-LLM-kv260>`_). Encoding
+   (external: `pccxai/pccx-FPGA-NPU-LLM-kv260
+   <https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260>`_). Encoding
    tables on the pages below must stay in sync with that package — see
    :doc:`../RTL/isa_pkg`.

@@ -9,8 +9,8 @@ abstract: >-
   implementation and tooling repositories in the pccx ecosystem.
 type: software
 license: Apache-2.0
-repository-code: "https://github.com/hkimw/pccx"
-url: "https://hkimw.github.io/pccx/"
+repository-code: "https://github.com/pccxai/pccx"
+url: "https://pccxai.github.io/pccx/"
 authors:
   - family-names: Kim
     given-names: Hyunwoo

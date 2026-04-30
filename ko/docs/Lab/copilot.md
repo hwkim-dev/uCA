@@ -206,13 +206,13 @@ lsp / synth / copilot 카테고리에 걸친 48 개 커맨드) 와 IPC 경계
   title        = {pccx-ai-copilot and pccx-lsp: current AI / IntelliSense surface of pccx-lab after Phase 1},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://hkimw.github.io/pccx/ko/docs/Lab/copilot.html}},
-  note         = {Part of pccx: \url{https://hkimw.github.io/pccx/}}
+  howpublished = {\url{https://pccxai.github.io/pccx/ko/docs/Lab/copilot.html}},
+  note         = {Part of pccx: \url{https://pccxai.github.io/pccx/}}
 }
 ```
 
 이 페이지가 문서화하는 헬퍼는
-<https://github.com/hkimw/pccx-lab/blob/main/crates/ai_copilot/src/lib.rs>
+<https://github.com/pccxai/pccx-lab/blob/main/crates/ai_copilot/src/lib.rs>
 에 위치하고, LSP 파사드는
-<https://github.com/hkimw/pccx-lab/blob/main/crates/lsp/src/lib.rs>
+<https://github.com/pccxai/pccx-lab/blob/main/crates/lsp/src/lib.rs>
 에 있다.

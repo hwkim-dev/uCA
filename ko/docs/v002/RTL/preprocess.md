@@ -89,5 +89,5 @@ Port A (7-bit 주소, 432-bit 데이터)이고, 읽기 포트는 Port B (11-bit 
 :::{admonition} 마지막 검증 대상
 :class: note
 
-커밋 `8c09e5e` @ `hkimw/pccx-FPGA-NPU-LLM-kv260` (2026-04-29).
+커밋 `8c09e5e` @ `pccxai/pccx-FPGA-NPU-LLM-kv260` (2026-04-29).
 :::

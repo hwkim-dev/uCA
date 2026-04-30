@@ -69,7 +69,7 @@ Phase 5 PRM gate 가 둘 다 RTL formal refinement 에 Sail 을 사용하기
 
 ## 로드맵 포인터
 
-- pccx-lab 레포: <https://github.com/hkimw/pccx-lab>
+- pccx-lab 레포: <https://github.com/pccxai/pccx-lab>
 - Phase 1 변경 이력: `crates/*/CHANGELOG.md`
 - 페이즈별 설계 문서: `docs/design/phase{1,2,3,4,5,6}_*.md`
 
@@ -80,8 +80,8 @@ Phase 5 PRM gate 가 둘 다 RTL formal refinement 에 Sail 을 사용하기
   title        = {pccx-lab research lineage (placeholder): registry rebuild underway after Phase 1 module exodus},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://hkimw.github.io/pccx/ko/docs/Lab/research.html}},
-  note         = {Part of pccx: \url{https://hkimw.github.io/pccx/}}
+  howpublished = {\url{https://pccxai.github.io/pccx/ko/docs/Lab/research.html}},
+  note         = {Part of pccx: \url{https://pccxai.github.io/pccx/}}
 }
 ```
 

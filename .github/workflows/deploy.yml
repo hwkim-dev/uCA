@@ -12,7 +12,7 @@ on:
 # part of the vN → vN+1 transition.
 env:
   ACTIVE_VERSION: v002
-  RTL_REPO_URL: https://github.com/hkimw/pccx-FPGA-NPU-LLM-kv260
+  RTL_REPO_URL: https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260
   RTL_REPO_REF: main
 
 jobs:
@@ -62,7 +62,7 @@ jobs:
       - name: Checkout pccx-lab (optional sibling)
         uses: actions/checkout@v4
         with:
-          repository: hkimw/pccx-lab
+          repository: pccxai/pccx-lab
           path: external/pccx-lab
         continue-on-error: true
 

@@ -212,12 +212,12 @@ analytics / verification / lsp / synth / copilot) lives at
   title        = {pccx-ai-copilot and pccx-lsp: current AI / IntelliSense surface of pccx-lab after Phase 1},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://hkimw.github.io/pccx/en/docs/Lab/copilot.html}},
-  note         = {Part of pccx: \url{https://hkimw.github.io/pccx/}}
+  howpublished = {\url{https://pccxai.github.io/pccx/en/docs/Lab/copilot.html}},
+  note         = {Part of pccx: \url{https://pccxai.github.io/pccx/}}
 }
 ```
 
 The helpers documented here live at
-<https://github.com/hkimw/pccx-lab/blob/main/crates/ai_copilot/src/lib.rs>;
+<https://github.com/pccxai/pccx-lab/blob/main/crates/ai_copilot/src/lib.rs>;
 the LSP façade at
-<https://github.com/hkimw/pccx-lab/blob/main/crates/lsp/src/lib.rs>.
+<https://github.com/pccxai/pccx-lab/blob/main/crates/lsp/src/lib.rs>.

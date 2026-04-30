@@ -114,5 +114,5 @@ Constant Cache에 `MEMSET`으로 적재하는 구조가 자연스럽다.
 :::{admonition} 마지막 검증 대상
 :class: note
 
-커밋 `8c09e5e` @ `hkimw/pccx-FPGA-NPU-LLM-kv260` (2026-04-29).
+커밋 `8c09e5e` @ `pccxai/pccx-FPGA-NPU-LLM-kv260` (2026-04-29).
 :::

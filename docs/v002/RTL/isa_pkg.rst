@@ -45,7 +45,7 @@ SV header and the driver header must move together.
 .. admonition:: Last verified against
    :class: note
 
-   Commit ``8c09e5e`` @ ``hkimw/pccx-FPGA-NPU-LLM-kv260`` (2026-04-29).
+   Commit ``8c09e5e`` @ ``pccxai/pccx-FPGA-NPU-LLM-kv260`` (2026-04-29).
 
 .. seealso::
 

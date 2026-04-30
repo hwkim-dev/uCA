@@ -56,9 +56,9 @@ pccx 는 **3-레포 연합** 이다 ({doc}`index` 의 에코시스템 섹션 참
 
 ```bash
 mkdir -p ~/pccx-ws && cd ~/pccx-ws
-git clone https://github.com/hkimw/pccx.git                    # docs (이 사이트)
-git clone https://github.com/hkimw/pccx-FPGA-NPU-LLM-kv260.git  # RTL + Sail 모델
-git clone https://github.com/hkimw/pccx-lab.git                 # 프로파일러 + UVM Copilot
+git clone https://github.com/pccxai/pccx.git                    # docs (이 사이트)
+git clone https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260.git  # RTL + Sail 모델
+git clone https://github.com/pccxai/pccx-lab.git                 # 프로파일러 + UVM Copilot
 ```
 
 ## 3. 원-커맨드 재현기 (Docker)
@@ -93,7 +93,7 @@ npm ci && npm run tauri dev
 ```
 
 ``samples/`` 디렉토리는 두 개의 사전 캡처 트레이스를 제공한다 —
-[`samples/README.md`](https://github.com/hkimw/pccx-lab/blob/main/samples/README.md) 참고:
+[`samples/README.md`](https://github.com/pccxai/pccx-lab/blob/main/samples/README.md) 참고:
 
 - ``gemma3n_16tok_smoke.pccx``   (101 KB, 2,568 events)  — CI smoke.
 - ``gemma3n_128tok_decode.pccx`` (797 KB, 20,488 events) — steady-state decode.
@@ -121,7 +121,7 @@ cd ~/pccx-ws/pccx-FPGA-NPU-LLM-kv260/scripts/board
   title        = {pccx Quickstart: one-command reproducer for the open NPU},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://hkimw.github.io/pccx/ko/docs/quickstart.html}},
-  note         = {Part of pccx: \url{https://hkimw.github.io/pccx/}}
+  howpublished = {\url{https://pccxai.github.io/pccx/ko/docs/quickstart.html}},
+  note         = {Part of pccx: \url{https://pccxai.github.io/pccx/}}
 }
 ```

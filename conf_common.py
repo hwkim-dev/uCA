@@ -265,11 +265,11 @@ def build_footer_icons(lang_prefix: str = "en") -> list:
     KO-page click lands on the KO sub-site; the other destinations are
     language-agnostic external repos / pages.
     """
-    lab_url = f"https://hkimw.github.io/pccx/{lang_prefix}/lab/"
+    lab_url = f"https://pccxai.github.io/pccx/{lang_prefix}/lab/"
     return [
         {
-            "name":  "RTL implementation — github.com/hkimw/pccx-FPGA-NPU-LLM-kv260",
-            "url":   "https://github.com/hkimw/pccx-FPGA-NPU-LLM-kv260",
+            "name":  "RTL implementation — github.com/pccxai/pccx-FPGA-NPU-LLM-kv260",
+            "url":   "https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260",
             "class": "pccx-footer-icon",
             "html": (
                 _ICON_CHIP
@@ -286,8 +286,8 @@ def build_footer_icons(lang_prefix: str = "en") -> list:
             ),
         },
         {
-            "name":  "Docs repository — github.com/hkimw/pccx",
-            "url":   "https://github.com/hkimw/pccx",
+            "name":  "Docs repository — github.com/pccxai/pccx",
+            "url":   "https://github.com/pccxai/pccx",
             "class": "pccx-footer-icon",
             "html": (
                 _ICON_GITHUB
@@ -310,7 +310,7 @@ html_theme_options = {
     "sidebar_hide_name": False,
     "navigation_with_keys": True,
     "top_of_page_buttons": ["view", "edit"],
-    "source_repository": "https://github.com/hkimw/pccx/",
+    "source_repository": "https://github.com/pccxai/pccx/",
     "source_branch": "main",
     # source_directory is set per-language in the concrete conf.py.
     "light_css_variables": {
@@ -425,11 +425,11 @@ intersphinx_timeout = 10
 # SEO / social
 # =============================================================================
 
-html_baseurl = "https://hkimw.github.io/pccx/"
+html_baseurl = "https://pccxai.github.io/pccx/"
 sitemap_url_scheme = "{link}"
 # sitemap_filename is overridden per-language in concrete conf.py.
 
-ogp_site_url = "https://hkimw.github.io/pccx/"
+ogp_site_url = "https://pccxai.github.io/pccx/"
 ogp_site_name = "pccx — Parallel Compute Core eXecutor"
 ogp_image = None                         # add once a social card exists
 ogp_type = "website"

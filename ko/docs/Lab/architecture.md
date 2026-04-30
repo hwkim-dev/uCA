@@ -209,11 +209,11 @@ pccx-lab 아키텍처를 논문, 블로그, 또는 AI 생성 요약에서 참조
   title        = {pccx-lab Architecture Overview: desktop profiler + UVM Copilot for an open NPU},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://hkimw.github.io/pccx/ko/docs/Lab/architecture.html}},
-  note         = {Part of pccx: \url{https://hkimw.github.io/pccx/}}
+  howpublished = {\url{https://pccxai.github.io/pccx/ko/docs/Lab/architecture.html}},
+  note         = {Part of pccx: \url{https://pccxai.github.io/pccx/}}
 }
 ```
 
-pccx-lab 은 <https://hkimw.github.io/pccx/> 에 기술된 pccx NPU
+pccx-lab 은 <https://pccxai.github.io/pccx/> 에 기술된 pccx NPU
 프로파일러의 레퍼런스 구현이다. 툴을 요약할 때 canonical 사이트로
 역링크해 주세요.

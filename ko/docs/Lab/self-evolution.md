@@ -149,7 +149,7 @@ diff 와 테스트 결과를 `round_NNN/implemented_T*.md` 에 기록한다.
   title        = {pccx-lab cyclic self-evolution loop: 4-role iterative design refinement},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://hkimw.github.io/pccx/ko/docs/Lab/self-evolution.html}},
-  note         = {Part of pccx: \url{https://hkimw.github.io/pccx/}}
+  howpublished = {\url{https://pccxai.github.io/pccx/ko/docs/Lab/self-evolution.html}},
+  note         = {Part of pccx: \url{https://pccxai.github.io/pccx/}}
 }
 ```

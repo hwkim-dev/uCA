@@ -33,7 +33,7 @@ on:
 
 env:
   ACTIVE_VERSION: v002
-  RTL_REPO_URL: https://github.com/hkimw/pccx-FPGA-NPU-LLM-kv260
+  RTL_REPO_URL: https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260
   RTL_REPO_REF: main
 
 jobs:
