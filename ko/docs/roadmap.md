@@ -17,7 +17,7 @@ pccx 생태계 전체의 현재 릴리스 방향만 짧게 요약한다.
 
 - pccx-lab plugin system (CLI 우선, GUI 후속)
 - AI worker 를 위한 controlled MCP 인터페이스
-- pccx-lab 에서 `pccx-systemverilog-ide` 를 spin-out
+- pccx-lab 에서 `systemverilog-ide` 를 spin-out
 - `pccx-llm-launcher` MVP 기획
 - pccx-lab ↔ IDE handoff 포맷
 - pccx-lab ↔ launcher workflow boundary

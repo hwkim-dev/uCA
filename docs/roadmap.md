@@ -18,7 +18,7 @@ Tracking issue: [pccxai/pccx#28 — v0.2.0 umbrella][v020].
 
 - pccx-lab plugin system (CLI-first, GUI second)
 - controlled MCP interface for AI workers
-- spin out `pccx-systemverilog-ide` from pccx-lab
+- spin out `systemverilog-ide` from pccx-lab
 - `pccx-llm-launcher` MVP planning
 - pccx-lab ↔ IDE handoff format
 - pccx-lab ↔ launcher workflow boundary
