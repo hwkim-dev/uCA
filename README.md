@@ -16,6 +16,24 @@
 
 ---
 
+## Project status
+
+**Public alpha** — first tagged release `v0.1.0-alpha` is in draft. Core
+architecture and ISA are stable; verification, KV260 bring-up, and
+documentation polish are in progress. Expect rough edges; feedback and
+issues are welcome.
+
+| Entry point | Link |
+| --- | --- |
+| Documentation | <https://pccxai.github.io/pccx/> |
+| Releases | <https://github.com/pccxai/pccx/releases> |
+| Roadmap (project board) | <https://github.com/orgs/pccxai/projects/1> |
+| Contributing | [CONTRIBUTING.md](CONTRIBUTING.md) |
+| Discussions | <https://github.com/pccxai/pccx/discussions> |
+| Good first issues | <https://github.com/pccxai/pccx/labels/good%20first%20issue> |
+
+---
+
 ## What is pccx?
 
 pccx is a hardware-software co-design framework that accelerates **autoregressive decoding** of Transformer-based LLMs on resource-constrained edge devices. The primary target is the **Xilinx Kria KV260** SOM.
