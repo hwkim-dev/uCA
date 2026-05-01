@@ -7,11 +7,11 @@ and this project follows [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
-## v0.1.0-alpha
+## v0.1.0-alpha — 2026-05-01
 
 First public alpha snapshot of the canonical pccx architecture, ISA,
 and documentation site under the `pccxai` organization. Mirrors the
-release draft at
+release notes at
 [`docs/releases/v0.1.0-alpha.md`](docs/releases/v0.1.0-alpha.md).
 
 ### Highlights

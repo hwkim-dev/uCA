@@ -18,7 +18,7 @@
 
 ## Project status
 
-**Public alpha** — first tagged release `v0.1.0-alpha` is in draft. Core
+**Public alpha** — `v0.1.0-alpha` is published as a prerelease. Core
 architecture and ISA are stable; verification, KV260 bring-up, and
 documentation polish are in progress. Expect rough edges; feedback and
 issues are welcome.
