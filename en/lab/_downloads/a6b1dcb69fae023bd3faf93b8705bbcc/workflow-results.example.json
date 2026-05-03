@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "pccx.lab.workflow-results.v0",
+  "tool": "pccx-lab",
+  "maxEntries": 20,
+  "summaries": [
+    {
+      "schemaVersion": "pccx.lab.workflow-results.v0",
+      "proposalId": "proposal-lab-status-contract",
+      "workflowId": "lab-status-contract",
+      "status": "blocked",
+      "exitCode": null,
+      "startedAt": "not-recorded",
+      "finishedAt": "not-recorded",
+      "durationMs": 0,
+      "summary": "Workflow did not run because runner execution is disabled.",
+      "truncated": false,
+      "redactionApplied": false,
+      "outputPolicy": "summary-only; stdout and stderr lines are omitted",
+      "limitations": [
+        "No full logs are included in this summary.",
+        "No generated artifacts or hardware logs are referenced."
+      ]
+    },
+    {
+      "schemaVersion": "pccx.lab.workflow-results.v0",
+      "proposalId": "[rejected-proposal-id]",
+      "workflowId": "unknown",
+      "status": "rejected",
+      "exitCode": null,
+      "startedAt": "not-recorded",
+      "finishedAt": "not-recorded",
+      "durationMs": 0,
+      "summary": "Workflow did not run because the proposal was not accepted by the allowlist.",
+      "truncated": false,
+      "redactionApplied": true,
+      "outputPolicy": "summary-only; stdout and stderr lines are omitted",
+      "limitations": [
+        "No full logs are included in this summary.",
+        "No generated artifacts or hardware logs are referenced."
+      ]
+    }
+  ],
+  "limitations": [
+    "Result summaries are summary-only; stdout and stderr lines are omitted.",
+    "The current list is deterministic metadata, not a persistent execution cache.",
+    "No artifacts, hardware logs, provider logs, or FPGA repo paths are stored."
+  ]
+}

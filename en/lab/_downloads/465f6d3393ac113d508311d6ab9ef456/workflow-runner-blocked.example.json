@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "pccx.lab.workflow-runner-result.v0",
+  "proposalId": "proposal-lab-status-contract",
+  "workflowId": "lab-status-contract",
+  "status": "blocked",
+  "runnerEnabled": false,
+  "mode": "disabled",
+  "exitCode": null,
+  "durationMs": 0,
+  "stdoutLines": [],
+  "stderrLines": [],
+  "truncated": false,
+  "redactionApplied": false,
+  "safetyFlags": [
+    "allowlist-only",
+    "fixed-args-only",
+    "no-shell",
+    "timeout-enforced",
+    "bounded-output",
+    "redaction-applied-before-return",
+    "no-hardware",
+    "no-fpga-repo",
+    "no-network",
+    "no-provider-call"
+  ],
+  "limitations": [
+    "Runner is disabled by default.",
+    "Pass explicit local runner enablement before any allowlisted pilot command can run."
+  ]
+}

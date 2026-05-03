@@ -15,7 +15,7 @@
 <meta name="description" content="역할: NPU 프론트엔드는 PS↔PL 경계의 AXI-Lite 진입점이다. 호스트 드라이버 HAL은 0x000 주소에 ISA 워드를 기록하고 0x008 에 kick을 기록하며, 완료 상태는 같은 인터페이스의 읽기 채널로 폴링한다. AXIL_CMD_IN 은 호스트 write 트랜잭션을 FIFO에 수신하고, AXIL_STAT_OUT 은 엔진 완료 상태를 F..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["ko","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"NPU 프론트엔드 모듈","name":"NPU 프론트엔드 모듈","url":"https://pccxai.github.io/pccx/ko/docs/v002/RTL/frontend.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/ko/docs/v002/RTL/frontend.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-01","dateModified":"2026-05-01","description":"pccx documentation page: NPU 프론트엔드 모듈. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"ko","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="색인" href="../../../genindex.html"><link rel="search" title="검색" href="../../../search.html"><link rel="next" title="L2 캐시 (URAM)" href="memory_l2.html"><link rel="prev" title="NPU 컨트롤러 모듈" href="controller.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["ko","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"NPU 프론트엔드 모듈","name":"NPU 프론트엔드 모듈","url":"https://pccxai.github.io/pccx/ko/docs/v002/RTL/frontend.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/ko/docs/v002/RTL/frontend.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-03","dateModified":"2026-05-03","description":"pccx documentation page: NPU 프론트엔드 모듈. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"ko","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="색인" href="../../../genindex.html"><link rel="search" title="검색" href="../../../search.html"><link rel="next" title="L2 캐시 (URAM)" href="memory_l2.html"><link rel="prev" title="NPU 컨트롤러 모듈" href="controller.html">
         <link rel="canonical" href="https://pccxai.github.io/pccx/docs/v002/RTL/frontend.html">
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
@@ -506,7 +506,7 @@ FIFO가 가득 차면 <code class="docutils literal notranslate"><span class="pr
 kick 마커는 하위 디스패처가 배치 경계를 감지하는 데 사용된다.
 <code class="docutils literal notranslate"><span class="pre">OUT_valid</span> <span class="pre">&amp;&amp;</span> <span class="pre">IN_decoder_ready</span></code> 핸드셰이크가 성립하는 사이클마다 FIFO에서 팝이 일어난다.</p>
 <div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-number">리스팅 18 </span><span class="caption-text">hw/rtl/NPU_Controller/NPU_frontend/AXIL_CMD_IN.sv (AXI4-Lite Write Path)</span><a class="headerlink" href="#id3" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">리스팅 17 </span><span class="caption-text">hw/rtl/NPU_Controller/NPU_frontend/AXIL_CMD_IN.sv (AXI4-Lite Write Path)</span><a class="headerlink" href="#id3" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="cm">/*─────────────────────────────────────────────</span>
 <span class="cm">  Register Address Map</span>
 <span class="cm">  ───────────────────────────────────────────────*/</span>
@@ -526,7 +526,7 @@ FIFO가 가득 차면 <code class="docutils literal notranslate"><span class="pr
 어서트한다. <code class="docutils literal notranslate"><span class="pre">s_rready</span></code>가 도착하면 <code class="docutils literal notranslate"><span class="pre">rvalid</span></code>를 해제한다.
 <code class="docutils literal notranslate"><span class="pre">s_arready</span></code>는 FIFO가 비어 있거나 R 응답이 아직 진행 중일 때 디어서트된다.</p>
 <div class="literal-block-wrapper docutils container" id="id4">
-<div class="code-block-caption"><span class="caption-number">리스팅 19 </span><span class="caption-text">hw/rtl/NPU_Controller/NPU_frontend/AXIL_STAT_OUT.sv (AXI4-Lite Read Path)</span><a class="headerlink" href="#id4" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">리스팅 18 </span><span class="caption-text">hw/rtl/NPU_Controller/NPU_frontend/AXIL_STAT_OUT.sv (AXI4-Lite Read Path)</span><a class="headerlink" href="#id4" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="cm">/*─────────────────────────────────────────────</span>
 <span class="cm">  FIFO  (simple synchronous, FIFO_DEPTH entries)</span>
 <span class="cm">  Push : IN_valid from upper module</span>
@@ -599,7 +599,7 @@ CMD_IN의 출력(<code class="docutils literal notranslate"><span class="pre">cm
 STAT_OUT 방향은 <code class="docutils literal notranslate"><span class="pre">IN_enc_stat</span></code> / <code class="docutils literal notranslate"><span class="pre">IN_enc_valid</span></code>를 인코더 FSM으로부터 직접 수신한다.
 <code class="docutils literal notranslate"><span class="pre">ctrl_npu_interface.sv</span></code>는 향후 코어별 인터페이스 집계를 위한 플레이스홀더다.</p>
 <div class="literal-block-wrapper docutils container" id="id5">
-<div class="code-block-caption"><span class="caption-number">리스팅 20 </span><span class="caption-text">hw/rtl/NPU_Controller/NPU_frontend/ctrl_npu_frontend.sv (인스턴스 배선)</span><a class="headerlink" href="#id5" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">리스팅 19 </span><span class="caption-text">hw/rtl/NPU_Controller/NPU_frontend/ctrl_npu_frontend.sv (인스턴스 배선)</span><a class="headerlink" href="#id5" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="n">AXIL_CMD_IN</span><span class="w"> </span><span class="p">#(</span>
 <span class="w">      </span><span class="p">.</span><span class="n">FIFO_DEPTH</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
 <span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="n">u_cmd_in</span><span class="w"> </span><span class="p">(</span>
@@ -609,9 +609,11 @@ STAT_OUT 방향은 <code class="docutils literal notranslate"><span class="pre">
 
 <span class="w">      </span><span class="c1">// AXI4-Lite Write channels directly routed from the interface</span>
 <span class="w">      </span><span class="p">.</span><span class="n">s_awaddr</span><span class="w"> </span><span class="p">(</span><span class="n">S_AXIL_CTRL</span><span class="p">.</span><span class="n">awaddr</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">s_awprot</span><span class="w"> </span><span class="p">(</span><span class="n">S_AXIL_CTRL</span><span class="p">.</span><span class="n">awprot</span><span class="p">),</span>
 <span class="w">      </span><span class="p">.</span><span class="n">s_awvalid</span><span class="p">(</span><span class="n">S_AXIL_CTRL</span><span class="p">.</span><span class="n">awvalid</span><span class="p">),</span>
 <span class="w">      </span><span class="p">.</span><span class="n">s_awready</span><span class="p">(</span><span class="n">S_AXIL_CTRL</span><span class="p">.</span><span class="n">awready</span><span class="p">),</span>
 <span class="w">      </span><span class="p">.</span><span class="n">s_wdata</span><span class="w">  </span><span class="p">(</span><span class="n">S_AXIL_CTRL</span><span class="p">.</span><span class="n">wdata</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">s_wstrb</span><span class="w">  </span><span class="p">(</span><span class="n">S_AXIL_CTRL</span><span class="p">.</span><span class="n">wstrb</span><span class="p">),</span>
 <span class="w">      </span><span class="p">.</span><span class="n">s_wvalid</span><span class="w"> </span><span class="p">(</span><span class="n">S_AXIL_CTRL</span><span class="p">.</span><span class="n">wvalid</span><span class="p">),</span>
 <span class="w">      </span><span class="p">.</span><span class="n">s_wready</span><span class="w"> </span><span class="p">(</span><span class="n">S_AXIL_CTRL</span><span class="p">.</span><span class="n">wready</span><span class="p">),</span>
 <span class="w">      </span><span class="p">.</span><span class="n">s_bresp</span><span class="w">  </span><span class="p">(</span><span class="n">S_AXIL_CTRL</span><span class="p">.</span><span class="n">bresp</span><span class="p">),</span>
@@ -658,7 +660,7 @@ STAT_OUT 방향은 <code class="docutils literal notranslate"><span class="pre">
 <code class="docutils literal notranslate"><span class="pre">axis_if</span></code>는 tdata/tvalid/tready/tlast/tkeep의 AXI-Stream 인터페이스로,
 데이터 경로 모듈이 사용한다.</p>
 <div class="literal-block-wrapper docutils container" id="id6">
-<div class="code-block-caption"><span class="caption-number">리스팅 21 </span><span class="caption-text">hw/rtl/NPU_Controller/npu_interfaces.svh (axis_if)</span><a class="headerlink" href="#id6" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">리스팅 20 </span><span class="caption-text">hw/rtl/NPU_Controller/npu_interfaces.svh (axis_if)</span><a class="headerlink" href="#id6" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="k">interface</span><span class="w"> </span><span class="n">axis_if</span><span class="w"> </span><span class="p">#(</span>
 <span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">DATA_WIDTH</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">128</span>
 <span class="p">)</span><span class="w"> </span><span class="p">();</span>
@@ -678,7 +680,7 @@ STAT_OUT 방향은 <code class="docutils literal notranslate"><span class="pre">
 </div>
 </div>
 <div class="literal-block-wrapper docutils container" id="id7">
-<div class="code-block-caption"><span class="caption-number">리스팅 22 </span><span class="caption-text">hw/rtl/NPU_Controller/npu_interfaces.svh (axil_if)</span><a class="headerlink" href="#id7" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">리스팅 21 </span><span class="caption-text">hw/rtl/NPU_Controller/npu_interfaces.svh (axil_if)</span><a class="headerlink" href="#id7" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// axil_if.sv</span>
 <span class="k">interface</span><span class="w"> </span><span class="n">axil_if</span><span class="w"> </span><span class="p">#(</span>
 <span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ADDR_W</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span>
@@ -773,7 +775,7 @@ STAT_OUT 방향은 <code class="docutils literal notranslate"><span class="pre">
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2026-05-01</div>
+              Last updated on 2026-05-03</div>
           </div>
           <div class="right-details">
             <div class="icons">

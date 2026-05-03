@@ -20,7 +20,7 @@ interactively.
 ## Node catalogue
 
 Thirteen node types ship in the default build; five are pccx-v002
-specific and mirror the actual KV260 accelerator topology.
+specific and mirror the configured accelerator topology.
 
 ### Input
 

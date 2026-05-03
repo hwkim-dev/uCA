@@ -1,7 +1,7 @@
 pccx-lab
 ========
 
-Pre-RTL bottleneck detection, UVM co-simulation, and LLM-driven testbench generation — purpose-built for the pccx NPU architecture.
+Trace profiling, verification surfaces, and CLI-backed workflow descriptors for the pccx NPU architecture.
 
 .. toctree::
    :maxdepth: 2
@@ -10,6 +10,9 @@ Pre-RTL bottleneck detection, UVM co-simulation, and LLM-driven testbench genera
    getting-started
    modules/overview
    modules/node-editor
+   CLI_CORE_BOUNDARY
+   CLI_BOUNDARY_EXAMPLES
+   DIAGNOSTICS_HANDOFF_CONSUMER
    design/rationale
    design/phase1_crate_split
    design/phase2_intellisense

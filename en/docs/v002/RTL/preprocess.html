@@ -15,7 +15,7 @@
 <meta name="description" content="The PREPROCESS subdirectory contains five SystemVerilog modules. barrel_shifter_BF16.sv is not present in the current working tree. preprocess_fmap: hw/rtl/PREPROCESS/preprocess_fmap.sv, Receives a..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"PREPROCESS RTL Reference","name":"PREPROCESS RTL Reference","url":"https://pccxai.github.io/pccx/en/docs/v002/RTL/preprocess.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/en/docs/v002/RTL/preprocess.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-01","dateModified":"2026-05-01","description":"pccx documentation page: PREPROCESS RTL Reference. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="Compile-Priority Packages" href="packages.html"><link rel="prev" title="Memory Dispatch" href="memory_dispatch.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"PREPROCESS RTL Reference","name":"PREPROCESS RTL Reference","url":"https://pccxai.github.io/pccx/en/docs/v002/RTL/preprocess.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/en/docs/v002/RTL/preprocess.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-03","dateModified":"2026-05-03","description":"pccx documentation page: PREPROCESS RTL Reference. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="Compile-Priority Packages" href="packages.html"><link rel="prev" title="Memory Dispatch" href="memory_dispatch.html">
         <link rel="canonical" href="https://pccxai.github.io/pccx/docs/v002/RTL/preprocess.html">
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
@@ -431,7 +431,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tools</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://pccxai.github.io/pccx/en/lab/">pccx-lab — Simulator &amp; AI Profiler</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pccxai.github.io/pccx/en/lab/">pccx-lab — Verification Lab</a></li>
 </ul>
 
 </div>
@@ -481,7 +481,7 @@
 <section id="preprocess-fmap">
 <h2><code class="docutils literal notranslate"><span class="pre">preprocess_fmap</span></code><a class="headerlink" href="#preprocess-fmap" title="Link to this heading">¶</a></h2>
 <div class="literal-block-wrapper docutils container" id="id1">
-<div class="code-block-caption"><span class="caption-number">Listing 23 </span><span class="caption-text">hw/rtl/PREPROCESS/preprocess_fmap.sv</span><a class="headerlink" href="#id1" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 22 </span><span class="caption-text">hw/rtl/PREPROCESS/preprocess_fmap.sv</span><a class="headerlink" href="#id1" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="k">module</span><span class="w"> </span><span class="n">preprocess_fmap</span><span class="w"> </span><span class="p">#(</span>
 <span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">fmap_width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">`DEVICE_ACP_WIDTH_BIT</span>
 <span class="p">)</span><span class="w"> </span><span class="p">(</span>
@@ -518,7 +518,7 @@ are driven to MAT_CORE.</p>
 <section id="preprocess-bf16-fixed-pipeline">
 <h2><code class="docutils literal notranslate"><span class="pre">preprocess_bf16_fixed_pipeline</span></code><a class="headerlink" href="#preprocess-bf16-fixed-pipeline" title="Link to this heading">¶</a></h2>
 <div class="literal-block-wrapper docutils container" id="id2">
-<div class="code-block-caption"><span class="caption-number">Listing 24 </span><span class="caption-text">hw/rtl/PREPROCESS/preprocess_bf16_fixed_pipeline.sv</span><a class="headerlink" href="#id2" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 23 </span><span class="caption-text">hw/rtl/PREPROCESS/preprocess_bf16_fixed_pipeline.sv</span><a class="headerlink" href="#id2" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="k">module</span><span class="w"> </span><span class="n">preprocess_bf16_fixed_pipeline</span><span class="w"> </span><span class="p">(</span>
 <span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span>
 <span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">rst_n</span><span class="p">,</span>
@@ -582,7 +582,7 @@ RTL repo as well.</p>
 <section id="fmap-cache">
 <h2><code class="docutils literal notranslate"><span class="pre">fmap_cache</span></code><a class="headerlink" href="#fmap-cache" title="Link to this heading">¶</a></h2>
 <div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-number">Listing 25 </span><span class="caption-text">hw/rtl/PREPROCESS/fmap_cache.sv</span><a class="headerlink" href="#id3" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 24 </span><span class="caption-text">hw/rtl/PREPROCESS/fmap_cache.sv</span><a class="headerlink" href="#id3" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="k">module</span><span class="w"> </span><span class="n">fmap_cache</span><span class="w"> </span><span class="p">#(</span>
 <span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">DATA_WIDTH</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w">    </span><span class="c1">// Fixed-point Mantissa width</span>
 <span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">WRITE_LANES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">    </span><span class="c1">// 16 words per write</span>
@@ -667,7 +667,7 @@ every cycle where <code class="docutils literal notranslate"><span class="pre">r
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2026-05-01</div>
+              Last updated on 2026-05-03</div>
           </div>
           <div class="right-details">
             <div class="icons">

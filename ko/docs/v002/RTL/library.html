@@ -15,7 +15,7 @@
 <meta name="description" content="v002 RTL은 공통 수치 연산과 데이터 구조를 Library/ 디렉터리에 분리한다. 컴파일 순서( filelist.f)상 이 파일들은 패키지 계층(A–D) 직후, isa_pkg 이전에 위치한다. 컴퓨트 코어가 공통 라이브러리에 의존함으로써 동일 연산의 중복 구현을 막는다. Algorithms 패키지: algorithms_pkg( Library/Al..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["ko","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"공유 라이브러리","name":"공유 라이브러리","url":"https://pccxai.github.io/pccx/ko/docs/v002/RTL/library.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/ko/docs/v002/RTL/library.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-01","dateModified":"2026-05-01","description":"pccx documentation page: 공유 라이브러리. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"ko","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="색인" href="../../../genindex.html"><link rel="search" title="검색" href="../../../search.html"><link rel="next" title="검증" href="../Verification/index.html"><link rel="prev" title="컴파일 우선순위 패키지" href="packages.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["ko","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"공유 라이브러리","name":"공유 라이브러리","url":"https://pccxai.github.io/pccx/ko/docs/v002/RTL/library.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/ko/docs/v002/RTL/library.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-03","dateModified":"2026-05-03","description":"pccx documentation page: 공유 라이브러리. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"ko","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="색인" href="../../../genindex.html"><link rel="search" title="검색" href="../../../search.html"><link rel="next" title="검증" href="../Verification/index.html"><link rel="prev" title="컴파일 우선순위 패키지" href="packages.html">
         <link rel="canonical" href="https://pccxai.github.io/pccx/docs/v002/RTL/library.html">
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
@@ -486,7 +486,7 @@ QUEUE 상태 구조체 <code class="docutils literal notranslate"><span class="p
 packed struct이며, QUEUE 모듈 외부에서 상태를 참조할 때 사용한다. STACK 지원은
 스텁(stub)으로 예약되어 있다.</p>
 <div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-number">리스팅 28 </span><span class="caption-text">Library/Algorithms/Algorithms.sv</span><a class="headerlink" href="#id3" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">리스팅 27 </span><span class="caption-text">Library/Algorithms/Algorithms.sv</span><a class="headerlink" href="#id3" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span><span class="w"> </span><span class="n">algorithms_pkg</span><span class="p">;</span>
 
 <span class="w">  </span><span class="cm">/*─────────────────────────────────────────────</span>
@@ -521,7 +521,7 @@ bit)는 저장하지 않는다.</p>
 처리는 포함하지 않는다(autoregressive 디코딩 경로의 정규화 BF16 피연산자 전제).</p></li>
 </ul>
 <div class="literal-block-wrapper docutils container" id="id4">
-<div class="code-block-caption"><span class="caption-number">리스팅 29 </span><span class="caption-text">Library/Algorithms/BF16_math.sv</span><a class="headerlink" href="#id4" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">리스팅 28 </span><span class="caption-text">Library/Algorithms/BF16_math.sv</span><a class="headerlink" href="#id4" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span><span class="w"> </span><span class="n">bf16_math_pkg</span><span class="p">;</span>
 
 <span class="w">  </span><span class="cm">/*─────────────────────────────────────────────</span>
@@ -637,7 +637,7 @@ bit)는 저장하지 않는다.</p>
 출력한다.</p></li>
 </ul>
 <div class="literal-block-wrapper docutils container" id="id5">
-<div class="code-block-caption"><span class="caption-number">리스팅 30 </span><span class="caption-text">Library/Algorithms/QUEUE/IF_queue.sv</span><a class="headerlink" href="#id5" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">리스팅 29 </span><span class="caption-text">Library/Algorithms/QUEUE/IF_queue.sv</span><a class="headerlink" href="#id5" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="k">modport</span><span class="w"> </span><span class="n">producer</span><span class="p">(</span><span class="k">import</span><span class="w"> </span><span class="n">push</span><span class="p">,</span><span class="w"> </span><span class="k">input</span><span class="w"> </span><span class="n">empty</span><span class="p">,</span><span class="w"> </span><span class="n">full</span><span class="p">,</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span><span class="w"> </span><span class="n">rst_n</span><span class="p">,</span><span class="w"> </span><span class="k">output</span><span class="w"> </span><span class="n">push_data</span><span class="p">,</span><span class="w"> </span><span class="n">push_en</span><span class="p">);</span>
 
 <span class="w">  </span><span class="c1">// consumer : only pops</span>
@@ -756,7 +756,7 @@ bit)는 저장하지 않는다.</p>
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2026-05-01</div>
+              Last updated on 2026-05-03</div>
           </div>
           <div class="right-details">
             <div class="icons">

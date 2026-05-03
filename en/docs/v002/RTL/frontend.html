@@ -15,7 +15,7 @@
 <meta name="description" content="Role: The NPU frontend is the AXI-Lite entry point at the PS↔PL boundary on the NPU side, complementing the host driver HAL. The host driver writes ISA words to address 0x000 and a kick token to 0x..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"NPU Frontend Modules","name":"NPU Frontend Modules","url":"https://pccxai.github.io/pccx/en/docs/v002/RTL/frontend.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/en/docs/v002/RTL/frontend.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-01","dateModified":"2026-05-01","description":"pccx documentation page: NPU Frontend Modules. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="L2 Cache (URAM)" href="memory_l2.html"><link rel="prev" title="NPU Controller Modules" href="controller.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"NPU Frontend Modules","name":"NPU Frontend Modules","url":"https://pccxai.github.io/pccx/en/docs/v002/RTL/frontend.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/en/docs/v002/RTL/frontend.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-03","dateModified":"2026-05-03","description":"pccx documentation page: NPU Frontend Modules. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="L2 Cache (URAM)" href="memory_l2.html"><link rel="prev" title="NPU Controller Modules" href="controller.html">
         <link rel="canonical" href="https://pccxai.github.io/pccx/docs/v002/RTL/frontend.html">
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
@@ -431,7 +431,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tools</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://pccxai.github.io/pccx/en/lab/">pccx-lab — Simulator &amp; AI Profiler</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pccxai.github.io/pccx/en/lab/">pccx-lab — Verification Lab</a></li>
 </ul>
 
 </div>
@@ -509,7 +509,7 @@ FIFO; <code class="docutils literal notranslate"><span class="pre">0x008</span><
 The kick marker signals a batch boundary to the downstream dispatcher.
 A pop occurs each cycle that both <code class="docutils literal notranslate"><span class="pre">OUT_valid</span></code> and <code class="docutils literal notranslate"><span class="pre">IN_decoder_ready</span></code> are asserted.</p>
 <div class="literal-block-wrapper docutils container" id="id1">
-<div class="code-block-caption"><span class="caption-number">Listing 18 </span><span class="caption-text">hw/rtl/NPU_Controller/NPU_frontend/AXIL_CMD_IN.sv (AXI4-Lite Write Path)</span><a class="headerlink" href="#id1" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 17 </span><span class="caption-text">hw/rtl/NPU_Controller/NPU_frontend/AXIL_CMD_IN.sv (AXI4-Lite Write Path)</span><a class="headerlink" href="#id1" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="cm">/*─────────────────────────────────────────────</span>
 <span class="cm">  Register Address Map</span>
 <span class="cm">  ───────────────────────────────────────────────*/</span>
@@ -531,7 +531,7 @@ On an AR-channel handshake the FIFO head is latched into <code class="docutils l
 asserted. The response is held until the host acknowledges with <code class="docutils literal notranslate"><span class="pre">s_rready</span></code>.
 <code class="docutils literal notranslate"><span class="pre">s_arready</span></code> deasserts when the FIFO is empty or when an R response is still in progress.</p>
 <div class="literal-block-wrapper docutils container" id="id2">
-<div class="code-block-caption"><span class="caption-number">Listing 19 </span><span class="caption-text">hw/rtl/NPU_Controller/NPU_frontend/AXIL_STAT_OUT.sv (AXI4-Lite Read Path)</span><a class="headerlink" href="#id2" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 18 </span><span class="caption-text">hw/rtl/NPU_Controller/NPU_frontend/AXIL_STAT_OUT.sv (AXI4-Lite Read Path)</span><a class="headerlink" href="#id2" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="cm">/*─────────────────────────────────────────────</span>
 <span class="cm">  FIFO  (simple synchronous, FIFO_DEPTH entries)</span>
 <span class="cm">  Push : IN_valid from upper module</span>
@@ -606,7 +606,7 @@ The status path accepts <code class="docutils literal notranslate"><span class="
 <code class="docutils literal notranslate"><span class="pre">ctrl_npu_interface.sv</span></code> is currently a placeholder for future per-core interface
 aggregation.</p>
 <div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-number">Listing 20 </span><span class="caption-text">hw/rtl/NPU_Controller/NPU_frontend/ctrl_npu_frontend.sv (instance wiring)</span><a class="headerlink" href="#id3" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 19 </span><span class="caption-text">hw/rtl/NPU_Controller/NPU_frontend/ctrl_npu_frontend.sv (instance wiring)</span><a class="headerlink" href="#id3" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="n">AXIL_CMD_IN</span><span class="w"> </span><span class="p">#(</span>
 <span class="w">      </span><span class="p">.</span><span class="n">FIFO_DEPTH</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
 <span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="n">u_cmd_in</span><span class="w"> </span><span class="p">(</span>
@@ -616,9 +616,11 @@ aggregation.</p>
 
 <span class="w">      </span><span class="c1">// AXI4-Lite Write channels directly routed from the interface</span>
 <span class="w">      </span><span class="p">.</span><span class="n">s_awaddr</span><span class="w"> </span><span class="p">(</span><span class="n">S_AXIL_CTRL</span><span class="p">.</span><span class="n">awaddr</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">s_awprot</span><span class="w"> </span><span class="p">(</span><span class="n">S_AXIL_CTRL</span><span class="p">.</span><span class="n">awprot</span><span class="p">),</span>
 <span class="w">      </span><span class="p">.</span><span class="n">s_awvalid</span><span class="p">(</span><span class="n">S_AXIL_CTRL</span><span class="p">.</span><span class="n">awvalid</span><span class="p">),</span>
 <span class="w">      </span><span class="p">.</span><span class="n">s_awready</span><span class="p">(</span><span class="n">S_AXIL_CTRL</span><span class="p">.</span><span class="n">awready</span><span class="p">),</span>
 <span class="w">      </span><span class="p">.</span><span class="n">s_wdata</span><span class="w">  </span><span class="p">(</span><span class="n">S_AXIL_CTRL</span><span class="p">.</span><span class="n">wdata</span><span class="p">),</span>
+<span class="w">      </span><span class="p">.</span><span class="n">s_wstrb</span><span class="w">  </span><span class="p">(</span><span class="n">S_AXIL_CTRL</span><span class="p">.</span><span class="n">wstrb</span><span class="p">),</span>
 <span class="w">      </span><span class="p">.</span><span class="n">s_wvalid</span><span class="w"> </span><span class="p">(</span><span class="n">S_AXIL_CTRL</span><span class="p">.</span><span class="n">wvalid</span><span class="p">),</span>
 <span class="w">      </span><span class="p">.</span><span class="n">s_wready</span><span class="w"> </span><span class="p">(</span><span class="n">S_AXIL_CTRL</span><span class="p">.</span><span class="n">wready</span><span class="p">),</span>
 <span class="w">      </span><span class="p">.</span><span class="n">s_bresp</span><span class="w">  </span><span class="p">(</span><span class="n">S_AXIL_CTRL</span><span class="p">.</span><span class="n">bresp</span><span class="p">),</span>
@@ -665,7 +667,7 @@ aggregation.</p>
 <code class="docutils literal notranslate"><span class="pre">axis_if</span></code> provides an AXI-Stream interface carrying tdata, tvalid, tready, tlast,
 and tkeep; it is used by data-path modules that transfer activation and weight streams.</p>
 <div class="literal-block-wrapper docutils container" id="id4">
-<div class="code-block-caption"><span class="caption-number">Listing 21 </span><span class="caption-text">hw/rtl/NPU_Controller/npu_interfaces.svh (axis_if)</span><a class="headerlink" href="#id4" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 20 </span><span class="caption-text">hw/rtl/NPU_Controller/npu_interfaces.svh (axis_if)</span><a class="headerlink" href="#id4" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="k">interface</span><span class="w"> </span><span class="n">axis_if</span><span class="w"> </span><span class="p">#(</span>
 <span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">DATA_WIDTH</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">128</span>
 <span class="p">)</span><span class="w"> </span><span class="p">();</span>
@@ -685,7 +687,7 @@ and tkeep; it is used by data-path modules that transfer activation and weight s
 </div>
 </div>
 <div class="literal-block-wrapper docutils container" id="id5">
-<div class="code-block-caption"><span class="caption-number">Listing 22 </span><span class="caption-text">hw/rtl/NPU_Controller/npu_interfaces.svh (axil_if)</span><a class="headerlink" href="#id5" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 21 </span><span class="caption-text">hw/rtl/NPU_Controller/npu_interfaces.svh (axil_if)</span><a class="headerlink" href="#id5" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// axil_if.sv</span>
 <span class="k">interface</span><span class="w"> </span><span class="n">axil_if</span><span class="w"> </span><span class="p">#(</span>
 <span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ADDR_W</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span>
@@ -780,7 +782,7 @@ and tkeep; it is used by data-path modules that transfer activation and weight s
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2026-05-01</div>
+              Last updated on 2026-05-03</div>
           </div>
           <div class="right-details">
             <div class="icons">

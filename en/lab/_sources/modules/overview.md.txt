@@ -24,9 +24,9 @@ must never import a UI or framework crate; `ui/` only talks to
 
 ## Shell at a glance
 
-The default layout mirrors a modern EDA IDE (think VTune / Nsight):
+The default layout is a desktop verification shell:
 a top menu bar, a tool ribbon, a tab strip, the active work panel,
-and two dockable side panels (Live Telemetry + AI Copilot).
+and two dockable side panels (Live Telemetry + Workflow Assistant).
 
 ```{image} /_static/screenshots/timeline-fullwidth.png
 :alt: pccx-lab Timeline view — swim lanes of NPU events over cycles
@@ -54,8 +54,8 @@ core; events are colour-coded by type
 | System Simulator  | `HardwareVisualizer.tsx` | — | 3D systolic array live view |
 | Memory Dump       | `MemoryDump.tsx`         | — | Paginated hex view of the flat trace buffer |
 | Data Flow         | `NodeEditor.tsx`         | **Shift+A** | Blender-grade block-diagram canvas |
-| SV Editor         | `CodeEditor.tsx`         | — | SystemVerilog editor + AI inline gen |
-| Report            | `ReportBuilder.tsx`      | — | Enterprise report composer |
+| SV Editor         | `CodeEditor.tsx`         | — | SystemVerilog editor + local draft helper |
+| Report            | `ReportBuilder.tsx`      | — | Bounded report composer |
 | Verification      | `VerificationSuite.tsx`  | — | **4-card** pccx-FPGA verification dashboard |
 | Roofline          | `Roofline.tsx`           | — | ECharts roofline chart |
 

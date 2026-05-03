@@ -1,7 +1,7 @@
 # 시작하기
 
 > pccx-lab 에 처음 입장하는 사용자를 위한 5 분 튜토리얼.
-> VS Code `walkthroughs` 계약을 따라 3 단계로 구성됩니다:
+> 에디터형 워크스루 형식의 3 단계로 구성됩니다:
 > 앱 실행 → 샘플 `.pccx` 로드 → Flame Graph + Waveform 열기.
 
 ## 사전 준비
@@ -28,10 +28,10 @@ npx tauri dev
 - **타이틀 바 + 메뉴 바** — File / Edit / View / Trace / Analysis / Verify / Run / Tools / Window / Help
 - **탭 스트립** — Timeline / Flame Graph / Waveform / System Simulator /
   Memory Dump / …
-- **AI Copilot 패널** (오른쪽 도킹, `Ctrl+\`` 로 토글)
+- **Workflow Assistant 패널** (오른쪽 도킹, `Ctrl+\`` 로 토글)
 - **Bottom Panel** (Log / Console / Telemetry, `Ctrl+J` 로 토글)
 
-우측 상단 활동 바에서 Copilot 및 Telemetry 토글이 있습니다.
+우측 상단 활동 바에서 도우미 및 Telemetry 토글이 있습니다.
 모든 아이콘 버튼에는 `aria-label` 이 부여되어 있어 스크린 리더로
 사용할 수 있습니다 (WCAG 2.2 SC 2.1.1 / 2.4.3).
 
@@ -47,7 +47,7 @@ npx tauri dev
    성공 시 상단 탭 스트립 오른쪽에 `trace loaded` 배지가 초록색으로
    표시됩니다.
 
-실제 pccx-FPGA 시뮬레이션 결과를 보려면 다음 경로를 선택하십시오:
+로컬 pccx-FPGA 시뮬레이션 결과를 보려면 다음 경로를 선택하십시오:
 
 ```
 ../pccx-FPGA-NPU-LLM-kv260/hw/sim/fixtures/smoke.pccx
@@ -73,7 +73,7 @@ npx tauri dev
 - `Ctrl + 스크롤` — 시간축 줌 인/아웃
 - 드래그 — 팬
 - **Find Bottleneck** 버튼 — `detect_bottlenecks` IPC 를 호출해 가장
-  혼잡한 창을 자동으로 찾아 AI 권장사항을 표시
+  혼잡한 창을 자동으로 찾아 로컬 권장사항을 표시
 - `Ctrl + Shift + D` — 두 번째 런과 비교하는 diff 모드 토글
 
 ### Waveform

@@ -7,15 +7,15 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://pccxai.github.io/pccx/docs/v002/RTL/controller.html" />
 <meta property="og:site_name" content="pccx — Parallel Compute Core eXecutor" />
-<meta property="og:description" content="1. Controller Top: npu_controller_top.sv integrates the AXI-Lite frontend, instruction decoder, dispatcher, and global scheduler into a single unit. hw/rtl/NPU_Controller/npu_controller_top.sv, 2. ..." />
+<meta property="og:description" content="1. Controller Top: npu_controller_top.sv integrates the AXI-Lite frontend, instruction decoder, and global scheduler into a single controller boundary. hw/rtl/NPU_Controller/npu_controller_top.sv, ..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="https://pccxai.github.io/pccx/_images/social_previews/summary_docs_v002_RTL_controller_c3b21cd4.png" />
-<meta property="og:image:alt" content="1. Controller Top: npu_controller_top.sv integrates the AXI-Lite frontend, instruction decoder, dispatcher, and global scheduler into a single unit. hw/rtl/NPU_Controller/npu_controller_top.sv, 2. ..." />
-<meta name="description" content="1. Controller Top: npu_controller_top.sv integrates the AXI-Lite frontend, instruction decoder, dispatcher, and global scheduler into a single unit. hw/rtl/NPU_Controller/npu_controller_top.sv, 2. ..." />
+<meta property="og:image" content="https://pccxai.github.io/pccx/_images/social_previews/summary_docs_v002_RTL_controller_bde6df0c.png" />
+<meta property="og:image:alt" content="1. Controller Top: npu_controller_top.sv integrates the AXI-Lite frontend, instruction decoder, and global scheduler into a single controller boundary. hw/rtl/NPU_Controller/npu_controller_top.sv, ..." />
+<meta name="description" content="1. Controller Top: npu_controller_top.sv integrates the AXI-Lite frontend, instruction decoder, and global scheduler into a single controller boundary. hw/rtl/NPU_Controller/npu_controller_top.sv, ..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"NPU Controller Modules","name":"NPU Controller Modules","url":"https://pccxai.github.io/pccx/en/docs/v002/RTL/controller.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/en/docs/v002/RTL/controller.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-01","dateModified":"2026-05-01","description":"pccx documentation page: NPU Controller Modules. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="NPU Frontend Modules" href="frontend.html"><link rel="prev" title="Compute Core Modules" href="compute_cores.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"NPU Controller Modules","name":"NPU Controller Modules","url":"https://pccxai.github.io/pccx/en/docs/v002/RTL/controller.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/en/docs/v002/RTL/controller.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-03","dateModified":"2026-05-03","description":"pccx documentation page: NPU Controller Modules. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="NPU Frontend Modules" href="frontend.html"><link rel="prev" title="Compute Core Modules" href="compute_cores.html">
         <link rel="canonical" href="https://pccxai.github.io/pccx/docs/v002/RTL/controller.html">
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
@@ -431,7 +431,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tools</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://pccxai.github.io/pccx/en/lab/">pccx-lab — Simulator &amp; AI Profiler</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pccxai.github.io/pccx/en/lab/">pccx-lab — Verification Lab</a></li>
 </ul>
 
 </div>
@@ -482,14 +482,13 @@
 <ul class="pccx-rtl-source__list simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">hw/rtl/NPU_Controller/npu_controller_top.sv</span></code> — <a class="pccx-rtl-source__link reference external" href="https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260/blob/main/hw/rtl/NPU_Controller/npu_controller_top.sv" target="_blank">View on GitHub</a></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">hw/rtl/NPU_Controller/NPU_Control_Unit/ctrl_npu_decoder.sv</span></code> — <a class="pccx-rtl-source__link reference external" href="https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260/blob/main/hw/rtl/NPU_Controller/NPU_Control_Unit/ctrl_npu_decoder.sv" target="_blank">View on GitHub</a></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">hw/rtl/NPU_Controller/NPU_Control_Unit/ctrl_npu_dispatcher.sv</span></code> — <a class="pccx-rtl-source__link reference external" href="https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260/blob/main/hw/rtl/NPU_Controller/NPU_Control_Unit/ctrl_npu_dispatcher.sv" target="_blank">View on GitHub</a></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">hw/rtl/NPU_Controller/Global_Scheduler.sv</span></code> — <a class="pccx-rtl-source__link reference external" href="https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260/blob/main/hw/rtl/NPU_Controller/Global_Scheduler.sv" target="_blank">View on GitHub</a></p></li>
 </ul>
 </div>
 <section id="controller-top">
 <h2>1. Controller Top<a class="headerlink" href="#controller-top" title="Link to this heading">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">npu_controller_top.sv</span></code> integrates the AXI-Lite frontend, instruction
-decoder, dispatcher, and global scheduler into a single unit.</p>
+decoder, and global scheduler into a single controller boundary.</p>
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption"><span class="caption-number">Listing 14 </span><span class="caption-text">hw/rtl/NPU_Controller/npu_controller_top.sv</span><a class="headerlink" href="#id1" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="no">`timescale</span><span class="w"> </span><span class="mi">1</span><span class="n">ns</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1</span><span class="n">ps</span>
@@ -498,9 +497,22 @@ decoder, dispatcher, and global scheduler into a single unit.</p>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">isa_pkg::*</span><span class="p">;</span>
 
-<span class="c1">// ===| NPU Controller Top |======================================================</span>
-<span class="c1">// Wraps the AXI-Lite frontend and the opcode decoder.</span>
-<span class="c1">// Outputs one valid pulse per instruction type along with the raw 60-bit body.</span>
+<span class="c1">// ===| Module: npu_controller_top — control-plane wrapper |=====================</span>
+<span class="c1">// Purpose      : Aggregate AXIL frontend + opcode decoder behind one boundary.</span>
+<span class="c1">//                Hides FIFO/handshake/decoding complexity from NPU_top.</span>
+<span class="c1">// Spec ref     : pccx v002 §3 (ISA), §4 (control plane).</span>
+<span class="c1">// Clock        : clk (= clk_core, 400 MHz).</span>
+<span class="c1">// Reset        : rst_n active-low; i_clear synchronous soft-clear.</span>
+<span class="c1">// Latency      : Decode is 1-cycle registered after AXIL kick (ctrl_npu_decoder).</span>
+<span class="c1">// Throughput   : Issues at most 1 decoded uop per clock (ISA serial issue).</span>
+<span class="c1">// Handshake    : One-hot OUT_*_op_x64_valid pulses — exactly one (or none)</span>
+<span class="c1">//                asserted per cycle. Raw 60-bit body driven on OUT_op_x64.</span>
+<span class="c1">// Backpressure : Decoder gates pop via fetch_PC_ready; AXIL frontend respects.</span>
+<span class="c1">// Reset state  : All OUT_*_op_x64_valid = 0; OUT_op_x64 = 0.</span>
+<span class="c1">// Errors       : none surfaced (illegal opcodes silently dropped — TODO).</span>
+<span class="c1">// Counters     : none.</span>
+<span class="c1">// Assertions   : (Stage C) one-hot of decoded valids; raw_instruction stable</span>
+<span class="c1">//                while pop_valid &amp;&amp; !fetch_PC_ready.</span>
 <span class="c1">// ===============================================================================</span>
 
 <span class="k">module</span><span class="w"> </span><span class="n">npu_controller_top</span><span class="w"> </span><span class="p">#()</span><span class="w"> </span><span class="p">(</span>
@@ -579,10 +591,25 @@ typed struct (<code class="docutils literal notranslate"><span class="pre">GEMV_
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">isa_pkg::*</span><span class="p">;</span>
 
-<span class="c1">// ===| NPU Opcode Decoder |======================================================</span>
-<span class="c1">// Receives raw 64-bit VLIW instructions from the frontend FIFO.</span>
-<span class="c1">// Strips the 4-bit opcode, asserts the matching valid pulse for one cycle,</span>
-<span class="c1">// and forwards the 60-bit body to the Global Scheduler.</span>
+<span class="c1">// ===| Module: ctrl_npu_decoder — VLIW opcode → engine valid demux |============</span>
+<span class="c1">// Purpose      : Receive raw 64-bit VLIW instructions from the frontend FIFO,</span>
+<span class="c1">//                strip the 4-bit opcode, assert exactly one matching valid</span>
+<span class="c1">//                pulse for one cycle, and forward the 60-bit body to the</span>
+<span class="c1">//                Global Scheduler.</span>
+<span class="c1">// Spec ref     : pccx v002 §3 (ISA), §3.1 (opcode encoding).</span>
+<span class="c1">// Clock        : clk @ 400 MHz.</span>
+<span class="c1">// Reset        : rst_n active-low.</span>
+<span class="c1">// Latency      : 1-cycle registered (raw_instruction_pop_valid → OUT_*_valid).</span>
+<span class="c1">// Throughput   : 1 instruction/cycle (decoder is purely combinational save</span>
+<span class="c1">//                for the output register).</span>
+<span class="c1">// Handshake    : OUT_fetch_PC_ready asserted unconditionally — frontend FIFO</span>
+<span class="c1">//                provides buffering, decoder is single-cycle.</span>
+<span class="c1">// Reset state  : All OUT_*_op_x64_valid = 0; OUT_op_x64 = 0.</span>
+<span class="c1">// Errors       : Unknown opcodes are silently dropped (no valid asserted).</span>
+<span class="c1">// Assertions   : (Stage C) one-hot of OUT_*_op_x64_valid; valid pulses</span>
+<span class="c1">//                are exactly one cycle wide.</span>
+<span class="c1">// Notes        : OP_CVO uses a separate FF (cvo_valid_ff) outside the</span>
+<span class="c1">//                4-bit OUT_valid bus because it is the 5th opcode.</span>
 <span class="c1">// ===============================================================================</span>
 
 <span class="k">module</span><span class="w"> </span><span class="n">ctrl_npu_decoder</span><span class="w"> </span><span class="p">(</span>
@@ -653,215 +680,44 @@ typed struct (<code class="docutils literal notranslate"><span class="pre">GEMV_
 </div>
 </div>
 </section>
-<section id="instruction-dispatcher">
-<h2>3. Instruction Dispatcher<a class="headerlink" href="#instruction-dispatcher" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">ctrl_npu_dispatcher.sv</span></code> resolves Constant Cache pointer lookups
-(shape / size / scale), checks for address and resource hazards, and
-issues per-core control μops to GEMM, GEMV, CVO, and mem_dispatcher.</p>
-<div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-number">Listing 16 </span><span class="caption-text">hw/rtl/NPU_Controller/NPU_Control_Unit/ctrl_npu_dispatcher.sv</span><a class="headerlink" href="#id3" title="Link to this code">¶</a></div>
-<div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// `timeOUT_scale 1ns / 1ps</span>
-<span class="c1">// `include &quot;GEMM_Array.svh&quot;</span>
-<span class="c1">// `include &quot;npu_interfaces.svh&quot;</span>
-<span class="c1">// `include &quot;GLOBAL_CONST.svh&quot;</span>
-
-<span class="c1">// import isa_pkg::*;</span>
-
-<span class="c1">// module cu_npu_dispatcher (</span>
-<span class="c1">//     input  logic         clk,</span>
-<span class="c1">//     input  logic         rst_n,</span>
-<span class="c1">//     input  instruction_t IN_inst,</span>
-<span class="c1">//     input  logic         IN_valid,</span>
-<span class="c1">//     output logic         o_valid,</span>
-
-
-<span class="c1">//     // GEMV / GEMM controls</span>
-<span class="c1">//     output logic [3:0] OUT_activate_top,</span>
-<span class="c1">//     output logic [3:0] OUT_activate_lane,</span>
-<span class="c1">//     output logic       OUT_result_emax_align,</span>
-<span class="c1">//     output logic       OUT_result_accm,</span>
-<span class="c1">//     output logic       OUT_result_scale,</span>
-
-
-<span class="c1">//     // memcpy</span>
-<span class="c1">//     output memory_uop_t OUT_memcpy_cmd,</span>
-
-<span class="c1">//     // if INT group size?</span>
-<span class="c1">// );</span>
-
-<span class="c1">//   /*─────────────────────────────────────────────</span>
-<span class="c1">//   Lane activation bitmask</span>
-<span class="c1">//   bit[0]=lane1, bit[1]=lane2 ...</span>
-<span class="c1">//   ─────────────────────────────────────────────*/</span>
-<span class="c1">//   localparam logic [3:0] LANE_1 = 4&#39;b0001;</span>
-<span class="c1">//   localparam logic [3:0] LANE_2 = 4&#39;b0010;</span>
-<span class="c1">//   localparam logic [3:0] LANE_3 = 4&#39;b0100;</span>
-<span class="c1">//   localparam logic [3:0] LANE_4 = 4&#39;b1000;</span>
-
-<span class="c1">//   always_ff @(posedge clk) begin</span>
-<span class="c1">//     if (!rst_n) begin</span>
-<span class="c1">//       o_valid           &lt;= 1&#39;b0;</span>
-<span class="c1">//       OUT_activate_lane     &lt;= &#39;0;</span>
-<span class="c1">//       OUT_result_emax_align        &lt;= 1&#39;b0;</span>
-<span class="c1">//       OUT_result_accm              &lt;= 1&#39;b0;</span>
-<span class="c1">//       OUT_result_scale             &lt;= 1&#39;b0;</span>
-<span class="c1">//       OUT_memcpy_destination_queue &lt;= &#39;0;</span>
-<span class="c1">//       for (int i = 0; i &lt; `MAX_MATRIX_DIM; i++) OUT_memcpy_matrix_shape[i] &lt;= &#39;0;</span>
-<span class="c1">//     end else begin</span>
-
-<span class="c1">//       o_valid &lt;= 1&#39;b0;  // default : deassert every cycle</span>
-
-<span class="c1">//       if (IN_valid) begin</span>
-<span class="c1">//         case (IN_inst.opcode)</span>
-
-<span class="c1">//           OP_GEMV: begin</span>
-<span class="c1">//             o_valid &lt;= 1&#39;b1;</span>
-
-<span class="c1">//             if (IN_inst.cmd_chaining) begin</span>
-<span class="c1">//               // TODO: chaining logic</span>
-<span class="c1">//             end</span>
-<span class="c1">//             if (IN_inst.override) begin</span>
-<span class="c1">//               // TODO: override logic</span>
-<span class="c1">//             end</span>
-
-<span class="c1">//             // lane activation (OR mask, cumulative)</span>
-<span class="c1">//             case (IN_inst.payload.dotm.lane_idq)</span>
-<span class="c1">//               2&#39;b00: OUT_activate_lane &lt;= LANE_1;</span>
-<span class="c1">//               2&#39;b01: OUT_activate_lane &lt;= LANE_1 | LANE_2;</span>
-<span class="c1">//               2&#39;b10: OUT_activate_lane &lt;= LANE_1 | LANE_2 | LANE_3;</span>
-<span class="c1">//               2&#39;b11: OUT_activate_lane &lt;= LANE_1 | LANE_2 | LANE_3 | LANE_4;</span>
-<span class="c1">//               default: begin</span>
-<span class="c1">//                 o_valid &lt;= 1&#39;b0;  // unknown → drop + TODO: interrupt</span>
-<span class="c1">//               end</span>
-<span class="c1">//             endcase</span>
-
-<span class="c1">//             OUT_result_emax_align &lt;= IN_inst.payload.dotm.find_emax_align;</span>
-<span class="c1">//             OUT_result_accm       &lt;= IN_inst.payload.dotm.OUT_result_accm;</span>
-<span class="c1">//             // activate when added to ISA</span>
-<span class="c1">//             // OUT_result_scale      &lt;= IN_inst.payload.dotm.OUT_result_scale;</span>
-<span class="c1">//             OUT_activate_top[`TOP_GEMV] &lt;= `TRUE;</span>
-<span class="c1">//           end</span>
-
-<span class="c1">//           OP_GEMM: begin</span>
-<span class="c1">//             if (IN_inst.override) begin</span>
-<span class="c1">//               if (IN_inst.cmd_chaining) begin</span>
-<span class="c1">//                 // TODO</span>
-<span class="c1">//               end else begin</span>
-<span class="c1">//                 // TODO</span>
-<span class="c1">//               end</span>
-<span class="c1">//             end else begin</span>
-<span class="c1">//               if (IN_inst.cmd_chaining) begin</span>
-<span class="c1">//                 // TODO</span>
-<span class="c1">//               end else begin</span>
-<span class="c1">//                 o_valid &lt;= 1&#39;b1;</span>
-
-<span class="c1">//                 OUT_result_emax_align &lt;= IN_inst.payload.dotm.align;</span>
-<span class="c1">//                 OUT_result_accm       &lt;= IN_inst.payload.dotm.OUT_result_accm;</span>
-<span class="c1">//                 OUT_activate_top[`TOP_GEMV] &lt;= `TRUE;</span>
-<span class="c1">//               end</span>
-<span class="c1">//             end</span>
-
-<span class="c1">//           end</span>
-
-<span class="c1">//           OP_MEMCPY: begin</span>
-<span class="c1">//             if (IN_inst.override) begin</span>
-<span class="c1">//               if (IN_inst.cmd_chaining) begin</span>
-<span class="c1">//                 // accumulate matrix shape across chained instructions</span>
-<span class="c1">//                 OUT_memcpy_matrix_shape[IN_inst.payload.memcpy.dim_xyz]</span>
-<span class="c1">//                     &lt;= IN_inst.payload.memcpy.dim_x;</span>
-
-
-<span class="c1">//               end else begin</span>
-<span class="c1">//                 // chaining end → dispatch memcpy</span>
-<span class="c1">//                 o_valid           &lt;= 1&#39;b1;</span>
-<span class="c1">//                 OUT_memcpy_destination_queue &lt;= IN_inst.payload.memcpy.dest_queue;</span>
-
-<span class="c1">//                 case (IN_inst.payload.memcpy.dest_queue[3:2])</span>
-<span class="c1">//                   `MASKING_WEIGHT: begin</span>
-<span class="c1">//                     // TODO: → weight buffer</span>
-<span class="c1">//                   end</span>
-<span class="c1">//                   `MASKING_OUT_scale: begin</span>
-<span class="c1">//                     // TODO: ACP → OUT_result_scale cache</span>
-<span class="c1">//                   end</span>
-<span class="c1">//                   `MASKING_FMAP: begin</span>
-<span class="c1">//                     // TODO: ACP → find emax &amp; align → cache</span>
-<span class="c1">//                   end</span>
-<span class="c1">//                   default: o_valid &lt;= 1&#39;b0;  // undefined</span>
-<span class="c1">//                 endcase</span>
-<span class="c1">//               end</span>
-
-<span class="c1">//             end else begin</span>
-<span class="c1">//               // non-override memcpy</span>
-<span class="c1">//               // TODO</span>
-<span class="c1">//             end</span>
-
-<span class="c1">//             // Determine logic based on datatype and mask IN_inst.payload.memcpy.option_flags using bitwise AND (&amp;)</span>
-<span class="c1">//             if (IN_inst.payload.memcpy.datatype == `BF16) begin</span>
-<span class="c1">//                 // Example: BF16 processing mode</span>
-<span class="c1">//                 // Check if the 4th bit (ALIGN) is set to 1</span>
-<span class="c1">//                 if ((IN_inst.payload.memcpy.option_flags &amp; `MEMCPY_FLAG_BF16_ALIGN) != 4&#39;b0000) begin</span>
-<span class="c1">//                     OUT_align &lt;= `TRUE;</span>
-
-<span class="c1">//                     // Determine the alignment direction</span>
-<span class="c1">//                     if ((IN_inst.payload.memcpy.option_flags &amp; `MEMCPY_FLAG_BF16_ALIGN_V) != 4&#39;b0000) begin</span>
-<span class="c1">//                         OUT_align_dir &lt;= `ALIGN_VERTICAL;</span>
-<span class="c1">//                     end else if ((IN_inst.payload.memcpy.option_flags &amp; `MEMCPY_FLAG_BF16_ALIGN_H) != 4&#39;b0000) begin</span>
-<span class="c1">//                         OUT_align_dir &lt;= `ALIGN_HORIZONTAL;</span>
-<span class="c1">//                     end else begin</span>
-<span class="c1">//                         // Default direction if neither V nor H is specified</span>
-<span class="c1">//                     end</span>
-
-<span class="c1">//                 end else begin</span>
-<span class="c1">//                     // If ALIGN flag is missing</span>
-<span class="c1">//                     OUT_align &lt;= `FALSE;</span>
-<span class="c1">//                 end</span>
-<span class="c1">//             end else begin</span>
-<span class="c1">//                 // Example: INT processing mode</span>
-<span class="c1">//                 if ((IN_inst.payload.memcpy.option_flags &amp; `MEMCPY_OPT_INT_IS_SCALED) != 4&#39;b0000) begin</span>
-<span class="c1">//                     // Logic for scaled INT</span>
-<span class="c1">//                     OUT_align &lt;= `TRUE; // (Adjust according to your actual spec)</span>
-<span class="c1">//                 end else begin</span>
-<span class="c1">//                     OUT_align &lt;= `FALSE;</span>
-<span class="c1">//                 end</span>
-<span class="c1">//             end</span>
-
-<span class="c1">//             OUT_datatype &lt;= IN_inst.payload.memcpy.datatype;</span>
-
-<span class="c1">//           end</span>
-<span class="c1">//           default: o_valid &lt;= 1&#39;b0;  // unknown opcode → drop</span>
-<span class="c1">//         endcase</span>
-<span class="c1">//       end</span>
-<span class="c1">//     end</span>
-<span class="c1">//   end</span>
-
-<span class="c1">// endmodule</span>
-</pre></div>
-</div>
-</div>
-</section>
 <section id="global-scheduler">
-<h2>4. Global Scheduler<a class="headerlink" href="#global-scheduler" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">Global_Scheduler.sv</span></code> tracks in-flight async instructions, maintains
+<h2>3. Global Scheduler<a class="headerlink" href="#global-scheduler" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Global_Scheduler.sv</span></code> receives decoded instruction fields, emits
+per-core control μops, tracks in-flight async instructions, maintains
 the dependency scoreboard, and gates new dispatches when a hazard is
 detected.</p>
-<div class="literal-block-wrapper docutils container" id="id4">
-<div class="code-block-caption"><span class="caption-number">Listing 17 </span><span class="caption-text">hw/rtl/NPU_Controller/Global_Scheduler.sv</span><a class="headerlink" href="#id4" title="Link to this code">¶</a></div>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-number">Listing 16 </span><span class="caption-text">hw/rtl/NPU_Controller/Global_Scheduler.sv</span><a class="headerlink" href="#id3" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="no">`timescale</span><span class="w"> </span><span class="mi">1</span><span class="n">ns</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1</span><span class="n">ps</span>
 <span class="no">`include</span><span class="w"> </span><span class="s">&quot;GEMM_Array.svh&quot;</span>
 <span class="no">`include</span><span class="w"> </span><span class="s">&quot;GLOBAL_CONST.svh&quot;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">isa_pkg::*</span><span class="p">;</span>
 
-<span class="c1">// ===| Global Scheduler |========================================================</span>
-<span class="c1">// Translates decoded VLIW instructions into engine micro-ops.</span>
-<span class="c1">//</span>
-<span class="c1">// Single always_ff drives each output to avoid multiple-driver conflicts.</span>
-<span class="c1">// Priority for OUT_LOAD_uop: GEMM &gt; GEMV &gt; MEMCPY &gt; CVO (one active per cycle).</span>
-<span class="c1">//</span>
-<span class="c1">// OUT_STORE_uop  : registered at issue time; mem_dispatcher uses it to initiate</span>
-<span class="c1">//                  result writeback after the engine signals completion.</span>
-<span class="c1">// OUT_sram_rd_start : one-cycle pulse when a GEMM or GEMV load is dispatched,</span>
-<span class="c1">//                     triggering preprocess_fmap to begin broadcasting from cache.</span>
+<span class="c1">// ===| Module: Global_Scheduler — VLIW → engine micro-op translator |============</span>
+<span class="c1">// Purpose      : Decode 60-bit VLIW body and emit per-engine uops for</span>
+<span class="c1">//                GEMM / GEMV / MEMCPY / MEMSET / CVO with deterministic</span>
+<span class="c1">//                priority.</span>
+<span class="c1">// Spec ref     : pccx v002 §3 (ISA decode), §4.2 (uop semantics).</span>
+<span class="c1">// Clock        : clk_core @ 400 MHz.</span>
+<span class="c1">// Reset        : rst_n_core active-low.</span>
+<span class="c1">// Latency      : 1-cycle registered uop output after IN_*_op_x64_valid pulse.</span>
+<span class="c1">// Throughput   : 1 uop/cycle per output channel; channels are mutually</span>
+<span class="c1">//                exclusive in time per ISA serial-issue semantics.</span>
+<span class="c1">// Priority     : OUT_LOAD_uop arbitration order:</span>
+<span class="c1">//                  GEMM &gt; GEMV &gt; MEMCPY &gt; CVO  (single-driver always_ff).</span>
+<span class="c1">// Outputs      :</span>
+<span class="c1">//   OUT_GEMM_uop / OUT_GEMV_uop / OUT_CVO_uop / OUT_mem_set_uop</span>
+<span class="c1">//                  : registered at issue cycle, hold until next valid.</span>
+<span class="c1">//   OUT_STORE_uop  : registered at issue; mem_dispatcher uses it to initiate</span>
+<span class="c1">//                    result writeback after engine completion handshake.</span>
+<span class="c1">//   OUT_sram_rd_start : one-cycle pulse on GEMM/GEMV LOAD dispatch — starts</span>
+<span class="c1">//                       preprocess_fmap broadcast from L1 cache.</span>
+<span class="c1">// Reset state  : all uops zeroed; OUT_sram_rd_start = 0.</span>
+<span class="c1">// Errors       : none surfaced (out-of-range fields wrap to MEMCPY default).</span>
+<span class="c1">// Counters     : none.</span>
+<span class="c1">// Assertions   : (Stage C) exactly-zero-or-one IN_*_op_x64_valid per cycle;</span>
+<span class="c1">//                OUT_sram_rd_start is one-cycle pulse only.</span>
 <span class="c1">// ===============================================================================</span>
 
 <span class="k">module</span><span class="w"> </span><span class="n">Global_Scheduler</span><span class="w"> </span><span class="p">#()</span><span class="w"> </span><span class="p">(</span>
@@ -1058,7 +914,9 @@ detected.</p>
 </div>
 <div class="note admonition">
 <p class="admonition-title">Last verified against</p>
-<p>Commit <code class="docutils literal notranslate"><span class="pre">773bd82</span></code> &#64; <code class="docutils literal notranslate"><span class="pre">pccxai/pccx-FPGA-NPU-LLM-kv260</span></code> (2026-04-21).</p>
+<p>Current public <code class="docutils literal notranslate"><span class="pre">pccx-FPGA-NPU-LLM-kv260</span></code> <code class="docutils literal notranslate"><span class="pre">main</span></code> clone used by the
+documentation CI. Controller source references should stay aligned with
+files present in that public RTL tree.</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -1107,7 +965,7 @@ detected.</p>
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2026-05-01</div>
+              Last updated on 2026-05-03</div>
           </div>
           <div class="right-details">
             <div class="icons">
@@ -1137,8 +995,7 @@ detected.</p>
 <li><a class="reference internal" href="#">NPU Controller Modules</a><ul>
 <li><a class="reference internal" href="#controller-top">1. Controller Top</a></li>
 <li><a class="reference internal" href="#instruction-decoder">2. Instruction Decoder</a></li>
-<li><a class="reference internal" href="#instruction-dispatcher">3. Instruction Dispatcher</a></li>
-<li><a class="reference internal" href="#global-scheduler">4. Global Scheduler</a></li>
+<li><a class="reference internal" href="#global-scheduler">3. Global Scheduler</a></li>
 </ul>
 </li>
 </ul>

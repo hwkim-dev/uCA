@@ -1,0 +1,223 @@
+{
+  "artifactRefs": [
+    {
+      "artifactId": "launcher_status_contract_fixture",
+      "artifactKind": "json_fixture",
+      "reference": "contracts/fixtures/launcher-ide-status.placeholder.json",
+      "referenceKind": "read_only_local_artifact_reference"
+    },
+    {
+      "artifactId": "model_runtime_descriptor_fixture",
+      "artifactKind": "json_fixture",
+      "reference": "contracts/fixtures/model-runtime-descriptor.gemma3n-e4b-kv260-placeholder.json",
+      "referenceKind": "read_only_local_artifact_reference"
+    }
+  ],
+  "consumer": {
+    "boundary": "cli_core_future_consumer",
+    "id": "pccx-lab",
+    "role": "pccx_lab_future_consumer",
+    "state": "planned"
+  },
+  "createdAt": "1970-01-01T00:00:00Z",
+  "diagnostics": [
+    {
+      "category": "configuration",
+      "diagnosticId": "launcher_target_not_configured",
+      "evidenceState": "evidence_required",
+      "redactionState": "sanitized_summary",
+      "relatedContractRefs": [
+        "pccx.launcherIdeStatus.v0"
+      ],
+      "severity": "warning",
+      "source": "pccx-llm-launcher",
+      "suggestedNextAction": "Keep the handoff read-only until target configuration evidence exists.",
+      "summary": "The handoff records a placeholder target state only.",
+      "title": "Launcher target is not configured"
+    },
+    {
+      "category": "model_descriptor",
+      "diagnosticId": "gemma3n_e4b_descriptor_reference_only",
+      "evidenceState": "evidence_required",
+      "redactionState": "sanitized_summary",
+      "relatedContractRefs": [
+        "pccx.modelDescriptor.v0"
+      ],
+      "severity": "info",
+      "source": "pccx-llm-launcher",
+      "suggestedNextAction": "Collect descriptor and asset evidence before runtime claims.",
+      "summary": "Gemma 3N E4B is represented as descriptor_ref_only with no bundled assets.",
+      "title": "Model descriptor is referenced by id"
+    },
+    {
+      "category": "runtime_descriptor",
+      "diagnosticId": "kv260_runtime_placeholder_not_configured",
+      "evidenceState": "evidence_required",
+      "redactionState": "sanitized_summary",
+      "relatedContractRefs": [
+        "pccx.runtimeDescriptor.v0",
+        "pccx.modelRuntimeCompatibility.v0"
+      ],
+      "severity": "blocked",
+      "source": "pccx-llm-launcher",
+      "suggestedNextAction": "Require pccx-lab/core evidence before enabling runtime integration.",
+      "summary": "The runtime descriptor is planned, unavailable, and not configured.",
+      "title": "KV260 runtime remains placeholder"
+    },
+    {
+      "category": "evidence",
+      "diagnosticId": "hardware_and_measurement_evidence_missing",
+      "evidenceState": "not_measured",
+      "redactionState": "sanitized_summary",
+      "relatedContractRefs": [
+        "pccx.modelRuntimeCompatibility.v0"
+      ],
+      "severity": "blocked",
+      "source": "pccx-llm-launcher",
+      "suggestedNextAction": "Treat all hardware and performance claims as not measured.",
+      "summary": "Compatibility stays provisional until checked evidence exists.",
+      "title": "Hardware and measurement evidence are missing"
+    },
+    {
+      "category": "safety",
+      "diagnosticId": "read_only_privacy_boundary",
+      "evidenceState": "placeholder",
+      "redactionState": "sanitized_summary",
+      "relatedContractRefs": [
+        "pccx.diagnosticsHandoff.v0"
+      ],
+      "severity": "info",
+      "source": "pccx-llm-launcher",
+      "suggestedNextAction": "Keep future consumer behavior explicit and opt-in.",
+      "summary": "The fixture carries no telemetry, upload, write-back, raw logs, prompts, or private paths.",
+      "title": "Read-only privacy boundary is active"
+    }
+  ],
+  "evidenceRefs": [
+    {
+      "evidenceId": "model_descriptor_evidence",
+      "referenceKind": "descriptor_ref_only",
+      "state": "evidence_required"
+    },
+    {
+      "evidenceId": "kv260_hardware_evidence",
+      "referenceKind": "descriptor_ref_only",
+      "state": "evidence_required"
+    },
+    {
+      "evidenceId": "measurement_evidence",
+      "referenceKind": "descriptor_ref_only",
+      "state": "not_measured"
+    }
+  ],
+  "handoffId": "launcher_diagnostics_handoff_gemma3n_e4b_kv260_placeholder",
+  "handoffKind": "read_only_handoff",
+  "issueRefs": [
+    "pccxai/pccx-llm-launcher#5",
+    "pccxai/pccx-llm-launcher#3",
+    "pccxai/pccx-llm-launcher#12"
+  ],
+  "launcherStatusRef": {
+    "coupling": "data_reference_only",
+    "fixture": "contracts/fixtures/launcher-ide-status.placeholder.json",
+    "operationId": "pccxlab.diagnostics.handoff",
+    "referenceKind": "descriptor_ref_only",
+    "schemaVersion": "pccx.launcherIdeStatus.v0"
+  },
+  "limitations": [
+    "Data-only placeholder; no pccx-lab execution is performed.",
+    "No launcher runtime execution, model execution, provider call, or network call is performed.",
+    "No KV260 hardware access is performed.",
+    "No telemetry, automatic upload, or auto write-back is included.",
+    "No raw full logs, prompts, source code, private paths, secrets, tokens, provider configuration, generated blobs, or model weight paths are included.",
+    "The contract is not a versioned compatibility commitment."
+  ],
+  "modelDescriptorRef": {
+    "fixture": "contracts/fixtures/model-runtime-descriptor.gemma3n-e4b-kv260-placeholder.json",
+    "modelId": "gemma3n_e4b_placeholder",
+    "referenceKind": "descriptor_ref_only",
+    "schemaVersion": "pccx.modelDescriptor.v0"
+  },
+  "privacyFlags": {
+    "automaticUpload": false,
+    "generatedBlobsIncluded": false,
+    "modelWeightPathsIncluded": false,
+    "privatePathsIncluded": false,
+    "providerConfigsIncluded": false,
+    "rawFullLogsIncluded": false,
+    "secretsIncluded": false,
+    "telemetryPolicy": "no_telemetry",
+    "tokensIncluded": false,
+    "uploadPolicy": "no_user_data_upload",
+    "userPromptsIncluded": false,
+    "userSourceCodeIncluded": false
+  },
+  "producer": {
+    "execution": "data_only",
+    "id": "pccx-llm-launcher",
+    "role": "launcher_generated_summary"
+  },
+  "runtimeDescriptorRef": {
+    "fixture": "contracts/fixtures/model-runtime-descriptor.gemma3n-e4b-kv260-placeholder.json",
+    "referenceKind": "descriptor_ref_only",
+    "runtimeId": "kv260_pccx_placeholder",
+    "schemaVersion": "pccx.runtimeDescriptor.v0"
+  },
+  "safetyFlags": {
+    "automaticUpload": false,
+    "contractKind": "read_only_handoff",
+    "dataOnly": true,
+    "descriptorPolicy": "descriptor_ref_only",
+    "evidencePolicy": "evidence_required",
+    "executesLauncher": false,
+    "executesPccxLab": false,
+    "hardwarePolicy": "no_hardware_access",
+    "kv260Access": false,
+    "lspImplemented": false,
+    "marketplaceFlow": false,
+    "mcpServerImplemented": false,
+    "modelExecution": false,
+    "networkCalls": false,
+    "providerCalls": false,
+    "readOnly": true,
+    "runtimeExecution": false,
+    "runtimePolicy": "no_runtime_execution",
+    "shellExecution": false,
+    "telemetry": false,
+    "touchesHardware": false,
+    "writeBack": false,
+    "writeBackPolicy": "no_auto_writeback"
+  },
+  "schemaVersion": "pccx.diagnosticsHandoff.v0",
+  "sessionId": "placeholder_session",
+  "targetDevice": {
+    "accessState": "no_hardware_access",
+    "configurationState": "not_configured",
+    "id": "kv260_pccx_placeholder",
+    "label": "KV260 PCCX placeholder"
+  },
+  "targetKind": "kv260",
+  "transport": [
+    {
+      "direction": "launcher_to_pccx_lab_future_consumer",
+      "execution": "no_pccx_lab_execution",
+      "mode": "read_only_handoff",
+      "state": "sketch",
+      "transportKind": "json_file"
+    },
+    {
+      "direction": "launcher_to_pccx_lab_future_consumer",
+      "execution": "no_pccx_lab_execution",
+      "mode": "read_only_handoff",
+      "state": "sketch",
+      "transportKind": "stdout_json"
+    },
+    {
+      "direction": "launcher_to_pccx_lab_future_consumer",
+      "execution": "no_pccx_lab_execution",
+      "mode": "read_only_handoff",
+      "state": "sketch",
+      "transportKind": "read_only_local_artifact_reference"
+    }
+  ]
+}

@@ -15,7 +15,7 @@
 <meta name="description" content="NPU_top.sv is the top integration wrapper. It exposes: S_AXIL_CTRL — AXI-Lite control (HPM port, 250 MHz), S_AXI_HP{0,1}_WEIGHT — 128-bit weight streams for the GEMM systolic array, S_AXI_HP{2,3}_W..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"NPU Top-Level","name":"NPU Top-Level","url":"https://pccxai.github.io/pccx/en/docs/v002/RTL/npu_top.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/en/docs/v002/RTL/npu_top.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-01","dateModified":"2026-05-01","description":"pccx documentation page: NPU Top-Level. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="Compute Core Modules" href="compute_cores.html"><link rel="prev" title="ISA Type Package" href="isa_pkg.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"NPU Top-Level","name":"NPU Top-Level","url":"https://pccxai.github.io/pccx/en/docs/v002/RTL/npu_top.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/en/docs/v002/RTL/npu_top.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-03","dateModified":"2026-05-03","description":"pccx documentation page: NPU Top-Level. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="Compute Core Modules" href="compute_cores.html"><link rel="prev" title="ISA Type Package" href="isa_pkg.html">
         <link rel="canonical" href="https://pccxai.github.io/pccx/docs/v002/RTL/npu_top.html">
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
@@ -431,7 +431,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tools</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://pccxai.github.io/pccx/en/lab/">pccx-lab — Simulator &amp; AI Profiler</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pccxai.github.io/pccx/en/lab/">pccx-lab — Verification Lab</a></li>
 </ul>
 
 </div>
@@ -502,21 +502,35 @@ here and connected through the shared L2 cache bus.</p>
 <span class="kn">import</span><span class="w"> </span><span class="nn">vec_core_pkg::*</span><span class="p">;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">bf16_math_pkg::*</span><span class="p">;</span>
 
-<span class="c1">// ===| NPU Top |=================================================================</span>
-<span class="c1">// Target: Kria KV260 @ 400 MHz</span>
+<span class="c1">// ===| Module: NPU_top — pccx v002 SoC integration wrapper |====================</span>
+<span class="c1">// Purpose      : Top-level integration of all v002 NPU subsystems on KV260.</span>
+<span class="c1">// Spec ref     : pccx v002 §1 (architecture overview), §6 (KV260 target).</span>
+<span class="c1">// Target       : Xilinx Kria KV260 (xck26-sfvc784-2LV-c), ZU5EV.</span>
+<span class="c1">// Clock        : clk_core @ 400 MHz (compute), clk_axi @ 250 MHz (HP/AXIL).</span>
+<span class="c1">// Reset        : rst_n_core / rst_axi_n active-low. Synchronous release.</span>
+<span class="c1">// Soft-clear   : i_clear (active-high, sync) — combined with reset wherever</span>
+<span class="c1">//                state is latched. See CLAUDE.md §3 reset convention.</span>
+<span class="c1">// Throughput   : Steady-state, dual-lane W4A8 systolic = 32 × 32 × 2 MAC/clk.</span>
+<span class="c1">// Backpressure : HP weight FIFOs (mem_HP_buffer) provide CDC + skid; ACP fmap</span>
+<span class="c1">//                FIFO (preprocess_fmap) holds at boundary when broadcast stalls.</span>
 <span class="c1">//</span>
 <span class="c1">// Architecture V2 (SystemVerilog Interface Version):</span>
-<span class="c1">//   HPC0 / HPC1  : 256-bit Feature Map caching bus (ACP port).</span>
-<span class="c1">//   HP0  ~ HP3   : High-throughput Weight streaming (128-bit each).</span>
-<span class="c1">//   HPM  (MMIO)  : Centralised control &amp; VLIW instruction issuing (AXI-Lite).</span>
-<span class="c1">//   ACP           : Coherent Result Output.</span>
+<span class="c1">//   HPC0 / HPC1 : 256-bit Feature Map caching bus (ACP port).</span>
+<span class="c1">//   HP0  ~ HP3  : High-throughput Weight streaming (128-bit each).</span>
+<span class="c1">//   HPM  (MMIO) : Centralised control &amp; VLIW instruction issuing (AXI-Lite).</span>
+<span class="c1">//   ACP         : Coherent Result Output.</span>
 <span class="c1">//</span>
-<span class="c1">// Data paths:</span>
+<span class="c1">// Data paths (one active per ISA opcode at a time):</span>
 <span class="c1">//   OP_GEMM  : ACP_FMAP → preprocess_fmap → systolic → normalizer → packer → ACP_RESULT</span>
 <span class="c1">//   OP_GEMV  : ACP_FMAP → preprocess_fmap → GEMV_top (HP2/3 weights)</span>
 <span class="c1">//   OP_MEMCPY: ACP DDR4 ↔ L2 (mem_dispatcher via ACP)</span>
 <span class="c1">//   OP_MEMSET: Shape constant RAM write (mem_dispatcher)</span>
 <span class="c1">//   OP_CVO   : L2 → CVO_top → L2 (mem_dispatcher ↔ CVO stream bridge)</span>
+<span class="c1">//</span>
+<span class="c1">// Status word (mmio_npu_stat[31:0], surfaced to AXIL_STAT_OUT):</span>
+<span class="c1">//   bit 0 : BUSY  = fifo_full | cvo_busy | cvo_disp_busy</span>
+<span class="c1">//   bit 1 : DONE  = CVO operation complete pulse (one cycle)</span>
+<span class="c1">//   bit 31:2 reserved.</span>
 <span class="c1">// ===============================================================================</span>
 
 <span class="k">module</span><span class="w"> </span><span class="n">NPU_top</span><span class="w"> </span><span class="p">(</span>
@@ -693,7 +707,7 @@ here and connected through the shared L2 cache bus.</p>
 <span class="w">  </span><span class="c1">// ===| v002 dual-lane weight unpack |=========================================</span>
 <span class="w">  </span><span class="c1">// HP0 / HP1 each carry a 128-bit AXIS word that holds 32 INT4 weights.</span>
 <span class="w">  </span><span class="c1">// Slice each into a 32-element INT4 array for the systolic engine.</span>
-<span class="w">  </span><span class="k">localparam</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">WEIGHT_CNT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">`HP_PORT_SINGLE_WIDTH</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="no">`INT4_WIDTH</span><span class="p">;</span><span class="w">  </span><span class="c1">// 32</span>
+<span class="w">  </span><span class="k">localparam</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">WEIGHT_CNT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">`HP_SINGLE_WIDTH</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="no">`INT4_WIDTH</span><span class="p">;</span><span class="w">  </span><span class="c1">// 32</span>
 <span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="no">`INT4_WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">hp0_weight_int4</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="n">WEIGHT_CNT</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
 <span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="no">`INT4_WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">hp1_weight_int4</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="n">WEIGHT_CNT</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
 <span class="w">  </span><span class="k">genvar</span><span class="w"> </span><span class="n">wi</span><span class="p">;</span>
@@ -933,7 +947,7 @@ here and connected through the shared L2 cache bus.</p>
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2026-05-01</div>
+              Last updated on 2026-05-03</div>
           </div>
           <div class="right-details">
             <div class="icons">

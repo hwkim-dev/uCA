@@ -245,7 +245,7 @@
 <h1>시작하기<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
 <blockquote>
 <div><p>pccx-lab 에 처음 입장하는 사용자를 위한 5 분 튜토리얼.
-VS Code <code class="docutils literal notranslate"><span class="pre">walkthroughs</span></code> 계약을 따라 3 단계로 구성됩니다:
+에디터형 워크스루 형식의 3 단계로 구성됩니다:
 앱 실행 → 샘플 <code class="docutils literal notranslate"><span class="pre">.pccx</span></code> 로드 → Flame Graph + Waveform 열기.</p>
 </div></blockquote>
 <section id="id2">
@@ -272,10 +272,10 @@ npx<span class="w"> </span>tauri<span class="w"> </span>dev
 <li><p><strong>타이틀 바 + 메뉴 바</strong> — File / Edit / View / Trace / Analysis / Verify / Run / Tools / Window / Help</p></li>
 <li><p><strong>탭 스트립</strong> — Timeline / Flame Graph / Waveform / System Simulator /
 Memory Dump / …</p></li>
-<li><p><strong>AI Copilot 패널</strong> (오른쪽 도킹, `Ctrl+`` 로 토글)</p></li>
+<li><p><strong>Workflow Assistant 패널</strong> (오른쪽 도킹, `Ctrl+`` 로 토글)</p></li>
 <li><p><strong>Bottom Panel</strong> (Log / Console / Telemetry, <code class="docutils literal notranslate"><span class="pre">Ctrl+J</span></code> 로 토글)</p></li>
 </ul>
-<p>우측 상단 활동 바에서 Copilot 및 Telemetry 토글이 있습니다.
+<p>우측 상단 활동 바에서 도우미 및 Telemetry 토글이 있습니다.
 모든 아이콘 버튼에는 <code class="docutils literal notranslate"><span class="pre">aria-label</span></code> 이 부여되어 있어 스크린 리더로
 사용할 수 있습니다 (WCAG 2.2 SC 2.1.1 / 2.4.3).</p>
 </section>
@@ -290,7 +290,7 @@ Memory Dump / …</p></li>
 성공 시 상단 탭 스트립 오른쪽에 <code class="docutils literal notranslate"><span class="pre">trace</span> <span class="pre">loaded</span></code> 배지가 초록색으로
 표시됩니다.</p></li>
 </ol>
-<p>실제 pccx-FPGA 시뮬레이션 결과를 보려면 다음 경로를 선택하십시오:</p>
+<p>로컬 pccx-FPGA 시뮬레이션 결과를 보려면 다음 경로를 선택하십시오:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">../</span><span class="n">pccx</span><span class="o">-</span><span class="n">FPGA</span><span class="o">-</span><span class="n">NPU</span><span class="o">-</span><span class="n">LLM</span><span class="o">-</span><span class="n">kv260</span><span class="o">/</span><span class="n">hw</span><span class="o">/</span><span class="n">sim</span><span class="o">/</span><span class="n">fixtures</span><span class="o">/</span><span class="n">smoke</span><span class="o">.</span><span class="n">pccx</span>
 </pre></div>
 </div>
@@ -309,7 +309,7 @@ Memory Dump / …</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Ctrl</span> <span class="pre">+</span> <span class="pre">스크롤</span></code> — 시간축 줌 인/아웃</p></li>
 <li><p>드래그 — 팬</p></li>
 <li><p><strong>Find Bottleneck</strong> 버튼 — <code class="docutils literal notranslate"><span class="pre">detect_bottlenecks</span></code> IPC 를 호출해 가장
-혼잡한 창을 자동으로 찾아 AI 권장사항을 표시</p></li>
+혼잡한 창을 자동으로 찾아 로컬 권장사항을 표시</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Ctrl</span> <span class="pre">+</span> <span class="pre">Shift</span> <span class="pre">+</span> <span class="pre">D</span></code> — 두 번째 런과 비교하는 diff 모드 토글</p></li>
 </ul>
 </section>

@@ -200,6 +200,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../modules/overview.html">Module Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../modules/node-editor.html">Node Editor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CLI_CORE_BOUNDARY.html">pccx-lab CLI/core boundary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CLI_BOUNDARY_EXAMPLES.html">pccx-lab CLI boundary examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DIAGNOSTICS_HANDOFF_CONSUMER.html">Launcher Diagnostics Handoff Consumer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../design/rationale.html">Design Rationale</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../design/phase1_crate_split.html">Phase 1 — Workspace / Crate Split Proposal</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../design/phase2_intellisense.html">Phase 2 — IntelliSense-Level Intelligence</a></li>
@@ -250,7 +253,7 @@
           <section id="pccx-lab-user-guide">
 <h1>pccx-lab User Guide<a class="headerlink" href="#pccx-lab-user-guide" title="Link to this heading">¶</a></h1>
 <p><strong>Version</strong>: pccx v002<br />
-<strong>Target Hardware</strong>: Xilinx KV260 (ZU5EV)<br />
+<strong>Target Architecture</strong>: pccx v002 systolic-array NPU
 <strong>Audience</strong>: Hardware Engineers, RTL Designers, Verification Engineers</p>
 <hr class="docutils" />
 <section id="table-of-contents">
@@ -280,7 +283,7 @@
 <li><p><a class="reference internal" href="#6-verification-suite"><span class="xref myst">Verification Suite</span></a></p></li>
 <li><p><a class="reference internal" href="#7-report-generation"><span class="xref myst">Report Generation</span></a></p></li>
 <li><p><a class="reference internal" href="#8-scenario-flow"><span class="xref myst">Scenario Flow</span></a></p></li>
-<li><p><a class="reference internal" href="#9-ai-copilot"><span class="xref myst">AI Copilot</span></a></p></li>
+<li><p><a class="reference internal" href="#9-workflow-assistant"><span class="xref myst">Workflow Assistant</span></a></p></li>
 <li><p><a class="reference internal" href="#10-keyboard-shortcuts"><span class="xref myst">Keyboard Shortcuts</span></a></p></li>
 <li><p><a class="reference internal" href="#11-theme-and-localization"><span class="xref myst">Theme and Localization</span></a></p></li>
 <li><p><a class="reference internal" href="#12-cli-tools"><span class="xref myst">CLI Tools</span></a></p></li>
@@ -294,8 +297,8 @@
 <hr class="docutils" />
 <section id="introduction">
 <h2>1. Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
-<p>pccx-lab is a Tauri v2 desktop application for NPU (Neural Processing Unit) architecture profiling, verification, and development. It consumes <code class="docutils literal notranslate"><span class="pre">.pccx</span></code> binary traces emitted by the pccx-FPGA-NPU-LLM-kv260 xsim testbench suite and presents them through an integrated analysis environment combining cycle-accurate timing visualization, hardware block diagram simulation, UVM-integrated verification, and AI-assisted RTL development.</p>
-<p>The primary target hardware is the <strong>Xilinx KV260 (ZU5EV)</strong> FPGA platform running the pccx v002 systolic array architecture. pccx-lab serves as the single workbench for the full NPU development loop: trace ingestion, performance diagnosis, RTL editing, functional verification, and report generation.</p>
+<p>pccx-lab is a Tauri v2 desktop application for NPU (Neural Processing Unit) architecture profiling, verification, and development. It consumes <code class="docutils literal notranslate"><span class="pre">.pccx</span></code> binary traces emitted by the pccx testbench suite and presents them through an integrated analysis environment combining cycle-accurate timing visualization, hardware block diagram simulation, UVM-integrated verification, and bounded RTL authoring helpers.</p>
+<p>The target architecture category is the pccx v002 systolic array. pccx-lab serves as a workbench for trace ingestion, performance diagnosis, RTL editing, functional verification, and report generation. Hardware execution, provider calls, and launcher or editor runtime bridges remain outside the CLI/core workflow boundary described in this guide.</p>
 <section id="key-capabilities">
 <h3>Key Capabilities<a class="headerlink" href="#key-capabilities" title="Link to this heading">¶</a></h3>
 <div class="table-wrapper colwidths-auto docutils container">
@@ -327,8 +330,8 @@
 <tr class="row-even"><td><p>Report generation</p></td>
 <td><p>Configurable PDF reports auto-populated from trace data</p></td>
 </tr>
-<tr class="row-odd"><td><p>AI assistance</p></td>
-<td><p>Context-aware bottleneck analysis and UVM sequence generation</p></td>
+<tr class="row-odd"><td><p>Authoring assistance</p></td>
+<td><p>Context-aware bottleneck analysis and UVM sequence scaffolding</p></td>
 </tr>
 </tbody>
 </table>
@@ -361,7 +364,7 @@
 <td><p>X11 session (Wayland compositing is not supported; see §2.4)</p></td>
 </tr>
 <tr class="row-even"><td><p>Hardware</p></td>
-<td><p>KV260 (ZU5EV) for live trace generation; pre-recorded <code class="docutils literal notranslate"><span class="pre">.pccx</span></code> files may be loaded on any host</p></td>
+<td><p>Pre-recorded <code class="docutils literal notranslate"><span class="pre">.pccx</span></code> files may be loaded on any host; hardware trace capture is outside the CLI/core boundary</p></td>
 </tr>
 </tbody>
 </table>
@@ -490,7 +493,7 @@ npm<span class="w"> </span>run<span class="w"> </span>tauri<span class="w"> </sp
 </section>
 <section id="panel-docks">
 <h3>3.4 Panel Docks<a class="headerlink" href="#panel-docks" title="Link to this heading">¶</a></h3>
-<p>Three dockable panel positions are available: left dock, right dock, and bottom dock. The AI Copilot panel (Section 9) may be docked to any of these positions. The bottom dock hosts the Log, Console, and Live Telemetry sub-panels.</p>
+<p>Three dockable panel positions are available: left dock, right dock, and bottom dock. The Workflow Assistant panel (Section 9) may be docked to any of these positions. The bottom dock hosts the Log, Console, and Live Telemetry sub-panels.</p>
 </section>
 <section id="status-bar">
 <h3>3.5 Status Bar<a class="headerlink" href="#status-bar" title="Link to this heading">¶</a></h3>
@@ -505,7 +508,7 @@ npm<span class="w"> </span>run<span class="w"> </span>tauri<span class="w"> </sp
 </section>
 <section id="activity-bar">
 <h3>3.6 Activity Bar<a class="headerlink" href="#activity-bar" title="Link to this heading">¶</a></h3>
-<p>Two toggle buttons on the right edge of the window control the AI Copilot panel visibility and the Live Telemetry panel visibility.</p>
+<p>Two toggle buttons on the right edge of the window control the Workflow Assistant panel visibility and the Live Telemetry panel visibility.</p>
 </section>
 </section>
 <hr class="docutils" />
@@ -637,7 +640,7 @@ npm<span class="w"> </span>run<span class="w"> </span>tauri<span class="w"> </sp
 <section id="system-simulator">
 <h3>4.3 System Simulator<a class="headerlink" href="#system-simulator" title="Link to this heading">¶</a></h3>
 <p><img alt="System Simulator view" src="../_images/03-system-simulator.png" /></p>
-<p>The System Simulator provides an interactive hardware model of the full pccx v002 KV260 ZU5EV module hierarchy.</p>
+<p>The System Simulator provides an interactive hardware model of the pccx v002 module hierarchy.</p>
 <section id="module-hierarchy-panel-left">
 <h4>Module Hierarchy Panel (Left)<a class="headerlink" href="#module-hierarchy-panel-left" title="Link to this heading">¶</a></h4>
 <p>The left panel lists all modules in the pccx v002 design hierarchy as a collapsible tree. Selecting a module in the tree highlights it in the block diagram and populates the Inspector panel.</p>
@@ -728,7 +731,7 @@ npm<span class="w"> </span>run<span class="w"> </span>tauri<span class="w"> </sp
 <section id="roofline-analysis">
 <h3>4.7 Roofline Analysis<a class="headerlink" href="#roofline-analysis" title="Link to this heading">¶</a></h3>
 <p>The Roofline view plots operations from the loaded trace on the standard roofline model: arithmetic intensity (operations per byte transferred) on the horizontal axis and achieved throughput (operations per second) on the vertical axis.</p>
-<p>The roofline ceiling and memory bandwidth ridge point are derived from the KV260 ZU5EV hardware parameters. Each kernel or operation segment from the trace appears as a labeled data point. Points below the memory bandwidth line are classified as <strong>memory-bound</strong>; points approaching the compute ceiling are classified as <strong>compute-bound</strong>.</p>
+<p>The roofline ceiling and memory bandwidth ridge point are derived from configured architecture parameters. Each kernel or operation segment from the trace appears as a labeled data point. Points below the memory bandwidth line are classified as <strong>memory-bound</strong>; points approaching the compute ceiling are classified as <strong>compute-bound</strong>.</p>
 </section>
 </section>
 <hr class="docutils" />
@@ -771,7 +774,7 @@ npm<span class="w"> </span>run<span class="w"> </span>tauri<span class="w"> </sp
 </tbody>
 </table>
 </div>
-<p><strong>Ask AI</strong>: Opens the AI Copilot panel pre-focused on code generation for the current file context. The copilot receives the visible editor content as context.</p>
+<p><strong>Draft SV</strong>: Opens the local draft helper for the current file context. The helper stays inside the GUI and does not call an external provider.</p>
 <p><strong>Run SV Test</strong>: Invokes the integrated simulation console directly from the editor. Compilation errors are reported inline as Monaco editor markers.</p>
 <p><strong>File Management</strong>: Files open via <strong>File &gt; Open</strong> or by drag-and-drop onto the editor surface. Unsaved changes are indicated by a dot next to the filename in the tab. <strong>Ctrl+S</strong> saves the current file.</p>
 </section>
@@ -957,16 +960,16 @@ npm<span class="w"> </span>run<span class="w"> </span>tauri<span class="w"> </sp
 </section>
 </section>
 <hr class="docutils" />
-<section id="ai-copilot">
-<h2>9. AI Copilot<a class="headerlink" href="#ai-copilot" title="Link to this heading">¶</a></h2>
-<p>The AI Copilot is a context-aware assistant integrated into pccx-lab via a dockable panel (left, right, or bottom). Its functions span performance analysis and RTL code generation.</p>
+<section id="workflow-assistant">
+<h2>9. Workflow Assistant<a class="headerlink" href="#workflow-assistant" title="Link to this heading">¶</a></h2>
+<p>The Workflow Assistant is a local-only planning surface integrated into pccx-lab via a dockable panel (left, right, or bottom). It summarizes bounded trace context and can request built-in helper actions through the existing GUI IPC boundary.</p>
 <section id="bottleneck-analysis">
 <h3>Bottleneck Analysis<a class="headerlink" href="#bottleneck-analysis" title="Link to this heading">¶</a></h3>
-<p>The Copilot receives the current trace context — active cycle window, event histogram, and Flame Graph summary — and returns a natural-language bottleneck diagnosis with cycle-level supporting evidence. Analysis does not require an external API connection; the local context-compression engine produces results from trace data alone.</p>
+<p>The assistant receives the current trace context - active cycle window, event histogram, and Flame Graph summary - and returns a bounded bottleneck note with cycle-level supporting evidence. Analysis does not require an external provider connection; the local context-compression engine produces results from trace data alone.</p>
 </section>
 <section id="uvm-sequence-generation">
 <h3>UVM Sequence Generation<a class="headerlink" href="#uvm-sequence-generation" title="Link to this heading">¶</a></h3>
-<p>The Copilot generates complete UVM sequence objects for five predefined optimization strategies:</p>
+<p>The assistant can request built-in UVM sequence objects for five predefined optimization strategies:</p>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
@@ -995,9 +998,9 @@ npm<span class="w"> </span>run<span class="w"> </span>tauri<span class="w"> </sp
 </div>
 <p>Generated sequence code is inserted directly into the SV Editor at the cursor position.</p>
 </section>
-<section id="openai-api-integration">
-<h3>OpenAI API Integration<a class="headerlink" href="#openai-api-integration" title="Link to this heading">¶</a></h3>
-<p>For extended reasoning tasks, the Copilot optionally forwards requests to the OpenAI API. Configure the API key under <strong>Tools &gt; Copilot Settings</strong>. All trace data transmitted to the API is summarized by the local context-compression engine; raw binary trace data is never transmitted.</p>
+<section id="provider-boundary">
+<h3>Provider Boundary<a class="headerlink" href="#provider-boundary" title="Link to this heading">¶</a></h3>
+<p>The documented CLI/core workflow boundary does not call external providers, send traces over the network, or require provider credentials. Any future external assistant work must consume the same bounded summaries as the GUI and stay behind an explicit configuration and approval boundary.</p>
 </section>
 </section>
 <hr class="docutils" />
@@ -1172,7 +1175,7 @@ pccx-cli<span class="w"> </span>--report-md<span class="w"> </span>path/to/trace
 <td><p>React Flow (&#64;xyflow/react)</p></td>
 </tr>
 <tr class="row-even"><td><p>Code editor</p></td>
-<td><p>Monaco (VS Code engine)</p></td>
+<td><p>Monaco editor</p></td>
 </tr>
 <tr class="row-odd"><td><p>Layout</p></td>
 <td><p>react-resizable-panels v4</p></td>
@@ -1214,7 +1217,7 @@ pccx-cli<span class="w"> </span>--report-md<span class="w"> </span>path/to/trace
 <td><p>Language server protocol integration for the SV Editor</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-ai-copilot</span></code></p></td>
-<td><p>Context compression and AI copilot backend</p></td>
+<td><p>Context compression and assistant-facing helper scaffolds</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-uvm-bridge</span></code></p></td>
 <td><p>UVM scoreboard hooks and coverage data import</p></td>
@@ -1445,10 +1448,10 @@ pccx-cli<span class="w"> </span>--report-md<span class="w"> </span>path/to/trace
 <li><a class="reference internal" href="#per-stage-profiling">Per-Stage Profiling</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#ai-copilot">9. AI Copilot</a><ul>
+<li><a class="reference internal" href="#workflow-assistant">9. Workflow Assistant</a><ul>
 <li><a class="reference internal" href="#bottleneck-analysis">Bottleneck Analysis</a></li>
 <li><a class="reference internal" href="#uvm-sequence-generation">UVM Sequence Generation</a></li>
-<li><a class="reference internal" href="#openai-api-integration">OpenAI API Integration</a></li>
+<li><a class="reference internal" href="#provider-boundary">Provider Boundary</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#keyboard-shortcuts">10. Keyboard Shortcuts</a></li>

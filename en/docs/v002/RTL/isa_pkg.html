@@ -15,7 +15,7 @@
 <meta name="description" content="isa_pkg.sv is the single source of truth for all instruction types, opcode enums, and micro-op structs. Every RTL module does import isa_pkg::*; — no header includes are needed downstream. The pack..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"ISA Type Package","name":"ISA Type Package","url":"https://pccxai.github.io/pccx/en/docs/v002/RTL/isa_pkg.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/en/docs/v002/RTL/isa_pkg.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-01","dateModified":"2026-05-01","description":"pccx documentation page: ISA Type Package. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="NPU Top-Level" href="npu_top.html"><link rel="prev" title="RTL Source Reference (v002)" href="index.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"ISA Type Package","name":"ISA Type Package","url":"https://pccxai.github.io/pccx/en/docs/v002/RTL/isa_pkg.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/en/docs/v002/RTL/isa_pkg.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-03","dateModified":"2026-05-03","description":"pccx documentation page: ISA Type Package. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="NPU Top-Level" href="npu_top.html"><link rel="prev" title="RTL Source Reference (v002)" href="index.html">
         <link rel="canonical" href="https://pccxai.github.io/pccx/docs/v002/RTL/isa_pkg.html">
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
@@ -431,7 +431,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tools</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://pccxai.github.io/pccx/en/lab/">pccx-lab — Simulator &amp; AI Profiler</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pccxai.github.io/pccx/en/lab/">pccx-lab — Verification Lab</a></li>
 </ul>
 
 </div>
@@ -499,16 +499,33 @@ opcode enums, and micro-op structs. Every RTL module does
 <div class="code-block-caption"><span class="caption-number">Listing 7 </span><span class="caption-text">hw/rtl/NPU_Controller/NPU_Control_Unit/ISA_PACKAGE/isa_pkg.sv</span><a class="headerlink" href="#id1" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="no">`timescale</span><span class="w"> </span><span class="mi">1</span><span class="n">ns</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1</span><span class="n">ps</span>
 
-<span class="c1">// ===| ISA Package |=============================================================</span>
-<span class="c1">// Master type package for the uCA (micro Compute Architecture) ISA.</span>
-<span class="c1">// All consumers do `import isa_pkg::*;` — no `include` needed downstream.</span>
-<span class="c1">//</span>
-<span class="c1">// Rules:</span>
-<span class="c1">//   - No `include inside this package (Vivado compilation-order constraint).</span>
-<span class="c1">//   - All `define macros that are also needed as port widths live in npu_arch.svh.</span>
-<span class="c1">//   - isa_x32.svh / isa_memctrl.svh / isa_x64.svh are LEGACY — types here supersede them.</span>
-<span class="c1">//</span>
-<span class="c1">// Compilation order: after A_const_svh (npu_arch.svh must be included first).</span>
+<span class="c1">// ===| Package: isa_pkg — pccx v002 ISA master type vocabulary |================</span>
+<span class="c1">// Purpose      : Master type package for the uCA (micro Compute Architecture)</span>
+<span class="c1">//                ISA. Provides every type used to describe instructions,</span>
+<span class="c1">//                routes, flags, and per-engine micro-ops. The architectural</span>
+<span class="c1">//                vocabulary that every other module imports.</span>
+<span class="c1">// Spec ref     : pccx v002 §3 (ISA encoding) — pccx/docs/v002/Architecture/.</span>
+<span class="c1">// Dependencies : A_const_svh (npu_arch.svh `defines must be included first</span>
+<span class="c1">//                outside this file; package itself avoids `include).</span>
+<span class="c1">// Provides</span>
+<span class="c1">//   Address types : dest_addr_t / src_addr_t / addr_t / ptr_addr_t / parallel_lane_t</span>
+<span class="c1">//   Value types   : a_value_t / b_value_t / c_value_t / length_t</span>
+<span class="c1">//   Shape types   : shape_dim_t / shape_xyz_t (shape constant RAM contract)</span>
+<span class="c1">//   Direction enums: from_device_e, to_device_e, async_e, dest_cache_e</span>
+<span class="c1">//   Flag structs   : flags_t (GEMV/GEMM), cvo_flags_t</span>
+<span class="c1">//   Opcode enum    : opcode_e (5 ops: GEMV / GEMM / MEMCPY / MEMSET / CVO)</span>
+<span class="c1">//   CVO function   : cvo_func_e (8 ops: EXP / SQRT / GELU / SIN / COS /</span>
+<span class="c1">//                                       REDUCE_SUM / SCALE / RECIP)</span>
+<span class="c1">//   Routing enum   : data_route_e (8 routes: host↔L2, L2↔L1_GEMM/GEMV/CVO,</span>
+<span class="c1">//                                            engine_res→L2)</span>
+<span class="c1">//   Instruction layouts: GEMV_op_x64_t, GEMM_op_x64_t, memcpy_op_x64_t,</span>
+<span class="c1">//                        memset_op_x64_t, cvo_op_x64_t.</span>
+<span class="c1">//   Micro-op structs   : gemm_control_uop_t, GEMV_control_uop_t,</span>
+<span class="c1">//                        memory_control_uop_t, memory_set_uop_t,</span>
+<span class="c1">//                        cvo_control_uop_t, acp_uop_t, npu_uop_t.</span>
+<span class="c1">// Constants    : MemoryUopWidth (= 49 bits).</span>
+<span class="c1">// Legacy       : isa_x32.svh / isa_memctrl.svh / isa_x64.svh are LEGACY —</span>
+<span class="c1">//                types here supersede them. Do not extend the .svh files.</span>
 <span class="c1">// ===============================================================================</span>
 
 <span class="kn">package</span><span class="w"> </span><span class="n">isa_pkg</span><span class="p">;</span>
@@ -527,6 +544,25 @@ opcode enums, and micro-op structs. Every RTL module does
 
 <span class="w">  </span><span class="c1">// CVO length (16-bit element count)</span>
 <span class="w">  </span><span class="k">typedef</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">15</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">length_t</span><span class="p">;</span>
+
+<span class="w">  </span><span class="c1">// ===| Shape Types (shape constant RAM contract) |=============================</span>
+<span class="w">  </span><span class="c1">// The shape constant RAM stores three 17-bit axes per entry. Naming the</span>
+<span class="w">  </span><span class="c1">// dimension and the triplet keeps dispatcher and testbench code explicit:</span>
+<span class="w">  </span><span class="c1">//</span>
+<span class="w">  </span><span class="c1">//   shape_dim_t : single-axis size (17-bit, matches the address-space</span>
+<span class="w">  </span><span class="c1">//                 dimension used by dest_addr_t / src_addr_t).</span>
+<span class="w">  </span><span class="c1">//   shape_xyz_t : a 3-axis bundle (Z is most-significant in packed order</span>
+<span class="w">  </span><span class="c1">//                 so { Z, Y, X } maps to a familiar memory layout).</span>
+<span class="w">  </span><span class="c1">//</span>
+<span class="w">  </span><span class="c1">// These types back the parameterised shape_const_ram used by mem_dispatcher</span>
+<span class="w">  </span><span class="c1">// for fmap and weight shape lookup.</span>
+<span class="w">  </span><span class="k">typedef</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">16</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">shape_dim_t</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="k">packed</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">shape_dim_t</span><span class="w"> </span><span class="n">z</span><span class="p">;</span>
+<span class="w">    </span><span class="n">shape_dim_t</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="w">    </span><span class="n">shape_dim_t</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="n">shape_xyz_t</span><span class="p">;</span>
 
 <span class="w">  </span><span class="c1">// ===| Device Direction Enums |=================================================</span>
 <span class="w">  </span><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">{</span>
@@ -927,7 +963,7 @@ SV header and the driver header must move together.</p>
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2026-05-01</div>
+              Last updated on 2026-05-03</div>
           </div>
           <div class="right-details">
             <div class="icons">

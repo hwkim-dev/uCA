@@ -1,0 +1,80 @@
+{
+  "schemaVersion": "pccx.lab.theme-tokens.v0",
+  "tokenSlots": [
+    "background",
+    "foreground",
+    "mutedForeground",
+    "border",
+    "panelBackground",
+    "accent",
+    "danger",
+    "warning",
+    "success"
+  ],
+  "presets": [
+    {
+      "name": "native-light",
+      "description": "Neutral light preset for host-native chrome.",
+      "tokens": {
+        "background": "#f7f7f8",
+        "foreground": "#1f2328",
+        "mutedForeground": "#667085",
+        "border": "#d0d5dd",
+        "panelBackground": "#ffffff",
+        "accent": "#2f6fed",
+        "danger": "#c2410c",
+        "warning": "#a16207",
+        "success": "#15803d"
+      }
+    },
+    {
+      "name": "native-dark",
+      "description": "Neutral dark preset for host-native chrome.",
+      "tokens": {
+        "background": "#1f2023",
+        "foreground": "#e6e8eb",
+        "mutedForeground": "#9aa4b2",
+        "border": "#3f444d",
+        "panelBackground": "#292b30",
+        "accent": "#6aa6ff",
+        "danger": "#f97316",
+        "warning": "#eab308",
+        "success": "#22c55e"
+      }
+    },
+    {
+      "name": "compact-dark",
+      "description": "Dense dark preset for compact verification panels.",
+      "tokens": {
+        "background": "#17191c",
+        "foreground": "#e4e7ec",
+        "mutedForeground": "#98a2b3",
+        "border": "#333741",
+        "panelBackground": "#202329",
+        "accent": "#7dd3fc",
+        "danger": "#fb7185",
+        "warning": "#fbbf24",
+        "success": "#34d399"
+      }
+    },
+    {
+      "name": "quiet-light",
+      "description": "Low-contrast light preset for quiet engineering UI.",
+      "tokens": {
+        "background": "#fafafa",
+        "foreground": "#24292f",
+        "mutedForeground": "#6b7280",
+        "border": "#d9dee7",
+        "panelBackground": "#f3f4f6",
+        "accent": "#3861d6",
+        "danger": "#b42318",
+        "warning": "#b54708",
+        "success": "#027a48"
+      }
+    }
+  ],
+  "limitations": [
+    "Theme presets are experimental and may change before a stable UI contract.",
+    "Presets define semantic slots only; component-level styling remains in the GUI."
+  ]
+}

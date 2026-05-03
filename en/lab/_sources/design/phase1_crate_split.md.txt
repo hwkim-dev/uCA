@@ -1,7 +1,7 @@
 # Phase 1 — Workspace / Crate Split Proposal
 
 **Status:** draft (2026-04-24) — awaiting user approval before implementation
-**Scope:** PCCX-Lab roadmap §Phase 1 (M1.1 Workspace split + M1.2 stable API contracts)
+**Scope:** PCCX-Lab roadmap Phase 1 (M1.1 Workspace split + M1.2 early API contracts)
 **Prior art:** `docs/design/rationale.md` (why pccx-lab is one repo, not five)
 
 ## 1. Current state
@@ -37,7 +37,7 @@ pccx-lab/  (Cargo workspace — 7 members)
 │   ├── pccx-reports/       Markdown / PDF / HTML report generator
 │   ├── pccx-verification/  golden_diff + robust_reader + step_snapshot reference logic
 │   ├── pccx-authoring/     isa_spec + api_spec (ISA / API TOML compilers)
-│   ├── pccx-agents/        cloud LLM orchestration (was ai_copilot)
+│   ├── pccx-agents/        assistant-facing helper scaffolds (was ai_copilot)
 │   ├── pccx-uvm-bridge/    UVM scoreboard hooks (unchanged)
 │   ├── pccx-remote/        NEW — backend daemon (Phase 3 scaffold)
 │   ├── pccx-evolve/        NEW — DSE + surrogate + PRM loop (Phase 5 scaffold)

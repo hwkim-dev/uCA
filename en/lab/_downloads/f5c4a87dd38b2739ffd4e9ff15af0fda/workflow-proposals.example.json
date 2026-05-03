@@ -1,0 +1,230 @@
+{
+  "schemaVersion": "pccx.lab.workflow-proposals.v0",
+  "tool": "pccx-lab",
+  "proposals": [
+    {
+      "proposalId": "proposal-lab-status-contract",
+      "workflowId": "lab-status-contract",
+      "label": "Preview lab status contract read",
+      "proposalState": "proposal_only",
+      "approvalRequired": false,
+      "commandKind": "pccx-lab-cli-fixed-args",
+      "fixedArgsPreview": [
+        "status",
+        "--format",
+        "json"
+      ],
+      "inputSummary": "No runtime input; static host status metadata only.",
+      "outputPolicy": "Bounded status JSON with conservative evidence markers.",
+      "safetyFlags": [
+        "no-execution",
+        "no-shell",
+        "fixed-args-preview",
+        "approval-boundary-required-before-run",
+        "no-hardware",
+        "no-fpga-repo",
+        "no-network",
+        "no-provider-call",
+        "no-private-paths",
+        "no-secrets"
+      ],
+      "expectedArtifacts": [],
+      "limitations": [
+        "Proposal listing does not run the status command.",
+        "Status output does not claim hardware, timing, inference, or throughput evidence."
+      ]
+    },
+    {
+      "proposalId": "proposal-theme-token-contract",
+      "workflowId": "theme-token-contract",
+      "label": "Preview theme token contract read",
+      "proposalState": "proposal_only",
+      "approvalRequired": false,
+      "commandKind": "pccx-lab-cli-fixed-args",
+      "fixedArgsPreview": [
+        "theme",
+        "--format",
+        "json"
+      ],
+      "inputSummary": "No runtime input; semantic theme-token metadata only.",
+      "outputPolicy": "Bounded theme-token JSON with named presets.",
+      "safetyFlags": [
+        "no-execution",
+        "no-shell",
+        "fixed-args-preview",
+        "approval-boundary-required-before-run",
+        "no-hardware",
+        "no-fpga-repo",
+        "no-network",
+        "no-provider-call",
+        "no-private-paths",
+        "no-secrets"
+      ],
+      "expectedArtifacts": [],
+      "limitations": [
+        "Proposal listing does not run the theme command.",
+        "Theme tokens are experimental semantic slots."
+      ]
+    },
+    {
+      "proposalId": "proposal-workflow-descriptor-catalog",
+      "workflowId": "workflow-descriptor-catalog",
+      "label": "Preview workflow descriptor catalog read",
+      "proposalState": "proposal_only",
+      "approvalRequired": false,
+      "commandKind": "pccx-lab-cli-fixed-args",
+      "fixedArgsPreview": [
+        "workflows",
+        "--format",
+        "json"
+      ],
+      "inputSummary": "No runtime input; descriptor-only metadata only.",
+      "outputPolicy": "Bounded descriptor JSON with no execution state.",
+      "safetyFlags": [
+        "no-execution",
+        "no-shell",
+        "fixed-args-preview",
+        "approval-boundary-required-before-run",
+        "no-hardware",
+        "no-fpga-repo",
+        "no-network",
+        "no-provider-call",
+        "no-private-paths",
+        "no-secrets"
+      ],
+      "expectedArtifacts": [],
+      "limitations": [
+        "Proposal listing does not run the workflows command.",
+        "Descriptor metadata does not implement an MCP runtime."
+      ]
+    },
+    {
+      "proposalId": "proposal-workflow-proposal-catalog",
+      "workflowId": "workflow-proposal-catalog",
+      "label": "Preview workflow proposal catalog read",
+      "proposalState": "proposal_only",
+      "approvalRequired": false,
+      "commandKind": "pccx-lab-cli-fixed-args",
+      "fixedArgsPreview": [
+        "workflow-proposals",
+        "--format",
+        "json"
+      ],
+      "inputSummary": "No runtime input; proposal-only metadata only.",
+      "outputPolicy": "Bounded proposal JSON with no execution state.",
+      "safetyFlags": [
+        "no-execution",
+        "no-shell",
+        "fixed-args-preview",
+        "approval-boundary-required-before-run",
+        "no-hardware",
+        "no-fpga-repo",
+        "no-network",
+        "no-provider-call",
+        "no-private-paths",
+        "no-secrets"
+      ],
+      "expectedArtifacts": [],
+      "limitations": [
+        "Proposal listing does not run the workflow-proposals command.",
+        "Proposal metadata does not implement a runner."
+      ]
+    },
+    {
+      "proposalId": "proposal-systemverilog-shape-diagnostics",
+      "workflowId": "systemverilog-shape-diagnostics",
+      "label": "Preview SystemVerilog shape diagnostics",
+      "proposalState": "proposal_only",
+      "approvalRequired": true,
+      "commandKind": "pccx-lab-cli-fixed-args-with-approved-input",
+      "fixedArgsPreview": [
+        "analyze",
+        "<approved-file>",
+        "--format",
+        "json"
+      ],
+      "inputSummary": "Requires one approved local SystemVerilog file path in a later boundary.",
+      "outputPolicy": "Bounded diagnostics JSON; no semantic verification or hardware run.",
+      "safetyFlags": [
+        "no-execution",
+        "no-shell",
+        "fixed-args-preview",
+        "approval-boundary-required-before-run",
+        "no-hardware",
+        "no-fpga-repo",
+        "no-network",
+        "no-provider-call",
+        "no-private-paths",
+        "no-secrets"
+      ],
+      "expectedArtifacts": [],
+      "limitations": [
+        "Proposal listing does not read files.",
+        "Any future run must approve the file input before execution."
+      ]
+    },
+    {
+      "proposalId": "proposal-trace-import-summary",
+      "workflowId": "trace-import-summary",
+      "label": "Preview trace import summary",
+      "proposalState": "proposal_only",
+      "approvalRequired": true,
+      "commandKind": "planned-core-boundary",
+      "fixedArgsPreview": [],
+      "inputSummary": "Would require an approved local trace file in a later boundary.",
+      "outputPolicy": "Future output should be summary-only trace metadata.",
+      "safetyFlags": [
+        "no-execution",
+        "no-shell",
+        "fixed-args-preview",
+        "approval-boundary-required-before-run",
+        "no-hardware",
+        "no-fpga-repo",
+        "no-network",
+        "no-provider-call",
+        "no-private-paths",
+        "no-secrets"
+      ],
+      "expectedArtifacts": [],
+      "limitations": [
+        "No trace is loaded by proposal listing.",
+        "No raw trace payload crosses this proposal boundary."
+      ]
+    },
+    {
+      "proposalId": "proposal-verification-report-summary",
+      "workflowId": "verification-report-summary",
+      "label": "Preview verification report summary",
+      "proposalState": "proposal_only",
+      "approvalRequired": true,
+      "commandKind": "planned-core-boundary",
+      "fixedArgsPreview": [],
+      "inputSummary": "Would require an approved report source in a later boundary.",
+      "outputPolicy": "Future output should be summary-only report metadata.",
+      "safetyFlags": [
+        "no-execution",
+        "no-shell",
+        "fixed-args-preview",
+        "approval-boundary-required-before-run",
+        "no-hardware",
+        "no-fpga-repo",
+        "no-network",
+        "no-provider-call",
+        "no-private-paths",
+        "no-secrets"
+      ],
+      "expectedArtifacts": [],
+      "limitations": [
+        "No verification script is launched by proposal listing.",
+        "No timing closure or hardware result is claimed."
+      ]
+    }
+  ],
+  "limitations": [
+    "Workflow proposals are previews only and never execute workflows.",
+    "Fixed argument previews are token arrays, not raw shell strings.",
+    "A separate approval boundary is required before any future run.",
+    "No hardware, provider, network, MCP, launcher, or IDE runtime is invoked.",
+    "The FPGA repo is not required and is not touched by proposal listing."
+  ]
+}

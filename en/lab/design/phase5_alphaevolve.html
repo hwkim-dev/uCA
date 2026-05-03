@@ -200,6 +200,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../modules/overview.html">Module Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../modules/node-editor.html">Node Editor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CLI_CORE_BOUNDARY.html">pccx-lab CLI/core boundary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CLI_BOUNDARY_EXAMPLES.html">pccx-lab CLI boundary examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DIAGNOSTICS_HANDOFF_CONSUMER.html">Launcher Diagnostics Handoff Consumer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rationale.html">Design Rationale</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase1_crate_split.html">Phase 1 — Workspace / Crate Split Proposal</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase2_intellisense.html">Phase 2 — IntelliSense-Level Intelligence</a></li>
@@ -323,7 +326,7 @@ User spec ──▶│  ┌──────────┐   ┌────�
 <li><p><strong>PRM gate</strong> — deep cloud LLM proposes RTL → Verilator elaborates → verible lints → timing-check sanity-tests → survivors go to the surrogate.</p></li>
 <li><p><strong>Formal diff</strong> — promoted variants must pass <code class="docutils literal notranslate"><span class="pre">pccx-verification::GoldenDiffGate</span></code> + Sail refinement check.</p></li>
 </ol>
-<p>Deliverable: “design an NPU for Gemma-3N E4B decoding at 20 tok/s on KV260” in &lt; 1 day wall-clock.</p>
+<p>Deliverable: produce a bounded candidate NPU design proposal for a model-decoding workload, with verification evidence attached before any hardware claim is made.</p>
 </section>
 <section id="b-compiler-superoptimization-weeks-22-24">
 <h3>5B — Compiler Superoptimization (Weeks 22-24)<a class="headerlink" href="#b-compiler-superoptimization-weeks-22-24" title="Link to this heading">¶</a></h3>
@@ -365,7 +368,7 @@ User spec ──▶│  ┌──────────┐   ┌────�
 </section>
 <section id="e-generative-chip-design-weeks-30-user-ultimate-goal">
 <h3>5E — Generative Chip Design (Weeks 30+)  <strong>USER ULTIMATE GOAL</strong><a class="headerlink" href="#e-generative-chip-design-weeks-30-user-ultimate-goal" title="Link to this heading">¶</a></h3>
-<p><strong>Input:</strong> same model file + target silicon family (KV260 / ASIC-22nm).</p>
+<p><strong>Input:</strong> same model file + target silicon family, such as a board-class FPGA target or a future ASIC process.</p>
 <p><strong>Pipeline:</strong></p>
 <ol class="arabic simple">
 <li><p>Run 5D, inspect the resulting <code class="docutils literal notranslate"><span class="pre">.pccx</span></code> trace, identify bottleneck (compute-bound vs memory-bound).</p></li>
@@ -381,7 +384,7 @@ User spec ──▶│  ┌──────────┐   ┌────�
 <li><p>Synthesize top-K survivors in parallel via 5C-authorised Vivado runners.</p></li>
 <li><p>Pick Pareto front; user selects final.</p></li>
 </ol>
-<p><strong>Deliverable:</strong> feed <code class="docutils literal notranslate"><span class="pre">gemma-3n-e4b.safetensors</span></code> + “KV260” → receive a tailor-made NPU RTL + bitstream + correctness proof in &lt; 48 hours.</p>
+<p><strong>Deliverable:</strong> feed a model artifact and target category into the design loop, then receive a candidate RTL package plus a bounded verification report. Bitstream generation and hardware readiness remain separate claims that require measured evidence.</p>
 </section>
 </section>
 <section id="risk-register">
@@ -416,10 +419,10 @@ User spec ──▶│  ┌──────────┐   ┌────�
 <td><p>Medium</p></td>
 <td><p>PRM gate does static timing sanity check (critical-path estimate) before the surrogate.</p></td>
 </tr>
-<tr class="row-even"><td><p>5E wall-clock target (48 h) unachievable on KV260 workstations</p></td>
+<tr class="row-even"><td><p>5E wall-clock target (48 h) unachievable on board-class workstations</p></td>
 <td><p>High</p></td>
 <td><p>Medium</p></td>
-<td><p>Offload synth to a cloud Vivado cluster; document the trade-off.</p></td>
+<td><p>Offload synthesis to a controlled remote cluster; document the trade-off.</p></td>
 </tr>
 </tbody>
 </table>

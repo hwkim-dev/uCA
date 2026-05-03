@@ -1,7 +1,7 @@
 # Getting Started
 
 > A 5-minute tutorial for first-time users.
-> Structured as a VS Code-style `walkthroughs` contract in three steps:
+> Structured as an editor-style walkthrough in three steps:
 > (1) launch pccx-lab, (2) load the sample `.pccx`, (3) open Flame Graph +
 > Waveform.
 
@@ -29,10 +29,10 @@ On launch you will see:
   Verify / Run / Tools / Window / Help.
 - **Tab strip** — Timeline / Flame Graph / Waveform / System Simulator /
   Memory Dump / ….
-- **AI Copilot panel** (docked right; `Ctrl+\`` to toggle).
+- **Workflow Assistant panel** (docked right; `Ctrl+\`` to toggle).
 - **Bottom Panel** (Log / Console / Telemetry; `Ctrl+J` to toggle).
 
-The right-hand activity bar surfaces the Copilot and Telemetry quick-toggles. Every icon-only button carries an `aria-label`
+The right-hand activity bar surfaces the assistant and Telemetry quick-toggles. Every icon-only button carries an `aria-label`
 so the shell is fully screen-reader navigable (WCAG 2.2 SC 2.1.1 /
 2.4.3).
 
@@ -47,7 +47,7 @@ Two entry points:
    startup. On success, a green `trace loaded` badge appears to the
    right of the tab strip.
 
-To load a real pccx-FPGA simulation result, pick:
+To load a local pccx-FPGA simulation result, pick:
 
 ```
 ../pccx-FPGA-NPU-LLM-kv260/hw/sim/fixtures/smoke.pccx
@@ -74,7 +74,7 @@ Controls:
 - `Ctrl + scroll` — zoom the time axis.
 - Drag — pan.
 - **Find Bottleneck** — calls the `detect_bottlenecks` IPC and
-  surfaces the dominant contended window with an AI recommendation.
+  surfaces the dominant contended window with a local recommendation.
 - `Ctrl + Shift + D` — toggle diff mode against a second loaded run.
 
 ### Waveform

@@ -200,6 +200,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Module Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="node-editor.html">Node Editor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CLI_CORE_BOUNDARY.html">pccx-lab CLI/core boundary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CLI_BOUNDARY_EXAMPLES.html">pccx-lab CLI boundary examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DIAGNOSTICS_HANDOFF_CONSUMER.html">Launcher Diagnostics Handoff Consumer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../design/rationale.html">Design Rationale</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../design/phase1_crate_split.html">Phase 1 — Workspace / Crate Split Proposal</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../design/phase2_intellisense.html">Phase 2 — IntelliSense-Level Intelligence</a></li>
@@ -292,9 +295,9 @@ must never import a UI or framework crate; <code class="docutils literal notrans
 <code class="docutils literal notranslate"><span class="pre">pccx-ide</span></code> through the Tauri IPC bridge.</p>
 <section id="shell-at-a-glance">
 <h2>Shell at a glance<a class="headerlink" href="#shell-at-a-glance" title="Link to this heading">¶</a></h2>
-<p>The default layout mirrors a modern EDA IDE (think VTune / Nsight):
+<p>The default layout is a desktop verification shell:
 a top menu bar, a tool ribbon, a tab strip, the active work panel,
-and two dockable side panels (Live Telemetry + AI Copilot).</p>
+and two dockable side panels (Live Telemetry + Workflow Assistant).</p>
 <a class="reference internal image-reference" href="../_images/timeline-fullwidth.png"><img alt="pccx-lab Timeline view — swim lanes of NPU events over cycles" src="../_images/timeline-fullwidth.png" style="width: 100%;" />
 </a>
 <p>The capture above shows the <strong>Timeline</strong> tab. Each swim lane is a
@@ -350,12 +353,12 @@ core; events are colour-coded by type
 <tr class="row-even"><td><p>SV Editor</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">CodeEditor.tsx</span></code></p></td>
 <td><p>—</p></td>
-<td><p>SystemVerilog editor + AI inline gen</p></td>
+<td><p>SystemVerilog editor + local draft helper</p></td>
 </tr>
 <tr class="row-odd"><td><p>Report</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">ReportBuilder.tsx</span></code></p></td>
 <td><p>—</p></td>
-<td><p>Enterprise report composer</p></td>
+<td><p>Bounded report composer</p></td>
 </tr>
 <tr class="row-even"><td><p>Verification</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">VerificationSuite.tsx</span></code></p></td>

@@ -23,9 +23,9 @@
 
 ## 쉘 한눈에
 
-기본 레이아웃은 모던 EDA IDE (VTune / Nsight 스타일) 를 모방합니다.
-상단 메뉴바, 툴바, 탭 스트립, 활성 작업 패널, 2개의 도킹 가능한
-사이드 패널 (Live Telemetry + AI Copilot).
+기본 레이아웃은 데스크톱 검증 쉘입니다. 상단 메뉴바, 툴바, 탭
+스트립, 활성 작업 패널, 2개의 도킹 가능한 사이드 패널
+(Live Telemetry + Workflow Assistant) 로 구성됩니다.
 
 ```{image} ../../_static/screenshots/timeline-fullwidth.png
 :alt: pccx-lab Timeline 뷰 — 사이클 축 위의 NPU 이벤트 스윔 레인
@@ -52,8 +52,8 @@ Rust 의 `core_utilisation` IPC 가 채웁니다.
 | System Simulator  | `HardwareVisualizer.tsx` | — | 3D 시스톨릭 어레이 라이브 뷰 |
 | Memory Dump       | `MemoryDump.tsx`         | — | flat trace buffer 의 페이지화된 hex 뷰 |
 | Data Flow         | `NodeEditor.tsx`         | **Shift+A** | Blender 급 블록 다이어그램 캔버스 |
-| SV Editor         | `CodeEditor.tsx`         | — | SystemVerilog 에디터 + AI 인라인 생성 |
-| Report            | `ReportBuilder.tsx`      | — | 엔터프라이즈 리포트 컴포저 |
+| SV Editor         | `CodeEditor.tsx`         | — | SystemVerilog 에디터 + 로컬 초안 도우미 |
+| Report            | `ReportBuilder.tsx`      | — | 경계가 있는 리포트 컴포저 |
 | Verification      | `VerificationSuite.tsx`  | — | **4-카드** pccx-FPGA 검증 대시보드 |
 | Roofline          | `Roofline.tsx`           | — | ECharts 루프라인 차트 |
 

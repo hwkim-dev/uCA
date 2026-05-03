@@ -1,7 +1,7 @@
 # pccx-lab User Guide
 
 **Version**: pccx v002  
-**Target Hardware**: Xilinx KV260 (ZU5EV)  
+**Target Architecture**: pccx v002 systolic-array NPU
 **Audience**: Hardware Engineers, RTL Designers, Verification Engineers
 
 ---
@@ -26,7 +26,7 @@
 6. [Verification Suite](#6-verification-suite)
 7. [Report Generation](#7-report-generation)
 8. [Scenario Flow](#8-scenario-flow)
-9. [AI Copilot](#9-ai-copilot)
+9. [Workflow Assistant](#9-workflow-assistant)
 10. [Keyboard Shortcuts](#10-keyboard-shortcuts)
 11. [Theme and Localization](#11-theme-and-localization)
 12. [CLI Tools](#12-cli-tools)
@@ -38,9 +38,9 @@
 
 ## 1. Introduction
 
-pccx-lab is a Tauri v2 desktop application for NPU (Neural Processing Unit) architecture profiling, verification, and development. It consumes `.pccx` binary traces emitted by the pccx-FPGA-NPU-LLM-kv260 xsim testbench suite and presents them through an integrated analysis environment combining cycle-accurate timing visualization, hardware block diagram simulation, UVM-integrated verification, and AI-assisted RTL development.
+pccx-lab is a Tauri v2 desktop application for NPU (Neural Processing Unit) architecture profiling, verification, and development. It consumes `.pccx` binary traces emitted by the pccx testbench suite and presents them through an integrated analysis environment combining cycle-accurate timing visualization, hardware block diagram simulation, UVM-integrated verification, and bounded RTL authoring helpers.
 
-The primary target hardware is the **Xilinx KV260 (ZU5EV)** FPGA platform running the pccx v002 systolic array architecture. pccx-lab serves as the single workbench for the full NPU development loop: trace ingestion, performance diagnosis, RTL editing, functional verification, and report generation.
+The target architecture category is the pccx v002 systolic array. pccx-lab serves as a workbench for trace ingestion, performance diagnosis, RTL editing, functional verification, and report generation. Hardware execution, provider calls, and launcher or editor runtime bridges remain outside the CLI/core workflow boundary described in this guide.
 
 ### Key Capabilities
 
@@ -53,7 +53,7 @@ The primary target hardware is the **Xilinx KV260 (ZU5EV)** FPGA platform runnin
 | Roofline analysis | Arithmetic intensity and memory-bound/compute-bound classification |
 | 3D MAC array visualization | Real-time 32x32 utilization heat map |
 | Report generation | Configurable PDF reports auto-populated from trace data |
-| AI assistance | Context-aware bottleneck analysis and UVM sequence generation |
+| Authoring assistance | Context-aware bottleneck analysis and UVM sequence scaffolding |
 
 ---
 
@@ -67,7 +67,7 @@ The primary target hardware is the **Xilinx KV260 (ZU5EV)** FPGA platform runnin
 | Rust toolchain | Stable, current edition (see `rust-toolchain.toml`) |
 | Node.js | LTS release compatible with Vite 7 |
 | Display | X11 session (Wayland compositing is not supported; see §2.4) |
-| Hardware | KV260 (ZU5EV) for live trace generation; pre-recorded `.pccx` files may be loaded on any host |
+| Hardware | Pre-recorded `.pccx` files may be loaded on any host; hardware trace capture is outside the CLI/core boundary |
 
 ### 2.2 Installation
 
@@ -146,7 +146,7 @@ The tab bar provides access to 14 analysis views. Each tab corresponds to a dist
 
 ### 3.4 Panel Docks
 
-Three dockable panel positions are available: left dock, right dock, and bottom dock. The AI Copilot panel (Section 9) may be docked to any of these positions. The bottom dock hosts the Log, Console, and Live Telemetry sub-panels.
+Three dockable panel positions are available: left dock, right dock, and bottom dock. The Workflow Assistant panel (Section 9) may be docked to any of these positions. The bottom dock hosts the Log, Console, and Live Telemetry sub-panels.
 
 ### 3.5 Status Bar
 
@@ -160,7 +160,7 @@ The status bar at the bottom of the window displays:
 
 ### 3.6 Activity Bar
 
-Two toggle buttons on the right edge of the window control the AI Copilot panel visibility and the Live Telemetry panel visibility.
+Two toggle buttons on the right edge of the window control the Workflow Assistant panel visibility and the Live Telemetry panel visibility.
 
 ---
 
@@ -232,7 +232,7 @@ The Flame Graph view presents a hierarchical performance breakdown derived from 
 
 ![System Simulator view](images/03-system-simulator.png)
 
-The System Simulator provides an interactive hardware model of the full pccx v002 KV260 ZU5EV module hierarchy.
+The System Simulator provides an interactive hardware model of the pccx v002 module hierarchy.
 
 #### Module Hierarchy Panel (Left)
 
@@ -295,7 +295,7 @@ The Data Flow view provides a node-based graph editor for constructing and inspe
 
 The Roofline view plots operations from the loaded trace on the standard roofline model: arithmetic intensity (operations per byte transferred) on the horizontal axis and achieved throughput (operations per second) on the vertical axis.
 
-The roofline ceiling and memory bandwidth ridge point are derived from the KV260 ZU5EV hardware parameters. Each kernel or operation segment from the trace appears as a labeled data point. Points below the memory bandwidth line are classified as **memory-bound**; points approaching the compute ceiling are classified as **compute-bound**.
+The roofline ceiling and memory bandwidth ridge point are derived from configured architecture parameters. Each kernel or operation segment from the trace appears as a labeled data point. Points below the memory bandwidth line are classified as **memory-bound**; points approaching the compute ceiling are classified as **compute-bound**.
 
 ---
 
@@ -322,7 +322,7 @@ The SV Editor provides a full-featured SystemVerilog development environment bui
 | NPU Interface | SystemVerilog interface definition for NPU bus connections |
 | Scoreboard | UVM scoreboard with expected/actual comparison logic |
 
-**Ask AI**: Opens the AI Copilot panel pre-focused on code generation for the current file context. The copilot receives the visible editor content as context.
+**Draft SV**: Opens the local draft helper for the current file context. The helper stays inside the GUI and does not call an external provider.
 
 **Run SV Test**: Invokes the integrated simulation console directly from the editor. Compilation errors are reported inline as Monaco editor markers.
 
@@ -445,17 +445,17 @@ Clicking a node opens the corresponding cycle range in the Timeline view for det
 
 ---
 
-## 9. AI Copilot
+## 9. Workflow Assistant
 
-The AI Copilot is a context-aware assistant integrated into pccx-lab via a dockable panel (left, right, or bottom). Its functions span performance analysis and RTL code generation.
+The Workflow Assistant is a local-only planning surface integrated into pccx-lab via a dockable panel (left, right, or bottom). It summarizes bounded trace context and can request built-in helper actions through the existing GUI IPC boundary.
 
 ### Bottleneck Analysis
 
-The Copilot receives the current trace context — active cycle window, event histogram, and Flame Graph summary — and returns a natural-language bottleneck diagnosis with cycle-level supporting evidence. Analysis does not require an external API connection; the local context-compression engine produces results from trace data alone.
+The assistant receives the current trace context - active cycle window, event histogram, and Flame Graph summary - and returns a bounded bottleneck note with cycle-level supporting evidence. Analysis does not require an external provider connection; the local context-compression engine produces results from trace data alone.
 
 ### UVM Sequence Generation
 
-The Copilot generates complete UVM sequence objects for five predefined optimization strategies:
+The assistant can request built-in UVM sequence objects for five predefined optimization strategies:
 
 | Strategy | Description |
 |---|---|
@@ -467,9 +467,9 @@ The Copilot generates complete UVM sequence objects for five predefined optimiza
 
 Generated sequence code is inserted directly into the SV Editor at the cursor position.
 
-### OpenAI API Integration
+### Provider Boundary
 
-For extended reasoning tasks, the Copilot optionally forwards requests to the OpenAI API. Configure the API key under **Tools > Copilot Settings**. All trace data transmitted to the API is summarized by the local context-compression engine; raw binary trace data is never transmitted.
+The documented CLI/core workflow boundary does not call external providers, send traces over the network, or require provider credentials. Any future external assistant work must consume the same bounded summaries as the GUI and stay behind an explicit configuration and approval boundary.
 
 ---
 
@@ -583,7 +583,7 @@ Connect the desktop application via **Trace > Connect to Server** with the serve
 | 3D rendering | Three.js |
 | Charts | ECharts (echarts-for-react) |
 | Graph editor | React Flow (@xyflow/react) |
-| Code editor | Monaco (VS Code engine) |
+| Code editor | Monaco editor |
 | Layout | react-resizable-panels v4 |
 
 ### Rust Workspace Crates
@@ -599,7 +599,7 @@ The backend is organized as a 10-crate Rust workspace:
 | `pccx-evolve` | Self-evolution cycle management |
 | `pccx-remote` | Network server and client for remote trace streaming |
 | `pccx-lsp` | Language server protocol integration for the SV Editor |
-| `pccx-ai-copilot` | Context compression and AI copilot backend |
+| `pccx-ai-copilot` | Context compression and assistant-facing helper scaffolds |
 | `pccx-uvm-bridge` | UVM scoreboard hooks and coverage data import |
 | `pccx-ide` | Tauri IPC command handlers (30+ `invoke_handler` commands) |
 

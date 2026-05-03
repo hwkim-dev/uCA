@@ -15,7 +15,7 @@
 <meta name="description" content="1. 행렬 코어 — Systolic Top: GEMM_systolic_top.sv 는 32 × 32 시스톨릭 어레이 (cascade 가 16 행 에서 끊겨 32 × 16 서브체인 2 개로 나뉨) 를 감싸는 래퍼입니다. HP0/HP1 에서 가중치 타일을, L2 캐시에서 활성화 행을 수신하고 누산 결과를 후처리기 (post-processor) 로 스트리밍..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["ko","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"컴퓨트 코어 모듈","name":"컴퓨트 코어 모듈","url":"https://pccxai.github.io/pccx/ko/docs/v002/RTL/compute_cores.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/ko/docs/v002/RTL/compute_cores.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-01","dateModified":"2026-05-01","description":"pccx documentation page: 컴퓨트 코어 모듈. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"ko","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="색인" href="../../../genindex.html"><link rel="search" title="검색" href="../../../search.html"><link rel="next" title="NPU 컨트롤러 모듈" href="controller.html"><link rel="prev" title="NPU 최상위 모듈" href="npu_top.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["ko","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"컴퓨트 코어 모듈","name":"컴퓨트 코어 모듈","url":"https://pccxai.github.io/pccx/ko/docs/v002/RTL/compute_cores.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/ko/docs/v002/RTL/compute_cores.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-03","dateModified":"2026-05-03","description":"pccx documentation page: 컴퓨트 코어 모듈. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"ko","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="색인" href="../../../genindex.html"><link rel="search" title="검색" href="../../../search.html"><link rel="next" title="NPU 컨트롤러 모듈" href="controller.html"><link rel="prev" title="NPU 최상위 모듈" href="npu_top.html">
         <link rel="canonical" href="https://pccxai.github.io/pccx/docs/v002/RTL/compute_cores.html">
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
@@ -499,24 +499,42 @@
 <span class="no">`include</span><span class="w"> </span><span class="s">&quot;GLOBAL_CONST.svh&quot;</span>
 <span class="no">`include</span><span class="w"> </span><span class="s">&quot;GEMM_Array.svh&quot;</span>
 
-<span class="cm">/**</span>
-<span class="cm"> * Module: GEMM_systolic_top</span>
-<span class="cm"> * Target: Kria KV260 @ 400MHz</span>
-<span class="cm"> *</span>
-<span class="cm"> * Architecture V2:</span>
-<span class="cm"> * - Weight Dispatcher (Unpacker)</span>
-<span class="cm"> * - Staggered Delay Lines for FMap &amp; Instructions</span>
-<span class="cm"> * - 32x32 Systolic Array Core</span>
-<span class="cm"> * - e_max Pipe for Synchronization with Result Output</span>
-<span class="cm"> */</span>
+<span class="c1">// ===| Module: GEMM_systolic_top — 32×32 dual-lane W4A8 systolic engine |========</span>
+<span class="c1">// Purpose      : Prefill-phase matrix multiply for transformer decode/prefill.</span>
+<span class="c1">//                Hosts the weight-stationary 32×32 PE array plus its weight</span>
+<span class="c1">//                unpacker, staggered fmap delay lines, and e_max pipe.</span>
+<span class="c1">// Spec ref     : pccx v002 §2.2 (Matrix Core), §3.3 (GEMM uop).</span>
+<span class="c1">// Target       : KV260 @ 400 MHz core; cascade break at row 16 per spec.</span>
+<span class="c1">// Clock        : clk @ 400 MHz.</span>
+<span class="c1">// Reset        : rst_n active-low; i_clear synchronous soft-clear.</span>
+<span class="c1">// Topology     : weight_dispatcher → systolic_array → V_ACC_out (raw_res_sum).</span>
+<span class="c1">//                emax_pipe[0..ARRAY_SIZE_H-1][0..TOTAL_LATENCY-1] keeps</span>
+<span class="c1">//                e_max aligned with raw_res_sum_valid for column normalisers.</span>
+<span class="c1">// Latency      : SYSTOLIC_TOTAL_LATENCY cycles (input fmap → V_ACC_out).</span>
+<span class="c1">// Throughput   : 1 PE-row per clock once the array is filled; 1 DSP = 2 MAC</span>
+<span class="c1">//                via INT4 packing on the A-port (see GEMM_dsp_packer).</span>
+<span class="c1">// Data widths  : INT4 weight (4b), INT8 activation (8b on B-port — current</span>
+<span class="c1">//                staggered_fmap_INT8 truncation is a v001→v002 migration</span>
+<span class="c1">//                placeholder, see TODO inside).</span>
+<span class="c1">// Handshake    : Weight side — IN_weight_*_valid + IN_weight_*_ready (dual-lane);</span>
+<span class="c1">//                fmap side — push-only (IN_fmap_broadcast / valid).</span>
+<span class="c1">// Reset state  : raw_res_sum* = 0, emax_pipe = 0.</span>
+<span class="c1">// Errors       : none.</span>
+<span class="c1">// Counters     : none.</span>
+<span class="c1">// Assertions   : (Stage C) IN_weight_upper_valid and IN_weight_lower_valid</span>
+<span class="c1">//                must rise in the same cycle for dual-MAC packing;</span>
+<span class="c1">//                staggered_inst_valid one-hot per row at issue.</span>
+<span class="c1">// Migration TODO (v002 §2.2): replace BF16 mantissa truncation with INT8</span>
+<span class="c1">//                fmap arriving directly from PREPROCESS.</span>
+<span class="c1">// ===============================================================================</span>
 
 <span class="k">module</span><span class="w"> </span><span class="n">GEMM_systolic_top</span><span class="w"> </span><span class="p">#(</span>
-<span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">weight_lane_cnt</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="no">`HP_PORT_CNT</span><span class="p">,</span>
-<span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">weight_width_per_lane</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">`HP_PORT_SINGLE_WIDTH</span><span class="p">,</span>
+<span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">weight_lane_cnt</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="no">`DEVICE_HP_PORT_CNT</span><span class="p">,</span>
+<span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">weight_width_per_lane</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">`HP_SINGLE_WIDTH</span><span class="p">,</span>
 <span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">weight_size</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="no">`INT4_WIDTH</span><span class="p">,</span>
 
 <span class="w">    </span><span class="c1">// 32 = 128 bit / int4 (4-bit)</span>
-<span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">weight_cnt</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="no">`HP_PORT_SINGLE_WIDTH</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="no">`INT4_WIDTH</span><span class="p">,</span>
+<span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">weight_cnt</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="no">`HP_SINGLE_WIDTH</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="no">`INT4_WIDTH</span><span class="p">,</span>
 
 <span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">array_horizontal</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="no">`ARRAY_SIZE_H</span><span class="p">,</span>
 <span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">array_vertical</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="no">`ARRAY_SIZE_V</span><span class="p">,</span>
@@ -547,10 +565,10 @@
 <span class="w">    </span><span class="c1">//   HP0 -&gt; upper INT4 channel, HP1 -&gt; lower INT4 channel. Both lanes must</span>
 <span class="w">    </span><span class="c1">//   present valid data in the same cycle for the W4A8 dual-MAC pipeline.</span>
 <span class="w">    </span><span class="c1">//   Arrays are already unpacked to 32 × INT4 upstream (128 bit / 4 bit = 32).</span>
-<span class="w">    </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="no">`INT4_WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">IN_weight_upper</span><span class="w">      </span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="p">(</span><span class="no">`HP_PORT_SINGLE_WIDTH</span><span class="o">/</span><span class="no">`INT4_WIDTH</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+<span class="w">    </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="no">`INT4_WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">IN_weight_upper</span><span class="w">      </span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="p">(</span><span class="no">`HP_SINGLE_WIDTH</span><span class="o">/</span><span class="no">`INT4_WIDTH</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
 <span class="w">    </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w">                   </span><span class="n">IN_weight_upper_valid</span><span class="p">,</span>
 <span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w">                   </span><span class="n">IN_weight_upper_ready</span><span class="p">,</span>
-<span class="w">    </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="no">`INT4_WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">IN_weight_lower</span><span class="w">      </span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="p">(</span><span class="no">`HP_PORT_SINGLE_WIDTH</span><span class="o">/</span><span class="no">`INT4_WIDTH</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+<span class="w">    </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="no">`INT4_WIDTH</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">IN_weight_lower</span><span class="w">      </span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="p">(</span><span class="no">`HP_SINGLE_WIDTH</span><span class="o">/</span><span class="no">`INT4_WIDTH</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
 <span class="w">    </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w">                   </span><span class="n">IN_weight_lower_valid</span><span class="p">,</span>
 <span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w">                   </span><span class="n">IN_weight_lower_ready</span><span class="p">,</span>
 
@@ -700,8 +718,34 @@ Stage 2–5: LUT 가산기) 를 가지며, HP2/HP3 에서 가중치를 스트리
 <span class="no">`include</span><span class="w"> </span><span class="s">&quot;GEMV_Vec_Matrix_MUL.svh&quot;</span>
 <span class="no">`include</span><span class="w"> </span><span class="s">&quot;GLOBAL_CONST.svh&quot;</span>
 
-<span class="c1">// weight size = 4bit</span>
-<span class="c1">// feature_map size =  bf16</span>
+<span class="c1">// ===| Module: GEMV_top — Vector Core (4 parallel muV-Core lanes) |==============</span>
+<span class="c1">// Purpose      : INT4 weight × BF16 fmap GEMV for transformer decode tokens.</span>
+<span class="c1">//                Each of A/B/C/D lanes runs an independent reduction branch</span>
+<span class="c1">//                sharing the broadcast fmap LUT generator.</span>
+<span class="c1">// Spec ref     : pccx v002 §2.3 (Vector Core), §3.2 (GEMV uop).</span>
+<span class="c1">// Clock        : clk @ 400 MHz.</span>
+<span class="c1">// Reset        : rst_n active-low.</span>
+<span class="c1">// Topology     : 1× GEMV_generate_lut (BF16 fmap → fixed-point LUT, shared)</span>
+<span class="c1">//              + 4× GEMV_reduction_branch (per-lane MAC + reduction tree).</span>
+<span class="c1">// Data widths  : INT4 weight (param.weight_width), fixed-point mantissa</span>
+<span class="c1">//                (param.fixed_mant_width), output 1+2+mant width = signed</span>
+<span class="c1">//                fixed-point (fixed_mant_width + 3 bits).</span>
+<span class="c1">// Latency      : LUT + reduction tree depth (see GEMV_reduction_branch contract).</span>
+<span class="c1">// Throughput   : 1 result/cycle per active lane in steady state, after the</span>
+<span class="c1">//                first num_recur cycles of fmap accumulation.</span>
+<span class="c1">// Handshake    : Per-lane weight valid+ready; activation gated by</span>
+<span class="c1">//                IN_activated_lane[lane] so disabled lanes hold weight stream.</span>
+<span class="c1">// Backpressure : OUT_weight_ready_* asserts only while reduction branch is</span>
+<span class="c1">//                ready to consume the next weight cycle; upstream (HP2/HP3</span>
+<span class="c1">//                CDC FIFO) must respect.</span>
+<span class="c1">// Reset state  : All output result valid = 0; result vectors registered to 0.</span>
+<span class="c1">// Errors       : none.</span>
+<span class="c1">// Counters     : none. (Stage D: lane_active_cycles, weight_handshakes.)</span>
+<span class="c1">// Assertions   : (Stage C) OUT_weight_ready_* never asserted while</span>
+<span class="c1">//                IN_weight_valid_* low; OUT_result_valid_* one-hot per cycle</span>
+<span class="c1">//                across activated lanes.</span>
+<span class="c1">// ===============================================================================</span>
+<span class="c1">// weight size = 4bit, feature_map size = BF16 (converted to fixed-point upstream).</span>
 <span class="k">module</span><span class="w"> </span><span class="n">GEMV_top</span>
 <span class="w">  </span><span class="k">import</span><span class="w"> </span><span class="n">vec_core_pkg</span><span class="o">::*</span><span class="p">;</span>
 <span class="p">#(</span>
@@ -751,7 +795,7 @@ Stage 2–5: LUT 가산기) 를 가지며, HP2/HP3 에서 가중치를 스트리
 <span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">OUT_result_valid_D</span>
 <span class="p">);</span>
 
-<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="kt">signed</span><span class="w"> </span><span class="p">[</span><span class="n">param</span><span class="p">.</span><span class="n">fixed_mant_width</span><span class="o">+</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">fmap_LUT_wire</span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="n">param</span><span class="p">.</span><span class="n">fmap_cache_out_cnt</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="o">:</span><span class="n">param</span><span class="p">.</span><span class="n">weight_width</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="kt">signed</span><span class="w"> </span><span class="p">[</span><span class="n">param</span><span class="p">.</span><span class="n">fixed_mant_width</span><span class="o">+</span><span class="mi">2</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">fmap_LUT_wire</span><span class="p">[</span><span class="mi">0</span><span class="o">:</span><span class="n">param</span><span class="p">.</span><span class="n">fmap_cache_out_cnt</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="o">:</span><span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">param</span><span class="p">.</span><span class="n">weight_width</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
 
 <span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">fmap_ready_wire</span><span class="p">;</span>
 
@@ -866,24 +910,38 @@ CORDIC + LUT 하이브리드 함수 유닛을 조율합니다.
 <span class="kn">import</span><span class="w"> </span><span class="nn">isa_pkg::*</span><span class="p">;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">bf16_math_pkg::*</span><span class="p">;</span>
 
-<span class="c1">// ===| CVO Top |=================================================================</span>
-<span class="c1">// Wraps CVO_sfu_unit (EXP/SQRT/GELU/RECIP/SCALE/REDUCE_SUM) and</span>
-<span class="c1">// CVO_cordic_unit (SIN/COS) behind a unified streaming interface.</span>
-<span class="c1">//</span>
-<span class="c1">// Data flow:</span>
-<span class="c1">//   Host issues OP_CVO via AXI-Lite → Global_Scheduler produces cvo_control_uop_t</span>
-<span class="c1">//   → CVO_top latches uop, processes IN_length BF16 elements from L2 stream,</span>
-<span class="c1">//     writes results back via output stream.</span>
-<span class="c1">//</span>
-<span class="c1">// FLAG_SUB_EMAX: subtract IN_e_max from each input before the function.</span>
-<span class="c1">//   Implements exp(x - e_max) for numerically stable softmax.</span>
-<span class="c1">// FLAG_ACCM: accumulate output into dst (add OUT_result to prior value).</span>
-<span class="c1">//   Handled externally by the mem subsystem; CVO_top only signals it via OUT_accm.</span>
-<span class="c1">//</span>
-<span class="c1">// FSM states:</span>
-<span class="c1">//   IDLE    : waiting for valid uop</span>
-<span class="c1">//   RUNNING : streaming IN_length elements through the chosen unit</span>
-<span class="c1">//   DONE    : pulse OUT_done for one cycle, return to IDLE</span>
+<span class="c1">// ===| Module: CVO_top — scalar function unit (SFU + CORDIC) wrapper |==========</span>
+<span class="c1">// Purpose      : Run BF16 element-wise non-linear ops (EXP/SQRT/GELU/RECIP/</span>
+<span class="c1">//                SCALE/REDUCE_SUM) and trig ops (SIN/COS) behind a unified</span>
+<span class="c1">//                streaming interface; provides numerically stable softmax via</span>
+<span class="c1">//                FLAG_SUB_EMAX (x - e_max).</span>
+<span class="c1">// Spec ref     : pccx v002 §2.4 (CVO core), §3.5 (CVO uop), §5.3 (bridge).</span>
+<span class="c1">// Clock        : clk @ 400 MHz.</span>
+<span class="c1">// Reset        : rst_n active-low; i_clear synchronous soft-clear.</span>
+<span class="c1">// Topology     : Op routing decided by uop_func at IDLE→RUNNING transition:</span>
+<span class="c1">//                  CVO_SIN/CVO_COS → CVO_cordic_unit</span>
+<span class="c1">//                  others          → CVO_sfu_unit</span>
+<span class="c1">// Sub-units    : CVO_sfu_unit (BF16 scalar pipeline), CVO_cordic_unit (rotation</span>
+<span class="c1">//                CORDIC for sin/cos pair).</span>
+<span class="c1">// Data flow    : Host issues OP_CVO via AXI-Lite → Global_Scheduler produces</span>
+<span class="c1">//                cvo_control_uop_t → CVO_top latches uop, processes IN_length</span>
+<span class="c1">//                BF16 elements from the L2 stream, writes results back via</span>
+<span class="c1">//                the output stream.</span>
+<span class="c1">// FLAG_SUB_EMAX: Subtract IN_e_max from each input before the function.</span>
+<span class="c1">//                Implements exp(x − e_max) for numerically stable softmax.</span>
+<span class="c1">// FLAG_ACCM    : Accumulate output into dst (add OUT_result to prior value).</span>
+<span class="c1">//                Handled externally by the mem subsystem; CVO_top only</span>
+<span class="c1">//                surfaces it via OUT_accm.</span>
+<span class="c1">// FSM states   : IDLE → RUNNING → DONE → IDLE.</span>
+<span class="c1">// Latency      : Sub-unit latency (see CVO_sfu_unit / CVO_cordic_unit</span>
+<span class="c1">//                contracts) + 1 output register cycle.</span>
+<span class="c1">// Throughput   : 1 result per cycle in steady state for non-CORDIC ops.</span>
+<span class="c1">// Backpressure : OUT_data_ready ANDs sub-unit ready with (state == RUNNING).</span>
+<span class="c1">// Reset state  : ST_IDLE, OUT_result = 0, OUT_result_valid = 0, OUT_done = 0.</span>
+<span class="c1">// Errors       : Unknown uop_func falls back to ST_IDLE on default arm.</span>
+<span class="c1">// Counters     : none.</span>
+<span class="c1">// Assertions   : (Stage C) IN_data_valid &amp;&amp; OUT_data_ready only during RUNNING;</span>
+<span class="c1">//                OUT_done is one-cycle pulse only.</span>
 <span class="c1">// ===============================================================================</span>
 
 <span class="k">module</span><span class="w"> </span><span class="n">CVO_top</span><span class="w"> </span><span class="p">(</span>
@@ -1397,7 +1455,7 @@ CORDIC + LUT 하이브리드 함수 유닛을 조율합니다.
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2026-05-01</div>
+              Last updated on 2026-05-03</div>
           </div>
           <div class="right-details">
             <div class="icons">

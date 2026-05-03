@@ -1,7 +1,8 @@
 pccx-lab
 ========
 
-pccx NPU 아키텍처를 위해 특별히 설계된 Pre-RTL 병목 탐지, UVM 공동 시뮬레이션 및 LLM 기반 테스트벤치 생성 프로파일러입니다.
+pccx NPU 아키텍처를 위한 트레이스 프로파일링, 검증 표면, CLI 기반
+워크플로우 디스크립터 문서입니다.
 
 .. toctree::
    :maxdepth: 2

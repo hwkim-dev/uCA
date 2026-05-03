@@ -200,6 +200,9 @@
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules/overview.html">Module Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules/node-editor.html">Node Editor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CLI_CORE_BOUNDARY.html">pccx-lab CLI/core boundary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CLI_BOUNDARY_EXAMPLES.html">pccx-lab CLI boundary examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DIAGNOSTICS_HANDOFF_CONSUMER.html">Launcher Diagnostics Handoff Consumer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="design/rationale.html">Design Rationale</a></li>
 <li class="toctree-l1"><a class="reference internal" href="design/phase1_crate_split.html">Phase 1 — Workspace / Crate Split Proposal</a></li>
 <li class="toctree-l1"><a class="reference internal" href="design/phase2_intellisense.html">Phase 2 — IntelliSense-Level Intelligence</a></li>
@@ -251,7 +254,7 @@
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">¶</a></h1>
 <blockquote>
 <div><p>A 5-minute tutorial for first-time users.
-Structured as a VS Code-style <code class="docutils literal notranslate"><span class="pre">walkthroughs</span></code> contract in three steps:
+Structured as an editor-style walkthrough in three steps:
 (1) launch pccx-lab, (2) load the sample <code class="docutils literal notranslate"><span class="pre">.pccx</span></code>, (3) open Flame Graph +
 Waveform.</p>
 </div></blockquote>
@@ -279,10 +282,10 @@ npx<span class="w"> </span>tauri<span class="w"> </span>dev
 Verify / Run / Tools / Window / Help.</p></li>
 <li><p><strong>Tab strip</strong> — Timeline / Flame Graph / Waveform / System Simulator /
 Memory Dump / ….</p></li>
-<li><p><strong>AI Copilot panel</strong> (docked right; `Ctrl+`` to toggle).</p></li>
+<li><p><strong>Workflow Assistant panel</strong> (docked right; `Ctrl+`` to toggle).</p></li>
 <li><p><strong>Bottom Panel</strong> (Log / Console / Telemetry; <code class="docutils literal notranslate"><span class="pre">Ctrl+J</span></code> to toggle).</p></li>
 </ul>
-<p>The right-hand activity bar surfaces the Copilot and Telemetry quick-toggles. Every icon-only button carries an <code class="docutils literal notranslate"><span class="pre">aria-label</span></code>
+<p>The right-hand activity bar surfaces the assistant and Telemetry quick-toggles. Every icon-only button carries an <code class="docutils literal notranslate"><span class="pre">aria-label</span></code>
 so the shell is fully screen-reader navigable (WCAG 2.2 SC 2.1.1 /
 2.4.3).</p>
 </section>
@@ -296,7 +299,7 @@ so the shell is fully screen-reader navigable (WCAG 2.2 SC 2.1.1 /
 startup. On success, a green <code class="docutils literal notranslate"><span class="pre">trace</span> <span class="pre">loaded</span></code> badge appears to the
 right of the tab strip.</p></li>
 </ol>
-<p>To load a real pccx-FPGA simulation result, pick:</p>
+<p>To load a local pccx-FPGA simulation result, pick:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">../</span><span class="n">pccx</span><span class="o">-</span><span class="n">FPGA</span><span class="o">-</span><span class="n">NPU</span><span class="o">-</span><span class="n">LLM</span><span class="o">-</span><span class="n">kv260</span><span class="o">/</span><span class="n">hw</span><span class="o">/</span><span class="n">sim</span><span class="o">/</span><span class="n">fixtures</span><span class="o">/</span><span class="n">smoke</span><span class="o">.</span><span class="n">pccx</span>
 </pre></div>
 </div>
@@ -316,7 +319,7 @@ decoded.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">Ctrl</span> <span class="pre">+</span> <span class="pre">scroll</span></code> — zoom the time axis.</p></li>
 <li><p>Drag — pan.</p></li>
 <li><p><strong>Find Bottleneck</strong> — calls the <code class="docutils literal notranslate"><span class="pre">detect_bottlenecks</span></code> IPC and
-surfaces the dominant contended window with an AI recommendation.</p></li>
+surfaces the dominant contended window with a local recommendation.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Ctrl</span> <span class="pre">+</span> <span class="pre">Shift</span> <span class="pre">+</span> <span class="pre">D</span></code> — toggle diff mode against a second loaded run.</p></li>
 </ul>
 </section>

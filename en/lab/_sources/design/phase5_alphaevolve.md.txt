@@ -48,7 +48,7 @@ Five lanes:
 3. **PRM gate** — deep cloud LLM proposes RTL → Verilator elaborates → verible lints → timing-check sanity-tests → survivors go to the surrogate.
 4. **Formal diff** — promoted variants must pass `pccx-verification::GoldenDiffGate` + Sail refinement check.
 
-Deliverable: "design an NPU for Gemma-3N E4B decoding at 20 tok/s on KV260" in < 1 day wall-clock.
+Deliverable: produce a bounded candidate NPU design proposal for a model-decoding workload, with verification evidence attached before any hardware claim is made.
 
 ### 5B — Compiler Superoptimization (Weeks 22-24)
 
@@ -95,7 +95,7 @@ Depends on: Phase 4 `M4.8-M4.10` Sail completion (for reliable refinement check)
 
 ### 5E — Generative Chip Design (Weeks 30+)  **USER ULTIMATE GOAL**
 
-**Input:** same model file + target silicon family (KV260 / ASIC-22nm).
+**Input:** same model file + target silicon family, such as a board-class FPGA target or a future ASIC process.
 
 **Pipeline:**
 
@@ -109,7 +109,7 @@ Depends on: Phase 4 `M4.8-M4.10` Sail completion (for reliable refinement check)
 4. Synthesize top-K survivors in parallel via 5C-authorised Vivado runners.
 5. Pick Pareto front; user selects final.
 
-**Deliverable:** feed `gemma-3n-e4b.safetensors` + "KV260" → receive a tailor-made NPU RTL + bitstream + correctness proof in < 48 hours.
+**Deliverable:** feed a model artifact and target category into the design loop, then receive a candidate RTL package plus a bounded verification report. Bitstream generation and hardware readiness remain separate claims that require measured evidence.
 
 ## 3. Risk register
 
@@ -119,7 +119,7 @@ Depends on: Phase 4 `M4.8-M4.10` Sail completion (for reliable refinement check)
 | Lean 4 proof obligations auto-extraction brittle | Medium | High | Start with known-provable kernel modules; expand only as tooling matures. |
 | Model input shapes outside pccx v002 ISA capacity | Low | High | Surface as a compile-time error in 5D; fall back to CPU reference path. |
 | Sonnet RTL proposals generate linter-clean but timing-broken candidates | High | Medium | PRM gate does static timing sanity check (critical-path estimate) before the surrogate. |
-| 5E wall-clock target (48 h) unachievable on KV260 workstations | High | Medium | Offload synth to a cloud Vivado cluster; document the trade-off. |
+| 5E wall-clock target (48 h) unachievable on board-class workstations | High | Medium | Offload synthesis to a controlled remote cluster; document the trade-off. |
 
 ## 4. Decision — internal first, open later
 
