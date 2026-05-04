@@ -29,7 +29,7 @@ three principles:
 
    :download:`pccx v002 ISA Guidebook (PDF) <../../../_static/downloads/pccx-isa-v002.pdf>`
 
-   The PDF is regenerated from ``main.tex`` at the repository root; the
+   The PDF is rebuilt from ``main.tex`` at the repository root; the
    LaTeX source is the single authoring entry point for the offline
    book, while this HTML portal remains the living reference for the
    web.

@@ -280,7 +280,7 @@ data via props or local state.
 
 ### `ExtensionManager.tsx` — `ExtensionManager`
 
-Calls `get_extensions` to retrieve the `ai_copilot` extension list and
+Calls `get_extensions` to retrieve the `workflow_facade` extension list and
 presents it as a category-grouped card grid (Local LLM, Hardware
 Acceleration, Cloud Bridge, Analysis Plugins, Export Plugins).  The
 install-progress UI exists; the actual download logic is currently a

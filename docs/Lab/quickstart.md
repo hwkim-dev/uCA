@@ -23,7 +23,7 @@ in the shortest possible path.
 pccx-lab is a Tauri v2 desktop application composed of a Rust workspace
 (`crates/`) and a React/Vite frontend (`ui/`). The Rust workspace
 contains nine crates: `core`, `reports`, `verification`, `authoring`,
-`evolve`, `lsp`, `remote`, `uvm_bridge`, `ai_copilot`. All crates
+`evolve`, `lsp`, `remote`, `uvm_bridge`, `workflow_facade`. All crates
 treat `pccx-core` as the single sink of the dependency graph;
 `pccx-ide` (`ui/src-tauri/`) and `pccx-remote` are the only terminal
 binaries.
@@ -73,8 +73,7 @@ when launching outside the Tauri process tree. A pure Wayland session
 without XWayland is not supported in the current release.
 
 If the freeze recurs after applying this workaround, consult the
-pccx-lab issue tracker and the five-stage escalation procedure in
-`CLAUDE_TASKS_lab.md` §3.
+pccx-lab issue tracker and the documented escalation procedure.
 
 ## Loading the First Trace
 

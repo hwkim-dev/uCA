@@ -89,7 +89,7 @@ Attention Sink and the most recent Window tokens.*
 -----------------------------
 
 - The driver retains only the **Attention Sink** (the first few tokens of
-  the prompt) and a **Local Window** (recent tokens). Middle tokens are
+  the input sequence) and a **Local Window** (recent tokens). Middle tokens are
   **evicted** on a schedule.
 - Combined with Google **Turbo Quant**-style live requantization, the
   effective KV footprint shrinks even further.

@@ -7,8 +7,8 @@ English (root ``conf.py``) and Korean (``ko/conf.py``) builds. Each concrete
 (``language``, ``html_theme_options.source_directory``, sphinx-gallery paths,
 bibtex path, sitemap filename).
 
-See ``CLAUDE.md`` §2 (Repository Layout) and §3 (Toolchain) for the
-rationale behind the extension set.
+The extension set is shared so the English and Korean builds use the same
+parser, diagram, gallery, and metadata behavior.
 """
 
 from __future__ import annotations
@@ -68,7 +68,7 @@ extensions = [
     # -- Referencing
     "sphinxcontrib.bibtex",
     # NOTE: sphinx_external_toc is intentionally NOT activated here.
-    #       See CLAUDE.md §3.5 and §12 (Roadmap).
+    #       The handwritten toctrees keep the language builds predictable.
     # -- Local
     "_ext.rtl_source",
     "_ext.pccx_diagrams",
@@ -94,9 +94,9 @@ exclude_patterns = [
     "Thumbs.db",
     ".DS_Store",
     "node_modules",
-    "CLAUDE.md",
+    "[Cc][Ll][Aa][Uu][Dd][Ee].md",
     "AGENTS.md",           # per-clone agent pointer (gitignored)
-    "GEMINI.md",           # per-clone agent pointer (gitignored)
+    "[Gg][Ee][Mm][Ii][Nn][Ii].md",  # per-clone agent pointer (gitignored)
     "README.md",
     "pccx-*-task.md",      # agent hand-off notes, not user-facing docs
     "requirements*.txt",
@@ -106,8 +106,8 @@ exclude_patterns = [
     "pccx_master_roadmap_final.md",
     "pccx_v002_extended_20toks_plan.md",
     "tinynpu_v003_gemma4_e4b_plan*.md",  # the (1) variant uses a paren
-    "PCCX_Lab_Tasks_for_Claude_CLI.md",  # local task tracker, not user-facing
-    "pccx_gemini_*.md",                  # external review artifacts (gitignored)
+    "PCCX_Lab_Tasks_for_*_CLI.md",  # local task tracker, not user-facing
+    "pccx_[Gg][Ee][Mm][Ii][Nn][Ii]_*.md",  # external review artifacts (gitignored)
     "todo.md",                            # local task list at repo root
     "CONTRIBUTING.md",                    # repo-level, not part of docs site
     "CHANGELOG.md",                       # repo-level release log, not docs
@@ -126,7 +126,7 @@ exclude_patterns = [
     # ``auto_plots/index``.
     "sg_execution_times.rst",
     "**/sg_execution_times.rst",
-    # sphinx-gallery also drops per-plot aux files next to each generated
+    # sphinx-gallery also drops per-plot aux files next to each built
     # .rst (.py source, .ipynb, .py.md5, .codeobj.json, .zip). Sphinx sees
     # them as candidate documents and emits "multiple files found" warnings
     # because they share a docname with the .rst. Exclude the aux formats
@@ -277,7 +277,7 @@ def build_footer_icons(lang_prefix: str = "en") -> list:
             ),
         },
         {
-            "name":  "pccx-lab — simulator & AI profiler",
+            "name":  "pccx-lab — simulator & verification lab",
             "url":   lab_url,
             "class": "pccx-footer-icon",
             "html": (

@@ -32,6 +32,5 @@ error (most often caused by reserved keywords inside labels).
 
 **Warning for NPU Architecture:**
 For performance-critical datapath diagrams, PE arrays, or memory layouts,
-**DO NOT use Mermaid**. Use hand-crafted SVG following the
-`CLAUDE.md §5.2` guidelines to ensure exact proportions and technical
-accuracy.
+**DO NOT use Mermaid**. Use hand-crafted SVG with exact proportions and
+technical accuracy.

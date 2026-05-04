@@ -25,5 +25,4 @@ plot_bandwidth
 | [](svg_themed_demo)                 | Inline SVG + Furo CSS vars    | yes           |
 | [](plot_bandwidth)                  | `scienceplots` + `sphinx-gallery` | yes (palette) |
 
-See `CLAUDE.md` §5 (Diagram Authoring Rules) and §6 (Plotting Conventions)
-for the authoring conventions these pages are meant to demonstrate.
+These pages demonstrate the repository's diagram and plotting conventions.

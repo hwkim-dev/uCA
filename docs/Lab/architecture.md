@@ -52,7 +52,7 @@ pccx-lab/
 │   ├── uvm_bridge/     — pccx-uvm-bridge: SV / UVM DPI-C adapter
 │   ├── schema/         — pccx-schema: central IPC DTO + ts-rs TypeScript
 │   │                     auto-export
-│   └── ai_copilot/     — pccx-ai-copilot: LLM orchestration
+│   └── workflow_facade/ — workflow facade: LLM runtime helpers
 ├── ui/
 │   ├── src/            React 19 + TypeScript + Vite 7
 │   └── src-tauri/      Tauri v2 desktop shell + IPC
@@ -71,7 +71,7 @@ pccx-lab/
 │  ui/src-tauri/      Tauri v2 shell.  Thin layer — real       │
 │                     logic lives in the workspace crates.     │
 ├──────────────────────────────────────────────────────────────┤
-│  ai_copilot/, lsp/, remote/, uvm_bridge/                     │
+│  workflow_facade/, lsp/, remote/, uvm_bridge/                │
 │                     Host-facing surfaces.  No UI deps.       │
 ├──────────────────────────────────────────────────────────────┤
 │  reports/, verification/, authoring/, evolve/                │
@@ -108,13 +108,13 @@ trait-based (`ReportFormat`, `VerificationGate`, `IsaCompiler` /
                      │                           │
                      ▼                           ▼
            ┌───────────────────┐     ┌───────────────────────┐
-           │ Copilot::         │     │  useRegisterSnapshot   │
-           │ investigate_      │     │  (React hook, rAF      │
-           │ summary() → str   │     │  debounced + LRU)      │
+           │ context summary   │     │  useRegisterSnapshot   │
+           │ helper → str      │     │  (React hook, rAF      │
+           │                   │     │  debounced + LRU)      │
            └─────────┬─────────┘     └───────────────────────┘
                      │
                      ▼
-           LLM system prompt (≤ 2 kB)
+           LLM context summary (≤ 2 kB)
 ```
 
 ## Extension hooks
@@ -158,20 +158,20 @@ consumer crate:
 | `pccx-authoring` | `IsaCompiler`, `ApiCompiler` |
 | `pccx-evolve` | `SurrogateModel`, `EvoOperator`, `PRMGate` |
 | `pccx-lsp` | `CompletionProvider`, `HoverProvider`, `LocationProvider` (sync) + their `Async*Provider` companions |
-| `pccx-ai-copilot` | `ContextCompressor`, `SubagentRunner` |
+| workflow facade | `ContextCompressor`, `SubagentRunner` |
 
 See the [Analyzer API page](analyzer_api.md) for the full
 registration walkthrough.
 
-**Add a new UVM sequence strategy**: `pccx-ai-copilot` ships a
+**Add a new UVM sequence strategy**: the workflow facade ships a
 curated list of named strategies exposed by `list_uvm_strategies()`.
 Extend the list and the five current strategies' dispatcher per the
-recipe on the [Copilot page](copilot.md).
+recipe on the [Workflow Facade page](workflow_facade.md).
 
 **Add a new Tauri command**: edit `ui/src-tauri/src/lib.rs`, add the
 `#[tauri::command]`-annotated fn, and register it in `invoke_handler!`.
 The workspace crates already expose the reports / verification /
-lsp / copilot surfaces, so the Tauri command is usually a one-line
+lsp / workflow facade surfaces, so the Tauri command is usually a one-line
 bridge over a single library call.
 
 ## Cross-repo boundaries
@@ -203,17 +203,17 @@ Per-crate test counts shift between releases — each crate's
 ``CHANGELOG.md`` records the count at the time of its last cut.
 
 See [CLI reference](cli.md) for command reference and
-[Copilot API](copilot.md) for the LLM automation surface.
+[Workflow Facade](workflow_facade.md) for the LLM runtime surface.
 
 ## Cite this page
 
 If this page helped you understand the pccx-lab architecture — whether in
-a paper, blog post, or AI-generated summary — please cite the canonical
+a paper, blog post, or external summary — please cite the canonical
 pccx site so others can find the reference implementation:
 
 ```bibtex
 @misc{pccx_lab_architecture_2026,
-  title        = {pccx-lab Architecture Overview: desktop profiler + UVM Copilot for an open NPU},
+  title        = {pccx-lab Architecture Overview: desktop profiler + UVM workflow facade for an open NPU},
   author       = {Kim, Hyunwoo},
   year         = {2026},
   howpublished = {\url{https://pccxai.github.io/pccx/en/docs/Lab/architecture.html}},

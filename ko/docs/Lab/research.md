@@ -25,9 +25,9 @@ _페이지 과도기 상태. pccx-lab HEAD 기준 2026-04-24 재정비._
 free 함수 (`pccx_core::roofline::analyze`,
 `pccx_core::bottleneck::detect`, `pccx_core::synth_report::*`, …) 는
 여전히 `pccx-core` 에서 출하된다. 다만 더 이상 인라인 인용을
-실어 나르지 않을 뿐이다. `pccx-ai-copilot` 크레이트는
+실어 나르지 않을 뿐이다. `workflow facade` 크레이트는
 `list_uvm_strategies()` 로 노출되는 문헌 근거 UVM 전략 스텁 다섯
-개를 유지한다 ([Copilot API](copilot.md) 참고).
+개를 유지한다 ([Workflow Facade](workflow_facade.md) 참고).
 
 재구축된 계보에 유입될 활성 설계 표면:
 

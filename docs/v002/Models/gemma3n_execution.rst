@@ -46,7 +46,7 @@ themselves, see :doc:`../ISA/instructions`.
 2. Host Setup (Once, at Model Load)
 ====================================
 
-The driver performs these steps before any token is generated:
+The driver performs these steps before any token is emitted:
 
 1. ``pccx_open(&handle)`` — maps the AXI-Lite control window and opens
    the HP/ACP DMA channels.

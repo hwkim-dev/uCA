@@ -443,7 +443,7 @@ The pccx web portal at \url{https://pccxai.github.io/pccx/}
 contains a living, cross-referenced copy of the encoding tables
 together with interactive Mermaid, WaveDrom, and Graphviz diagrams.
 This PDF is the \textit{offline, signoff-ready} mirror; both sources
-are regenerated from the authoritative RTL definitions in the external
+are rebuilt from the authoritative RTL definitions in the external
 repository
 \href{https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260}{\texttt{pccxai/pccx-FPGA-NPU-LLM-kv260}}
 under
@@ -1583,7 +1583,7 @@ architectural flags are affected.
 
 \begin{itemize}[leftmargin=*, itemsep=0.2ex]
   \item \texttt{GEMM} --- prefill. Q/K/V projection, FFN up/down
-        projection over a prompt tile.
+        projection over a sequence tile.
   \item \texttt{GEMV} --- autoregressive decoding. Every projection
         in the single-token-per-step loop.
 \end{itemize}
@@ -2239,7 +2239,7 @@ slot to IDLE.}
 This chapter walks through representative instruction streams that a
 host driver emits.
 
-\section{Example 1 --- Single GEMM tile (Q projection for one prompt tile)}
+\section{Example 1 --- Single GEMM tile (Q projection for one sequence tile)}
 
 \textbf{Goal:} compute $Q = X W_Q$ for a tile of shape
 $(M, N, K) = (64, 256, 256)$.

@@ -2,10 +2,11 @@
 
 _Last revised: 2026-04-29._
 
-The `cycle/` directory is the artefact store for a **4-role loop** that
-iteratively improves pccx-lab without user intervention between rounds.
-The loop completes one round in Judge → Research → Plan → Implement order;
-the next round's Judge re-evaluates the prior implementation.
+The `cycle/` directory is the artefact store for a **4-role review loop**
+that iteratively evaluates pccx-lab changes across evidence, planning, and
+implementation records. The loop completes one round in Judge → Research →
+Plan → Implement order; the next round's Judge re-evaluates the prior
+implementation.
 Round artefact layout, grade history, and current state are collected here.
 
 Loop driver specification: `cycle/driver.md`.
@@ -13,8 +14,8 @@ Round summary index: `cycle/ROUNDS.md`.
 
 ## Loop structure
 
-The loop is composed of four roles. Each role has a dedicated agent prompt
-file under `cycle/agents/`.
+The loop is composed of four roles. Each role has a dedicated role
+specification under `cycle/agents/`.
 
 **Judge** (`agents/judge.md`) compares pccx-lab's current state objectively
 against a reference set of commercial RTL simulators, GPU profilers, and
@@ -37,7 +38,7 @@ converts weaknesses into concrete implementation tickets, each specifying
 target file paths, patch direction, and acceptance criteria.
 Output: `round_NNN/roadmap.md`.
 
-**Implementer** splits into three specialised prompts
+**Implementer** splits into three specialised role specifications
 (`implementer_ui.md`, `implementer_core.md`, `implementer_bridge.md`).
 The top tickets from `roadmap.md` are executed in parallel in isolated
 worktrees; diff and test results are recorded in `round_NNN/implemented_T*.md`.

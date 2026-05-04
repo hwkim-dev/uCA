@@ -33,5 +33,5 @@ fig.tight_layout()
 plt.show()
 ```
 
-`plots/plot_bandwidth.py` 에 실제 동작하는 예시가 있고, 전체 플롯 규약은
-`CLAUDE.md` §6 에 있습니다 (결정성 원칙: 난수 시드는 전부 고정).
+`plots/plot_bandwidth.py` 에 실제 동작하는 예시가 있다. 플롯 예시는
+결정적이어야 하며, 난수 사용 시 시드를 고정한다.

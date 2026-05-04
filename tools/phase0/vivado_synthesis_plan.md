@@ -156,7 +156,7 @@ Zynq PS's HP / HPM / ACP ports. Integration needs:
 
 ```
 hw/ip/pccx_npu_v002/
-├── component.xml         # generated via ipx::package_project
+├── component.xml         # packaged via ipx::package_project
 ├── hdl/                  # symlink to hw/rtl
 └── package_ip.tcl
 ```

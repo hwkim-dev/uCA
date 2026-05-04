@@ -2,7 +2,7 @@
 # pccx — documentation build targets
 #
 # Convenience wrapper around sphinx-build / sphinx-autobuild for the dual
-# English-Korean dual-source site. See CLAUDE.md §7 for the full command list.
+# English-Korean dual-source site.
 # =============================================================================
 
 PY             ?= python

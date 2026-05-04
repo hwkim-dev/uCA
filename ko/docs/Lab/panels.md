@@ -272,7 +272,7 @@ unit)와 데이터 이동 엣지를 플로우 그래프로 렌더링한다. i18n
 
 ### `ExtensionManager.tsx` — `ExtensionManager`
 
-`get_extensions`로 `ai_copilot` 익스텐션 목록을 받아 카테고리별
+`get_extensions`로 `workflow_facade` 익스텐션 목록을 받아 카테고리별
 (Local LLM, Hardware Acceleration, Cloud Bridge, Analysis Plugins,
 Export Plugins) 카드 그리드로 표시한다. 설치 진행률 표시 UI가
 있으나 실제 다운로드 로직은 현재 스텁이다.
