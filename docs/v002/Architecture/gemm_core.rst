@@ -10,7 +10,7 @@ grid and deliver a theoretical peak of **819 GMAC/s at 400 MHz**.
 
 .. note::
 
-   GEMM is used mainly in prefill (long-prompt initial processing) and in
+   GEMM is used mainly in prefill (long-context initial processing) and in
    Attention's ``Q·Kᵀ`` and ``score·V``. For the decoding-dominant GEMV
    operation, see :doc:`gemv_core`.
 

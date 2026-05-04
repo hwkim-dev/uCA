@@ -5,7 +5,7 @@ _Page in flux.  Refreshed 2026-04-24 to match pccx-lab HEAD._
 Phase 1 retired the pre-split `TraceAnalyzer` trait and the monolithic
 `analyzer::builtin_analyzers()` list.  In its place pccx-core ships a
 small generic **plugin-registry primitive** that every workspace crate
-(reports, verification, authoring, evolve, lsp, ai_copilot, …) reuses
+(reports, verification, authoring, evolve, lsp, workflow_facade, …) reuses
 for its own trait-object plugins.  Callers now register plugins against
 a per-crate `PluginRegistry<P>` instead of calling a fixed builtin list.
 
@@ -62,7 +62,7 @@ defines — `ReportFormat` (reports), `VerificationGate` (verification),
 `IsaCompiler` / `ApiCompiler` (authoring), `SurrogateModel` /
 `EvoOperator` / `PRMGate` (evolve), `CompletionProvider` /
 `HoverProvider` / `LocationProvider` (lsp), `ContextCompressor` /
-`SubagentRunner` (ai_copilot).  Each crate's unstable trait is a
+`SubagentRunner` (workflow_facade).  Each crate's unstable trait is a
 supertrait of `Plugin`, gets its own `PluginRegistry<CrateTrait>`
 instance, and is iterated independently at the call site.
 
@@ -148,7 +148,7 @@ is an in-process `Vec<Box<dyn T>>`.
 | `pccx-authoring`  | `IsaCompiler`, `ApiCompiler`                                 |
 | `pccx-evolve`     | `SurrogateModel`, `EvoOperator`, `PRMGate`                   |
 | `pccx-lsp`        | `CompletionProvider`, `HoverProvider`, `LocationProvider`    |
-| `pccx-ai-copilot` | `ContextCompressor`, `SubagentRunner`                        |
+| `workflow facade` | `ContextCompressor`, `SubagentRunner`                        |
 
 Every trait in this table is scaffolded behind the crate's
 `plugin-api` feature flag; concrete implementations land incrementally
@@ -159,7 +159,7 @@ as the Phase 2–5 workstreams complete.  See each crate's
 
 - [CLI reference](cli.md) — which binaries exist today after the
   workspace split, and what surface each one actually covers.
-- [Copilot API](copilot.md) — the current `pccx-ai-copilot` static
+- [Workflow Facade](workflow_facade.md) — the current `workflow facade` static
   helpers plus the Phase 2 pccx-lsp provider traits.
 - [Research lineage](research.md) — currently a placeholder; the
   citation registry was in `core/src/research.rs`, which was removed
@@ -168,7 +168,7 @@ as the Phase 2–5 workstreams complete.  See each crate's
 ## Cite this page
 
 When referring to the pccx-core plugin-registry primitive in papers,
-blog posts, or AI summaries, please cite:
+blog posts, or external summaries, please cite:
 
 ```bibtex
 @misc{pccx_lab_analyzer_api_2026,

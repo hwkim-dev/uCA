@@ -10,7 +10,7 @@ Tauri v2 window.
 
 This section documents the tool's internal surface — the Phase 1
 plugin-registry primitive every crate hangs trait objects off, the
-current ``pccx-ai-copilot`` + ``pccx-lsp`` LSP façade, the
+current workflow facade + ``pccx-lsp`` LSP façade, the
 command-line binaries distributed across crates after the workspace
 split, and the research-lineage placeholder that will refresh once the
 citation registry lands in its new home.
@@ -43,11 +43,11 @@ For the user-facing desktop app itself, see the separate
       ``PluginMetadata`` supertraits, and how each crate hangs its own
       plugin trait off it.
 
-   .. grid-item-card:: :octicon:`beaker;1em;sd-mr-1` Copilot API
-      :link: copilot
+   .. grid-item-card:: :octicon:`beaker;1em;sd-mr-1` Workflow Facade
+      :link: workflow_facade
       :link-type: doc
 
-      The ``pccx-ai-copilot`` static helpers (``compress_context``,
+      The workflow facade static helpers (``compress_context``,
       ``generate_uvm_sequence``, ``list_uvm_strategies``) and the
       Phase 2 ``pccx-lsp`` provider traits + ``LspMultiplexer``.
 
@@ -67,7 +67,7 @@ For the user-facing desktop app itself, see the separate
    architecture
    cli
    analyzer_api
-   copilot
+   workflow_facade
    research
    panels
    ipc

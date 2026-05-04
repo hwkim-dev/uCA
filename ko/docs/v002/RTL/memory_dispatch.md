@@ -60,7 +60,7 @@ AXI 250 MHz 도메인에서 NPU 코어 400 MHz 도메인으로 교차하는 CDC 
 - `S_AXI_HP{0..3}_WEIGHT` → `M_CORE_HP{0..3}_WEIGHT`로 명명된
   `axis_if` 인터페이스를 사용한다.
 
-GEMM 가중치는 HP0/HP1을, GEMV 가중치는 HP2/HP3을 통해 공급된다(CLAUDE.md §4 참고).
+GEMM 가중치는 HP0/HP1을, GEMV 가중치는 HP2/HP3을 통해 공급된다.
 각 FIFO의 깊이 4096 × 128비트 = 64 KiB는 가중치 타일 한 배치를 버퍼링하기에
 충분한 크기다.
 

@@ -2,7 +2,7 @@
 pccx — Korean Sphinx configuration.
 
 Thin wrapper: pulls every shared knob from the repo-root :mod:`conf_common`
-and only overrides language-specific values. See ``CLAUDE.md`` §2.
+and only overrides language-specific values.
 """
 
 from __future__ import annotations

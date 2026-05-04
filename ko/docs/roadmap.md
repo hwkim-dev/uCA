@@ -16,15 +16,15 @@ pccx 생태계 전체의 현재 릴리스 방향만 짧게 요약한다.
 ## Next — v0.3.0: Lab 확장성 + 사용자 워크플로 분리
 
 - pccx-lab plugin system (CLI 우선, GUI 후속)
-- AI worker 를 위한 controlled MCP 인터페이스
+- controlled external tool interface
 - pccx-lab 에서 `systemverilog-ide` 를 spin-out
 - `pccx-llm-launcher` MVP 기획
 - pccx-lab ↔ IDE handoff 포맷
 - pccx-lab ↔ launcher workflow boundary
 
-## Later — v0.4+: AI 보조 하드웨어/소프트웨어 워크플로
+## Later — v0.4+: 검토된 하드웨어/소프트웨어 워크플로
 
-- AI-assisted SystemVerilog development workflow
+- SystemVerilog workflow boundary
 - evolutionary generate / simulate / evaluate / refine loop
 - testbench / log / waveform feedback loop
 - VS Code extension 경로

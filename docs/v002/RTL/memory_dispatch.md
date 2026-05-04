@@ -64,7 +64,7 @@ domain into the NPU core 400 MHz domain.
 - Uses `axis_if` interfaces named `S_AXI_HP{0..3}_WEIGHT` →
   `M_CORE_HP{0..3}_WEIGHT`.
 
-GEMM weights arrive on HP0/HP1; GEMV weights arrive on HP2/HP3 (see CLAUDE.md §4).
+GEMM weights arrive on HP0/HP1; GEMV weights arrive on HP2/HP3.
 Each FIFO's depth of 4096 × 128 bits = 64 KiB is sufficient to buffer one weight tile batch.
 
 ## CVO Stream Bridge

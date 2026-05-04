@@ -25,9 +25,9 @@ None of the research-grounded analytics code has been deleted — the
 free functions it drove (`pccx_core::roofline::analyze`,
 `pccx_core::bottleneck::detect`, `pccx_core::synth_report::*`, …) all
 still ship from `pccx-core`, they just no longer carry inline
-citations.  The `pccx-ai-copilot` crate retains five
+citations.  The `workflow facade` crate retains five
 literature-grounded UVM strategy stubs exposed via
-`list_uvm_strategies()` (see [Copilot API](copilot.md)).
+`list_uvm_strategies()` (see [Workflow Facade](workflow_facade.md)).
 
 Active design surfaces that will feed the rebuilt lineage:
 

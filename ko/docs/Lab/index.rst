@@ -9,7 +9,7 @@ bottleneck 윈도 / waveform / Vivado 합성 리포트 / 자연어 UVM-시퀀스
 
 이 섹션은 툴의 내부 표면 — 모든 크레이트가 trait object 를 걸기 위해
 사용하는 Phase 1 플러그인 레지스트리 프리미티브, 현재
-``pccx-ai-copilot`` + ``pccx-lsp`` LSP 파사드, 워크스페이스 분할 이후
+workflow facade + ``pccx-lsp`` LSP 파사드, 워크스페이스 분할 이후
 크레이트에 분산된 커맨드라인 바이너리, 그리고 인용 레지스트리가 새
 홈에 착륙할 때 갱신될 연구 계보 플레이스홀더 — 를 문서화한다.
 
@@ -41,11 +41,11 @@ bottleneck 윈도 / waveform / Vivado 합성 리포트 / 자연어 UVM-시퀀스
       ``PluginMetadata`` 슈퍼트레이트, 각 크레이트가 자체 플러그인
       트레이트를 거기에 거는 방법.
 
-   .. grid-item-card:: :octicon:`beaker;1em;sd-mr-1` Copilot API
-      :link: copilot
+   .. grid-item-card:: :octicon:`beaker;1em;sd-mr-1` Workflow Facade
+      :link: workflow_facade
       :link-type: doc
 
-      ``pccx-ai-copilot`` 정적 헬퍼 (``compress_context``,
+      workflow facade 정적 헬퍼 (``compress_context``,
       ``generate_uvm_sequence``, ``list_uvm_strategies``) 와
       Phase 2 ``pccx-lsp`` provider 트레이트 + ``LspMultiplexer``.
 
@@ -65,7 +65,7 @@ bottleneck 윈도 / waveform / Vivado 합성 리포트 / 자연어 UVM-시퀀스
    architecture
    cli
    analyzer_api
-   copilot
+   workflow_facade
    research
    panels
    ipc

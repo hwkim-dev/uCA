@@ -137,7 +137,7 @@ pccx/
 Two sibling repositories round out the pccx project:
 
 - **[pccxai/pccx-FPGA-NPU-LLM-kv260](https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260)** — active v002 SystemVerilog sources (CI-cloned into `codes/v002/`).
-- **[pccxai/pccx-lab](https://github.com/pccxai/pccx-lab)** — performance simulator and AI-integrated profiler (mounted under `/en/lab/` and `/ko/lab/` on the docs site).
+- **[pccxai/pccx-lab](https://github.com/pccxai/pccx-lab)** — performance simulator, CLI-first verification lab, and trace profiler (mounted under `/en/lab/` and `/ko/lab/` on the docs site).
 
 ---
 
@@ -165,9 +165,9 @@ v003 branches off after v002 freeze.
 
 ## Ecosystem
 
-### pccx-lab — Simulator & AI Profiler
+### pccx-lab — Simulator & Verification Lab
 
-Performance simulator and AI-integrated profiler, purpose-built for the pccx NPU. Pre-RTL bottleneck detection, UVM co-simulation, and LLM-driven testbench generation in one workflow.
+Performance simulator, CLI-first verification lab, and trace profiler for the pccx NPU. Pre-RTL bottleneck detection, UVM co-simulation, and testbench/trace workflow support share one workflow.
 
 - Repository: https://github.com/pccxai/pccx-lab
 - Documentation: https://pccxai.github.io/pccx/en/lab/ (Korean: https://pccxai.github.io/pccx/ko/lab/)

@@ -41,7 +41,7 @@ The full catalogue of 48 registered commands follows.
 | `get_core_utilisation` | — | `Result<serde_json::Value, String>` | Return per-core MAC utilisation percentages, total cycles, total microseconds, and peak TOPS as JSON. |
 | `fetch_live_window` | `window_cycles: Option<u64>` | `Result<Vec<LiveSample>, String>` | Reduce the cached trace into a `LiveSample` ring.  Returns an empty Vec when no trace is loaded. |
 | `step_to_cycle` | `cycle: u64` | `Result<RegisterSnapshot, String>` | Return the deterministic `RegisterSnapshot` for the requested cycle.  Returns an empty snapshot when no trace is loaded. |
-| `compress_trace_context` | — | `Result<String, String>` | Compress the trace into an LLM-friendly context string via `ai_copilot::compress_context`. |
+| `compress_trace_context` | — | `Result<String, String>` | Compress the trace into an LLM-friendly context string via `workflow_facade::compress_context`. |
 
 ### Reports
 
@@ -85,11 +85,11 @@ The full catalogue of 48 registered commands follows.
 | `generate_module_detail` | `sv_source: String`, `module_name: String` | `Result<String, String>` | Return a Mermaid subgraph diagram for the named module. |
 | `generate_sv_docs` | `path: String` | `Result<String, String>` | Generate module documentation from SV source. |
 
-### AI copilot
+### Workflow facade
 
 | Command | Args | Return | Purpose |
 |---|---|---|---|
-| `get_extensions` | — | `Vec<Extension>` | Return the available extension list from `ai_copilot`. |
+| `get_extensions` | — | `Vec<Extension>` | Return the available extension list from `workflow_facade`. |
 | `generate_uvm_sequence_cmd` | `strategy: String` | `String` | Generate a SV UVM sequence stub for the named strategy (`l2_prefetch`, `barrier_reduction`). |
 | `list_uvm_strategies` | — | `Vec<String>` | Return the strategy names accepted by the UVM sequence generator. |
 
@@ -167,13 +167,13 @@ struct MmapViewportResponse {
 ```
 
 The schema crate carries no dependency on `ui/`, `uvm_bridge/`, or
-`ai_copilot/`.  Wire DTOs are thin data carriers with no domain logic.
+`workflow_facade/`.  Wire DTOs are thin data carriers with no domain logic.
 
 ---
 
 ## Boundary rules
 
-Rules derived from `CLAUDE.md §5.5` and the `lib.rs` implementation.
+Rules derived from the IPC design notes and the `lib.rs` implementation.
 
 ### u64 fields
 
@@ -230,7 +230,7 @@ Raw trace data (`NpuTrace`, full `NpuEvent` arrays) does not cross the
 IPC boundary directly.  Only the flat buffer returned by
 `fetch_trace_payload`, tiled slices from `mmap_viewport`, and
 aggregated results from commands such as `analyze_roofline` may cross.
-This is a design decision stated in `CLAUDE.md §5.5` and motivated in
+This is a design decision captured in the IPC design notes and motivated in
 `docs/design/architecture_adoption.md` Section 4.
 
 ---

@@ -60,7 +60,7 @@ pccx is a **three-repo federation** (see the ecosystem section on
 mkdir -p ~/pccx-ws && cd ~/pccx-ws
 git clone https://github.com/pccxai/pccx.git                    # docs (this site)
 git clone https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260.git  # RTL + Sail model
-git clone https://github.com/pccxai/pccx-lab.git                 # profiler + UVM Copilot
+git clone https://github.com/pccxai/pccx-lab.git                 # profiler + UVM workflow facade
 ```
 
 ## 3. One-command reproducer (Docker)

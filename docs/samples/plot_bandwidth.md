@@ -34,6 +34,5 @@ fig.tight_layout()
 plt.show()
 ```
 
-See `plots/plot_bandwidth.py` for a working example and `CLAUDE.md` §6 for
-the full set of plotting conventions (including the determinism rule —
-seed every RNG you touch).
+See `plots/plot_bandwidth.py` for a working example. Plotting examples should
+be deterministic, including fixed seeds for any RNG use.

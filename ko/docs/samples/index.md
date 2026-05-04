@@ -23,5 +23,4 @@ plot_bandwidth
 | [](svg_themed_demo)                | 수작업 SVG + Furo CSS 변수   | yes     |
 | [](plot_bandwidth)                 | `scienceplots` + `sphinx-gallery` | yes (팔레트) |
 
-작성 규약은 `CLAUDE.md` §5 (Diagram Authoring Rules) 와 §6 (Plotting
-Conventions) 를 참고.
+이 페이지들은 저장소의 다이어그램 및 플롯 작성 규약을 보여준다.

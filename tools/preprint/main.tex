@@ -85,8 +85,8 @@ quantisation~\cite{qserve2024}, FlashAttention~\cite{dao2023flash2},
 and NPU-adapted speculative decoding~\cite{openpangu2026} in a single
 64-bit VLIW ISA with five base opcodes (GEMV / GEMM / MEMCPY /
 MEMSET / CVO).  An accompanying desktop profiler, \textbf{pccx-lab},
-supplies 16 built-in trace analyzers and an AI-driven UVM strategy
-copilot.  This preprint covers the architecture, the Sail model, the
+supplies 16 built-in trace analyzers and a UVM strategy workflow facade.
+This preprint covers the architecture, the Sail model, the
 profiler design, and the current measurement status.
 \end{abstract}
 
@@ -165,7 +165,7 @@ before the synthesiser.
 \textbf{TODO} — describe:
 \begin{itemize}
   \item 16 built-in \texttt{TraceAnalyzer} implementations.
-  \item \texttt{Copilot::investigate} / \texttt{suggest\_fix} surface.
+  \item \texttt{WorkflowFacade::investigate} / \texttt{suggest\_fix} surface.
   \item Research-citation registry (21 papers auto-cited).
   \item Tauri desktop UI with WaveformViewer, FlameGraph, ISA replay.
 \end{itemize}
