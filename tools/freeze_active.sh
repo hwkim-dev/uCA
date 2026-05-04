@@ -45,9 +45,8 @@
 #   * Writing the commit message. Suggested format:
 #         chore(archive): freeze v002 RTL at tag v2.0.0
 #
-# The full cutover ceremony — including docs scaffolding and
-# sphinx-multiversion whitelist updates — is documented in
-# CLAUDE.md §8.4.
+# The full cutover includes docs scaffolding and sphinx-multiversion
+# whitelist updates.
 
 set -euo pipefail
 
@@ -122,7 +121,7 @@ Staged codes/$target_version/ from tag $tag.
 Review:
     git -C "$repo_root" diff --cached --stat codes/$target_version | head -40
 
-Then continue the cutover ceremony (CLAUDE.md §8.4):
+Then continue the cutover:
 
   1. Commit:
          chore(archive): freeze $target_version RTL from tag $tag

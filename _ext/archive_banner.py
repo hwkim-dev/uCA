@@ -21,8 +21,8 @@ from typing import Any
 
 from sphinx.application import Sphinx
 
-# Active version the archive should redirect to.  Update this once per
-# major cutover (see the pccx CLAUDE.md §8.4 cutover ceremony).
+# Active version the archive should redirect to. Update this once per
+# major documentation cutover.
 _ACTIVE_VERSION = "v002"
 
 # Short labels — the KO copy is the Korean translation of the EN copy.

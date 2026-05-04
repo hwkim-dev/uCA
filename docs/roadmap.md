@@ -9,7 +9,7 @@ only summarizes the current release direction across the pccx ecosystem.
 - trace-driven verification on `pccx-lab`
 - Sail execute increments
 - xsim / KV260 bring-up logs
-- no production-ready or timing-closed claim until the verification
+- no completion or timing signoff claim until the verification
   evidence is published
 
 Tracking issue: [pccxai/pccx#28 — v0.2.0 umbrella][v020].

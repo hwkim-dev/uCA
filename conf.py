@@ -2,8 +2,8 @@
 pccx — English Sphinx configuration.
 
 Thin wrapper: pulls every shared knob from :mod:`conf_common` and only
-overrides language-specific values. See ``CLAUDE.md`` §2 (Repository
-Layout) for the dual-source rationale.
+overrides language-specific values. Keep shared configuration in the
+common module so EN and KO builds stay aligned.
 """
 
 from __future__ import annotations
