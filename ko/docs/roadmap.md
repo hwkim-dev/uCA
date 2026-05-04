@@ -9,7 +9,7 @@ pccx 생태계 전체의 현재 릴리스 방향만 짧게 요약한다.
 - `pccx-lab` 기반 trace-driven verification
 - Sail execute 증분 작업
 - xsim / KV260 bring-up 로그 정리
-- 검증 근거가 공개되기 전까지 production-ready / timing-closed 주장 금지
+- 검증 근거가 공개되기 전까지 완료 상태로 표현하지 않음
 
 추적 이슈: [pccxai/pccx#28 — v0.2.0 umbrella][v020].
 

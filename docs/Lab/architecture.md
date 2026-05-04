@@ -14,7 +14,7 @@ subsystem lives in-line in the source.
 
 ## Phase status
 
-Phase 1 (workspace split + stable API contracts + plugin registry +
+Phase 1 (workspace split + early API contracts + plugin registry +
 per-crate CHANGELOG) is complete.  Phase 2 (LSP façade) has landed
 through the M2.1 A/B/C/D slices (`LspMultiplexer` + `NoopBackend`,
 async companions + `BlockingBridge`, JSON-RPC wire framing, async

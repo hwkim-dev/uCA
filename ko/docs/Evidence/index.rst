@@ -61,7 +61,7 @@ Evidence
      - Vivado impl 대기
      - ``pccx_analyze --run-synth <rtl_repo>`` 랜딩
        (:doc:`../Lab/cli`)
-   * - Timing closure @ 400 MHz core / 250 MHz AXI
+   * - Post-route timing status @ 400 MHz core / 250 MHz AXI
      - Vivado impl 대기
      - 위와 동일
    * - Layer-by-layer 골든 모델 diff (PyTorch 레퍼런스 대비)

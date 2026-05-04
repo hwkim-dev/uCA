@@ -1,9 +1,8 @@
 # =============================================================================
 # pccx — runtime & build dependencies
 #
-# Single-source managed. See CLAUDE.md §3 (Toolchain) for rationale on every
-# entry. Pin upper bounds loosely (major version) to catch breaking upstream
-# changes without blocking minor/patch updates.
+# Single-source managed. Pin upper bounds loosely (major version) to catch
+# breaking upstream changes without blocking minor/patch updates.
 # =============================================================================
 
 # -- Core ---------------------------------------------------------------------
@@ -35,7 +34,7 @@ sphinx-reredirects>=0.1
 sphinxcontrib-mermaid>=1.0
 sphinxcontrib-wavedrom>=3.0
 # graphviz: sphinx.ext.graphviz is built-in; `dot` (graphviz OS package) is
-# required separately (see README / CLAUDE.md §7).
+# required separately (see README).
 
 # -- Math / Plotting ----------------------------------------------------------
 matplotlib>=3.9

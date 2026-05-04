@@ -61,7 +61,7 @@ Pending (board / synth)
      - pending Vivado impl
      - ``pccx_analyze --run-synth <rtl_repo>`` landing
        (:doc:`../Lab/cli`)
-   * - Timing closure @ 400 MHz core / 250 MHz AXI
+   * - Post-route timing status @ 400 MHz core / 250 MHz AXI
      - pending Vivado impl
      - Gate as above
    * - Layer-by-layer golden-model diff (vs PyTorch reference)

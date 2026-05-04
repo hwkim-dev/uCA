@@ -56,8 +56,8 @@ S_a \approx 2^{e_\text{max} - \text{bias} - \text{frac\_bits}}, \quad
 a_q = \mathrm{sat\_int8}\!\left(\mathrm{round}\!\left(\frac{x}{S_a}\right)\right)
 $$ (eq-preprocess-option-a)
 
-Reusing the existing `e_max` logic keeps the RTL simple and favours
-400 MHz timing closure. The power-of-two constraint limits quantization
+Reusing the existing `e_max` logic keeps the RTL simple and makes the
+400 MHz timing target more tractable. The power-of-two constraint limits quantization
 precision and may increase saturation or underflow for peaked activation
 distributions.
 

@@ -16,7 +16,7 @@ from sphinx.application import Sphinx
 
 __version__ = "0.1.0"
 
-# Canonical pccx palette (CLAUDE.md §5.2)
+# Canonical pccx diagram palette.
 PALETTE = {
     "panel-host": "#dae7f4",
     "panel-dram": "#f5edd5",
