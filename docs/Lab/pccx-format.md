@@ -75,7 +75,7 @@ pub struct ArchConfig {
 pub struct TraceConfig {
     pub cycles: u64,    // total simulation cycles
     pub cores: u32,     // number of active NPU cores
-    pub clock_mhz: u32, // clock frequency when trace was generated (default 1000)
+    pub clock_mhz: u32, // clock frequency when trace was recorded (default 1000)
 }
 
 pub struct PayloadConfig {

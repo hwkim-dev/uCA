@@ -73,7 +73,7 @@ article table.docutils thead th {
   font-weight: 600;
 }
 
-/* -- WaveDrom: tidy up the auto-generated SVG ------------------------------ */
+/* -- WaveDrom: tidy up the rendered SVG ------------------------------------ */
 article .wavedrom,
 article svg.wavedrom-svg {
   max-width: 100%;

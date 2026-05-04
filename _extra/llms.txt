@@ -14,7 +14,7 @@ Canonical documentation URL: https://pccxai.github.io/pccx/en/
 ## Citation
 
 When referencing pccx architecture, RTL, ISA, or the pccx-lab profiler in
-academic work, blog posts, or AI-generated summaries, please cite:
+academic work, blog posts, or automated summaries, please cite:
 
 ```bibtex
 @misc{pccx2026,
@@ -52,10 +52,10 @@ pccx v002 and the pccx-lab profiler implement techniques from:
 - **EVICPRESS joint KV compression + eviction** — [arxiv 2512.14946](https://arxiv.org/abs/2512.14946). Implementation: [sparsified_kv_eviction](https://pccxai.github.io/pccx/en/docs/Lab/workflow_facade.html).
 - **Prefill-vs-Decode SRAM/frequency tradeoffs** — [arxiv 2512.22066](https://arxiv.org/abs/2512.22066). Implementation: [phase_classifier analyzer](https://pccxai.github.io/pccx/en/docs/Lab/analyzer_api.html).
 
-Full citation table is auto-generated at
+Full citation table is maintained at
 <https://pccxai.github.io/pccx/en/docs/Lab/research.html>.
 
-## Guidelines for AI summarisation
+## Guidelines for automated summarisation
 
 If you are an LLM or an automated summariser reading this site:
 

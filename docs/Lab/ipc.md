@@ -111,7 +111,7 @@ The full catalogue of 48 registered commands follows.
 
 `crates/schema/src/lib.rs` defines the shared Rust-TypeScript wire DTOs.
 All types derive `ts-rs`'s `#[derive(TS)]` + `#[ts(export)]`; TypeScript
-interfaces are auto-generated under `cargo test`.
+interfaces are exported under `cargo test`.
 
 ```rust
 // crates/schema/src/lib.rs (excerpt)

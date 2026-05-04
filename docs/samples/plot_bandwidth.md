@@ -5,8 +5,8 @@ script and generates a standalone page per script, using whatever
 matplotlib style the script opts into. The pccx convention is IEEE via
 [`scienceplots`](https://github.com/garrettj403/SciencePlots).
 
-The generated gallery card for the demo script is listed in the
-[auto-generated plot gallery](../../auto_plots/index.rst) and picked up by
+The gallery card for the demo script is listed in the
+[automatic plot gallery](../../auto_plots/index.rst) and picked up by
 the {doc}`samples index <index>` toctree.
 
 ## Authoring pattern

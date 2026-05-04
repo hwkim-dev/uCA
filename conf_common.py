@@ -126,7 +126,7 @@ exclude_patterns = [
     # ``auto_plots/index``.
     "sg_execution_times.rst",
     "**/sg_execution_times.rst",
-    # sphinx-gallery also drops per-plot aux files next to each generated
+    # sphinx-gallery also drops per-plot aux files next to each built
     # .rst (.py source, .ipynb, .py.md5, .codeobj.json, .zip). Sphinx sees
     # them as candidate documents and emits "multiple files found" warnings
     # because they share a docname with the .rst. Exclude the aux formats
