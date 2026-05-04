@@ -126,7 +126,8 @@ lower accumulator. The math and the Verilog implementation live in
    accumulate-done), and ``P_OUT`` is active only when accumulation
    completes, routing into the Result Accumulator.
 
-Every DSP48E2 pipeline register is enabled to hit 400 MHz timing closure.
+Every DSP48E2 pipeline register is enabled for the 400 MHz timing target;
+post-route evidence is required before treating that target as closed.
 
 .. list-table::
    :header-rows: 1

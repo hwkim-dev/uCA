@@ -55,7 +55,7 @@ a_q = \mathrm{sat\_int8}\!\left(\mathrm{round}\!\left(\frac{x}{S_a}\right)\right
 $$ (eq-preprocess-option-a)
 
 기존 `e_max` 탐색 구조를 그대로 재사용하므로 RTL이 단순하고
-400 MHz timing closure에 유리하다. 반면 스케일이 2의 거듭제곱으로
+400 MHz 타이밍 목표를 단순하게 유지하는 데 유리하다. 반면 스케일이 2의 거듭제곱으로
 제한되어 activation 분포에 따라 saturation 또는 underflow가 증가할 수 있다.
 
 **Option B — true symmetric INT8 양자화**

@@ -22,7 +22,7 @@
          White canvas, black strokes, black text, soft pastel block
          fills.  Same appearance in Furo light and dark mode (the
          diagram is a fixed card, not theme-adaptive).  Palette is
-         shared across all pccx diagrams — see CLAUDE.md §5.2. */
+         shared across all pccx diagrams. */
       text          { fill: #000000; font: 400 12px ui-sans-serif, system-ui, sans-serif; }
       .t-title      { font-weight: 600; font-size: 13px; }
       .t-sub        { font-size: 11px; }

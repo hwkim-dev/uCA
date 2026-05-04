@@ -255,7 +255,7 @@
   
   <a class="pccx-repolinks__btn"
      href="/pccx/ko/lab/"
-     title="pccx-lab — simulator & AI profiler"
+     title="pccx-lab — verification lab and trace profiler"
      rel="noopener">
     <svg aria-hidden="true" viewBox="0 0 24 24" width="1em" height="1em"
          fill="none" stroke="currentColor" stroke-width="1.6"
@@ -526,7 +526,7 @@ a_q = \mathrm{sat\_int8}\!\left(\mathrm{round}\!\left(\frac{x}{S_a}\right)\right
 \]</div>
 </div>
 <p>기존 <code class="docutils literal notranslate"><span class="pre">e_max</span></code> 탐색 구조를 그대로 재사용하므로 RTL이 단순하고
-400 MHz timing closure에 유리하다. 반면 스케일이 2의 거듭제곱으로
+400 MHz 타이밍 목표를 단순하게 유지하는 데 유리하다. 반면 스케일이 2의 거듭제곱으로
 제한되어 activation 분포에 따라 saturation 또는 underflow가 증가할 수 있다.</p>
 <p><strong>Option B — true symmetric INT8 양자화</strong></p>
 <p>블록 내 <code class="docutils literal notranslate"><span class="pre">max_abs</span></code>를 기준으로 실수 스케일을 결정한다.</p>

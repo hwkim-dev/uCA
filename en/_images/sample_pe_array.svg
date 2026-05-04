@@ -5,8 +5,7 @@
   <desc id="desc-sample-pe">A 4 by 4 grid of processing elements.  Weights
     stay resident inside each PE.  Activations stream left-to-right along
     each row while partial sums accumulate top-to-bottom along each
-    column.  This file is the canonical template for new pccx diagrams —
-    see `CLAUDE.md §5.2` for the palette and authoring rules.</desc>
+    column.  This file is the canonical template for new pccx diagrams.</desc>
 
   <defs>
     <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5"
@@ -15,9 +14,8 @@
     </marker>
 
     <style><![CDATA[
-      /* Shared pccx palette — classical reference-manual minimalism.
-         Self-contained white canvas + fixed pastel block fills + black
-         borders and text.  See CLAUDE.md §5.2. */
+      /* Shared pccx palette: self-contained white canvas, fixed pastel
+         block fills, black borders, and black text. */
       text         { fill: #000000; font: 400 12px ui-sans-serif, system-ui, sans-serif; }
       .t-pe        { font-weight: 600; font-size: 13px; text-anchor: middle; }
       .t-axis      { font-size: 10.5px; letter-spacing: 0.02em; }

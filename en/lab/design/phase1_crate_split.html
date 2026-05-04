@@ -253,7 +253,7 @@
           <section id="phase-1-workspace-crate-split-proposal">
 <h1>Phase 1 — Workspace / Crate Split Proposal<a class="headerlink" href="#phase-1-workspace-crate-split-proposal" title="Link to this heading">¶</a></h1>
 <p><strong>Status:</strong> draft (2026-04-24) — awaiting user approval before implementation
-<strong>Scope:</strong> PCCX-Lab roadmap Phase 1 (M1.1 Workspace split + M1.2 early API contracts)
+<strong>Scope:</strong> PCCX-Lab roadmap Phase 1 (M1.1 Workspace split + M1.2 early interface contracts)
 <strong>Prior art:</strong> <code class="docutils literal notranslate"><span class="pre">docs/design/rationale.md</span></code> (why pccx-lab is one repo, not five)</p>
 <section id="current-state">
 <h2>1. Current state<a class="headerlink" href="#current-state" title="Link to this heading">¶</a></h2>
@@ -357,8 +357,8 @@ pccx-uvm-bridge ───▶   pccx-core
 <p><strong>Acyclic.</strong> <code class="docutils literal notranslate"><span class="pre">pccx-core</span></code> is the single sink. No crate depends on
 <code class="docutils literal notranslate"><span class="pre">pccx-ide</span></code> / <code class="docutils literal notranslate"><span class="pre">pccx-remote</span></code> (they are terminal binaries).</p>
 </section>
-<section id="stable-api-contracts-m1-2-scope">
-<h2>4. Stable API contracts (M1.2 scope)<a class="headerlink" href="#stable-api-contracts-m1-2-scope" title="Link to this heading">¶</a></h2>
+<section id="early-interface-contracts-m1-2-scope">
+<h2>4. Early interface contracts (M1.2 scope)<a class="headerlink" href="#early-interface-contracts-m1-2-scope" title="Link to this heading">¶</a></h2>
 <p>Each non-core crate exposes a <strong>trait</strong> that <code class="docutils literal notranslate"><span class="pre">pccx-core</span></code> (or its
 consumers) can depend on without pulling the whole crate:</p>
 <div class="table-wrapper colwidths-auto docutils container">
@@ -528,7 +528,7 @@ and link the first implementation commit below.</em></p>
 </ul>
 </li>
 <li><a class="reference internal" href="#dependency-graph-target">3. Dependency graph (target)</a></li>
-<li><a class="reference internal" href="#stable-api-contracts-m1-2-scope">4. Stable API contracts (M1.2 scope)</a></li>
+<li><a class="reference internal" href="#early-interface-contracts-m1-2-scope">4. Early interface contracts (M1.2 scope)</a></li>
 <li><a class="reference internal" href="#implementation-order-ordered-by-risk-not-by-milestone-number">5. Implementation order (ordered by risk, not by milestone number)</a></li>
 <li><a class="reference internal" href="#risk-mitigation">6. Risk mitigation</a></li>
 <li><a class="reference internal" href="#out-of-scope-for-this-proposal">7. Out of scope for this proposal</a></li>

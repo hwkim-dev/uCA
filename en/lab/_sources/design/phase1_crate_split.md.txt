@@ -1,7 +1,7 @@
 # Phase 1 — Workspace / Crate Split Proposal
 
 **Status:** draft (2026-04-24) — awaiting user approval before implementation
-**Scope:** PCCX-Lab roadmap Phase 1 (M1.1 Workspace split + M1.2 early API contracts)
+**Scope:** PCCX-Lab roadmap Phase 1 (M1.1 Workspace split + M1.2 early interface contracts)
 **Prior art:** `docs/design/rationale.md` (why pccx-lab is one repo, not five)
 
 ## 1. Current state
@@ -82,7 +82,7 @@ pccx-uvm-bridge ───▶   pccx-core
 **Acyclic.** `pccx-core` is the single sink. No crate depends on
 `pccx-ide` / `pccx-remote` (they are terminal binaries).
 
-## 4. Stable API contracts (M1.2 scope)
+## 4. Early interface contracts (M1.2 scope)
 
 Each non-core crate exposes a **trait** that `pccx-core` (or its
 consumers) can depend on without pulling the whole crate:
