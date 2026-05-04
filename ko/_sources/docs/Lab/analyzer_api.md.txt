@@ -5,7 +5,7 @@ _페이지 과도기 상태. pccx-lab HEAD 기준 2026-04-24 재정비._
 Phase 1 은 분할 이전의 `TraceAnalyzer` 트레이트와 모놀리식
 `analyzer::builtin_analyzers()` 목록을 폐기했다. 대신 pccx-core 는
 모든 워크스페이스 크레이트 (reports, verification, authoring, evolve,
-lsp, ai_copilot, …) 가 자기 자신의 trait-object 플러그인을 걸기 위해
+lsp, workflow_facade, …) 가 자기 자신의 trait-object 플러그인을 걸기 위해
 재사용하는 작은 제네릭 **플러그인 레지스트리 프리미티브** 를 출하한다.
 호출자는 더 이상 고정 빌트인 목록을 호출하지 않고 크레이트별
 `PluginRegistry<P>` 에 플러그인을 등록한다.
@@ -62,7 +62,7 @@ impl<P: Plugin> PluginRegistry<P> {
 (verification), `IsaCompiler` / `ApiCompiler` (authoring),
 `SurrogateModel` / `EvoOperator` / `PRMGate` (evolve),
 `CompletionProvider` / `HoverProvider` / `LocationProvider` (lsp),
-`ContextCompressor` / `SubagentRunner` (ai_copilot). 각 크레이트의
+`ContextCompressor` / `SubagentRunner` (workflow_facade). 각 크레이트의
 unstable 트레이트는 `Plugin` 의 서브트레이트이며, 자체 인스턴스의
 `PluginRegistry<CrateTrait>` 를 가지고, 호출 지점에서 독립적으로
 iterate 된다.
@@ -148,7 +148,7 @@ in-process `Vec<Box<dyn T>>` 이다.
 | `pccx-authoring`     | `IsaCompiler`, `ApiCompiler`                                 |
 | `pccx-evolve`        | `SurrogateModel`, `EvoOperator`, `PRMGate`                   |
 | `pccx-lsp`           | `CompletionProvider`, `HoverProvider`, `LocationProvider`    |
-| `pccx-ai-copilot`    | `ContextCompressor`, `SubagentRunner`                        |
+| `workflow facade`    | `ContextCompressor`, `SubagentRunner`                        |
 
 이 테이블의 모든 트레이트는 크레이트 자체 `plugin-api` 피처 뒤에
 스캐폴딩 되어 있다. 구체 구현은 Phase 2–5 워크스트림 진행에 따라
@@ -159,7 +159,7 @@ in-process `Vec<Box<dyn T>>` 이다.
 
 - [CLI 레퍼런스](cli.md) — 워크스페이스 분할 이후 오늘 존재하는
   바이너리와 각각이 실제로 담당하는 표면.
-- [Copilot API](copilot.md) — 현재 `pccx-ai-copilot` 의 정적 헬퍼와
+- [Workflow Facade](workflow_facade.md) — 현재 `workflow facade` 의 정적 헬퍼와
   Phase 2 pccx-lsp provider 트레이트.
 - [연구 계보](research.md) — 현재 플레이스홀더. 인용 레지스트리는
   `core/src/research.rs` 에 있었으며 Phase 1 에서 제거되었다.

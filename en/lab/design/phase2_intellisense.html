@@ -254,7 +254,7 @@
 <h1>Phase 2 — IntelliSense-Level Intelligence<a class="headerlink" href="#phase-2-intellisense-level-intelligence" title="Link to this heading">¶</a></h1>
 <p><strong>Status:</strong> scaffold landed (2026-04-24); implementation kicks off in Phase 2 proper.
 <strong>Scope:</strong> roadmap Weeks 6-9; milestones M2.1 - M2.6.
-<strong>Prior art:</strong> Visual Studio IntelliSense, VSCode’s LSP stack, Codeium, GitHub Copilot.</p>
+<strong>Prior art:</strong> Visual Studio IntelliSense, VSCode’s LSP stack, and editor completion tools.</p>
 <section id="goal">
 <h2>1. Goal<a class="headerlink" href="#goal" title="Link to this heading">¶</a></h2>
 <p>Make pccx-ide feel like a professional IDE for hardware + system design.
@@ -448,7 +448,7 @@ language service; AI layer only on Rust / SV / Sail / docs.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">tower-lsp</span> <span class="pre">=</span> <span class="pre">&quot;0.20&quot;</span></code> — LSP server framework (pccx-lsp will pull in Phase 2 proper).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">tree-sitter</span> <span class="pre">=</span> <span class="pre">&quot;0.22&quot;</span></code> — fast parser for Sail + MyST (ditto).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">lsp-types</span> <span class="pre">=</span> <span class="pre">&quot;0.95&quot;</span></code> — matches tower-lsp’s version.</p></li>
-<li><p>Haiku / Sonnet API access — shares <code class="docutils literal notranslate"><span class="pre">pccx-ai-copilot</span></code>.</p></li>
+<li><p>Haiku / Sonnet API access — shares <code class="docutils literal notranslate"><span class="pre">pccx-workflow-facade</span></code>.</p></li>
 </ul>
 <p><em>All left out of pccx-lsp’s <code class="docutils literal notranslate"><span class="pre">Cargo.toml</span></code> today; added during Phase 2 proper
 when implementation lands.</em></p>

@@ -14,7 +14,7 @@ for the dependency graph.
 | Core          | `pccx-core`                                                 | `.pccx` format, trace parsing, hardware model, roofline + bottleneck + synth-report parsers |
 | Derivatives   | `pccx-reports`, `pccx-verification`, `pccx-authoring`, `pccx-evolve` | specialised producers that consume the core surface (reports, CI gates, ISA/API TOML compilers, EAGLE-family primitives) |
 | IDE + services| `pccx-ide` (Tauri shell), `pccx-lsp` (IntelliSense façade), `pccx-remote` (Phase 3 daemon scaffold), `ui/` (React + Vite)   | the experience surface and the network / language-server lanes that plug into it |
-| Bridges       | `pccx-uvm-bridge`, `pccx-ai-copilot`                        | non-Rust boundaries: SystemVerilog/UVM over DPI-C, and LLM invocation wrappers |
+| Bridges       | `pccx-uvm-bridge`, `pccx-workflow-facade`                        | non-Rust boundaries: SystemVerilog/UVM over DPI-C, and workflow facade support |
 
 Dependencies flow **inwards only** — every non-core crate depends
 on `pccx-core` (transitively on none), and no crate depends on
@@ -26,7 +26,7 @@ must never import a UI or framework crate; `ui/` only talks to
 
 The default layout is a desktop verification shell:
 a top menu bar, a tool ribbon, a tab strip, the active work panel,
-and two dockable side panels (Live Telemetry + Workflow Assistant).
+and two dockable side panels (Live Telemetry + Workflow Panel).
 
 ```{image} /_static/screenshots/timeline-fullwidth.png
 :alt: pccx-lab Timeline view — swim lanes of NPU events over cycles
@@ -93,7 +93,7 @@ See {doc}`../verification-workflow` for the end-to-end flow.
 | `load_pccx(path)` | Cache a trace + emit `trace-loaded` |
 | `fetch_trace_payload()` | Flat 24-B/event buffer for the Timeline |
 | `get_core_utilisation()` | Per-core MAC-utilisation stats |
-| `compress_trace_context()` | LLM-prompt-sized trace summary |
+| `compress_trace_context()` | LLM-sized trace summary |
 | `generate_uvm_sequence_cmd(strategy)` | SV UVM sequence stub |
 | `list_uvm_strategies()` | Enumerate the 5 built-in strategies |
 | `generate_report()` | Legacy enterprise report |

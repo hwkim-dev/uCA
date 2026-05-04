@@ -90,7 +90,7 @@ pccx는 엣지 디바이스에서 Transformer 기반 LLM을 가속하기 위한
       :link-alt: pccx-lab 설계 근거 읽기
 
       왜 pccx-lab은 다섯 개가 아닌 한 레포인가. 모듈 경계 규칙
-      (``core/``, ``ui/``, ``uvm_bridge/``, ``ai_copilot/``).
+      (``core/``, ``ui/``, ``uvm_bridge/``, ``workflow_facade/``).
 
    .. grid-item-card:: :octicon:`verified;1.2em;sd-mr-1` 형식 모델 — Sail
       :link: docs/v002/Formal/index

@@ -2,7 +2,7 @@
 
 **Status:** scaffold landed (2026-04-24); implementation kicks off in Phase 2 proper.
 **Scope:** roadmap Weeks 6-9; milestones M2.1 - M2.6.
-**Prior art:** Visual Studio IntelliSense, VSCode's LSP stack, Codeium, GitHub Copilot.
+**Prior art:** Visual Studio IntelliSense, VSCode's LSP stack, and editor completion tools.
 
 ## 1. Goal
 
@@ -133,7 +133,7 @@ language server if no match.
 - `tower-lsp = "0.20"` — LSP server framework (pccx-lsp will pull in Phase 2 proper).
 - `tree-sitter = "0.22"` — fast parser for Sail + MyST (ditto).
 - `lsp-types = "0.95"` — matches tower-lsp's version.
-- Haiku / Sonnet API access — shares `pccx-ai-copilot`.
+- Haiku / Sonnet API access — shares `pccx-workflow-facade`.
 
 _All left out of pccx-lsp's `Cargo.toml` today; added during Phase 2 proper
 when implementation lands._

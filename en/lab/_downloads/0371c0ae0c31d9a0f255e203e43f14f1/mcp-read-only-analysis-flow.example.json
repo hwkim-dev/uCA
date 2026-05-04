@@ -1,0 +1,180 @@
+{
+  "schemaVersion": "pccx.lab.mcp-read-only-analysis-flow.v0",
+  "tool": "pccx-lab",
+  "flowId": "mcp-read-only-cli-core-analysis-flow",
+  "flowState": "dry_run_contract",
+  "adapterState": "not_implemented",
+  "defaultMode": "read_only",
+  "automationPath": "cli-core-first-gui-independent",
+  "entryBoundaryRefs": [
+    {
+      "refId": "tool_plan",
+      "schemaVersion": "pccx.lab.mcp-read-only-tool-plan.v0",
+      "examplePath": "docs/examples/mcp-read-only-tool-plan.example.json",
+      "state": "available_as_data"
+    },
+    {
+      "refId": "permission_model",
+      "schemaVersion": "pccx.lab.mcp-permission-model.v0",
+      "examplePath": "docs/examples/mcp-permission-model.example.json",
+      "state": "available_as_data"
+    },
+    {
+      "refId": "audit_event_shape",
+      "schemaVersion": "pccx.lab.mcp-audit-event.v0",
+      "examplePath": "docs/examples/mcp-audit-event.example.json",
+      "state": "available_as_data"
+    }
+  ],
+  "flowSteps": [
+    {
+      "stepId": "read_lab_status",
+      "order": 1,
+      "toolId": "lab.status.read",
+      "commandKind": "pccx-lab-cli-fixed-args",
+      "fixedArgsPreview": [
+        "status",
+        "--format",
+        "json"
+      ],
+      "approvalRequired": false,
+      "inputReferenceKind": "none",
+      "expectedOutputBoundary": "pccx.lab.status.v0",
+      "reportContribution": "status summary and conservative evidence markers",
+      "sideEffectPolicy": "read-only metadata",
+      "auditEvent": "mcp-read-only.status.read"
+    },
+    {
+      "stepId": "list_workflows",
+      "order": 2,
+      "toolId": "lab.workflows.list",
+      "commandKind": "pccx-lab-cli-fixed-args",
+      "fixedArgsPreview": [
+        "workflows",
+        "--format",
+        "json"
+      ],
+      "approvalRequired": false,
+      "inputReferenceKind": "none",
+      "expectedOutputBoundary": "pccx.lab.workflow-descriptors.v0",
+      "reportContribution": "descriptor-only workflow catalog",
+      "sideEffectPolicy": "descriptor-only metadata",
+      "auditEvent": "mcp-read-only.workflows.list"
+    },
+    {
+      "stepId": "preview_workflow_proposals",
+      "order": 3,
+      "toolId": "lab.workflowProposals.preview",
+      "commandKind": "pccx-lab-cli-fixed-args",
+      "fixedArgsPreview": [
+        "workflow-proposals",
+        "--format",
+        "json"
+      ],
+      "approvalRequired": false,
+      "inputReferenceKind": "none",
+      "expectedOutputBoundary": "pccx.lab.workflow-proposals.v0",
+      "reportContribution": "proposal-only command previews without execution",
+      "sideEffectPolicy": "proposal-only metadata",
+      "auditEvent": "mcp-read-only.workflow-proposals.preview"
+    },
+    {
+      "stepId": "summarize_workflow_results",
+      "order": 4,
+      "toolId": "lab.workflowResults.summarize",
+      "commandKind": "pccx-lab-cli-fixed-args",
+      "fixedArgsPreview": [
+        "workflow-results",
+        "--format",
+        "json"
+      ],
+      "approvalRequired": false,
+      "inputReferenceKind": "none",
+      "expectedOutputBoundary": "pccx.lab.workflow-results.v0",
+      "reportContribution": "summary-only result metadata without full logs",
+      "sideEffectPolicy": "summary-only metadata",
+      "auditEvent": "mcp-read-only.workflow-results.summarize"
+    }
+  ],
+  "reportPrototype": {
+    "reportState": "summary_only_fixture",
+    "reportFormat": "bounded_json_summary",
+    "outputPolicy": "Report text is assembled by a future adapter from bounded JSON summaries only.",
+    "trackedFileMutation": false,
+    "artifactWrite": false,
+    "pathEchoAllowed": false,
+    "stdoutIncluded": false,
+    "stderrIncluded": false,
+    "rawLogIncluded": false,
+    "privatePathsIncluded": false
+  },
+  "validationPolicy": {
+    "state": "planned",
+    "commandExecutionByFixture": false,
+    "trackedFileMutationAllowed": false,
+    "artifactWriteAllowed": false,
+    "approvedInputRequiredForPathSteps": true,
+    "noMutationCheck": "Future smoke should verify tracked files are unchanged before and after the read-only flow.",
+    "reportReview": "Future report output must remain summary-only and exclude private paths, full stdout, full stderr, secrets, tokens, and model paths."
+  },
+  "blockedActions": [
+    "mcp-server-start",
+    "mcp-client-session",
+    "arbitrary-shell-command",
+    "approved-workflow-run",
+    "artifact-write",
+    "repository-write-back",
+    "public-push",
+    "release-or-tag",
+    "provider-call",
+    "network-call",
+    "hardware-probe",
+    "kv260-access",
+    "fpga-repo-access",
+    "runtime-launch",
+    "model-load",
+    "telemetry-upload"
+  ],
+  "safetyFlags": {
+    "dataOnly": true,
+    "descriptorOnly": true,
+    "readOnly": true,
+    "flowPrototypeOnly": true,
+    "mcpRuntimeImplemented": false,
+    "mcpServerImplemented": false,
+    "mcpClientImplemented": false,
+    "commandExecution": false,
+    "shellExecution": false,
+    "runtimeExecution": false,
+    "networkCalls": false,
+    "providerCalls": false,
+    "launcherExecution": false,
+    "editorExecution": false,
+    "hardwareAccess": false,
+    "kv260Access": false,
+    "fpgaRepoAccess": false,
+    "modelExecution": false,
+    "modelWeightsIncluded": false,
+    "privatePathsIncluded": false,
+    "secretsIncluded": false,
+    "tokensIncluded": false,
+    "stdoutIncluded": false,
+    "stderrIncluded": false,
+    "rawLogsIncluded": false,
+    "telemetry": false,
+    "writeBack": false,
+    "writesArtifacts": false,
+    "publicPush": false,
+    "releaseOrTag": false,
+    "stableApiAbiClaim": false
+  },
+  "limitations": [
+    "This is a checked dry-run contract for a future read-only MCP/tool analysis flow, not an MCP server, client, runtime, or command executor.",
+    "The fixture describes how a future adapter can combine existing CLI/core JSON summaries; it does not run commands or write reports.",
+    "The flow does not include approved local file input steps, raw trace data, full logs, private paths, secrets, tokens, provider configuration, model paths, hardware access, or repository mutation.",
+    "No release, tag, compatibility, hardware, inference, throughput, or timing-closure claim is made."
+  ],
+  "issueRefs": [
+    "pccxai/pccx-lab#22"
+  ]
+}

@@ -283,7 +283,7 @@
 <li><p><a class="reference internal" href="#6-verification-suite"><span class="xref myst">Verification Suite</span></a></p></li>
 <li><p><a class="reference internal" href="#7-report-generation"><span class="xref myst">Report Generation</span></a></p></li>
 <li><p><a class="reference internal" href="#8-scenario-flow"><span class="xref myst">Scenario Flow</span></a></p></li>
-<li><p><a class="reference internal" href="#9-workflow-assistant"><span class="xref myst">Workflow Assistant</span></a></p></li>
+<li><p><a class="reference internal" href="#9-workflow-assistant"><span class="xref myst">Workflow Panel</span></a></p></li>
 <li><p><a class="reference internal" href="#10-keyboard-shortcuts"><span class="xref myst">Keyboard Shortcuts</span></a></p></li>
 <li><p><a class="reference internal" href="#11-theme-and-localization"><span class="xref myst">Theme and Localization</span></a></p></li>
 <li><p><a class="reference internal" href="#12-cli-tools"><span class="xref myst">CLI Tools</span></a></p></li>
@@ -493,7 +493,7 @@ npm<span class="w"> </span>run<span class="w"> </span>tauri<span class="w"> </sp
 </section>
 <section id="panel-docks">
 <h3>3.4 Panel Docks<a class="headerlink" href="#panel-docks" title="Link to this heading">¶</a></h3>
-<p>Three dockable panel positions are available: left dock, right dock, and bottom dock. The Workflow Assistant panel (Section 9) may be docked to any of these positions. The bottom dock hosts the Log, Console, and Live Telemetry sub-panels.</p>
+<p>Three dockable panel positions are available: left dock, right dock, and bottom dock. The Workflow Panel panel (Section 9) may be docked to any of these positions. The bottom dock hosts the Log, Console, and Live Telemetry sub-panels.</p>
 </section>
 <section id="status-bar">
 <h3>3.5 Status Bar<a class="headerlink" href="#status-bar" title="Link to this heading">¶</a></h3>
@@ -508,7 +508,7 @@ npm<span class="w"> </span>run<span class="w"> </span>tauri<span class="w"> </sp
 </section>
 <section id="activity-bar">
 <h3>3.6 Activity Bar<a class="headerlink" href="#activity-bar" title="Link to this heading">¶</a></h3>
-<p>Two toggle buttons on the right edge of the window control the Workflow Assistant panel visibility and the Live Telemetry panel visibility.</p>
+<p>Two toggle buttons on the right edge of the window control the Workflow Panel panel visibility and the Live Telemetry panel visibility.</p>
 </section>
 </section>
 <hr class="docutils" />
@@ -960,9 +960,9 @@ npm<span class="w"> </span>run<span class="w"> </span>tauri<span class="w"> </sp
 </section>
 </section>
 <hr class="docutils" />
-<section id="workflow-assistant">
-<h2>9. Workflow Assistant<a class="headerlink" href="#workflow-assistant" title="Link to this heading">¶</a></h2>
-<p>The Workflow Assistant is a local-only planning surface integrated into pccx-lab via a dockable panel (left, right, or bottom). It summarizes bounded trace context and can request built-in helper actions through the existing GUI IPC boundary.</p>
+<section id="workflow-panel">
+<h2>9. Workflow Panel<a class="headerlink" href="#workflow-panel" title="Link to this heading">¶</a></h2>
+<p>The Workflow Panel is a local-only planning surface integrated into pccx-lab via a dockable panel (left, right, or bottom). It summarizes bounded trace context and can request built-in helper actions through the existing GUI IPC boundary.</p>
 <section id="bottleneck-analysis">
 <h3>Bottleneck Analysis<a class="headerlink" href="#bottleneck-analysis" title="Link to this heading">¶</a></h3>
 <p>The assistant receives the current trace context - active cycle window, event histogram, and Flame Graph summary - and returns a bounded bottleneck note with cycle-level supporting evidence. Analysis does not require an external provider connection; the local context-compression engine produces results from trace data alone.</p>
@@ -1216,8 +1216,8 @@ pccx-cli<span class="w"> </span>--report-md<span class="w"> </span>path/to/trace
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-lsp</span></code></p></td>
 <td><p>Language server protocol integration for the SV Editor</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-ai-copilot</span></code></p></td>
-<td><p>Context compression and assistant-facing helper scaffolds</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-workflow-facade</span></code></p></td>
+<td><p>Context compression and workflow-boundary helper scaffolds</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-uvm-bridge</span></code></p></td>
 <td><p>UVM scoreboard hooks and coverage data import</p></td>
@@ -1448,7 +1448,7 @@ pccx-cli<span class="w"> </span>--report-md<span class="w"> </span>path/to/trace
 <li><a class="reference internal" href="#per-stage-profiling">Per-Stage Profiling</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#workflow-assistant">9. Workflow Assistant</a><ul>
+<li><a class="reference internal" href="#workflow-panel">9. Workflow Panel</a><ul>
 <li><a class="reference internal" href="#bottleneck-analysis">Bottleneck Analysis</a></li>
 <li><a class="reference internal" href="#uvm-sequence-generation">UVM Sequence Generation</a></li>
 <li><a class="reference internal" href="#provider-boundary">Provider Boundary</a></li>

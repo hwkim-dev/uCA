@@ -17,15 +17,15 @@ Tracking issue: [pccxai/pccx#28 — v0.2.0 umbrella][v020].
 ## Next — v0.3.0: Lab extensibility and user workflow split
 
 - pccx-lab plugin system (CLI-first, GUI second)
-- controlled MCP interface for AI workers
+- controlled external tool interface
 - spin out `systemverilog-ide` from pccx-lab
 - `pccx-llm-launcher` MVP planning
 - pccx-lab ↔ IDE handoff format
 - pccx-lab ↔ launcher workflow boundary
 
-## Later — v0.4+: AI-assisted hardware/software workflows
+## Later — v0.4+: reviewed hardware/software workflows
 
-- AI-assisted SystemVerilog development workflow
+- SystemVerilog workflow boundary
 - evolutionary generate / simulate / evaluate / refine loop
 - testbench / log / waveform feedback loop
 - VS Code extension path

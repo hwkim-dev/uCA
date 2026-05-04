@@ -19,8 +19,8 @@ To prevent the downside of a monorepo (spaghetti code), we enforce strict module
 - `pccx-lsp` (`crates/lsp/`): Phase 2 IntelliSense façade — sync and async provider traits, multiplexers, `NoopBackend`, `BlockingBridge`, `LspSubprocess`.  Depends on `pccx-core`.
 - `pccx-remote` (`crates/remote/`): Phase 3 backend-daemon scaffold (WireGuard / OIDC / RBAC land later).  Depends on `pccx-core`.
 - `pccx-uvm-bridge` (`crates/uvm_bridge/`): DPI-C / FFI boundary between SystemVerilog/UVM and `pccx-core`.  Depends on `pccx-core`.
-- `pccx-ai-copilot` (`crates/ai_copilot/`): LLM invocation wrapper.  Depends only on `pccx-core`'s trace surface (JSON or typed).
-- `pccx-ide` (`ui/src-tauri/`): Tauri shell that consumes `pccx-core`, `pccx-reports`, and `pccx-ai-copilot`.
+- `pccx-workflow-facade` (`crates/workflow_facade/`): workflow facade support.  Depends only on `pccx-core`'s trace surface (JSON or typed).
+- `pccx-ide` (`ui/src-tauri/`): Tauri shell that consumes `pccx-core`, `pccx-reports`, and `pccx-workflow-facade`.
 - `ui/` (non-Cargo): React + Vite frontend; reads from `pccx-ide` over Tauri IPC only.
 
 No crate depends on `pccx-ide` or `pccx-remote` — both are terminal binaries.  The React tree is not a Cargo member; it is outside the workspace graph by design.

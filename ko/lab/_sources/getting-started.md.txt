@@ -28,7 +28,7 @@ npx tauri dev
 - **타이틀 바 + 메뉴 바** — File / Edit / View / Trace / Analysis / Verify / Run / Tools / Window / Help
 - **탭 스트립** — Timeline / Flame Graph / Waveform / System Simulator /
   Memory Dump / …
-- **Workflow Assistant 패널** (오른쪽 도킹, `Ctrl+\`` 로 토글)
+- **Workflow Panel 패널** (오른쪽 도킹, `Ctrl+\`` 로 토글)
 - **Bottom Panel** (Log / Console / Telemetry, `Ctrl+J` 로 토글)
 
 우측 상단 활동 바에서 도우미 및 Telemetry 토글이 있습니다.

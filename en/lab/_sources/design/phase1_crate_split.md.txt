@@ -9,7 +9,7 @@
 ```
 pccx-lab/  (Cargo workspace — 3 members)
 ├── src/core          pccx-core       30 files   7,375 LOC     monolith
-├── src/ai_copilot    pccx-ai-copilot  1 file      297 LOC     skeleton
+├── src/workflow_facade    pccx-workflow-facade  1 file      297 LOC     skeleton
 ├── src/uvm_bridge    pccx-uvm-bridge  1 file      134 LOC     skeleton
 └── src/ui/src-tauri  "srcui"          3 files     706 LOC     orphan (not in workspace)
 ```
@@ -37,7 +37,7 @@ pccx-lab/  (Cargo workspace — 7 members)
 │   ├── pccx-reports/       Markdown / PDF / HTML report generator
 │   ├── pccx-verification/  golden_diff + robust_reader + step_snapshot reference logic
 │   ├── pccx-authoring/     isa_spec + api_spec (ISA / API TOML compilers)
-│   ├── pccx-agents/        assistant-facing helper scaffolds (was ai_copilot)
+│   ├── pccx-agents/        workflow-boundary helper scaffolds (was workflow_facade)
 │   ├── pccx-uvm-bridge/    UVM scoreboard hooks (unchanged)
 │   ├── pccx-remote/        NEW — backend daemon (Phase 3 scaffold)
 │   ├── pccx-evolve/        NEW — DSE + surrogate + PRM loop (Phase 5 scaffold)
@@ -152,7 +152,7 @@ All traits start as `#[unstable]`; semver-strict after v0.3 per roadmap.
   but postponed to end of Phase 1.
 - **React frontend split.** `ui/` stays monolithic for now; splitting
   into sub-packages is a Phase 2 IDE concern.
-- **pccx-ai-copilot / pccx-agents merger.** Rename only in this round;
+- **pccx-workflow-facade / pccx-agents merger.** Rename only in this round;
   expanding agent orchestration features is Phase 2 territory.
 
 ## 8. Decision requested

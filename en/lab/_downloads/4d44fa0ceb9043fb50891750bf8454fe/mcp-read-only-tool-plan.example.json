@@ -1,0 +1,324 @@
+{
+  "schemaVersion": "pccx.lab.mcp-read-only-tool-plan.v0",
+  "tool": "pccx-lab",
+  "planId": "mcp-read-only-cli-core-boundary",
+  "planState": "descriptor_only",
+  "adapterState": "not_implemented",
+  "automationPath": "cli-core-first-gui-independent",
+  "defaultMode": "read_only_first",
+  "toolList": [
+    {
+      "toolId": "lab.status.read",
+      "label": "Read lab status",
+      "category": "status",
+      "availabilityState": "available",
+      "commandKind": "pccx-lab-cli-fixed-args",
+      "readOnly": true,
+      "approvalRequired": false,
+      "fixedArgsPreview": [
+        "status",
+        "--format",
+        "json"
+      ],
+      "inputPolicy": "No user path or repository input is accepted.",
+      "outputPolicy": "Deterministic lab-status JSON with conservative evidence markers.",
+      "auditEvent": "mcp-read-only.status.read"
+    },
+    {
+      "toolId": "lab.workflows.list",
+      "label": "List workflow descriptors",
+      "category": "workflow",
+      "availabilityState": "available",
+      "commandKind": "pccx-lab-cli-fixed-args",
+      "readOnly": true,
+      "approvalRequired": false,
+      "fixedArgsPreview": [
+        "workflows",
+        "--format",
+        "json"
+      ],
+      "inputPolicy": "No user path or repository input is accepted.",
+      "outputPolicy": "Descriptor-only workflow catalog.",
+      "auditEvent": "mcp-read-only.workflows.list"
+    },
+    {
+      "toolId": "lab.workflowProposals.preview",
+      "label": "Preview workflow proposals",
+      "category": "workflow",
+      "availabilityState": "available",
+      "commandKind": "pccx-lab-cli-fixed-args",
+      "readOnly": true,
+      "approvalRequired": false,
+      "fixedArgsPreview": [
+        "workflow-proposals",
+        "--format",
+        "json"
+      ],
+      "inputPolicy": "No user path or repository input is accepted.",
+      "outputPolicy": "Proposal-only previews; no workflow execution.",
+      "auditEvent": "mcp-read-only.workflow-proposals.preview"
+    },
+    {
+      "toolId": "lab.workflowResults.summarize",
+      "label": "Read workflow result summaries",
+      "category": "workflow",
+      "availabilityState": "available",
+      "commandKind": "pccx-lab-cli-fixed-args",
+      "readOnly": true,
+      "approvalRequired": false,
+      "fixedArgsPreview": [
+        "workflow-results",
+        "--format",
+        "json"
+      ],
+      "inputPolicy": "No user path or repository input is accepted.",
+      "outputPolicy": "Summary-only workflow result metadata without full logs.",
+      "auditEvent": "mcp-read-only.workflow-results.summarize"
+    },
+    {
+      "toolId": "lab.diagnosticsHandoff.validate",
+      "label": "Validate diagnostics handoff",
+      "category": "diagnostics",
+      "availabilityState": "available",
+      "commandKind": "pccx-lab-cli-approved-local-file",
+      "readOnly": true,
+      "approvalRequired": true,
+      "fixedArgsPreview": [
+        "diagnostics-handoff",
+        "validate",
+        "--file",
+        "<approved-json-file>",
+        "--format",
+        "json"
+      ],
+      "inputPolicy": "Reads only an explicitly approved local JSON file path; the output must not echo the path.",
+      "outputPolicy": "Deterministic diagnostics handoff validation summary.",
+      "auditEvent": "mcp-read-only.diagnostics-handoff.validate"
+    },
+    {
+      "toolId": "lab.deviceSessionStatus.validate",
+      "label": "Validate device/session status",
+      "category": "diagnostics",
+      "availabilityState": "available",
+      "commandKind": "pccx-lab-cli-approved-local-file",
+      "readOnly": true,
+      "approvalRequired": true,
+      "fixedArgsPreview": [
+        "device-session-status",
+        "validate",
+        "--file",
+        "<approved-json-file>",
+        "--format",
+        "json"
+      ],
+      "inputPolicy": "Reads only an explicitly approved local JSON file path; the output must not echo the path.",
+      "outputPolicy": "Bounded device/session status validation summary.",
+      "auditEvent": "mcp-read-only.device-session-status.validate"
+    },
+    {
+      "toolId": "lab.fileShapeDiagnostics.analyze",
+      "label": "Analyze file shape diagnostics",
+      "category": "diagnostics",
+      "availabilityState": "early-scaffold",
+      "commandKind": "pccx-lab-cli-approved-local-file",
+      "readOnly": true,
+      "approvalRequired": true,
+      "fixedArgsPreview": [
+        "analyze",
+        "<approved-source-file>",
+        "--format",
+        "json"
+      ],
+      "inputPolicy": "Reads only an explicitly approved local source file path.",
+      "outputPolicy": "Bounded file-shape diagnostics envelope.",
+      "auditEvent": "mcp-read-only.file-shape-diagnostics.analyze"
+    }
+  ],
+  "deferredTools": [
+    {
+      "toolId": "lab.trace.open",
+      "availabilityState": "planned",
+      "reason": "Requires a separate trace summary boundary before raw trace data or user paths can be exposed."
+    },
+    {
+      "toolId": "lab.report.generate",
+      "availabilityState": "planned",
+      "reason": "Requires a reviewed artifact boundary before any report file can be written."
+    },
+    {
+      "toolId": "lab.verification.compare",
+      "availabilityState": "planned",
+      "reason": "Requires an evidence input contract; no verification run is launched by this plan."
+    },
+    {
+      "toolId": "lab.pullRequestSummary.prepare",
+      "availabilityState": "planned",
+      "reason": "Requires separate repository mutation and public wording review before it can produce PR-ready text."
+    }
+  ],
+  "permissionModel": {
+    "defaultMode": "read_only",
+    "allowedCommandKind": "pccx-lab-cli-fixed-args",
+    "readOnlyByDefault": true,
+    "writeActionsRequireApproval": true,
+    "pathInputRequiresApproval": true,
+    "rawShellCommandsAllowed": false,
+    "blockedActions": [
+      "public-push",
+      "release-or-tag",
+      "hidden-background-change",
+      "arbitrary-command",
+      "provider-call",
+      "network-call",
+      "hardware-probe",
+      "runtime-launch",
+      "model-load",
+      "telemetry-upload"
+    ]
+  },
+  "auditLogPlan": {
+    "state": "planned",
+    "eventSchema": "pccx.lab.mcpAuditEvent.v0",
+    "recordedFields": [
+      "requestId",
+      "toolId",
+      "fixedArgsPreview",
+      "approvedInputReferenceKind",
+      "outcomeState",
+      "validationSummary",
+      "redactionState",
+      "timestamp"
+    ],
+    "redactedFields": [
+      "private paths",
+      "secrets",
+      "tokens",
+      "model weight paths",
+      "full stdout",
+      "full stderr"
+    ],
+    "storagePolicy": "Local implementation detail after a reviewed boundary; this plan does not create an audit log file."
+  },
+  "commandMap": [
+    {
+      "toolId": "lab.status.read",
+      "coreBoundary": "pccx_core::status::lab_status",
+      "fixedArgsPreview": [
+        "status",
+        "--format",
+        "json"
+      ],
+      "inputKind": "none",
+      "sideEffectPolicy": "read-only metadata"
+    },
+    {
+      "toolId": "lab.workflows.list",
+      "coreBoundary": "pccx_core::workflows::workflow_descriptors",
+      "fixedArgsPreview": [
+        "workflows",
+        "--format",
+        "json"
+      ],
+      "inputKind": "none",
+      "sideEffectPolicy": "descriptor-only metadata"
+    },
+    {
+      "toolId": "lab.workflowProposals.preview",
+      "coreBoundary": "pccx_core::proposals::workflow_proposals",
+      "fixedArgsPreview": [
+        "workflow-proposals",
+        "--format",
+        "json"
+      ],
+      "inputKind": "none",
+      "sideEffectPolicy": "proposal-only metadata"
+    },
+    {
+      "toolId": "lab.workflowResults.summarize",
+      "coreBoundary": "pccx_core::results::workflow_result_summaries",
+      "fixedArgsPreview": [
+        "workflow-results",
+        "--format",
+        "json"
+      ],
+      "inputKind": "none",
+      "sideEffectPolicy": "summary-only metadata"
+    },
+    {
+      "toolId": "lab.diagnosticsHandoff.validate",
+      "coreBoundary": "pccx_core::diagnostics_handoff::validate_diagnostics_handoff_json",
+      "fixedArgsPreview": [
+        "diagnostics-handoff",
+        "validate",
+        "--file",
+        "<approved-json-file>",
+        "--format",
+        "json"
+      ],
+      "inputKind": "approved-local-json-file",
+      "sideEffectPolicy": "read-only validation summary"
+    },
+    {
+      "toolId": "lab.deviceSessionStatus.validate",
+      "coreBoundary": "pccx_core::device_session_status::validate_device_session_status_json",
+      "fixedArgsPreview": [
+        "device-session-status",
+        "validate",
+        "--file",
+        "<approved-json-file>",
+        "--format",
+        "json"
+      ],
+      "inputKind": "approved-local-json-file",
+      "sideEffectPolicy": "read-only validation summary"
+    },
+    {
+      "toolId": "lab.fileShapeDiagnostics.analyze",
+      "coreBoundary": "pccx-lab analyze / diagnostics envelope",
+      "fixedArgsPreview": [
+        "analyze",
+        "<approved-source-file>",
+        "--format",
+        "json"
+      ],
+      "inputKind": "approved-local-source-file",
+      "sideEffectPolicy": "read-only file-shape diagnostics"
+    }
+  ],
+  "safetyFlags": {
+    "dataOnly": true,
+    "descriptorOnly": true,
+    "readOnly": true,
+    "mcpRuntimeImplemented": false,
+    "mcpServerImplemented": false,
+    "shellExecution": false,
+    "runtimeExecution": false,
+    "networkCalls": false,
+    "providerCalls": false,
+    "launcherExecution": false,
+    "editorExecution": false,
+    "hardwareAccess": false,
+    "kv260Access": false,
+    "fpgaRepoAccess": false,
+    "modelExecution": false,
+    "modelWeightsIncluded": false,
+    "privatePathsIncluded": false,
+    "secretsIncluded": false,
+    "telemetry": false,
+    "writeBack": false,
+    "writesArtifacts": false,
+    "publicPush": false,
+    "releaseOrTag": false,
+    "stableApiAbiClaim": false
+  },
+  "limitations": [
+    "This is a checked boundary plan, not an MCP server, client, or runtime.",
+    "Only fixed CLI/core command maps are described.",
+    "Approved file inputs are placeholders for a future reviewed adapter and are not executed by this fixture.",
+    "No GUI-only automation, launcher bridge, editor bridge, provider call, network call, hardware access, or repository mutation is implemented.",
+    "No release, tag, compatibility, hardware, inference, throughput, or timing-closure claim is made."
+  ],
+  "issueRefs": [
+    "pccxai/pccx-lab#22"
+  ]
+}

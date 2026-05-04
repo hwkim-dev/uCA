@@ -25,5 +25,5 @@ sums accumulate down each column.
 - **Zero network dependency.** The SVG is served with the site and parses
   locally; there is no client-side rendering library to ship or version.
 
-See `CLAUDE.md` §5.2 for the absolute rules new SVG assets must follow
-(no hardcoded colors, `viewBox` only, `<title>` + `<desc>` for a11y).
+New SVG assets should avoid hardcoded colors, use `viewBox` only, and include
+`<title>` plus `<desc>` for accessibility.

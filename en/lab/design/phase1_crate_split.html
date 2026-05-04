@@ -259,7 +259,7 @@
 <h2>1. Current state<a class="headerlink" href="#current-state" title="Link to this heading">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pccx-lab/  (Cargo workspace — 3 members)
 ├── src/core          pccx-core       30 files   7,375 LOC     monolith
-├── src/ai_copilot    pccx-ai-copilot  1 file      297 LOC     skeleton
+├── src/workflow_facade    pccx-workflow-facade  1 file      297 LOC     skeleton
 ├── src/uvm_bridge    pccx-uvm-bridge  1 file      134 LOC     skeleton
 └── src/ui/src-tauri  &quot;srcui&quot;          3 files     706 LOC     orphan (not in workspace)
 </pre></div>
@@ -287,7 +287,7 @@ none exist yet.</p></li>
 │   ├── pccx-reports/       Markdown / PDF / HTML report generator
 │   ├── pccx-verification/  golden_diff + robust_reader + step_snapshot reference logic
 │   ├── pccx-authoring/     isa_spec + api_spec (ISA / API TOML compilers)
-│   ├── pccx-agents/        assistant-facing helper scaffolds (was ai_copilot)
+│   ├── pccx-agents/        workflow-boundary helper scaffolds (was workflow_facade)
 │   ├── pccx-uvm-bridge/    UVM scoreboard hooks (unchanged)
 │   ├── pccx-remote/        NEW — backend daemon (Phase 3 scaffold)
 │   ├── pccx-evolve/        NEW — DSE + surrogate + PRM loop (Phase 5 scaffold)
@@ -451,7 +451,7 @@ the layout.</p></li>
 but postponed to end of Phase 1.</p></li>
 <li><p><strong>React frontend split.</strong> <code class="docutils literal notranslate"><span class="pre">ui/</span></code> stays monolithic for now; splitting
 into sub-packages is a Phase 2 IDE concern.</p></li>
-<li><p><strong>pccx-ai-copilot / pccx-agents merger.</strong> Rename only in this round;
+<li><p><strong>pccx-workflow-facade / pccx-agents merger.</strong> Rename only in this round;
 expanding agent orchestration features is Phase 2 territory.</p></li>
 </ul>
 </section>

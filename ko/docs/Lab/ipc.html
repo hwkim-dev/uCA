@@ -15,7 +15,7 @@
 <meta name="description" content="pccx-lab HEAD 기준 2026-04-29. 소스: ui/src-tauri/src/lib.rs, crates/schema/src/lib.rs. pccx-lab 프런트엔드와 Rust 백엔드는 Tauri v2 invoke 메커니즘으로 통신한다. 모든 커맨드는 ui/src-tauri/src/lib.rs 의 tauri::generate_handler!..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["ko","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"Tauri IPC 계약","name":"Tauri IPC 계약","url":"https://pccxai.github.io/pccx/ko/docs/Lab/ipc.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/ko/docs/Lab/ipc.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-03","dateModified":"2026-05-03","description":"pccx documentation page: Tauri IPC 계약. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"ko","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="색인" href="../../genindex.html"><link rel="search" title="검색" href="../../search.html"><link rel="next" title="검증 워크플로" href="verification-workflow.html"><link rel="prev" title="UI 패널 카탈로그" href="panels.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["ko","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"Tauri IPC 계약","name":"Tauri IPC 계약","url":"https://pccxai.github.io/pccx/ko/docs/Lab/ipc.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/ko/docs/Lab/ipc.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-04","dateModified":"2026-05-04","description":"pccx documentation page: Tauri IPC 계약. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"ko","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="색인" href="../../genindex.html"><link rel="search" title="검색" href="../../search.html"><link rel="next" title="검증 워크플로" href="verification-workflow.html"><link rel="prev" title="UI 패널 카탈로그" href="panels.html">
         <link rel="canonical" href="https://pccxai.github.io/pccx/docs/Lab/ipc.html">
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=4880187a" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=0bd41fdc" />
     <link rel="stylesheet" type="text/css" href="../../_static/image-lightbox.css?v=884c9d5a" />
     <link rel="stylesheet" type="text/css" href="../../_static/language-switcher.css?v=cc8629cf" />
     
@@ -376,7 +376,7 @@
 <li class="toctree-l2"><a class="reference internal" href="architecture.html">아키텍처 개요</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cli.html">CLI 레퍼런스</a></li>
 <li class="toctree-l2"><a class="reference internal" href="analyzer_api.html">분석기 API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="copilot.html">Copilot API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="workflow_facade.html">Workflow Facade</a></li>
 <li class="toctree-l2"><a class="reference internal" href="research.html">pccx-lab 연구 계보</a></li>
 <li class="toctree-l2"><a class="reference internal" href="panels.html">UI 패널 카탈로그</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Tauri IPC 계약</a></li>
@@ -607,7 +607,7 @@
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">compress_trace_context</span></code></p></td>
 <td><p>없음</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">Result&lt;String,</span> <span class="pre">String&gt;</span></code></p></td>
-<td><p>트레이스를 LLM 친화적 컨텍스트 문자열로 압축. <code class="docutils literal notranslate"><span class="pre">ai_copilot::compress_context</span></code> 경유.</p></td>
+<td><p>트레이스를 LLM 친화적 컨텍스트 문자열로 압축. <code class="docutils literal notranslate"><span class="pre">workflow_facade::compress_context</span></code> 경유.</p></td>
 </tr>
 </tbody>
 </table>
@@ -787,8 +787,8 @@
 </table>
 </div>
 </section>
-<section id="ai-copilot">
-<h3>AI Copilot<a class="headerlink" href="#ai-copilot" title="Link to this heading">¶</a></h3>
+<section id="workflow-facade">
+<h3>Workflow facade<a class="headerlink" href="#workflow-facade" title="Link to this heading">¶</a></h3>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
@@ -802,7 +802,7 @@
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">get_extensions</span></code></p></td>
 <td><p>없음</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">Vec&lt;Extension&gt;</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">ai_copilot</span></code>에서 사용 가능한 익스텐션 목록 반환.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">workflow_facade</span></code>에서 사용 가능한 익스텐션 목록 반환.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">generate_uvm_sequence_cmd</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">strategy:</span> <span class="pre">String</span></code></p></td>
@@ -926,13 +926,13 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>스키마 크레이트는 <code class="docutils literal notranslate"><span class="pre">ui/</span></code>, <code class="docutils literal notranslate"><span class="pre">uvm_bridge/</span></code>, <code class="docutils literal notranslate"><span class="pre">ai_copilot/</span></code>에 의존하지 않는다.
+<p>스키마 크레이트는 <code class="docutils literal notranslate"><span class="pre">ui/</span></code>, <code class="docutils literal notranslate"><span class="pre">uvm_bridge/</span></code>, <code class="docutils literal notranslate"><span class="pre">workflow_facade/</span></code>에 의존하지 않는다.
 wire DTO는 도메인 로직 없는 순수 데이터 캐리어다.</p>
 </section>
 <hr class="docutils" />
 <section id="id8">
 <h2>경계 규칙<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span> <span class="pre">§5.5</span></code>와 <code class="docutils literal notranslate"><span class="pre">lib.rs</span></code> 구현에서 도출된 IPC 경계 규칙.</p>
+<p>IPC 설계 노트와 <code class="docutils literal notranslate"><span class="pre">lib.rs</span></code> 구현에서 도출된 IPC 경계 규칙.</p>
 <section id="u64">
 <h3>u64 필드<a class="headerlink" href="#u64" title="Link to this heading">¶</a></h3>
 <p>2^53을 초과할 수 있는 <code class="docutils literal notranslate"><span class="pre">u64</span></code> 필드는 IPC를 거칠 때 <code class="docutils literal notranslate"><span class="pre">String</span></code>으로
@@ -984,7 +984,7 @@ mmap 슬라이스를 <code class="docutils literal notranslate"><span class="pre
 직접 넘지 않는다. <code class="docutils literal notranslate"><span class="pre">fetch_trace_payload</span></code>가 반환하는 평탄 버퍼,
 <code class="docutils literal notranslate"><span class="pre">mmap_viewport</span></code>가 반환하는 타일된 슬라이스, <code class="docutils literal notranslate"><span class="pre">analyze_roofline</span></code>이
 반환하는 집계 결과만이 경계를 넘는다. 이 규칙은
-<code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span> <span class="pre">§5.5</span></code>에 명시된 설계 결정이며,
+IPC 설계 노트에 기록된 설계 결정이며,
 <code class="docutils literal notranslate"><span class="pre">docs/design/architecture_adoption.md</span></code> 섹션 4에서 근거를 제공한다.</p>
 </section>
 </section>
@@ -1059,12 +1059,12 @@ DTO 스키마는
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2026-05-03</div>
+              Last updated on 2026-05-04</div>
           </div>
           <div class="right-details">
             <div class="icons">
               <a class="muted-link pccx-footer-icon" href="https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260" aria-label="RTL implementation — github.com/pccxai/pccx-FPGA-NPU-LLM-kv260"><svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1.2"/><rect x="10" y="10" width="4" height="4" fill="currentColor" stroke="none"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></svg><span class="pccx-footer-icon__label">RTL</span></a>
-              <a class="muted-link pccx-footer-icon" href="https://pccxai.github.io/pccx/ko/lab/" aria-label="pccx-lab — simulator & AI profiler"><svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true"><path d="M9 3h6"/><path d="M10 3v6.2L4.6 19a1 1 0 0 0 .86 1.5h13.08a1 1 0 0 0 .86-1.5L14 9.2V3"/><path d="M6.8 14h10.4"/></svg><span class="pccx-footer-icon__label">Lab</span></a>
+              <a class="muted-link pccx-footer-icon" href="https://pccxai.github.io/pccx/ko/lab/" aria-label="pccx-lab — simulator & verification lab"><svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true"><path d="M9 3h6"/><path d="M10 3v6.2L4.6 19a1 1 0 0 0 .86 1.5h13.08a1 1 0 0 0 .86-1.5L14 9.2V3"/><path d="M6.8 14h10.4"/></svg><span class="pccx-footer-icon__label">Lab</span></a>
               <a class="muted-link pccx-footer-icon" href="https://github.com/pccxai/pccx" aria-label="Docs repository — github.com/pccxai/pccx"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" width="1em" height="1em" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg><span class="pccx-footer-icon__label">Docs</span></a>
               <a class="muted-link pccx-footer-icon" href="https://hkimw.github.io/hkimw/" aria-label="Author portfolio — hkimw.github.io/hkimw"><svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20.5c1-3.5 4-5.5 7.5-5.5s6.5 2 7.5 5.5"/></svg><span class="pccx-footer-icon__label">Blog</span></a>
               
@@ -1095,7 +1095,7 @@ DTO 스키마는
 <li><a class="reference internal" href="#id5">검증</a></li>
 <li><a class="reference internal" href="#id6">합성 / 하드웨어</a></li>
 <li><a class="reference internal" href="#lsp-systemverilog">LSP (SystemVerilog)</a></li>
-<li><a class="reference internal" href="#ai-copilot">AI Copilot</a></li>
+<li><a class="reference internal" href="#workflow-facade">Workflow facade</a></li>
 <li><a class="reference internal" href="#id7">파일 시스템 / 보조</a></li>
 </ul>
 </li>

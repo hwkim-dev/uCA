@@ -29,7 +29,7 @@ On launch you will see:
   Verify / Run / Tools / Window / Help.
 - **Tab strip** — Timeline / Flame Graph / Waveform / System Simulator /
   Memory Dump / ….
-- **Workflow Assistant panel** (docked right; `Ctrl+\`` to toggle).
+- **Workflow Panel panel** (docked right; `Ctrl+\`` to toggle).
 - **Bottom Panel** (Log / Console / Telemetry; `Ctrl+J` to toggle).
 
 The right-hand activity bar surfaces the assistant and Telemetry quick-toggles. Every icon-only button carries an `aria-label`

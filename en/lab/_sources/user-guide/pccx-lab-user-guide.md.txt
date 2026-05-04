@@ -26,7 +26,7 @@
 6. [Verification Suite](#6-verification-suite)
 7. [Report Generation](#7-report-generation)
 8. [Scenario Flow](#8-scenario-flow)
-9. [Workflow Assistant](#9-workflow-assistant)
+9. [Workflow Panel](#9-workflow-assistant)
 10. [Keyboard Shortcuts](#10-keyboard-shortcuts)
 11. [Theme and Localization](#11-theme-and-localization)
 12. [CLI Tools](#12-cli-tools)
@@ -146,7 +146,7 @@ The tab bar provides access to 14 analysis views. Each tab corresponds to a dist
 
 ### 3.4 Panel Docks
 
-Three dockable panel positions are available: left dock, right dock, and bottom dock. The Workflow Assistant panel (Section 9) may be docked to any of these positions. The bottom dock hosts the Log, Console, and Live Telemetry sub-panels.
+Three dockable panel positions are available: left dock, right dock, and bottom dock. The Workflow Panel panel (Section 9) may be docked to any of these positions. The bottom dock hosts the Log, Console, and Live Telemetry sub-panels.
 
 ### 3.5 Status Bar
 
@@ -160,7 +160,7 @@ The status bar at the bottom of the window displays:
 
 ### 3.6 Activity Bar
 
-Two toggle buttons on the right edge of the window control the Workflow Assistant panel visibility and the Live Telemetry panel visibility.
+Two toggle buttons on the right edge of the window control the Workflow Panel panel visibility and the Live Telemetry panel visibility.
 
 ---
 
@@ -445,9 +445,9 @@ Clicking a node opens the corresponding cycle range in the Timeline view for det
 
 ---
 
-## 9. Workflow Assistant
+## 9. Workflow Panel
 
-The Workflow Assistant is a local-only planning surface integrated into pccx-lab via a dockable panel (left, right, or bottom). It summarizes bounded trace context and can request built-in helper actions through the existing GUI IPC boundary.
+The Workflow Panel is a local-only planning surface integrated into pccx-lab via a dockable panel (left, right, or bottom). It summarizes bounded trace context and can request built-in helper actions through the existing GUI IPC boundary.
 
 ### Bottleneck Analysis
 
@@ -599,7 +599,7 @@ The backend is organized as a 10-crate Rust workspace:
 | `pccx-evolve` | Self-evolution cycle management |
 | `pccx-remote` | Network server and client for remote trace streaming |
 | `pccx-lsp` | Language server protocol integration for the SV Editor |
-| `pccx-ai-copilot` | Context compression and assistant-facing helper scaffolds |
+| `pccx-workflow-facade` | Context compression and workflow-boundary helper scaffolds |
 | `pccx-uvm-bridge` | UVM scoreboard hooks and coverage data import |
 | `pccx-ide` | Tauri IPC command handlers (30+ `invoke_handler` commands) |
 

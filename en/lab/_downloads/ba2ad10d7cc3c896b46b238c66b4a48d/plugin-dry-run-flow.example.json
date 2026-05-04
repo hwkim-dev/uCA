@@ -1,0 +1,208 @@
+{
+  "schemaVersion": "pccx.lab.plugin-dry-run-flow.v0",
+  "tool": "pccx-lab",
+  "flowId": "plugin-cli-core-dry-run-flow",
+  "flowState": "dry_run_contract",
+  "pluginRuntimeState": "not_implemented",
+  "loaderState": "not_implemented",
+  "defaultMode": "disabled",
+  "hostMode": "cli_first_gui_second",
+  "automationPath": "cli-core-first-gui-independent",
+  "entryBoundaryRefs": [
+    {
+      "refId": "plugin_boundary_plan",
+      "schemaVersion": "pccx.lab.plugin-boundary-plan.v0",
+      "examplePath": "docs/examples/plugin-boundary-plan.example.json",
+      "state": "available_as_data"
+    },
+    {
+      "refId": "plugin_permission_model",
+      "schemaVersion": "pccx.lab.plugin-permission-model.v0",
+      "examplePath": "docs/examples/plugin-permission-model.example.json",
+      "state": "available_as_data"
+    }
+  ],
+  "samplePluginRef": {
+    "pluginId": "example.diagnostics.summary",
+    "manifestState": "example_manifest_only",
+    "entryKind": "manifest_only",
+    "codeLoaded": false,
+    "packageInstalled": false,
+    "dynamicLibrariesLoaded": false
+  },
+  "flowSteps": [
+    {
+      "stepId": "review_manifest",
+      "order": 1,
+      "toolId": "plugin.manifest.review",
+      "commandKind": "planned-cli-fixed-args",
+      "fixedArgsPreview": [
+        "plugin-manifest",
+        "validate",
+        "--file",
+        "<approved-manifest-json>",
+        "--format",
+        "json"
+      ],
+      "approvalRequired": true,
+      "inputReferenceKind": "approved-plugin-manifest-json",
+      "expectedOutputBoundary": "pccx.lab.plugin.validation-summary.v0",
+      "reportContribution": "bounded manifest validation summary",
+      "sideEffectPolicy": "read-only manifest validation preview",
+      "auditEvent": "plugin-dry-run.manifest.review",
+      "artifactWrite": false,
+      "repositoryMutation": false
+    },
+    {
+      "stepId": "review_capabilities",
+      "order": 2,
+      "toolId": "plugin.capability.review",
+      "commandKind": "planned-cli-fixed-args",
+      "fixedArgsPreview": [
+        "plugin-capabilities",
+        "--manifest",
+        "<approved-manifest-json>",
+        "--format",
+        "json"
+      ],
+      "approvalRequired": true,
+      "inputReferenceKind": "approved-plugin-manifest-json",
+      "expectedOutputBoundary": "pccx.lab.plugin.capability-summary.v0",
+      "reportContribution": "capability and permission-profile review summary",
+      "sideEffectPolicy": "descriptor-only capability review preview",
+      "auditEvent": "plugin-dry-run.capability.review",
+      "artifactWrite": false,
+      "repositoryMutation": false
+    },
+    {
+      "stepId": "summarize_diagnostics",
+      "order": 3,
+      "toolId": "plugin.diagnostics.summary",
+      "commandKind": "planned-cli-fixed-args",
+      "fixedArgsPreview": [
+        "plugin-diagnostics",
+        "summarize",
+        "--input",
+        "<approved-diagnostics-envelope-json>",
+        "--format",
+        "json"
+      ],
+      "approvalRequired": true,
+      "inputReferenceKind": "approved-diagnostics-envelope-json",
+      "expectedOutputBoundary": "pccx.lab.plugin.diagnostics-summary.v0",
+      "reportContribution": "bounded diagnostics summary item",
+      "sideEffectPolicy": "read-only diagnostics summary preview",
+      "auditEvent": "plugin-dry-run.diagnostics.summary",
+      "artifactWrite": false,
+      "repositoryMutation": false
+    },
+    {
+      "stepId": "preview_report_panel",
+      "order": 4,
+      "toolId": "plugin.report.panel.preview",
+      "commandKind": "planned-cli-fixed-args",
+      "fixedArgsPreview": [
+        "plugin-report-panel",
+        "preview",
+        "--input",
+        "<approved-workflow-result-summary-json>",
+        "--format",
+        "json"
+      ],
+      "approvalRequired": true,
+      "inputReferenceKind": "approved-workflow-result-summary-json",
+      "expectedOutputBoundary": "pccx.lab.plugin.report-panel-summary.v0",
+      "reportContribution": "bounded report-panel metadata preview",
+      "sideEffectPolicy": "read-only report-panel metadata preview",
+      "auditEvent": "plugin-dry-run.report-panel.preview",
+      "artifactWrite": false,
+      "repositoryMutation": false
+    }
+  ],
+  "outputPrototype": {
+    "outputState": "summary_only_fixture",
+    "outputFormat": "bounded_json_summary",
+    "outputPolicy": "Future output is assembled from bounded manifest, capability, diagnostics, and workflow-result summaries only.",
+    "trackedFileMutation": false,
+    "artifactWrite": false,
+    "pathEchoAllowed": false,
+    "stdoutIncluded": false,
+    "stderrIncluded": false,
+    "rawLogIncluded": false,
+    "privatePathsIncluded": false
+  },
+  "validationPolicy": {
+    "state": "planned",
+    "commandExecutionByFixture": false,
+    "trackedFileMutationAllowed": false,
+    "artifactWriteAllowed": false,
+    "pluginCodeLoadAllowed": false,
+    "localInputRequiresApproval": true,
+    "manifestApprovalRequired": true,
+    "noMutationCheck": "Future smoke should verify tracked files are unchanged before and after a dry-run plugin flow.",
+    "reviewRule": "Future output must remain summary-only and exclude private paths, full stdout, full stderr, secrets, tokens, model paths, and generated artifacts."
+  },
+  "blockedActions": [
+    "dynamic-code-load",
+    "untrusted-execution",
+    "plugin-package-install",
+    "marketplace-flow",
+    "sandbox-bypass",
+    "arbitrary-shell-command",
+    "artifact-write",
+    "repository-write-back",
+    "public-push",
+    "release-or-tag",
+    "provider-call",
+    "network-call",
+    "hardware-probe",
+    "kv260-access",
+    "fpga-repo-access",
+    "runtime-launch",
+    "model-load",
+    "telemetry-upload"
+  ],
+  "safetyFlags": {
+    "dataOnly": true,
+    "descriptorOnly": true,
+    "readOnly": true,
+    "dryRunOnly": true,
+    "pluginRuntimeImplemented": false,
+    "pluginLoaderImplemented": false,
+    "pluginCodeLoaded": false,
+    "dynamicLibrariesLoaded": false,
+    "sandboxImplemented": false,
+    "permissionExecutorImplemented": false,
+    "stablePluginAbiPromised": false,
+    "marketplaceFlow": false,
+    "packageDistribution": false,
+    "commandExecution": false,
+    "shellExecution": false,
+    "runtimeExecution": false,
+    "networkCalls": false,
+    "providerCalls": false,
+    "launcherExecution": false,
+    "editorExecution": false,
+    "hardwareAccess": false,
+    "kv260Access": false,
+    "fpgaRepoAccess": false,
+    "modelExecution": false,
+    "privatePathsIncluded": false,
+    "secretsIncluded": false,
+    "tokensIncluded": false,
+    "telemetry": false,
+    "writeBack": false,
+    "writesArtifacts": false,
+    "publicPush": false,
+    "releaseOrTag": false
+  },
+  "limitations": [
+    "This is a checked dry-run contract for a future plugin flow, not a plugin loader, runtime, sandbox, or permission executor.",
+    "The fixture describes how future CLI/core commands could combine approved manifest, capability, diagnostics, and workflow-result summaries; it does not run commands.",
+    "No plugin code is loaded, no package is installed, no dynamic library is loaded, and no untrusted code executes.",
+    "No stable plugin ABI is promised. No marketplace, package distribution, release, tag, hardware, inference, throughput, or timing-closure claim is made."
+  ],
+  "issueRefs": [
+    "pccxai/pccx-lab#21"
+  ]
+}

@@ -1,0 +1,225 @@
+{
+  "schemaVersion": "pccx.lab.plugin-boundary-plan.v0",
+  "tool": "pccx-lab",
+  "planId": "plugin-boundary-cli-core-plan",
+  "planState": "descriptor_only",
+  "hostMode": "cli_first_gui_second",
+  "manifestDraft": {
+    "schemaVersion": "pccx.lab.plugin-manifest.v0",
+    "manifestState": "draft",
+    "requiredFields": [
+      "pluginId",
+      "name",
+      "version",
+      "entryKind",
+      "capabilities",
+      "inputContracts",
+      "outputContracts",
+      "permissions",
+      "limitations"
+    ],
+    "optionalFields": [
+      "description",
+      "homepage",
+      "license",
+      "minimumLabVersion",
+      "tags"
+    ],
+    "limitations": [
+      "Manifest shape is a planning artifact only.",
+      "No plugin package format, publisher flow, or compatibility commitment is defined by this draft."
+    ]
+  },
+  "capabilityCatalog": [
+    {
+      "capabilityId": "plugin.diagnostics.summary",
+      "capabilityState": "planned",
+      "inputPolicy": "Approved summary or diagnostics JSON only.",
+      "outputPolicy": "Bounded diagnostics envelope or summary item.",
+      "permissionProfile": "read-only"
+    },
+    {
+      "capabilityId": "plugin.report.panel",
+      "capabilityState": "planned",
+      "inputPolicy": "Approved report summary JSON only.",
+      "outputPolicy": "Bounded report-panel metadata; no artifact write in this plan.",
+      "permissionProfile": "read-only"
+    },
+    {
+      "capabilityId": "plugin.trace.importer",
+      "capabilityState": "deferred",
+      "inputPolicy": "Requires a separate trace summary boundary before raw trace input can be exposed.",
+      "outputPolicy": "Deferred until trace import permissions are reviewed.",
+      "permissionProfile": "not-available"
+    }
+  ],
+  "loadingBoundary": {
+    "state": "not_implemented",
+    "defaultMode": "disabled",
+    "allowedDuringPlan": [
+      "manifest shape review",
+      "capability review",
+      "permission review"
+    ],
+    "pluginCodeLoaded": false,
+    "dynamicLibrariesLoaded": false,
+    "untrustedExecutionAllowed": false,
+    "hostApiStable": false
+  },
+  "hostApiBoundary": {
+    "state": "planned",
+    "exposedContracts": [
+      {
+        "contractId": "lab.status",
+        "coreBoundary": "pccx_core::status::lab_status",
+        "exposureState": "read-only metadata",
+        "readOnly": true
+      },
+      {
+        "contractId": "workflow.descriptors",
+        "coreBoundary": "pccx_core::workflows::workflow_descriptors",
+        "exposureState": "descriptor-only metadata",
+        "readOnly": true
+      },
+      {
+        "contractId": "diagnostics.envelope",
+        "coreBoundary": "pccx-lab analyze / diagnostics envelope",
+        "exposureState": "approved local file input required",
+        "readOnly": true
+      },
+      {
+        "contractId": "workflow.results",
+        "coreBoundary": "pccx_core::results::workflow_result_summaries",
+        "exposureState": "summary-only metadata",
+        "readOnly": true
+      }
+    ],
+    "forbiddenAccess": [
+      "raw trace memory",
+      "private GUI state",
+      "arbitrary filesystem write",
+      "shell command",
+      "provider configuration",
+      "network endpoint",
+      "hardware device",
+      "launcher runtime",
+      "editor runtime"
+    ]
+  },
+  "samplePluginPlan": {
+    "pluginId": "example.diagnostics.summary",
+    "sampleState": "plan_only",
+    "entryKind": "manifest_only",
+    "inputContract": "diagnostics.envelope",
+    "outputContract": "plugin.diagnostics.summary",
+    "executionState": "not_implemented",
+    "limitations": [
+      "The sample does not load code.",
+      "The sample does not read traces, write reports, or mutate repositories."
+    ]
+  },
+  "securityModel": {
+    "state": "planned",
+    "sandboxRequired": true,
+    "explicitApprovalRequired": true,
+    "permissionsDefaultDeny": true,
+    "rawShellCommandsAllowed": false,
+    "networkAccessAllowed": false,
+    "fileWriteAllowed": false,
+    "blockedActions": [
+      "dynamic-code-load",
+      "untrusted-execution",
+      "arbitrary-command",
+      "network-call",
+      "provider-call",
+      "hardware-access",
+      "launcher-execution",
+      "editor-execution",
+      "public-push",
+      "release-or-tag",
+      "marketplace-flow"
+    ]
+  },
+  "cliFirstPlan": {
+    "state": "planned",
+    "proposedCommands": [
+      {
+        "commandId": "plugin-manifest-validate",
+        "availabilityState": "planned",
+        "fixedArgsPreview": [
+          "plugin-manifest",
+          "validate",
+          "--file",
+          "<approved-manifest-json>",
+          "--format",
+          "json"
+        ],
+        "sideEffectPolicy": "read-only manifest validation"
+      },
+      {
+        "commandId": "plugin-capabilities-list",
+        "availabilityState": "planned",
+        "fixedArgsPreview": [
+          "plugin-capabilities",
+          "--format",
+          "json"
+        ],
+        "sideEffectPolicy": "descriptor-only capability listing"
+      },
+      {
+        "commandId": "plugin-run-approved",
+        "availabilityState": "deferred",
+        "fixedArgsPreview": [
+          "plugin-run",
+          "--proposal-id",
+          "<approved-proposal-id>",
+          "--format",
+          "json"
+        ],
+        "sideEffectPolicy": "not available until a separate security boundary exists"
+      }
+    ],
+    "guiPolicy": "GUI may render manifest and capability metadata only after CLI/core contracts exist."
+  },
+  "externalIntegrationBoundary": {
+    "state": "planned",
+    "consumers": [
+      "future editor consumer",
+      "future launcher consumer",
+      "future MCP/tool consumer"
+    ],
+    "rule": "External consumers must use CLI/core data contracts and must not load plugins or bypass approval boundaries."
+  },
+  "safetyFlags": {
+    "dataOnly": true,
+    "descriptorOnly": true,
+    "readOnly": true,
+    "pluginRuntimeImplemented": false,
+    "pluginCodeLoaded": false,
+    "dynamicLibrariesLoaded": false,
+    "untrustedExecutionAllowed": false,
+    "stablePluginAbiPromised": false,
+    "marketplaceFlow": false,
+    "shellExecution": false,
+    "runtimeExecution": false,
+    "networkCalls": false,
+    "providerCalls": false,
+    "launcherExecution": false,
+    "editorExecution": false,
+    "hardwareAccess": false,
+    "modelExecution": false,
+    "writeBack": false,
+    "writesArtifacts": false,
+    "publicPush": false,
+    "releaseOrTag": false
+  },
+  "limitations": [
+    "This is a checked plugin boundary plan, not a plugin loader or runtime.",
+    "No stable plugin ABI is promised.",
+    "No marketplace, publisher, package, or extension distribution flow is implemented.",
+    "No untrusted code execution, shell execution, provider call, network call, hardware access, launcher/editor bridge, artifact write, public push, or release/tag control is implemented."
+  ],
+  "issueRefs": [
+    "pccxai/pccx-lab#21"
+  ]
+}

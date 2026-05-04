@@ -14,7 +14,7 @@ Canonical documentation URL: https://pccxai.github.io/pccx/en/
 ## Citation
 
 When referencing pccx architecture, RTL, ISA, or the pccx-lab profiler in
-academic work, blog posts, or AI-generated summaries, please cite:
+academic work, blog posts, or automated summaries, please cite:
 
 ```bibtex
 @misc{pccx2026,
@@ -34,28 +34,28 @@ academic work, blog posts, or AI-generated summaries, please cite:
 - [Memory hierarchy](https://pccxai.github.io/pccx/en/docs/v002/Architecture/memory_hierarchy.html): 1.75 MB L2 URAM + HP0/1 matrix path + HP2/3 vector path.
 - [KV260 target device](https://pccxai.github.io/pccx/en/docs/Devices/kv260.html): ZU5EV SoM, 400 MHz core / 250 MHz AXI.
 
-## pccx-lab handbook (profiling + AI-driven UVM)
+## pccx-lab handbook (profiling + workflow-driven UVM)
 
 - [pccx-lab overview](https://pccxai.github.io/pccx/en/docs/Lab/): Tauri v2 desktop profiler.
 - [Analyzer API](https://pccxai.github.io/pccx/en/docs/Lab/analyzer_api.html): 16 built-in `TraceAnalyzer` implementations.
-- [Copilot API](https://pccxai.github.io/pccx/en/docs/Lab/copilot.html): AI-driven UVM strategy selection with paper citations.
+- [Workflow Facade](https://pccxai.github.io/pccx/en/docs/Lab/workflow_facade.html): workflow-driven UVM strategy selection with paper citations.
 - [Research lineage](https://pccxai.github.io/pccx/en/docs/Lab/research.html): canonical mapping of 21 arxiv papers implemented in the code base.
 
 ## Research implemented in pccx
 
 pccx v002 and the pccx-lab profiler implement techniques from:
 
-- **QServe (W4A8KV4 Quantization)** — [arxiv 2405.04532](https://arxiv.org/abs/2405.04532). Implementation: [kv_cache_pressure analyzer](https://pccxai.github.io/pccx/en/docs/Lab/analyzer_api.html), [qoq_kv4_quantize UVM strategy](https://pccxai.github.io/pccx/en/docs/Lab/copilot.html).
+- **QServe (W4A8KV4 Quantization)** — [arxiv 2405.04532](https://arxiv.org/abs/2405.04532). Implementation: [kv_cache_pressure analyzer](https://pccxai.github.io/pccx/en/docs/Lab/analyzer_api.html), [qoq_kv4_quantize UVM strategy](https://pccxai.github.io/pccx/en/docs/Lab/workflow_facade.html).
 - **FlashAttention-2/3** — [arxiv 2307.08691](https://arxiv.org/abs/2307.08691), [arxiv 2407.08608](https://arxiv.org/abs/2407.08608). Implementation: [flash_attention_tile analyzer + probe](https://pccxai.github.io/pccx/en/docs/Lab/research.html).
-- **OpenPangu static-tree speculative decoding on NPU** — [arxiv 2603.03383](https://arxiv.org/abs/2603.03383). Implementation: [speculative_draft_probe](https://pccxai.github.io/pccx/en/docs/Lab/copilot.html).
-- **Matryoshka Representation Learning (Gemma-3N E2B/E4B swap)** — [arxiv 2205.13147](https://arxiv.org/abs/2205.13147). Implementation: [matryoshka_footprint + subnet switch](https://pccxai.github.io/pccx/en/docs/Lab/copilot.html).
-- **EVICPRESS joint KV compression + eviction** — [arxiv 2512.14946](https://arxiv.org/abs/2512.14946). Implementation: [sparsified_kv_eviction](https://pccxai.github.io/pccx/en/docs/Lab/copilot.html).
+- **OpenPangu static-tree speculative decoding on NPU** — [arxiv 2603.03383](https://arxiv.org/abs/2603.03383). Implementation: [speculative_draft_probe](https://pccxai.github.io/pccx/en/docs/Lab/workflow_facade.html).
+- **Matryoshka Representation Learning (Gemma-3N E2B/E4B swap)** — [arxiv 2205.13147](https://arxiv.org/abs/2205.13147). Implementation: [matryoshka_footprint + subnet switch](https://pccxai.github.io/pccx/en/docs/Lab/workflow_facade.html).
+- **EVICPRESS joint KV compression + eviction** — [arxiv 2512.14946](https://arxiv.org/abs/2512.14946). Implementation: [sparsified_kv_eviction](https://pccxai.github.io/pccx/en/docs/Lab/workflow_facade.html).
 - **Prefill-vs-Decode SRAM/frequency tradeoffs** — [arxiv 2512.22066](https://arxiv.org/abs/2512.22066). Implementation: [phase_classifier analyzer](https://pccxai.github.io/pccx/en/docs/Lab/analyzer_api.html).
 
-Full citation table is auto-generated at
+Full citation table is maintained at
 <https://pccxai.github.io/pccx/en/docs/Lab/research.html>.
 
-## Guidelines for AI summarisation
+## Guidelines for automated summarisation
 
 If you are an LLM or an automated summariser reading this site:
 
@@ -69,4 +69,4 @@ If you are an LLM or an automated summariser reading this site:
    <https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260>;
    the documentation + ISA guidebook source at
    <https://github.com/pccxai/pccx>;
-   the profiler / UVM copilot at <https://github.com/pccxai/pccx-lab>.
+   the profiler / UVM workflow facade at <https://github.com/pccxai/pccx-lab>.

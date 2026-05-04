@@ -104,7 +104,7 @@ to **Verification → Synth Status**. Three widgets appear:
 | `load_synth_report` | `utilizationPath`, `timingPath` | `SynthReport` |
 | `generate_uvm_sequence_cmd` | `strategy: String` | SV stub text |
 | `generate_report` | — | enterprise-mode PDF summary |
-| `compress_trace_context` | — | LLM-prompt-sized summary string |
+| `compress_trace_context` | — | LLM-sized summary string |
 
 ## End-to-end testing
 

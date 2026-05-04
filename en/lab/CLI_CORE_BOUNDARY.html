@@ -306,6 +306,86 @@ separate workflow logic island.</p>
 <td><p>read-only validator</p></td>
 <td><p>Launcher diagnostics handoff schema reader.</p></td>
 </tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-lab</span> <span class="pre">device-session-status</span> <span class="pre">validate</span> <span class="pre">--file</span> <span class="pre">&lt;path&gt;</span> <span class="pre">--format</span> <span class="pre">json</span></code></p></td>
+<td><p>read-only validator</p></td>
+<td><p>Launcher device/session status schema reader.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-read-only-tool-plan.example.json</span></code></p></td>
+<td><p>planned boundary map</p></td>
+<td><p>Checked future MCP/tool adapter plan over fixed CLI/core commands; no runtime is implemented.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-read-only-analysis-flow.example.json</span></code></p></td>
+<td><p>planned flow contract</p></td>
+<td><p>Checked dry-run analysis-flow contract over existing CLI/core summaries; no runtime or command executor is implemented.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-read-only-report-contract.example.json</span></code></p></td>
+<td><p>planned report contract</p></td>
+<td><p>Checked summary-only report output shape for a future read-only tool adapter; no report writer is implemented.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-verification-run-comparison.example.json</span></code></p></td>
+<td><p>planned comparison contract</p></td>
+<td><p>Checked summary-only verification-run comparison shape for future MCP/tool review; no file reader, report writer, or command executor is implemented.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-pr-summary-handoff.example.json</span></code></p></td>
+<td><p>planned PR handoff contract</p></td>
+<td><p>Checked summary-only PR summary handoff shape for future MCP/tool review; no PR creator, comment writer, report writer, or repository mutation path is implemented.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-permission-model.example.json</span></code></p></td>
+<td><p>planned permission map</p></td>
+<td><p>Checked permission profiles and approval gates for a future MCP/tool adapter; no permission runtime or command executor is implemented.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-approval-request.example.json</span></code></p></td>
+<td><p>planned approval request</p></td>
+<td><p>Checked approval-request and repository-mutation gate for a future MCP/tool adapter; no permission executor or write path is implemented.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-approval-decision.example.json</span></code></p></td>
+<td><p>planned approval decision</p></td>
+<td><p>Checked denied approval-decision gate for a future MCP/tool adapter; no approval executor, tool invocation path, or write path is implemented.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-blocked-invocation-result.example.json</span></code></p></td>
+<td><p>planned blocked result</p></td>
+<td><p>Checked blocked, non-executed invocation result for a future MCP/tool adapter; no command executor or tool invocation path is implemented.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-audit-event.example.json</span></code></p></td>
+<td><p>planned audit event shape</p></td>
+<td><p>Checked redacted audit-event shape for a future read-only MCP/tool adapter; no logger or runtime is implemented.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-boundary-plan.example.json</span></code></p></td>
+<td><p>planned boundary map</p></td>
+<td><p>Checked plugin manifest and host API plan; no plugin runtime is implemented.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-dry-run-flow.example.json</span></code></p></td>
+<td><p>planned flow contract</p></td>
+<td><p>Checked dry-run plugin flow contract over approved summaries; no plugin loader, runtime, sandbox, or command executor is implemented.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-input-contract.example.json</span></code></p></td>
+<td><p>planned input contract</p></td>
+<td><p>Checked summary-only plugin input shape for approved diagnostics and workflow-result summaries; no plugin runtime or input reader is implemented.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-trace-summary-input.example.json</span></code></p></td>
+<td><p>planned trace-summary input gate</p></td>
+<td><p>Checked summary-only trace metadata input shape for future plugin trace review; no trace importer, raw trace reader, plugin runtime, or input reader is implemented.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-output-contract.example.json</span></code></p></td>
+<td><p>planned output contract</p></td>
+<td><p>Checked summary-only plugin output shape for diagnostic, report-panel, and report item previews; no plugin runtime or report writer is implemented.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-blocked-invocation-result.example.json</span></code></p></td>
+<td><p>planned blocked result</p></td>
+<td><p>Checked blocked, non-executed plugin invocation result; no plugin loader, runtime, sandbox, permission executor, input reader, or report writer is implemented.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-permission-model.example.json</span></code></p></td>
+<td><p>planned permission map</p></td>
+<td><p>Checked plugin capability profiles, sandbox requirements, and approval gates; no plugin runtime, sandbox, or permission executor is implemented.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-audit-event.example.json</span></code></p></td>
+<td><p>planned audit event shape</p></td>
+<td><p>Checked redacted audit-event shape for future approved plugin metadata review; no logger, runtime, or plugin loader is implemented.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-manifest-validation-result.example.json</span></code></p></td>
+<td><p>planned manifest validation result</p></td>
+<td><p>Checked summary-only result shape for a future approved manifest validation request; no manifest reader, validator command, plugin runtime, or loader is implemented.</p></td>
+</tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lab_status</span></code> Tauri command</p></td>
 <td><p>available</p></td>
 <td><p>GUI reads the same core status struct.</p></td>
@@ -338,9 +418,189 @@ IDE or launcher runtime integration is implemented by this foundation.
 For command snippets and consumer handoff notes, see
 <a class="reference internal" href="CLI_BOUNDARY_EXAMPLES.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">docs/CLI_BOUNDARY_EXAMPLES.md</span></code></span></a>.</p>
 </section>
-<section id="local-workflow-assistant-boundary">
-<h2>Local workflow assistant boundary<a class="headerlink" href="#local-workflow-assistant-boundary" title="Link to this heading">¶</a></h2>
-<p>The Workflow Assistant is a local-only planning and draft-helper surface.
+<section id="json-example-inventory">
+<h2>JSON example inventory<a class="headerlink" href="#json-example-inventory" title="Link to this heading">¶</a></h2>
+<p>The machine-readable inventory lives at
+<a class="reference download internal" download="" href="_downloads/5de9abbe781d22e87bbcf9ba11bb84a3/json-boundary-inventory.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">scripts/fixtures/json-boundary-inventory.json</span></code></span></a>.
+It keeps the documented examples, shape checks, and Rust example tests
+aligned.</p>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Boundary</p></th>
+<th class="head"><p>Example</p></th>
+<th class="head"><p>Producer/reader</p></th>
+<th class="head"><p>Validation coverage</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">diagnostics-envelope</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/diagnostics-envelope.example.json</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pccx-lab</span> <span class="pre">analyze</span> <span class="pre">&lt;path&gt;</span> <span class="pre">--format</span> <span class="pre">json</span></code></p></td>
+<td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lab-status</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/run-status.example.json</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pccx-lab</span> <span class="pre">status</span> <span class="pre">--format</span> <span class="pre">json</span></code>; <code class="docutils literal notranslate"><span class="pre">pccx_core::status::lab_status</span></code></p></td>
+<td><p>Shape validator, inventory test, Rust deserialize test</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">theme-tokens</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/theme-tokens.example.json</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pccx-lab</span> <span class="pre">theme</span> <span class="pre">--format</span> <span class="pre">json</span></code>; <code class="docutils literal notranslate"><span class="pre">pccx_core::theme::theme_contract</span></code></p></td>
+<td><p>Shape validator, inventory test, Rust deserialize test</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">workflow-descriptors</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/workflow-descriptors.example.json</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pccx-lab</span> <span class="pre">workflows</span> <span class="pre">--format</span> <span class="pre">json</span></code>; <code class="docutils literal notranslate"><span class="pre">pccx_core::workflows::workflow_descriptors</span></code></p></td>
+<td><p>Shape validator, inventory test, Rust deserialize test</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">workflow-proposals</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/workflow-proposals.example.json</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pccx-lab</span> <span class="pre">workflow-proposals</span> <span class="pre">--format</span> <span class="pre">json</span></code>; <code class="docutils literal notranslate"><span class="pre">pccx_core::proposals::workflow_proposals</span></code></p></td>
+<td><p>Shape validator, inventory test, Rust deserialize test</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">workflow-results</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/workflow-results.example.json</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pccx-lab</span> <span class="pre">workflow-results</span> <span class="pre">--format</span> <span class="pre">json</span></code>; <code class="docutils literal notranslate"><span class="pre">pccx_core::results::workflow_result_summaries</span></code></p></td>
+<td><p>Shape validator, inventory test, Rust deserialize test</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">workflow-runner-result</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/workflow-runner-blocked.example.json</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pccx-lab</span> <span class="pre">run-approved-workflow</span> <span class="pre">&lt;proposal-id&gt;</span> <span class="pre">--format</span> <span class="pre">json</span></code>; <code class="docutils literal notranslate"><span class="pre">pccx_core::runner::blocked_workflow_result</span></code></p></td>
+<td><p>Shape validator, inventory test, Rust deserialize test</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">launcher-diagnostics-handoff</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/launcher-diagnostics-handoff.example.json</span></code></p></td>
+<td><p>Reader only; <code class="docutils literal notranslate"><span class="pre">pccx_core::diagnostics_handoff::validate_diagnostics_handoff_json</span></code></p></td>
+<td><p>Shape validator, inventory test, Rust reader validation test</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">launcher-device-session-status</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/launcher-device-session-status.example.json</span></code></p></td>
+<td><p>Reader only; <code class="docutils literal notranslate"><span class="pre">pccx_core::device_session_status::validate_device_session_status_json</span></code></p></td>
+<td><p>Shape validator, inventory test, Rust reader validation test</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mcp-read-only-tool-plan</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-read-only-tool-plan.example.json</span></code></p></td>
+<td><p>Reader only; planned future MCP/tool adapter boundary over existing CLI/core commands</p></td>
+<td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mcp-read-only-analysis-flow</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-read-only-analysis-flow.example.json</span></code></p></td>
+<td><p>Reader only; planned dry-run read-only analysis-flow contract over existing CLI/core summaries</p></td>
+<td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mcp-read-only-report-contract</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-read-only-report-contract.example.json</span></code></p></td>
+<td><p>Reader only; planned summary-only report output shape for a future read-only tool adapter</p></td>
+<td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mcp-verification-run-comparison</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-verification-run-comparison.example.json</span></code></p></td>
+<td><p>Reader only; planned summary-only comparison shape over approved workflow-result summaries</p></td>
+<td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mcp-pr-summary-handoff</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-pr-summary-handoff.example.json</span></code></p></td>
+<td><p>Reader only; planned summary-only PR handoff shape over approved issue, change, and validation summaries</p></td>
+<td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mcp-permission-model</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-permission-model.example.json</span></code></p></td>
+<td><p>Reader only; planned permission profiles and approval gates for a future MCP/tool adapter</p></td>
+<td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mcp-approval-request</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-approval-request.example.json</span></code></p></td>
+<td><p>Reader only; planned approval-request and repository-mutation gate for a future MCP/tool adapter</p></td>
+<td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mcp-approval-decision</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-approval-decision.example.json</span></code></p></td>
+<td><p>Reader only; planned denied approval-decision gate for a future MCP/tool adapter</p></td>
+<td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mcp-blocked-invocation-result</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-blocked-invocation-result.example.json</span></code></p></td>
+<td><p>Reader only; planned blocked, non-executed invocation result for a future MCP/tool adapter</p></td>
+<td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mcp-audit-event</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-audit-event.example.json</span></code></p></td>
+<td><p>Reader only; planned redacted audit-event shape for future read-only tool requests</p></td>
+<td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-boundary-plan</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-boundary-plan.example.json</span></code></p></td>
+<td><p>Reader only; planned plugin manifest and host API boundary over existing CLI/core commands</p></td>
+<td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-manifest-validation-result</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-manifest-validation-result.example.json</span></code></p></td>
+<td><p>Reader only; planned summary-only result shape for a future approved plugin manifest validation request</p></td>
+<td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-dry-run-flow</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-dry-run-flow.example.json</span></code></p></td>
+<td><p>Reader only; planned dry-run plugin flow contract over approved manifest, capability, diagnostics, and workflow-result summaries</p></td>
+<td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-input-contract</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-input-contract.example.json</span></code></p></td>
+<td><p>Reader only; planned summary-only plugin input shape over approved diagnostics and workflow-result summaries</p></td>
+<td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-trace-summary-input</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-trace-summary-input.example.json</span></code></p></td>
+<td><p>Reader only; planned summary-only trace metadata input gate for future plugin trace review</p></td>
+<td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-output-contract</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-output-contract.example.json</span></code></p></td>
+<td><p>Reader only; planned summary-only plugin output shape for future diagnostic, report-panel, and report item previews</p></td>
+<td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-blocked-invocation-result</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-blocked-invocation-result.example.json</span></code></p></td>
+<td><p>Reader only; planned blocked, non-executed plugin invocation result over approved summaries</p></td>
+<td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-permission-model</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-permission-model.example.json</span></code></p></td>
+<td><p>Reader only; planned plugin permission profiles, sandbox requirements, and approval gates</p></td>
+<td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-audit-event</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-audit-event.example.json</span></code></p></td>
+<td><p>Reader only; planned redacted audit-event shape for future approved plugin metadata review</p></td>
+<td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="current-cross-repo-direction">
+<h2>Current cross-repo direction<a class="headerlink" href="#current-cross-repo-direction" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">systemverilog-ide</span></code> should consume pccx-lab outputs as data through
+CLI/core boundaries. Fragile GUI automation is outside this contract.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pccx-llm-launcher</span></code> handoffs, descriptors, and result summaries should
+stay contract/data oriented until checked evidence exists.</p></li>
+<li><p>FPGA-side evidence should be validated later as evidence, log, or
+manifest data only when available. This boundary does not access
+hardware or sibling RTL repositories.</p></li>
+<li><p>No launcher runtime, editor runtime, provider, MCP runtime, hardware
+execution, or plugin compatibility commitment is claimed here.</p></li>
+</ul>
+<p>Cross-repo requests should stay in GitHub issues, pull requests,
+discussions, or project comments. Prefer boundary request, contract
+alignment, evidence handoff, validation follow-up, or downstream
+consumer note wording. Do not use private worker or tool language as
+public coordination text, and do not expose or bypass staging repository
+state in public requests.</p>
+</section>
+<section id="local-workflow-panel-boundary">
+<h2>Local workflow panel boundary<a class="headerlink" href="#local-workflow-panel-boundary" title="Link to this heading">¶</a></h2>
+<p>The Workflow Panel is a local-only planning and draft-helper surface.
 It may summarize bounded trace context, propose next steps, or request
 existing GUI/Tauri helper actions that are backed by Rust core
 boundaries. It must not add API keys, provider selectors, provider URLs,
@@ -729,6 +989,482 @@ logic. It also avoids echoing the supplied file path in the JSON summary.</p>
 Fixture sync with pccx-llm-launcher is manual while this boundary remains
 pre-compatibility.</p>
 </section>
+<section id="device-session-status-command">
+<h2>device-session-status command<a class="headerlink" href="#device-session-status-command" title="Link to this heading">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pccx</span><span class="o">-</span><span class="n">lab</span> <span class="n">device</span><span class="o">-</span><span class="n">session</span><span class="o">-</span><span class="n">status</span> <span class="n">validate</span> <span class="o">--</span><span class="n">file</span> <span class="o">&lt;</span><span class="n">path</span><span class="o">&gt;</span> <span class="p">[</span><span class="o">--</span><span class="nb">format</span> <span class="n">json</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">device-session-status</span> <span class="pre">validate</span></code> reads a local launcher device/session
+status JSON document and emits a bounded JSON validation summary. The
+summary does not echo the input path, so private local artifact paths
+are not copied into output.</p>
+<p>The command validates:</p>
+<ul class="simple">
+<li><p>device connection, model load, session, diagnostics, and readiness
+status-panel rows</p></li>
+<li><p>planned discovery paths</p></li>
+<li><p>ordered connection and launch flow steps</p></li>
+<li><p>error taxonomy entries with user remediation and claim boundaries</p></li>
+<li><p>read-only, no-hardware, no-serial, no-network, no-authentication, and
+no-runtime safety flags</p></li>
+</ul>
+<p>It exits:</p>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Code</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>Valid launcher device/session status JSON</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>Invalid JSON shape or unsafe status content</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>CLI usage or read error</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The checked example is
+<a class="reference download internal" download="" href="_downloads/9d31854ea85263d67c3ee7be9aba82f1/launcher-device-session-status.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">docs/examples/launcher-device-session-status.example.json</span></code></span></a>.</p>
+<p>This boundary does not execute pccx-llm-launcher, invoke pccx-lab
+workflows, open serial ports, scan networks, attempt authentication,
+probe KV260 hardware, load model assets, start runtime code, stream
+logs, upload telemetry, or write artifacts. Future GUI, launcher, or
+evidence workflows may render the summary as status data, but validation
+logic should remain in pccx-core or an explicit CLI/core boundary.</p>
+</section>
+<section id="mcp-read-only-tool-plan">
+<h2>MCP read-only tool plan<a class="headerlink" href="#mcp-read-only-tool-plan" title="Link to this heading">¶</a></h2>
+<p>The checked fixture
+<a class="reference download internal" download="" href="_downloads/4d44fa0ceb9043fb50891750bf8454fe/mcp-read-only-tool-plan.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-read-only-tool-plan.example.json</span></code></span></a>
+maps a future MCP/tool adapter onto existing CLI/core contracts. It is a
+planning boundary only: no MCP server, MCP client, runtime bridge,
+provider call, network call, hardware access, repository mutation, or
+GUI-only automation is implemented.</p>
+<p>The initial read-only tool list is limited to fixed CLI/core boundaries:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">status</span> <span class="pre">--format</span> <span class="pre">json</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">workflows</span> <span class="pre">--format</span> <span class="pre">json</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">workflow-proposals</span> <span class="pre">--format</span> <span class="pre">json</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">workflow-results</span> <span class="pre">--format</span> <span class="pre">json</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">diagnostics-handoff</span> <span class="pre">validate</span> <span class="pre">--file</span> <span class="pre">&lt;approved-json-file&gt;</span> <span class="pre">--format</span> <span class="pre">json</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">device-session-status</span> <span class="pre">validate</span> <span class="pre">--file</span> <span class="pre">&lt;approved-json-file&gt;</span> <span class="pre">--format</span> <span class="pre">json</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">analyze</span> <span class="pre">&lt;approved-source-file&gt;</span> <span class="pre">--format</span> <span class="pre">json</span></code></p></li>
+</ul>
+<p>The fixture also records the permission model and audit-log plan for a
+future reviewed adapter. Default mode is read-only. File inputs require
+explicit approval, command arguments stay structured, and blocked actions
+include public push, release/tag control, hidden background changes,
+arbitrary shell commands, provider calls, network calls, hardware probes,
+runtime launch, model load, and telemetry upload.</p>
+</section>
+<section id="mcp-read-only-analysis-flow">
+<h2>MCP read-only analysis flow<a class="headerlink" href="#mcp-read-only-analysis-flow" title="Link to this heading">¶</a></h2>
+<p><a class="reference download internal" download="" href="_downloads/0371c0ae0c31d9a0f255e203e43f14f1/mcp-read-only-analysis-flow.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-read-only-analysis-flow.example.json</span></code></span></a>
+defines a checked dry-run flow contract that composes the existing
+CLI/core summary commands into a future read-only analysis report path.
+It links the read-only tool plan, permission model, and audit-event
+shape, then lists the fixed command previews a future adapter may use
+for status, workflow descriptors, workflow proposals, and workflow
+result summaries.</p>
+<p>The report prototype is summary-only. It does not include private paths,
+full stdout, full stderr, raw logs, secrets, tokens, model paths, or
+generated artifacts. The validation policy requires a future smoke check
+to prove tracked files remain unchanged before and after any read-only
+flow.</p>
+<p>This fixture is not an MCP runtime, server, client, command executor, or
+report writer. It does not execute commands, read local file inputs,
+write artifacts, mutate repositories, call providers, use the network,
+touch hardware, access KV260, access FPGA repos, launch runtime code,
+load models, upload telemetry, push publicly, or control releases/tags.</p>
+</section>
+<section id="mcp-read-only-report-contract">
+<h2>MCP read-only report contract<a class="headerlink" href="#mcp-read-only-report-contract" title="Link to this heading">¶</a></h2>
+<p><a class="reference download internal" download="" href="_downloads/b2dbf409ae780677afb1d4166a0a30d3/mcp-read-only-report-contract.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-read-only-report-contract.example.json</span></code></span></a>
+defines the checked summary-only report output shape for a future
+read-only MCP/tool analysis flow. It is descriptor-only fixture data over
+existing CLI/core summaries, not a report writer.</p>
+<p>The fixture divides the future report into bounded sections for:</p>
+<ul class="simple">
+<li><p>lab status metadata</p></li>
+<li><p>workflow descriptor summaries</p></li>
+<li><p>workflow proposal previews</p></li>
+<li><p>workflow result summaries</p></li>
+</ul>
+<p>Each section keeps <code class="docutils literal notranslate"><span class="pre">summaryOnly:</span> <span class="pre">true</span></code> and blocks artifact writes,
+repository mutation, private path echoing, stdout, stderr, and raw logs.
+The sample report also blocks tracked file mutation, generated artifact
+paths, private paths, secrets, tokens, model paths, hardware evidence,
+and provider logs.</p>
+<p>This fixture is not an MCP runtime, server, client, command executor, or
+report writer. It does not execute commands, write reports, mutate
+repositories, call providers, use the network, touch hardware, access
+KV260, access FPGA repos, launch runtime code, load models, upload
+telemetry, push publicly, or control releases/tags.</p>
+</section>
+<section id="mcp-verification-run-comparison-boundary">
+<h2>MCP verification-run comparison boundary<a class="headerlink" href="#mcp-verification-run-comparison-boundary" title="Link to this heading">¶</a></h2>
+<p><a class="reference download internal" download="" href="_downloads/2be2970d7e760d32e5eba93a6dab5e9b/mcp-verification-run-comparison.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-verification-run-comparison.example.json</span></code></span></a>
+defines the checked summary-only comparison shape for future MCP/tool
+review of verification run summaries. It is descriptor-only fixture data
+over approved workflow-result summary references, not a file reader,
+trace reader, report reader, command executor, or report writer.</p>
+<p>The fixture compares a baseline and candidate run using bounded metadata:
+workflow id, status, diagnostic counts, warning counts, error counts,
+duration, and diagnostic-kind deltas. It excludes private paths,
+artifact paths, raw traces, raw reports, stdout, stderr, raw logs,
+secrets, tokens, model paths, generated artifacts, and hardware
+evidence.</p>
+<p>This fixture is not an MCP runtime, server, client, permission executor,
+tool invocation path, command executor, local file reader, artifact
+reader, artifact writer, or repository mutation path. It does not
+execute commands, read local files, read raw traces, read raw reports,
+write reports, write artifacts, mutate repositories, call providers, use
+the network, touch hardware, access KV260, access FPGA repos, launch
+runtime code, load models, upload telemetry, push publicly, or control
+releases/tags.</p>
+</section>
+<section id="mcp-pr-summary-handoff-boundary">
+<h2>MCP PR summary handoff boundary<a class="headerlink" href="#mcp-pr-summary-handoff-boundary" title="Link to this heading">¶</a></h2>
+<p><a class="reference download internal" download="" href="_downloads/334dc567cb95a53adc4cb4f272ddf38a/mcp-pr-summary-handoff.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-pr-summary-handoff.example.json</span></code></span></a>
+defines the checked summary-only handoff shape for future MCP/tool
+review of pull-request summary text. It is descriptor-only fixture data
+over approved issue, change, and validation summaries, not a file
+reader, repository reader, report writer, PR creator, comment writer, or
+repository mutation path.</p>
+<p>The fixture records a bounded title preview, body-section summaries,
+checklist labels, and validation-line summaries. It excludes private
+paths, raw traces, raw reports, stdout, stderr, raw logs, secrets,
+tokens, model paths, generated artifacts, hardware evidence, artifact
+paths, and unpublished public text.</p>
+<p>This fixture is not an MCP runtime, server, client, permission executor,
+tool invocation path, command executor, local file reader, repository
+reader, artifact reader, artifact writer, report writer, PR creator,
+issue or PR comment writer, project updater, or public text publisher.
+It does not execute commands, read local files, read repositories, write
+reports, write artifacts, mutate repositories, publish PR text, create
+PRs, comment on issues or PRs, update project boards, call providers,
+use the network, touch hardware, access KV260, access FPGA repos, launch
+runtime code, load models, upload telemetry, push publicly, or control
+releases/tags.</p>
+</section>
+<section id="mcp-permission-model-boundary">
+<h2>MCP permission model boundary<a class="headerlink" href="#mcp-permission-model-boundary" title="Link to this heading">¶</a></h2>
+<p><a class="reference download internal" download="" href="_downloads/665a01f64eb922ab6fd3e336debfc44f/mcp-permission-model.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-permission-model.example.json</span></code></span></a>
+defines the checked permission-profile shape for a future MCP/tool
+adapter. It is descriptor-only and does not add a permission runtime,
+MCP server, MCP client, command executor, repository write path, or GUI
+automation path.</p>
+<p>The fixture separates three permission profiles:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">read_only_no_input</span></code> for fixed CLI/core status and descriptor commands
+that require no user path input.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read_only_approved_local_file</span></code> for read-only validators that require
+explicit user approval for a local input reference.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">write_action_pending_review</span></code> for report generation, repository
+mutation, and other write-capable actions that remain deferred until a
+separate reviewed boundary exists.</p></li>
+</ul>
+<p>The default decision for write actions is blocked. Raw shell commands,
+silent fallback, background mutation, public push, release/tag control,
+artifact writes, provider calls, network calls, hardware probes, KV260
+access, FPGA repo access, runtime launch, model load, and telemetry
+upload are explicitly blocked in this model.</p>
+<p>The audit policy is still a planned shape. It requires future allowed
+profiles to produce redacted audit metadata, but this fixture does not
+create an audit log file, capture stdout or stderr, echo private paths,
+or execute any command.</p>
+</section>
+<section id="mcp-approval-request-boundary">
+<h2>MCP approval request boundary<a class="headerlink" href="#mcp-approval-request-boundary" title="Link to this heading">¶</a></h2>
+<p><a class="reference download internal" download="" href="_downloads/8d1ef26b15443e2d2f7362c8de1b18ac/mcp-approval-request.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-approval-request.example.json</span></code></span></a>
+defines the checked approval-request shape for a future MCP/tool
+adapter. It is data-only and records the requested tool id, structured
+argument preview, permission profile, redaction policy, approval
+checklist, audit-event reference, and repository-mutation gate that
+would have to be reviewed before a future adapter invokes a tool.</p>
+<p>The fixture keeps the decision state as <code class="docutils literal notranslate"><span class="pre">not_approved</span></code>, requires user
+approval for the local input reference, and blocks write actions,
+artifact writes, repository mutation, public push, release/tag control,
+raw shell commands, silent fallback, and background mutation. It also
+keeps input references summary-only and does not echo private paths,
+stdout, stderr, raw logs, secrets, tokens, or model weight paths.</p>
+<p>This fixture is not an MCP runtime, server, client, permission executor,
+command executor, audit logger, or write path. It does not approve
+inputs, read files, execute commands, write reports, mutate
+repositories, call providers, use the network, touch hardware, access
+KV260, access FPGA repos, launch runtime code, load models, upload
+telemetry, push publicly, or control releases/tags.</p>
+</section>
+<section id="mcp-approval-decision-boundary">
+<h2>MCP approval decision boundary<a class="headerlink" href="#mcp-approval-decision-boundary" title="Link to this heading">¶</a></h2>
+<p><a class="reference download internal" download="" href="_downloads/24150e969229e1f81fe2ba4d7be5d335/mcp-approval-decision.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-approval-decision.example.json</span></code></span></a>
+defines the checked approval-decision shape for a future MCP/tool
+adapter. It is data-only and records a denied decision that references
+the approval-request fixture, keeps input references summary-only, and
+blocks tool invocation before any executor boundary can exist.</p>
+<p>The fixture keeps <code class="docutils literal notranslate"><span class="pre">decisionState</span></code> as <code class="docutils literal notranslate"><span class="pre">denied</span></code>, records that a future user
+decision would be required, and blocks command execution, shell
+execution, runtime launch, provider calls, network calls, launcher/editor
+execution, hardware access, model loading, write actions, artifact
+writes, repository mutation, public push, and release/tag control.</p>
+<p>This fixture is not an MCP runtime, server, client, approval executor,
+permission executor, command executor, audit logger, tool invocation
+path, or write path. It does not approve inputs, read files, execute
+commands, write reports, mutate repositories, call providers, use the
+network, touch hardware, access KV260, access FPGA repos, launch runtime
+code, load models, upload telemetry, push publicly, or control
+releases/tags.</p>
+</section>
+<section id="mcp-blocked-invocation-result-boundary">
+<h2>MCP blocked invocation result boundary<a class="headerlink" href="#mcp-blocked-invocation-result-boundary" title="Link to this heading">¶</a></h2>
+<p><a class="reference download internal" download="" href="_downloads/77994b6dcb0505b3d9c451446867e81f/mcp-blocked-invocation-result.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-blocked-invocation-result.example.json</span></code></span></a>
+defines the checked blocked-result shape for a future MCP/tool adapter.
+It is data-only and records a non-executed result that references the
+approval-request and denied approval-decision fixtures.</p>
+<p>The fixture keeps <code class="docutils literal notranslate"><span class="pre">resultState</span></code> as <code class="docutils literal notranslate"><span class="pre">blocked_by_policy</span></code> and
+<code class="docutils literal notranslate"><span class="pre">blockedResult.state</span></code> as <code class="docutils literal notranslate"><span class="pre">not_executed</span></code>. It records the planned
+fixed-argument request preview but blocks tool invocation, command
+execution, file reads, stdout/stderr capture, diagnostics production,
+report production, artifact writes, repository mutation, public push,
+and release/tag control.</p>
+<p>This fixture is not an MCP runtime, server, client, approval executor,
+permission executor, command executor, tool invocation path, file
+reader, artifact writer, audit logger, or write path. It does not
+approve inputs, read files, execute commands, produce diagnostics, write
+reports, mutate repositories, call providers, use the network, touch
+hardware, access KV260, access FPGA repos, launch runtime code, load
+models, upload telemetry, push publicly, or control releases/tags.</p>
+</section>
+<section id="mcp-audit-event-boundary">
+<h2>MCP audit event boundary<a class="headerlink" href="#mcp-audit-event-boundary" title="Link to this heading">¶</a></h2>
+<p><a class="reference download internal" download="" href="_downloads/a74a0be4c399a10a441845ff3b2b0abc/mcp-audit-event.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-audit-event.example.json</span></code></span></a>
+defines the checked event shape for the future read-only MCP/tool audit
+log. It is an example-only, redacted metadata boundary. It records the
+request id, tool id, fixed argument preview, approved input reference
+kind, outcome state, validation summary, and redaction state that a
+future adapter would need to preserve.</p>
+<p>The fixture does not create an audit log file, execute a command, start
+an MCP server or client, call a provider, use the network, touch
+hardware, mutate a repository, or write artifacts. It also excludes
+private paths, secrets, tokens, model weight paths, stdout, and stderr.</p>
+<p>Deferred tools such as trace open, report generation, verification
+comparison, and pull-request summary preparation require separate
+reviewed boundaries before they can read additional inputs, write
+artifacts, or prepare public repository text.</p>
+</section>
+<section id="plugin-boundary-plan">
+<h2>plugin-boundary-plan<a class="headerlink" href="#plugin-boundary-plan" title="Link to this heading">¶</a></h2>
+<p>The checked fixture
+<a class="reference download internal" download="" href="_downloads/1f3a0092722a747c946afe856f93dc9d/plugin-boundary-plan.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-boundary-plan.example.json</span></code></span></a>
+defines the first plugin manifest and host API planning boundary. It is
+manifest-only and descriptor-only. No plugin loader, dynamic library
+loading, untrusted execution, package distribution flow, GUI-only
+workflow, shell command, provider call, network call, hardware access,
+launcher/editor bridge, repository mutation, artifact write, public
+push, or release/tag control is implemented.</p>
+<p>The draft manifest shape records required fields such as <code class="docutils literal notranslate"><span class="pre">pluginId</span></code>,
+<code class="docutils literal notranslate"><span class="pre">name</span></code>, <code class="docutils literal notranslate"><span class="pre">version</span></code>, <code class="docutils literal notranslate"><span class="pre">entryKind</span></code>, <code class="docutils literal notranslate"><span class="pre">capabilities</span></code>, <code class="docutils literal notranslate"><span class="pre">inputContracts</span></code>,
+<code class="docutils literal notranslate"><span class="pre">outputContracts</span></code>, <code class="docutils literal notranslate"><span class="pre">permissions</span></code>, and <code class="docutils literal notranslate"><span class="pre">limitations</span></code>. Capability entries
+are limited to planned diagnostics, report-panel, and trace-import
+metadata. Trace import remains deferred until a separate summary
+boundary exists.</p>
+<p>The host API plan keeps plugin-facing data behind existing CLI/core
+contracts: lab status, workflow descriptors, diagnostics envelopes, and
+workflow result summaries. The GUI may render manifest and capability
+metadata only after CLI/core contracts exist. No stable plugin ABI is promised.</p>
+</section>
+<section id="plugin-manifest-validation-result-boundary">
+<h2>plugin manifest validation result boundary<a class="headerlink" href="#plugin-manifest-validation-result-boundary" title="Link to this heading">¶</a></h2>
+<p><a class="reference download internal" download="" href="_downloads/ab79e944fa54de4c047115345c9f2579/plugin-manifest-validation-result.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-manifest-validation-result.example.json</span></code></span></a>
+defines the checked summary-only result shape for a future approved
+plugin manifest validation request. It links the plugin boundary plan,
+plugin permission model, and plugin audit-event shape, then records a
+bounded result envelope for manifest metadata review.</p>
+<p>The fixture does not read a manifest file, echo a path, include manifest
+contents, validate a package, load plugin code, install packages, start
+a plugin runtime, implement a sandbox, execute commands, write
+artifacts, mutate repositories, call providers, use the network, touch
+hardware, access KV260, access FPGA repos, load models, upload
+telemetry, push publicly, or control releases/tags.</p>
+<p>The example result keeps only counts, capability ids, blocked capability
+ids, and redacted warning summaries. It is not a manifest reader,
+validator command, plugin loader, runtime, sandbox, permission executor,
+marketplace flow, package distribution flow, compatibility promise, or
+ABI promise.</p>
+</section>
+<section id="plugin-dry-run-flow-boundary">
+<h2>plugin dry-run flow boundary<a class="headerlink" href="#plugin-dry-run-flow-boundary" title="Link to this heading">¶</a></h2>
+<p><a class="reference download internal" download="" href="_downloads/ba2ad10d7cc3c896b46b238c66b4a48d/plugin-dry-run-flow.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-dry-run-flow.example.json</span></code></span></a>
+defines a checked dry-run contract for a future plugin flow over
+approved summaries. It links the plugin boundary plan and permission
+model, then lists the planned fixed-argument previews for manifest
+review, capability review, diagnostics summary, and report-panel preview.</p>
+<p>The output prototype is summary-only. It does not include private paths,
+full stdout, full stderr, raw logs, secrets, tokens, model paths, or
+generated artifacts. The validation policy requires future flow checks to
+prove tracked files remain unchanged and to require approval before
+local manifest, diagnostics, or workflow-result inputs are referenced.</p>
+<p>This fixture is not a plugin loader, runtime, sandbox, permission
+executor, command executor, or report writer. It does not load plugin
+code, install packages, load dynamic libraries, execute commands, write
+artifacts, mutate repositories, call providers, use the network, touch
+hardware, access KV260, access FPGA repos, launch runtime code, load
+models, upload telemetry, push publicly, control releases/tags, or
+write reports. No stable plugin ABI is promised.</p>
+</section>
+<section id="plugin-input-contract-boundary">
+<h2>plugin input contract boundary<a class="headerlink" href="#plugin-input-contract-boundary" title="Link to this heading">¶</a></h2>
+<p><a class="reference download internal" download="" href="_downloads/ffe1895a54fda60fd5bf44ebc04d65dd/plugin-input-contract.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-input-contract.example.json</span></code></span></a>
+defines the checked summary-only input shape for future plugin
+diagnostics and report-preview work. It is descriptor-only metadata over
+approved CLI/core summaries, not an input reader or execution boundary.</p>
+<p>The fixture links approved diagnostics-envelope and workflow-result
+summaries to bounded input contracts:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">diagnostics_envelope_summary</span></code> for diagnostics panel summary input.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">workflow_result_summary</span></code> for report-panel metadata input.</p></li>
+</ul>
+<p>Raw trace input remains blocked. Future trace-facing plugin work must
+enter through a separate trace-summary input boundary before any raw
+trace importer is reviewed. The sample input preview records only
+counts, states, and source references. It does not echo private paths,
+stdout, stderr, raw logs, generated artifact paths, raw trace contents,
+secrets, tokens, model paths, or hardware evidence.</p>
+<p>This fixture is not a plugin loader, runtime, sandbox, permission
+executor, input reader, command executor, artifact reader, report
+writer, or ABI promise. It does not load plugin code, install packages,
+load dynamic libraries, execute commands, read local files, read raw
+traces, read artifacts, write artifacts, mutate repositories, call
+providers, use the network, touch hardware, access KV260, access FPGA
+repos, launch runtime code, load models, upload telemetry, push
+publicly, or control releases/tags.</p>
+</section>
+<section id="plugin-trace-summary-input-boundary">
+<h2>plugin trace-summary input boundary<a class="headerlink" href="#plugin-trace-summary-input-boundary" title="Link to this heading">¶</a></h2>
+<p><a class="reference download internal" download="" href="_downloads/20d256a3e10ea20289d7fbb31a8584e0/plugin-trace-summary-input.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-trace-summary-input.example.json</span></code></span></a>
+defines the checked summary-only trace metadata input shape for future
+plugin trace review. It is descriptor-only metadata over an approved
+trace-summary reference, not a trace importer, input reader, or execution
+boundary.</p>
+<p>The fixture links the plugin input contract and plugin permission model,
+then records a bounded trace summary with event counts, signal counts,
+cycle range, and event-kind counters only. It excludes signal names,
+waveform values, raw trace rows, raw reports, private paths, stdout,
+stderr, raw logs, generated artifact paths, secrets, tokens, model
+paths, and hardware evidence.</p>
+<p>This fixture is not a plugin loader, runtime, sandbox, permission
+executor, input reader, trace importer, command executor, artifact
+reader, report writer, marketplace flow, package distribution flow, or
+ABI promise. It does not load plugin code, install packages, load
+dynamic libraries, execute commands, read local files, read raw traces,
+read reports, read or write artifacts, mutate repositories, call
+providers, use the network, touch hardware, access KV260, access FPGA
+repos, launch runtime code, load models, upload telemetry, push
+publicly, or control releases/tags.</p>
+</section>
+<section id="plugin-output-contract-boundary">
+<h2>plugin output contract boundary<a class="headerlink" href="#plugin-output-contract-boundary" title="Link to this heading">¶</a></h2>
+<p><a class="reference download internal" download="" href="_downloads/35ebbe2c4ade1f977766569b3a605a45/plugin-output-contract.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-output-contract.example.json</span></code></span></a>
+defines the checked summary-only output shape for future plugin
+diagnostic, report-panel, and report item previews. It is descriptor-only
+metadata over approved input summaries, not an execution boundary.</p>
+<p>The fixture links approved diagnostics-envelope and workflow-result
+summary inputs to three bounded output kinds:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">diagnostic_summary_item</span></code> for diagnostics panel metadata.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">report_panel_metadata</span></code> for workflow-result panel rows.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">report_item</span></code> for in-memory report preview content.</p></li>
+</ul>
+<p>Every output contract keeps <code class="docutils literal notranslate"><span class="pre">summaryOnly:</span> <span class="pre">true</span></code> and blocks artifact
+writes, repository mutation, private path echoing, stdout, stderr, and
+raw logs. The sample output uses synthetic metadata and does not include
+private paths, generated artifacts, secrets, tokens, model paths, or
+hardware evidence.</p>
+<p>This fixture is not a plugin loader, runtime, sandbox, permission
+executor, command executor, report writer, or ABI promise. It does not
+load plugin code, install packages, load dynamic libraries, execute
+commands, write artifacts, mutate repositories, call providers, use the
+network, touch hardware, access KV260, access FPGA repos, launch runtime
+code, load models, upload telemetry, push publicly, or control
+releases/tags.</p>
+</section>
+<section id="plugin-blocked-invocation-result-boundary">
+<h2>plugin blocked invocation-result boundary<a class="headerlink" href="#plugin-blocked-invocation-result-boundary" title="Link to this heading">¶</a></h2>
+<p><a class="reference download internal" download="" href="_downloads/c9b53300cbb87c87addff2725777eb4e/plugin-blocked-invocation-result.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-blocked-invocation-result.example.json</span></code></span></a>
+defines the checked blocked-result shape for a future plugin invocation
+path. It is descriptor-only metadata over approved input and output
+summary contracts, not an execution boundary.</p>
+<p>The fixture links the plugin input contract, plugin output contract, and
+plugin audit-event shape, then records a planned fixed-argument preview
+for an example diagnostics-summary plugin invocation. The result stays
+<code class="docutils literal notranslate"><span class="pre">not_executed</span></code>: no plugin is invoked, no input reader runs, no output
+writer runs, no diagnostics or report items are produced, and no
+tracked files are mutated.</p>
+<p>This fixture is not a plugin loader, runtime, sandbox, permission
+executor, input reader, command executor, report writer, artifact
+reader, audit logger, or ABI promise. It does not load plugin code,
+install packages, load dynamic libraries, execute commands, read local
+files, read raw traces, read reports, read or write artifacts, mutate
+repositories, call providers, use the network, touch hardware, access
+KV260, access FPGA repos, launch runtime code, load models, upload
+telemetry, push publicly, or control releases/tags. No stable plugin
+ABI is promised.</p>
+</section>
+<section id="plugin-permission-model-boundary">
+<h2>plugin permission model boundary<a class="headerlink" href="#plugin-permission-model-boundary" title="Link to this heading">¶</a></h2>
+<p><a class="reference download internal" download="" href="_downloads/442ece012f2a928def689e5eca4796a2/plugin-permission-model.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-permission-model.example.json</span></code></span></a>
+defines the checked permission-profile shape for future plugin
+capabilities. It is descriptor-only. It does not add a plugin runtime,
+plugin loader, sandbox implementation, permission executor, dynamic
+library loading, untrusted execution, package distribution flow, or
+marketplace flow.</p>
+<p>The fixture separates read-only profile planning from blocked or
+deferred capabilities:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">manifest_review_read_only</span></code> for approved manifest and capability
+review without loading plugin code.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">diagnostics_summary_read_only</span></code> for an approved diagnostics envelope
+producing bounded summary metadata.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">report_panel_metadata_read_only</span></code> for approved workflow result
+summaries producing bounded panel metadata without writing artifacts.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">trace_import_pending_review</span></code> and <code class="docutils literal notranslate"><span class="pre">write_action_pending_review</span></code> for
+capabilities that remain blocked until separate reviewed boundaries
+exist.</p></li>
+</ul>
+<p>The sandbox policy is a requirement model, not an implementation. It
+requires future execution work to define process isolation, default
+network denial, default filesystem-write denial, redacted audit
+metadata, and explicit approval gates before any plugin code can run.
+Dynamic code loading, untrusted execution, shell commands, provider
+calls, network calls, hardware probes, KV260 access, FPGA repo access,
+runtime launch, model load, telemetry upload, public push,
+release/tag control, repository mutation, and artifact writes are
+blocked in this boundary.</p>
+</section>
+<section id="plugin-audit-event-boundary">
+<h2>plugin audit event boundary<a class="headerlink" href="#plugin-audit-event-boundary" title="Link to this heading">¶</a></h2>
+<p><a class="reference download internal" download="" href="_downloads/7bba700e13a407f2cf1a8f89906453d8/plugin-audit-event.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-audit-event.example.json</span></code></span></a>
+defines the checked audit-event shape for future approved plugin
+metadata review. It is an example-only, redacted metadata boundary for a
+future CLI/core plugin approval path.</p>
+<p>The fixture records the request id, plugin id, capability id, permission
+profile, fixed argument preview, approved input reference kind, outcome
+state, validation summary, and redaction state that a future plugin
+review flow would need to preserve.</p>
+<p>This fixture does not create an audit log file, validate a manifest,
+load plugin code, install packages, start a plugin runtime, implement a
+sandbox, execute commands, write artifacts, mutate repositories, call
+providers, use the network, touch hardware, access KV260, access FPGA
+repos, upload telemetry, push publicly, or control releases/tags. It
+also excludes private paths, secrets, tokens, model paths, stdout,
+stderr, and artifact paths. No stable plugin ABI is promised.</p>
+</section>
 <section id="gui-foundation">
 <h2>GUI foundation<a class="headerlink" href="#gui-foundation" title="Link to this heading">¶</a></h2>
 <p>The current GUI addition is only a compact verification dashboard panel
@@ -764,16 +1500,19 @@ bridges, launcher bridges, or arbitrary shell commands.</p>
 <tr class="row-odd"><td><p>Plugin ABI stability</p></td>
 <td><p>Not promised.</p></td>
 </tr>
-<tr class="row-even"><td><p>MCP runtime</p></td>
+<tr class="row-even"><td><p>Plugin loader/runtime</p></td>
 <td><p>Not implemented in this foundation.</p></td>
 </tr>
-<tr class="row-odd"><td><p>Editor or launcher runtime bridge</p></td>
+<tr class="row-odd"><td><p>MCP runtime</p></td>
 <td><p>Not implemented in this foundation.</p></td>
 </tr>
-<tr class="row-even"><td><p>Hardware inference and throughput status</p></td>
+<tr class="row-even"><td><p>Editor or launcher runtime bridge</p></td>
+<td><p>Not implemented in this foundation.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Hardware inference and throughput status</p></td>
 <td><p>Not claimed by status output.</p></td>
 </tr>
-<tr class="row-odd"><td><p>Timing-closure status</p></td>
+<tr class="row-even"><td><p>Timing-closure status</p></td>
 <td><p>Not claimed by status output.</p></td>
 </tr>
 </tbody>
@@ -842,7 +1581,9 @@ not a separate workflow engine or a separate product surface.</p>
 <li><a class="reference internal" href="#">pccx-lab CLI/core boundary</a><ul>
 <li><a class="reference internal" href="#principle">Principle</a></li>
 <li><a class="reference internal" href="#current-boundary-artifacts">Current boundary artifacts</a></li>
-<li><a class="reference internal" href="#local-workflow-assistant-boundary">Local workflow assistant boundary</a></li>
+<li><a class="reference internal" href="#json-example-inventory">JSON example inventory</a></li>
+<li><a class="reference internal" href="#current-cross-repo-direction">Current cross-repo direction</a></li>
+<li><a class="reference internal" href="#local-workflow-panel-boundary">Local workflow panel boundary</a></li>
 <li><a class="reference internal" href="#status-command">status command</a></li>
 <li><a class="reference internal" href="#theme-command">theme command</a></li>
 <li><a class="reference internal" href="#workflows-command">workflows command</a></li>
@@ -851,6 +1592,26 @@ not a separate workflow engine or a separate product surface.</p>
 <li><a class="reference internal" href="#run-approved-workflow-command">run-approved-workflow command</a></li>
 <li><a class="reference internal" href="#analyze-command">analyze command</a></li>
 <li><a class="reference internal" href="#diagnostics-handoff-command">diagnostics-handoff command</a></li>
+<li><a class="reference internal" href="#device-session-status-command">device-session-status command</a></li>
+<li><a class="reference internal" href="#mcp-read-only-tool-plan">MCP read-only tool plan</a></li>
+<li><a class="reference internal" href="#mcp-read-only-analysis-flow">MCP read-only analysis flow</a></li>
+<li><a class="reference internal" href="#mcp-read-only-report-contract">MCP read-only report contract</a></li>
+<li><a class="reference internal" href="#mcp-verification-run-comparison-boundary">MCP verification-run comparison boundary</a></li>
+<li><a class="reference internal" href="#mcp-pr-summary-handoff-boundary">MCP PR summary handoff boundary</a></li>
+<li><a class="reference internal" href="#mcp-permission-model-boundary">MCP permission model boundary</a></li>
+<li><a class="reference internal" href="#mcp-approval-request-boundary">MCP approval request boundary</a></li>
+<li><a class="reference internal" href="#mcp-approval-decision-boundary">MCP approval decision boundary</a></li>
+<li><a class="reference internal" href="#mcp-blocked-invocation-result-boundary">MCP blocked invocation result boundary</a></li>
+<li><a class="reference internal" href="#mcp-audit-event-boundary">MCP audit event boundary</a></li>
+<li><a class="reference internal" href="#plugin-boundary-plan">plugin-boundary-plan</a></li>
+<li><a class="reference internal" href="#plugin-manifest-validation-result-boundary">plugin manifest validation result boundary</a></li>
+<li><a class="reference internal" href="#plugin-dry-run-flow-boundary">plugin dry-run flow boundary</a></li>
+<li><a class="reference internal" href="#plugin-input-contract-boundary">plugin input contract boundary</a></li>
+<li><a class="reference internal" href="#plugin-trace-summary-input-boundary">plugin trace-summary input boundary</a></li>
+<li><a class="reference internal" href="#plugin-output-contract-boundary">plugin output contract boundary</a></li>
+<li><a class="reference internal" href="#plugin-blocked-invocation-result-boundary">plugin blocked invocation-result boundary</a></li>
+<li><a class="reference internal" href="#plugin-permission-model-boundary">plugin permission model boundary</a></li>
+<li><a class="reference internal" href="#plugin-audit-event-boundary">plugin audit event boundary</a></li>
 <li><a class="reference internal" href="#gui-foundation">GUI foundation</a></li>
 <li><a class="reference internal" href="#deferred-work">Deferred work</a></li>
 </ul>

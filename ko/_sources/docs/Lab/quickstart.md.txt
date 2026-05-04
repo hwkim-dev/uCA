@@ -21,7 +21,7 @@ myst:
 pccx-lab 은 Rust 워크스페이스(`crates/`) + React/Vite 프론트엔드(`ui/`) 로
 구성된 Tauri v2 데스크톱 앱이다. Rust 워크스페이스는 9개 크레이트로 구성된다:
 `core`, `reports`, `verification`, `authoring`, `evolve`, `lsp`, `remote`,
-`uvm_bridge`, `ai_copilot`. 모든 크레이트는 `pccx-core` 를 의존 그래프의
+`uvm_bridge`, `workflow_facade`. 모든 크레이트는 `pccx-core` 를 의존 그래프의
 싱크로 사용하며 `pccx-ide`(`ui/src-tauri/`) 와 `pccx-remote` 는 터미널
 바이너리다.
 
@@ -68,8 +68,8 @@ npm run tauri dev
 명시적으로 선언해야 한다. XWayland 없는 순수 Wayland 세션은 현재 릴리스에서
 지원하지 않는다.
 
-위 우회 후에도 멈춤이 재현되면 `pccx-lab` 이슈 트래커와
-`CLAUDE_TASKS_lab.md` §3 의 5단계 에스컬레이션 절차를 참고한다.
+위 우회 후에도 멈춤이 재현되면 `pccx-lab` 이슈 트래커와 문서화된
+에스컬레이션 절차를 참고한다.
 
 ## 첫 트레이스 로드
 

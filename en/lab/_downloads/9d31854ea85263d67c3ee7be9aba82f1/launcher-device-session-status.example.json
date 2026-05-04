@@ -1,0 +1,297 @@
+{
+  "authenticationState": "not_configured",
+  "connectionLaunchFlow": [
+    {
+      "launcherAction": "Render deterministic local status rows.",
+      "order": 1,
+      "sideEffectPolicy": "local_render_only",
+      "stage": "status_panel",
+      "state": "placeholder",
+      "statusPanelUpdate": "Show connection, model load, session, diagnostics, and readiness rows.",
+      "stepId": "open_status_panel",
+      "userAction": "Open the launcher status panel."
+    },
+    {
+      "launcherAction": "Record the selected target as status data only.",
+      "order": 2,
+      "sideEffectPolicy": "no_hardware_access",
+      "stage": "target_selection",
+      "state": "planned",
+      "statusPanelUpdate": "Move target selection from placeholder to configured in a future implementation.",
+      "stepId": "select_kv260_target",
+      "userAction": "Select a KV260-class target when configuration exists."
+    },
+    {
+      "launcherAction": "Use reviewed read-only discovery paths when implemented.",
+      "order": 3,
+      "sideEffectPolicy": "no_mutation_no_network_scan",
+      "stage": "discovery",
+      "state": "planned",
+      "statusPanelUpdate": "Report detected, missing, or not configured discovery state.",
+      "stepId": "run_read_only_discovery",
+      "userAction": "Request a status refresh."
+    },
+    {
+      "launcherAction": "Check only whether required inputs are present.",
+      "order": 4,
+      "sideEffectPolicy": "no_secret_echo_no_login_attempt",
+      "stage": "authentication",
+      "state": "requires_configuration",
+      "statusPanelUpdate": "Report authentication as not configured, configured, or blocked.",
+      "stepId": "prepare_authentication",
+      "userAction": "Provide target access details through a future explicit settings surface."
+    },
+    {
+      "launcherAction": "Read local readiness data and keep launch controls gated.",
+      "order": 5,
+      "sideEffectPolicy": "data_only",
+      "stage": "readiness",
+      "state": "blocked",
+      "statusPanelUpdate": "Show runtime, bitstream, board-smoke, and measurement blockers.",
+      "stepId": "check_runtime_readiness",
+      "userAction": "Review readiness blockers before launch controls are enabled."
+    },
+    {
+      "launcherAction": "Show the dry-run launch preview only.",
+      "order": 6,
+      "sideEffectPolicy": "dry_run_only",
+      "stage": "launch_preview",
+      "state": "planned",
+      "statusPanelUpdate": "Keep the session inactive and logs not started.",
+      "stepId": "preview_launch",
+      "userAction": "Review the planned launch sequence."
+    },
+    {
+      "launcherAction": "Refuse runtime start while evidence is missing.",
+      "order": 7,
+      "sideEffectPolicy": "blocked_until_evidence_backed",
+      "stage": "runtime_start",
+      "state": "blocked",
+      "statusPanelUpdate": "Keep runtime and session states blocked or inactive.",
+      "stepId": "start_runtime_when_evidence_backed",
+      "userAction": "Start runtime only after the readiness gate changes."
+    },
+    {
+      "launcherAction": "Do not stream logs when no session exists.",
+      "order": 8,
+      "sideEffectPolicy": "no_log_stream_without_session",
+      "stage": "logs",
+      "state": "blocked",
+      "statusPanelUpdate": "Show log stream as not started.",
+      "stepId": "stream_logs_when_session_exists",
+      "userAction": "Inspect logs after a real session exists."
+    }
+  ],
+  "connectionState": "not_configured",
+  "diagnosticsState": "available_as_placeholder",
+  "discoveryPaths": [
+    {
+      "pathId": "usb_serial_hint",
+      "state": "planned",
+      "suggestedUserAction": "Connect the KV260 carrier-board USB path and rerun the status panel check.",
+      "summary": "Read-only USB and serial enumeration can provide a local device hint.",
+      "transport": "usb_serial"
+    },
+    {
+      "pathId": "network_host_target",
+      "state": "requires_configuration",
+      "suggestedUserAction": "Configure the target host through a future explicit settings surface.",
+      "summary": "A network target must be provided explicitly; the launcher does not scan networks.",
+      "transport": "network_host"
+    },
+    {
+      "pathId": "serial_console_target",
+      "state": "future_only",
+      "suggestedUserAction": "Use read-only enumeration until a reviewed serial boundary exists.",
+      "summary": "Serial-console interaction is a future explicit target path, not active in this fixture.",
+      "transport": "serial_console"
+    }
+  ],
+  "discoveryState": "not_started",
+  "errorTaxonomy": [
+    {
+      "claimBoundary": "No runtime or performance claim follows from discovery status.",
+      "errorId": "kv260_device_not_detected",
+      "severity": "blocked",
+      "stage": "discovery",
+      "state": "planned",
+      "suggestedRemediation": "Check power, cabling, and the selected discovery path, then rerun a read-only status refresh.",
+      "userMessage": "No KV260 target is visible to the configured discovery path."
+    },
+    {
+      "claimBoundary": "The launcher must not guess hosts, scan networks, or print access inputs.",
+      "errorId": "target_access_not_configured",
+      "severity": "blocked",
+      "stage": "authentication",
+      "state": "requires_configuration",
+      "suggestedRemediation": "Configure the target host and access method through a future explicit settings surface.",
+      "userMessage": "Target access inputs are not configured."
+    },
+    {
+      "claimBoundary": "No login attempt is performed by this status surface.",
+      "errorId": "authentication_not_available",
+      "severity": "blocked",
+      "stage": "authentication",
+      "state": "planned",
+      "suggestedRemediation": "Keep connection controls disabled until the authentication boundary is implemented and tested.",
+      "userMessage": "The reviewed authentication handshake is not implemented in this fixture."
+    },
+    {
+      "claimBoundary": "The target remains blocked and not evidence-backed.",
+      "errorId": "runtime_evidence_missing",
+      "severity": "blocked",
+      "stage": "readiness",
+      "state": "blocked",
+      "suggestedRemediation": "Wait for checked runtime evidence before enabling start controls.",
+      "userMessage": "Runtime evidence is missing for the KV260 target path."
+    },
+    {
+      "claimBoundary": "No model is loaded or referenced by local path.",
+      "errorId": "model_assets_not_configured",
+      "severity": "blocked",
+      "stage": "model",
+      "state": "ready_for_inputs",
+      "suggestedRemediation": "Keep model asset selection explicit and outside repository fixtures.",
+      "userMessage": "Model assets are external and not configured by the launcher fixture."
+    },
+    {
+      "claimBoundary": "No bitstream or board-smoke success is claimed here.",
+      "errorId": "bitstream_evidence_missing",
+      "severity": "blocked",
+      "stage": "readiness",
+      "state": "blocked",
+      "suggestedRemediation": "Keep launch controls gated until lower-layer evidence is available.",
+      "userMessage": "Bitstream and board-smoke evidence are missing for the launch path."
+    },
+    {
+      "claimBoundary": "The launcher does not execute pccx-lab for this status surface.",
+      "errorId": "lab_diagnostics_unavailable",
+      "severity": "placeholder",
+      "stage": "diagnostics",
+      "state": "available_as_placeholder",
+      "suggestedRemediation": "Use the explicit pccx-lab CLI/core validator when that integration is requested.",
+      "userMessage": "pccx-lab diagnostics are represented as a read-only placeholder handoff."
+    },
+    {
+      "claimBoundary": "No inference session is started.",
+      "errorId": "session_inactive",
+      "severity": "placeholder",
+      "stage": "session",
+      "state": "inactive",
+      "suggestedRemediation": "Show session controls as disabled until the readiness gate changes.",
+      "userMessage": "No launcher session is active."
+    },
+    {
+      "claimBoundary": "No runtime logs are produced or collected.",
+      "errorId": "log_stream_not_started",
+      "severity": "placeholder",
+      "stage": "logs",
+      "state": "not_started",
+      "suggestedRemediation": "Show logs as pending rather than empty success.",
+      "userMessage": "No log stream exists because no runtime session exists."
+    }
+  ],
+  "fixtureVersion": "device-session-status.gemma3n-e4b-kv260.2026-05-03",
+  "issueRefs": [
+    "pccxai/pccx-llm-launcher#10",
+    "pccxai/pccx-llm-launcher#2",
+    "pccxai/pccx-lab#50"
+  ],
+  "lastUpdatedSource": "pccx_launcher_issues_2_10_boundary_2026-05-03",
+  "limitations": [
+    "Data-only status panel fixture; no runtime is executed.",
+    "No USB, serial, network, SSH, or authentication command is run by this contract.",
+    "No model assets are bundled, loaded, or referenced by path.",
+    "No KV260 hardware access, board programming, runtime start, provider call, telemetry, upload, or write-back is performed.",
+    "The connection and launch flow is a gated plan until checked readiness evidence exists.",
+    "This is not a release, tag, versioned compatibility commitment, MCP, LSP, IDE, marketplace, or telemetry implementation."
+  ],
+  "logStreamState": "not_started",
+  "modelLoadState": "not_loaded",
+  "pccxLabDiagnostics": {
+    "automaticUpload": false,
+    "executesPccxLab": false,
+    "lowerBoundary": "pccx-lab CLI/core",
+    "mode": "read_only_handoff",
+    "state": "planned",
+    "writeBack": false
+  },
+  "readinessState": "blocked",
+  "runtimeState": "planned",
+  "safetyFlags": {
+    "authenticationAttempt": false,
+    "automaticUpload": false,
+    "dataOnly": true,
+    "deterministic": true,
+    "executesPccxLab": false,
+    "executesSystemverilogIde": false,
+    "firmwareFlashing": false,
+    "generatedBlobsIncluded": false,
+    "hardwareDumpsIncluded": false,
+    "kv260Access": false,
+    "modelExecution": false,
+    "modelLoaded": false,
+    "modelWeightPathsIncluded": false,
+    "networkCalls": false,
+    "networkScan": false,
+    "opensSerialPort": false,
+    "packageInstallation": false,
+    "privatePathsIncluded": false,
+    "providerCalls": false,
+    "readOnly": true,
+    "runtimeExecution": false,
+    "secretsIncluded": false,
+    "serialWrites": false,
+    "sshExecution": false,
+    "stableApiAbiClaim": false,
+    "telemetry": false,
+    "tokensIncluded": false,
+    "touchesHardware": false,
+    "writeBack": false,
+    "writesArtifacts": false
+  },
+  "schemaVersion": "pccx.deviceSessionStatus.v0",
+  "sessionState": "inactive",
+  "statusAnswer": "device_session_status_placeholder_blocked",
+  "statusId": "device_session_status_gemma3n_e4b_kv260_placeholder",
+  "statusPanel": [
+    {
+      "label": "device connection",
+      "nextAction": "Run a read-only status check after a target is explicitly configured.",
+      "rowId": "device_connection",
+      "state": "not_configured",
+      "summary": "No KV260 target connection is configured by this fixture."
+    },
+    {
+      "label": "model load",
+      "nextAction": "Keep model assets external until runtime evidence exists.",
+      "rowId": "model_load",
+      "state": "not_loaded",
+      "summary": "Gemma 3N E4B is a target descriptor only; no model assets are loaded."
+    },
+    {
+      "label": "session activity",
+      "nextAction": "Keep launch controls gated until readiness inputs are present.",
+      "rowId": "session_activity",
+      "state": "inactive",
+      "summary": "No launcher session is active and no log stream has started."
+    },
+    {
+      "label": "pccx-lab diagnostics",
+      "nextAction": "Use the pccx-lab CLI/core boundary later for validation, not launcher internals.",
+      "rowId": "pccx_lab_diagnostics",
+      "state": "available_as_placeholder",
+      "summary": "Diagnostics handoff is represented as read-only local data only."
+    },
+    {
+      "label": "runtime readiness",
+      "nextAction": "Do not present the launch path as available until evidence-backed readiness changes.",
+      "rowId": "runtime_readiness",
+      "state": "blocked",
+      "summary": "Runtime, bitstream, board-smoke, and measurement evidence are still required."
+    }
+  ],
+  "targetBoard": "xilinx_kria_kv260",
+  "targetDevice": "kv260",
+  "targetModel": "gemma3n-e4b"
+}

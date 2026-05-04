@@ -1,0 +1,187 @@
+{
+  "schemaVersion": "pccx.lab.plugin-manifest-validation-result.v0",
+  "tool": "pccx-lab",
+  "resultId": "plugin-manifest-validation-result-example-0001",
+  "pluginId": "example.diagnostics.summary",
+  "capabilityId": "plugin.manifest.validate",
+  "permissionProfile": "manifest_review_read_only",
+  "resultState": "example_only",
+  "pluginRuntimeState": "not_implemented",
+  "loaderState": "not_implemented",
+  "sandboxState": "not_implemented",
+  "defaultMode": "disabled",
+  "hostMode": "cli_first_gui_second",
+  "sourceManifestRef": {
+    "schemaVersion": "pccx.lab.plugin-manifest.v0",
+    "sourceState": "approved_manifest_metadata_reference",
+    "pathEchoAllowed": false,
+    "manifestContentIncluded": false,
+    "localFileRead": false
+  },
+  "sourceBoundaryRefs": [
+    {
+      "schemaVersion": "pccx.lab.plugin-boundary-plan.v0",
+      "examplePath": "docs/examples/plugin-boundary-plan.example.json",
+      "refKind": "manifest_shape_plan"
+    },
+    {
+      "schemaVersion": "pccx.lab.plugin-permission-model.v0",
+      "examplePath": "docs/examples/plugin-permission-model.example.json",
+      "refKind": "permission_profile_plan"
+    },
+    {
+      "schemaVersion": "pccx.lab.plugin-audit-event.v0",
+      "examplePath": "docs/examples/plugin-audit-event.example.json",
+      "refKind": "redacted_audit_event_shape"
+    }
+  ],
+  "validationRequest": {
+    "commandKind": "planned-cli-fixed-args",
+    "approvedInputReferenceKind": "approved-plugin-manifest-json",
+    "fixedArgsPreview": [
+      "plugin-manifest",
+      "validate",
+      "--file",
+      "<approved-manifest-json>",
+      "--format",
+      "json"
+    ],
+    "pathEchoAllowed": false,
+    "rawShellCommandAllowed": false,
+    "manifestReaderImplemented": false,
+    "pluginCodeLoadAllowed": false,
+    "packageInstallAllowed": false
+  },
+  "validationResult": {
+    "state": "planned_result_shape",
+    "summary": "Example summary-only result for a future approved plugin manifest validation request; no validation command is executed by this fixture.",
+    "summaryOnly": true,
+    "manifestReaderAttempted": false,
+    "pluginCodeLoaded": false,
+    "commandExecutionAttempted": false,
+    "packageInstalled": false,
+    "dynamicLibrariesLoaded": false,
+    "requiredFieldCount": 9,
+    "missingRequiredFields": [],
+    "acceptedCapabilityIds": [
+      "plugin.diagnostics.summary",
+      "plugin.report.panel"
+    ],
+    "blockedCapabilityIds": [
+      "plugin.trace.importer"
+    ],
+    "warnings": [
+      {
+        "code": "trace-import-deferred",
+        "summary": "Trace import remains blocked until a separate reviewed trace input boundary exists.",
+        "pathIncluded": false
+      }
+    ]
+  },
+  "redactionState": {
+    "state": "redacted",
+    "privatePathsIncluded": false,
+    "manifestContentIncluded": false,
+    "secretsIncluded": false,
+    "tokensIncluded": false,
+    "modelWeightPathsIncluded": false,
+    "stdoutIncluded": false,
+    "stderrIncluded": false,
+    "artifactPathsIncluded": false
+  },
+  "noMutationEvidence": {
+    "state": "planned",
+    "trackedFileMutationAllowed": false,
+    "trackedFileDiffCaptured": false,
+    "artifactReadAllowed": false,
+    "artifactWriteAllowed": false,
+    "publicPushAllowed": false,
+    "releaseOrTagAllowed": false
+  },
+  "blockedActions": [
+    "plugin-loader-start",
+    "plugin-runtime-start",
+    "sandbox-bypass",
+    "permission-executor",
+    "manifest-file-read",
+    "input-reader",
+    "dynamic-code-load",
+    "untrusted-execution",
+    "plugin-package-install",
+    "marketplace-flow",
+    "package-distribution",
+    "arbitrary-shell-command",
+    "command-execution",
+    "local-file-read",
+    "raw-trace-read",
+    "raw-report-read",
+    "artifact-read",
+    "artifact-write",
+    "repository-write-back",
+    "provider-call",
+    "network-call",
+    "hardware-probe",
+    "kv260-access",
+    "fpga-repo-access",
+    "runtime-launch",
+    "model-load",
+    "telemetry-upload",
+    "public-push",
+    "release-or-tag"
+  ],
+  "safetyFlags": {
+    "dataOnly": true,
+    "descriptorOnly": true,
+    "readOnly": true,
+    "validationResultFixtureOnly": true,
+    "summaryOnly": true,
+    "pluginManifestValidatorImplemented": false,
+    "manifestReaderImplemented": false,
+    "pluginRuntimeImplemented": false,
+    "pluginLoaderImplemented": false,
+    "pluginCodeLoaded": false,
+    "dynamicLibrariesLoaded": false,
+    "sandboxImplemented": false,
+    "permissionExecutorImplemented": false,
+    "stablePluginAbiPromised": false,
+    "marketplaceFlow": false,
+    "packageDistribution": false,
+    "commandExecution": false,
+    "shellExecution": false,
+    "runtimeExecution": false,
+    "localFileRead": false,
+    "rawTraceRead": false,
+    "rawReportRead": false,
+    "readsArtifacts": false,
+    "writesArtifacts": false,
+    "networkCalls": false,
+    "providerCalls": false,
+    "launcherExecution": false,
+    "editorExecution": false,
+    "hardwareAccess": false,
+    "kv260Access": false,
+    "fpgaRepoAccess": false,
+    "modelExecution": false,
+    "privatePathsIncluded": false,
+    "manifestContentIncluded": false,
+    "secretsIncluded": false,
+    "tokensIncluded": false,
+    "stdoutIncluded": false,
+    "stderrIncluded": false,
+    "rawLogsIncluded": false,
+    "telemetry": false,
+    "writeBack": false,
+    "repositoryMutation": false,
+    "publicPush": false,
+    "releaseOrTag": false
+  },
+  "limitations": [
+    "This is a checked plugin manifest validation result shape for future approved manifest metadata review, not a manifest reader or validator implementation.",
+    "The fixture records summary-only metadata and does not include private paths, manifest contents, secrets, tokens, model paths, stdout, stderr, raw logs, or artifact paths.",
+    "No plugin loader, runtime, sandbox, permission executor, command executor, package install, marketplace flow, repository mutation, artifact read/write, provider call, network call, hardware access, model execution, telemetry, public push, release, or tag behavior is implemented.",
+    "The fixture does not define ABI stability, package compatibility, marketplace distribution, hardware behavior, inference behavior, throughput measurement, or timing-closure evidence."
+  ],
+  "issueRefs": [
+    "pccxai/pccx-lab#21"
+  ]
+}

@@ -1,0 +1,230 @@
+{
+  "schemaVersion": "pccx.lab.plugin-input-contract.v0",
+  "tool": "pccx-lab",
+  "contractId": "plugin-input-cli-core-contract",
+  "contractState": "descriptor_only",
+  "pluginRuntimeState": "not_implemented",
+  "loaderState": "not_implemented",
+  "defaultMode": "disabled",
+  "hostMode": "cli_first_gui_second",
+  "samplePluginRef": {
+    "pluginId": "example.diagnostics.summary",
+    "manifestState": "example_manifest_only",
+    "entryKind": "manifest_only",
+    "codeLoaded": false,
+    "packageInstalled": false,
+    "dynamicLibrariesLoaded": false
+  },
+  "sourceBoundaryRefs": [
+    {
+      "refId": "diagnostics_envelope",
+      "schemaVersion": "pccx.lab.diagnostics-envelope.v0",
+      "examplePath": "docs/examples/diagnostics-envelope.example.json",
+      "approvalState": "approved_local_input_required",
+      "pathEchoAllowed": false
+    },
+    {
+      "refId": "workflow_results",
+      "schemaVersion": "pccx.lab.workflow-results.v0",
+      "examplePath": "docs/examples/workflow-results.example.json",
+      "approvalState": "approved_summary_input_required",
+      "pathEchoAllowed": false
+    },
+    {
+      "refId": "plugin_permission_model",
+      "schemaVersion": "pccx.lab.plugin-permission-model.v0",
+      "examplePath": "docs/examples/plugin-permission-model.example.json",
+      "approvalState": "descriptor_only",
+      "pathEchoAllowed": false
+    }
+  ],
+  "inputContracts": [
+    {
+      "inputId": "diagnostics_envelope_summary",
+      "schemaVersion": "pccx.lab.diagnostics-envelope.v0",
+      "capabilityId": "plugin.diagnostics.summary",
+      "inputKind": "diagnostics_envelope",
+      "inputState": "approved_summary_only",
+      "permissionProfile": "diagnostics_summary_read_only",
+      "sourceRef": "approved-diagnostics-envelope-json",
+      "summary": "Bounded diagnostics envelope values approved before a future plugin review.",
+      "summaryOnly": true,
+      "approvalRequired": true,
+      "localFileRead": false,
+      "rawTraceRead": false,
+      "rawReportRead": false,
+      "artifactRead": false,
+      "privatePathEchoAllowed": false,
+      "stdoutIncluded": false,
+      "stderrIncluded": false,
+      "rawLogIncluded": false,
+      "fieldDescriptors": [
+        {
+          "fieldName": "severity",
+          "valueKind": "enum",
+          "policy": "copied only from approved diagnostics summary values"
+        },
+        {
+          "fieldName": "message",
+          "valueKind": "bounded-string",
+          "policy": "short summary; no private path or raw log content"
+        }
+      ]
+    },
+    {
+      "inputId": "workflow_result_summary",
+      "schemaVersion": "pccx.lab.workflow-results.v0",
+      "capabilityId": "plugin.report.panel",
+      "inputKind": "workflow_result_summary",
+      "inputState": "approved_summary_only",
+      "permissionProfile": "report_panel_metadata_read_only",
+      "sourceRef": "approved-workflow-result-summary-json",
+      "summary": "Bounded workflow result summaries approved before a future report-panel preview.",
+      "summaryOnly": true,
+      "approvalRequired": true,
+      "localFileRead": false,
+      "rawTraceRead": false,
+      "rawReportRead": false,
+      "artifactRead": false,
+      "privatePathEchoAllowed": false,
+      "stdoutIncluded": false,
+      "stderrIncluded": false,
+      "rawLogIncluded": false,
+      "fieldDescriptors": [
+        {
+          "fieldName": "status",
+          "valueKind": "enum",
+          "policy": "copied from workflow result summary status"
+        },
+        {
+          "fieldName": "summary",
+          "valueKind": "bounded-string",
+          "policy": "summary-only; no stdout, stderr, raw log, or generated artifact"
+        }
+      ]
+    }
+  ],
+  "sampleInputPreview": {
+    "diagnosticEnvelopeSummary": {
+      "sourceRef": "approved-diagnostics-envelope-json",
+      "diagnosticCount": 1,
+      "highestSeverity": "error",
+      "pathIncluded": false,
+      "privatePathsIncluded": false,
+      "stdoutIncluded": false,
+      "stderrIncluded": false,
+      "rawLogsIncluded": false
+    },
+    "workflowResultSummary": {
+      "sourceRef": "approved-workflow-result-summary-json",
+      "resultCount": 1,
+      "highestState": "blocked",
+      "artifactPathIncluded": false,
+      "privatePathsIncluded": false,
+      "stdoutIncluded": false,
+      "stderrIncluded": false,
+      "rawLogsIncluded": false
+    },
+    "traceInputGate": {
+      "state": "blocked_until_separate_trace_summary_boundary",
+      "traceSummaryRequired": true,
+      "rawTraceInputAllowed": false,
+      "pathEchoAllowed": false
+    }
+  },
+  "inputPolicy": {
+    "state": "planned",
+    "summaryOnly": true,
+    "approvalRequired": true,
+    "auditRequired": true,
+    "trackedFileMutationAllowed": false,
+    "localFileReadAllowed": false,
+    "rawTraceReadAllowed": false,
+    "rawReportReadAllowed": false,
+    "artifactReadAllowed": false,
+    "pathEchoAllowed": false,
+    "stdoutAllowed": false,
+    "stderrAllowed": false,
+    "rawLogAllowed": false,
+    "privatePathsAllowed": false,
+    "generatedArtifactsAllowed": false,
+    "noMutationRule": "Future validation must prove tracked files are unchanged before and after preparing plugin input summaries.",
+    "redactionRule": "Input summaries must omit private paths, secrets, tokens, model paths, stdout, stderr, raw logs, generated artifact paths, and raw trace contents."
+  },
+  "blockedActions": [
+    "dynamic-code-load",
+    "untrusted-execution",
+    "plugin-package-install",
+    "marketplace-flow",
+    "sandbox-bypass",
+    "arbitrary-shell-command",
+    "local-file-read",
+    "raw-trace-read",
+    "raw-report-read",
+    "artifact-read",
+    "artifact-write",
+    "repository-write-back",
+    "public-push",
+    "release-or-tag",
+    "provider-call",
+    "network-call",
+    "hardware-probe",
+    "kv260-access",
+    "fpga-repo-access",
+    "runtime-launch",
+    "model-load",
+    "telemetry-upload"
+  ],
+  "safetyFlags": {
+    "dataOnly": true,
+    "descriptorOnly": true,
+    "readOnly": true,
+    "inputFixtureOnly": true,
+    "summaryOnly": true,
+    "pluginRuntimeImplemented": false,
+    "pluginLoaderImplemented": false,
+    "pluginCodeLoaded": false,
+    "dynamicLibrariesLoaded": false,
+    "sandboxImplemented": false,
+    "permissionExecutorImplemented": false,
+    "inputReaderImplemented": false,
+    "rawTraceRead": false,
+    "rawReportRead": false,
+    "localFileRead": false,
+    "stablePluginAbiPromised": false,
+    "marketplaceFlow": false,
+    "packageDistribution": false,
+    "commandExecution": false,
+    "shellExecution": false,
+    "runtimeExecution": false,
+    "networkCalls": false,
+    "providerCalls": false,
+    "launcherExecution": false,
+    "editorExecution": false,
+    "hardwareAccess": false,
+    "kv260Access": false,
+    "fpgaRepoAccess": false,
+    "modelExecution": false,
+    "privatePathsIncluded": false,
+    "secretsIncluded": false,
+    "tokensIncluded": false,
+    "stdoutIncluded": false,
+    "stderrIncluded": false,
+    "rawLogsIncluded": false,
+    "telemetry": false,
+    "writeBack": false,
+    "readsArtifacts": false,
+    "writesArtifacts": false,
+    "publicPush": false,
+    "releaseOrTag": false
+  },
+  "limitations": [
+    "This is a checked plugin input contract fixture, not a plugin loader, runtime, sandbox, permission executor, input reader, command executor, or report writer.",
+    "The sample input preview is descriptor-only metadata assembled from approved summaries; it does not read raw traces, read reports, echo paths, write artifacts, or mutate repositories.",
+    "No plugin code is loaded, no package is installed, no dynamic library is loaded, and no untrusted code executes.",
+    "No stable plugin ABI is promised. No marketplace, package distribution, release, tag, hardware, inference, throughput, or timing-closure claim is made."
+  ],
+  "issueRefs": [
+    "pccxai/pccx-lab#21"
+  ]
+}

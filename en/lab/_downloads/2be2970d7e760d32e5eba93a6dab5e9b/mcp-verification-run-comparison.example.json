@@ -1,0 +1,274 @@
+{
+  "schemaVersion": "pccx.lab.mcp-verification-run-comparison.v0",
+  "tool": "pccx-lab",
+  "comparisonId": "mcp-verification-run-comparison-cli-core-contract",
+  "comparisonState": "descriptor_only",
+  "adapterState": "not_implemented",
+  "defaultMode": "read_only",
+  "automationPath": "cli_core_first",
+  "sourceBoundaryRefs": [
+    {
+      "refId": "workflow_results",
+      "schemaVersion": "pccx.lab.workflow-results.v0",
+      "examplePath": "docs/examples/workflow-results.example.json",
+      "state": "approved_summary_only",
+      "pathEchoAllowed": false
+    },
+    {
+      "refId": "mcp_read_only_report_contract",
+      "schemaVersion": "pccx.lab.mcp-read-only-report-contract.v0",
+      "examplePath": "docs/examples/mcp-read-only-report-contract.example.json",
+      "state": "summary_output_only",
+      "artifactWriteAllowed": false
+    },
+    {
+      "refId": "mcp_permission_model",
+      "schemaVersion": "pccx.lab.mcp-permission-model.v0",
+      "examplePath": "docs/examples/mcp-permission-model.example.json",
+      "state": "descriptor_only",
+      "pathEchoAllowed": false
+    }
+  ],
+  "comparisonInputs": [
+    {
+      "inputId": "baseline_run_summary",
+      "runId": "baseline-summary-0001",
+      "schemaVersion": "pccx.lab.workflow-results.v0",
+      "inputKind": "workflow_result_summary",
+      "inputState": "approved_summary_only",
+      "sourceRef": "approved-workflow-result-summary-a",
+      "summary": "Baseline verification run summary approved before comparison.",
+      "summaryOnly": true,
+      "approvalRequired": true,
+      "localFileRead": false,
+      "rawTraceRead": false,
+      "rawReportRead": false,
+      "artifactRead": false,
+      "privatePathEchoAllowed": false,
+      "stdoutIncluded": false,
+      "stderrIncluded": false,
+      "rawLogIncluded": false,
+      "artifactPathIncluded": false,
+      "fieldDescriptors": [
+        {
+          "fieldName": "workflowId",
+          "valueKind": "identifier",
+          "policy": "approved summary identifier only"
+        },
+        {
+          "fieldName": "status",
+          "valueKind": "enum",
+          "policy": "bounded status value only"
+        },
+        {
+          "fieldName": "diagnosticCount",
+          "valueKind": "integer",
+          "policy": "bounded count only; no diagnostic payloads"
+        }
+      ]
+    },
+    {
+      "inputId": "candidate_run_summary",
+      "runId": "candidate-summary-0001",
+      "schemaVersion": "pccx.lab.workflow-results.v0",
+      "inputKind": "workflow_result_summary",
+      "inputState": "approved_summary_only",
+      "sourceRef": "approved-workflow-result-summary-b",
+      "summary": "Candidate verification run summary approved before comparison.",
+      "summaryOnly": true,
+      "approvalRequired": true,
+      "localFileRead": false,
+      "rawTraceRead": false,
+      "rawReportRead": false,
+      "artifactRead": false,
+      "privatePathEchoAllowed": false,
+      "stdoutIncluded": false,
+      "stderrIncluded": false,
+      "rawLogIncluded": false,
+      "artifactPathIncluded": false,
+      "fieldDescriptors": [
+        {
+          "fieldName": "workflowId",
+          "valueKind": "identifier",
+          "policy": "approved summary identifier only"
+        },
+        {
+          "fieldName": "status",
+          "valueKind": "enum",
+          "policy": "bounded status value only"
+        },
+        {
+          "fieldName": "diagnosticCount",
+          "valueKind": "integer",
+          "policy": "bounded count only; no diagnostic payloads"
+        }
+      ]
+    }
+  ],
+  "comparisonPolicy": {
+    "state": "planned",
+    "comparisonKind": "summary_only_metadata",
+    "maxRuns": 2,
+    "summaryOnly": true,
+    "approvalRequired": true,
+    "auditRequired": true,
+    "commandExecutionAllowed": false,
+    "localFileReadAllowed": false,
+    "rawTraceReadAllowed": false,
+    "rawReportReadAllowed": false,
+    "artifactReadAllowed": false,
+    "artifactWriteAllowed": false,
+    "reportWriteAllowed": false,
+    "repositoryMutationAllowed": false,
+    "pathEchoAllowed": false,
+    "stdoutAllowed": false,
+    "stderrAllowed": false,
+    "rawLogAllowed": false,
+    "privatePathsAllowed": false,
+    "generatedArtifactsAllowed": false,
+    "redactionRule": "Comparison inputs and outputs must omit private paths, raw traces, raw reports, stdout, stderr, raw logs, secrets, tokens, model paths, artifact paths, generated artifacts, and hardware dumps."
+  },
+  "sampleComparison": {
+    "comparisonState": "summary_only_fixture",
+    "baselineRunId": "baseline-summary-0001",
+    "candidateRunId": "candidate-summary-0001",
+    "overallStatus": "metadata_changed",
+    "runs": [
+      {
+        "runId": "baseline-summary-0001",
+        "workflowId": "workflow-smoke",
+        "status": "blocked",
+        "diagnosticCount": 3,
+        "warningCount": 2,
+        "errorCount": 1,
+        "durationMs": 0,
+        "pathIncluded": false,
+        "artifactPathIncluded": false,
+        "stdoutIncluded": false,
+        "stderrIncluded": false,
+        "rawLogsIncluded": false
+      },
+      {
+        "runId": "candidate-summary-0001",
+        "workflowId": "workflow-smoke",
+        "status": "blocked",
+        "diagnosticCount": 2,
+        "warningCount": 2,
+        "errorCount": 0,
+        "durationMs": 0,
+        "pathIncluded": false,
+        "artifactPathIncluded": false,
+        "stdoutIncluded": false,
+        "stderrIncluded": false,
+        "rawLogsIncluded": false
+      }
+    ],
+    "deltas": {
+      "diagnosticCountDelta": -1,
+      "warningCountDelta": 0,
+      "errorCountDelta": -1,
+      "newDiagnosticKinds": [],
+      "resolvedDiagnosticKinds": [
+        "example-error-kind"
+      ]
+    },
+    "summaryOnly": true,
+    "pathIncluded": false,
+    "privatePathsIncluded": false,
+    "stdoutIncluded": false,
+    "stderrIncluded": false,
+    "rawLogsIncluded": false,
+    "artifactPathsIncluded": false,
+    "generatedArtifactsIncluded": false,
+    "rawTraceIncluded": false,
+    "rawReportIncluded": false
+  },
+  "noMutationEvidence": {
+    "state": "planned",
+    "evidenceRule": "Future comparison validation must prove tracked files are unchanged before and after preparing the comparison summary.",
+    "trackedFileMutationAllowed": false,
+    "trackedFileDiffCaptured": false,
+    "artifactReadAllowed": false,
+    "artifactWriteAllowed": false,
+    "reportWriteAllowed": false,
+    "repositoryMutationAllowed": false,
+    "publicPushAllowed": false,
+    "releaseOrTagAllowed": false
+  },
+  "blockedActions": [
+    "mcp-server-start",
+    "mcp-client-session",
+    "permission-executor",
+    "tool-invocation",
+    "command-execution",
+    "arbitrary-shell-command",
+    "local-file-read",
+    "raw-trace-read",
+    "raw-report-read",
+    "artifact-read",
+    "artifact-write",
+    "report-write",
+    "repository-write-back",
+    "provider-call",
+    "network-call",
+    "hardware-probe",
+    "kv260-access",
+    "fpga-repo-access",
+    "runtime-launch",
+    "model-load",
+    "telemetry-upload",
+    "public-push",
+    "release-or-tag"
+  ],
+  "safetyFlags": {
+    "dataOnly": true,
+    "descriptorOnly": true,
+    "readOnly": true,
+    "comparisonFixtureOnly": true,
+    "summaryOnly": true,
+    "mcpRuntimeImplemented": false,
+    "mcpServerImplemented": false,
+    "mcpClientImplemented": false,
+    "permissionExecutorImplemented": false,
+    "toolInvocationPathImplemented": false,
+    "commandExecution": false,
+    "shellExecution": false,
+    "runtimeExecution": false,
+    "localFileRead": false,
+    "rawTraceRead": false,
+    "rawReportRead": false,
+    "readsArtifacts": false,
+    "writesArtifacts": false,
+    "reportWriterImplemented": false,
+    "networkCalls": false,
+    "providerCalls": false,
+    "launcherExecution": false,
+    "editorExecution": false,
+    "hardwareAccess": false,
+    "kv260Access": false,
+    "fpgaRepoAccess": false,
+    "modelExecution": false,
+    "privatePathsIncluded": false,
+    "secretsIncluded": false,
+    "tokensIncluded": false,
+    "stdoutIncluded": false,
+    "stderrIncluded": false,
+    "rawLogsIncluded": false,
+    "artifactPathsIncluded": false,
+    "generatedArtifactsIncluded": false,
+    "telemetry": false,
+    "writeBack": false,
+    "repositoryMutation": false,
+    "publicPush": false,
+    "releaseOrTag": false,
+    "stableApiAbiClaim": false
+  },
+  "limitations": [
+    "This is a checked MCP verification-run comparison fixture, not an MCP runtime, server, client, permission executor, tool invocation path, command executor, file reader, report writer, or artifact writer.",
+    "The comparison consumes approved summary references only; it does not read raw traces, read raw reports, echo paths, capture stdout or stderr, include raw logs, write artifacts, or mutate repositories.",
+    "No provider call, network call, launcher execution, editor execution, hardware access, KV260 access, FPGA repo access, model execution, telemetry upload, public push, release, tag, stable API, or stable ABI claim is made."
+  ],
+  "issueRefs": [
+    "pccxai/pccx-lab#22"
+  ]
+}

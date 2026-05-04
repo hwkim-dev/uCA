@@ -15,7 +15,7 @@
 <meta name="description" content="최근 개정: 2026-04-24. pccx-lab 은 pccx v002 NPU 아키텍처를 위한 데스크톱 프로파일러 + 검증 IDE 이다. 컴패니언 pccx-FPGA-NPU-LLM-kv260 RTL 레포의 xsim 테스트벤치가 내놓는.pccx 바이너리 트레이스를 수집해 타임라인, flame graph, roofline, bottleneck 윈도, 하드웨..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["ko","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"아키텍처 개요","name":"아키텍처 개요","url":"https://pccxai.github.io/pccx/ko/docs/Lab/architecture.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/ko/docs/Lab/architecture.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-03","dateModified":"2026-05-03","description":"pccx documentation page: 아키텍처 개요. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"ko","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="색인" href="../../genindex.html"><link rel="search" title="검색" href="../../search.html"><link rel="next" title="CLI 레퍼런스" href="cli.html"><link rel="prev" title="pccx-lab 핸드북" href="index.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["ko","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"아키텍처 개요","name":"아키텍처 개요","url":"https://pccxai.github.io/pccx/ko/docs/Lab/architecture.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/ko/docs/Lab/architecture.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-04","dateModified":"2026-05-04","description":"pccx documentation page: 아키텍처 개요. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"ko","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="색인" href="../../genindex.html"><link rel="search" title="검색" href="../../search.html"><link rel="next" title="CLI 레퍼런스" href="cli.html"><link rel="prev" title="pccx-lab 핸드북" href="index.html">
         <link rel="canonical" href="https://pccxai.github.io/pccx/docs/Lab/architecture.html">
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=4880187a" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=0bd41fdc" />
     <link rel="stylesheet" type="text/css" href="../../_static/image-lightbox.css?v=884c9d5a" />
     <link rel="stylesheet" type="text/css" href="../../_static/language-switcher.css?v=cc8629cf" />
     
@@ -376,7 +376,7 @@
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">아키텍처 개요</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cli.html">CLI 레퍼런스</a></li>
 <li class="toctree-l2"><a class="reference internal" href="analyzer_api.html">분석기 API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="copilot.html">Copilot API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="workflow_facade.html">Workflow Facade</a></li>
 <li class="toctree-l2"><a class="reference internal" href="research.html">pccx-lab 연구 계보</a></li>
 <li class="toctree-l2"><a class="reference internal" href="panels.html">UI 패널 카탈로그</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ipc.html">Tauri IPC 계약</a></li>
@@ -520,7 +520,7 @@ JSON-RPC 와이어 프레이밍, async framed IO) 와 M2.2 (<code class="docutil
 │   ├── uvm_bridge/     — pccx-uvm-bridge: SV / UVM DPI-C 어댑터
 │   ├── schema/         — pccx-schema: 중앙 IPC DTO + ts-rs TypeScript
 │   │                     자동 내보내기
-│   └── ai_copilot/     — pccx-ai-copilot: LLM 오케스트레이션
+│   └── workflow_facade/ — workflow facade: LLM runtime helper
 ├── ui/
 │   ├── src/            React 19 + TypeScript + Vite 7
 │   └── src-tauri/      Tauri v2 데스크톱 셸 + IPC
@@ -539,7 +539,7 @@ JSON-RPC 와이어 프레이밍, async framed IO) 와 M2.2 (<code class="docutil
 │  ui/src-tauri/      Tauri v2 셸. 얇은 레이어 — 실제 로직은    │
 │                     워크스페이스 크레이트 에 있음.            │
 ├──────────────────────────────────────────────────────────────┤
-│  ai_copilot/, lsp/, remote/, uvm_bridge/                     │
+│  workflow_facade/, lsp/, remote/, uvm_bridge/                │
 │                     호스트 지향 표면. UI 의존성 없음.         │
 ├──────────────────────────────────────────────────────────────┤
 │  reports/, verification/, authoring/, evolve/                │
@@ -573,13 +573,13 @@ acyclic — <code class="docutils literal notranslate"><span class="pre">core/</
                      │                           │
                      ▼                           ▼
            ┌───────────────────┐     ┌───────────────────────┐
-           │ Copilot::         │     │  useRegisterSnapshot   │
-           │ investigate_      │     │  (React 훅, rAF       │
-           │ summary() → str   │     │  debounced + LRU)     │
+           │ context summary   │     │  useRegisterSnapshot   │
+           │ helper → str      │     │  (React 훅, rAF        │
+           │                   │     │  debounced + LRU)      │
            └─────────┬─────────┘     └───────────────────────┘
                      │
                      ▼
-           LLM 시스템 프롬프트 (≤ 2 kB)
+           LLM context summary (≤ 2 kB)
 </pre></div>
 </div>
 </section>
@@ -636,20 +636,20 @@ acyclic — <code class="docutils literal notranslate"><span class="pre">core/</
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-lsp</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">CompletionProvider</span></code>, <code class="docutils literal notranslate"><span class="pre">HoverProvider</span></code>, <code class="docutils literal notranslate"><span class="pre">LocationProvider</span></code> (sync) + 그들의 <code class="docutils literal notranslate"><span class="pre">Async*Provider</span></code> 동반자</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-ai-copilot</span></code></p></td>
+<tr class="row-odd"><td><p>workflow facade</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">ContextCompressor</span></code>, <code class="docutils literal notranslate"><span class="pre">SubagentRunner</span></code></p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <p>등록 전체 절차는 <a class="reference internal" href="analyzer_api.html"><span class="std std-doc">Analyzer API 페이지</span></a> 참고.</p>
-<p><strong>신규 UVM 시퀀스 전략 추가</strong>: <code class="docutils literal notranslate"><span class="pre">pccx-ai-copilot</span></code> 은
+<p><strong>신규 UVM 시퀀스 전략 추가</strong>: workflow facade 는
 <code class="docutils literal notranslate"><span class="pre">list_uvm_strategies()</span></code> 로 노출되는 큐레이션된 이름붙은 전략 목록을
 출고한다.  이 목록을 확장하고 현재 다섯 전략의 디스패처에 연결하는
-레시피는 <a class="reference internal" href="copilot.html"><span class="std std-doc">Copilot 페이지</span></a> 참고.</p>
+레시피는 <a class="reference internal" href="workflow_facade.html"><span class="std std-doc">Workflow Facade 페이지</span></a> 참고.</p>
 <p><strong>신규 Tauri 커맨드 추가</strong>: <code class="docutils literal notranslate"><span class="pre">ui/src-tauri/src/lib.rs</span></code> 편집 →
 <code class="docutils literal notranslate"><span class="pre">#[tauri::command]</span></code> annotated fn 추가 → <code class="docutils literal notranslate"><span class="pre">invoke_handler!</span></code> 에 등록.
-워크스페이스 crate 가 이미 reports / verification / lsp / copilot
+워크스페이스 crate 가 이미 reports / verification / lsp / workflow facade
 표면을 노출하므로 Tauri 커맨드는 대개 라이브러리 호출 한 줄 위의
 브릿지로 끝난다.</p>
 </section>
@@ -697,8 +697,8 @@ pccx-lab 워크스페이스의 일부가 아니다.</p></li>
 </div>
 <p>크레이트별 테스트 수는 릴리스 사이에 변동되며, 각 크레이트의
 <code class="docutils literal notranslate"><span class="pre">CHANGELOG.md</span></code> 가 마지막 컷 시점의 수치를 기록한다.</p>
-<p>커맨드 레퍼런스는 <a class="reference internal" href="cli.html"><span class="std std-doc">CLI 레퍼런스</span></a>, LLM 자동화 표면은
-<a class="reference internal" href="copilot.html"><span class="std std-doc">Copilot API</span></a> 참고.</p>
+<p>커맨드 레퍼런스는 <a class="reference internal" href="cli.html"><span class="std std-doc">CLI 레퍼런스</span></a>, LLM runtime surface 는
+<a class="reference internal" href="workflow_facade.html"><span class="std std-doc">Workflow Facade</span></a> 참고.</p>
 </section>
 <section id="id9">
 <h2>이 페이지 인용<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h2>
@@ -706,7 +706,7 @@ pccx-lab 워크스페이스의 일부가 아니다.</p></li>
 다른 사람들이 레퍼런스 구현을 찾을 수 있도록 canonical pccx 사이트를
 인용해 주세요:</p>
 <div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@misc</span><span class="p">{</span><span class="nl">pccx_lab_architecture_2026</span><span class="p">,</span>
-<span class="w">  </span><span class="na">title</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="s">{pccx-lab Architecture Overview: desktop profiler + UVM Copilot for an open NPU}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">title</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="s">{pccx-lab Architecture Overview: desktop profiler + UVM workflow facade for an open NPU}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">author</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{Kim, Hyunwoo}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">year</span><span class="w">         </span><span class="p">=</span><span class="w"> </span><span class="s">{2026}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">howpublished</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{\url{https://pccxai.github.io/pccx/ko/docs/Lab/architecture.html}}</span><span class="p">,</span>
@@ -760,12 +760,12 @@ pccx-lab 워크스페이스의 일부가 아니다.</p></li>
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2026-05-03</div>
+              Last updated on 2026-05-04</div>
           </div>
           <div class="right-details">
             <div class="icons">
               <a class="muted-link pccx-footer-icon" href="https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260" aria-label="RTL implementation — github.com/pccxai/pccx-FPGA-NPU-LLM-kv260"><svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1.2"/><rect x="10" y="10" width="4" height="4" fill="currentColor" stroke="none"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></svg><span class="pccx-footer-icon__label">RTL</span></a>
-              <a class="muted-link pccx-footer-icon" href="https://pccxai.github.io/pccx/ko/lab/" aria-label="pccx-lab — simulator & AI profiler"><svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true"><path d="M9 3h6"/><path d="M10 3v6.2L4.6 19a1 1 0 0 0 .86 1.5h13.08a1 1 0 0 0 .86-1.5L14 9.2V3"/><path d="M6.8 14h10.4"/></svg><span class="pccx-footer-icon__label">Lab</span></a>
+              <a class="muted-link pccx-footer-icon" href="https://pccxai.github.io/pccx/ko/lab/" aria-label="pccx-lab — simulator & verification lab"><svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true"><path d="M9 3h6"/><path d="M10 3v6.2L4.6 19a1 1 0 0 0 .86 1.5h13.08a1 1 0 0 0 .86-1.5L14 9.2V3"/><path d="M6.8 14h10.4"/></svg><span class="pccx-footer-icon__label">Lab</span></a>
               <a class="muted-link pccx-footer-icon" href="https://github.com/pccxai/pccx" aria-label="Docs repository — github.com/pccxai/pccx"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" width="1em" height="1em" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg><span class="pccx-footer-icon__label">Docs</span></a>
               <a class="muted-link pccx-footer-icon" href="https://hkimw.github.io/hkimw/" aria-label="Author portfolio — hkimw.github.io/hkimw"><svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20.5c1-3.5 4-5.5 7.5-5.5s6.5 2 7.5 5.5"/></svg><span class="pccx-footer-icon__label">Blog</span></a>
               

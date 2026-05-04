@@ -200,7 +200,7 @@ IPC command reference:
 | `run_verification` | `repoPath: String` | per-step results + synth status |
 | `load_pccx` | `path: String` | `PccxHeader` (+ `trace-loaded` event) |
 | `fetch_trace_payload` | — | flat binary buffer (24 B/event) |
-| `list_pccx_traces` | `repoPath: String` | list of generated `.pccx` artefacts |
+| `list_pccx_traces` | `repoPath: String` | list of emitted `.pccx` artefacts |
 
 ## Cite this page
 

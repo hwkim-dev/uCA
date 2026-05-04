@@ -19,8 +19,8 @@
 - `pccx-lsp` (`crates/lsp/`): Phase 2 IntelliSense façade — sync / async provider trait, multiplexer, `NoopBackend`, `BlockingBridge`, `LspSubprocess`.  `pccx-core` 의존.
 - `pccx-remote` (`crates/remote/`): Phase 3 백엔드 데몬 스캐폴드(WireGuard / OIDC / RBAC 는 이후 단계에서 착지).  `pccx-core` 의존.
 - `pccx-uvm-bridge` (`crates/uvm_bridge/`): SystemVerilog/UVM 과 `pccx-core` 사이의 DPI-C / FFI 경계.
-- `pccx-ai-copilot` (`crates/ai_copilot/`): LLM 호출 래퍼.  `pccx-core` 의 트레이스 표면(JSON 등)에만 의존.
-- `pccx-ide` (`ui/src-tauri/`): `pccx-core`, `pccx-reports`, `pccx-ai-copilot` 을 소비하는 Tauri 쉘.
+- `pccx-workflow-facade` (`crates/workflow_facade/`): LLM 호출 래퍼.  `pccx-core` 의 트레이스 표면(JSON 등)에만 의존.
+- `pccx-ide` (`ui/src-tauri/`): `pccx-core`, `pccx-reports`, `pccx-workflow-facade` 을 소비하는 Tauri 쉘.
 - `ui/` (비-Cargo): React + Vite 프론트엔드.  `pccx-ide` 와 Tauri IPC 만으로 통신합니다.
 
 어느 crate 도 `pccx-ide` 또는 `pccx-remote` 에 의존하지 않습니다 — 둘 다 터미널 바이너리입니다.  React 트리는 Cargo 워크스페이스 멤버가 아니며, 설계상 워크스페이스 그래프 바깥에 위치합니다.

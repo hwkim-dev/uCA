@@ -58,7 +58,7 @@ pccx 는 **3-레포 연합** 이다 ({doc}`index` 의 에코시스템 섹션 참
 mkdir -p ~/pccx-ws && cd ~/pccx-ws
 git clone https://github.com/pccxai/pccx.git                    # docs (이 사이트)
 git clone https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260.git  # RTL + Sail 모델
-git clone https://github.com/pccxai/pccx-lab.git                 # 프로파일러 + UVM Copilot
+git clone https://github.com/pccxai/pccx-lab.git                 # 프로파일러 + UVM workflow facade
 ```
 
 ## 3. 원-커맨드 재현기 (Docker)

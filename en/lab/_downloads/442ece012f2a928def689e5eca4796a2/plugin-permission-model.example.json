@@ -1,0 +1,232 @@
+{
+  "schemaVersion": "pccx.lab.plugin-permission-model.v0",
+  "tool": "pccx-lab",
+  "modelId": "plugin-cli-core-permission-boundary",
+  "modelState": "descriptor_only",
+  "pluginRuntimeState": "not_implemented",
+  "defaultMode": "disabled",
+  "manifestSource": "approved-plugin-manifest-json",
+  "approvalPolicy": {
+    "state": "planned",
+    "manifestApprovalRequired": true,
+    "localInputApprovalRequired": true,
+    "capabilityEscalationRequiresReview": true,
+    "artifactOutputRequiresReview": true,
+    "rawShellCommandsAllowed": false,
+    "silentFallbackAllowed": false,
+    "backgroundMutationAllowed": false,
+    "unreviewedCapabilityAllowed": false
+  },
+  "sandboxPolicy": {
+    "state": "planned",
+    "sandboxRequiredBeforeExecution": true,
+    "processIsolationRequired": true,
+    "networkDisabledByDefault": true,
+    "filesystemWriteDisabledByDefault": true,
+    "dynamicLibraryLoadAllowed": false,
+    "untrustedExecutionAllowed": false,
+    "privatePathEchoAllowed": false,
+    "stdoutCaptureAllowed": false,
+    "stderrCaptureAllowed": false
+  },
+  "permissionProfiles": [
+    {
+      "profileId": "manifest_review_read_only",
+      "profileState": "planned",
+      "inputReferenceKind": "approved-plugin-manifest-json",
+      "outputPolicy": "bounded manifest validation summary only",
+      "requiresUserApproval": true,
+      "auditRequired": true,
+      "allowedCapabilityIds": [
+        "plugin.manifest.validate",
+        "plugin.capability.review"
+      ],
+      "allowedInputContracts": [
+        "plugin.manifest"
+      ],
+      "allowedOutputContracts": [
+        "plugin.validation.summary"
+      ],
+      "examples": [
+        "Validate that a draft manifest declares explicit capabilities and limitations.",
+        "List the reviewed capability ids without loading plugin code."
+      ]
+    },
+    {
+      "profileId": "diagnostics_summary_read_only",
+      "profileState": "planned",
+      "inputReferenceKind": "approved-diagnostics-envelope-json",
+      "outputPolicy": "bounded diagnostics summary item only",
+      "requiresUserApproval": true,
+      "auditRequired": true,
+      "allowedCapabilityIds": [
+        "plugin.diagnostics.summary"
+      ],
+      "allowedInputContracts": [
+        "diagnostics.envelope"
+      ],
+      "allowedOutputContracts": [
+        "plugin.diagnostics.summary"
+      ],
+      "examples": [
+        "Read an approved diagnostics envelope and prepare a summary item."
+      ]
+    },
+    {
+      "profileId": "report_panel_metadata_read_only",
+      "profileState": "planned",
+      "inputReferenceKind": "approved-workflow-result-summary-json",
+      "outputPolicy": "bounded report-panel metadata only; no artifact write",
+      "requiresUserApproval": true,
+      "auditRequired": true,
+      "allowedCapabilityIds": [
+        "plugin.report.panel"
+      ],
+      "allowedInputContracts": [
+        "workflow.results"
+      ],
+      "allowedOutputContracts": [
+        "plugin.report.panel"
+      ],
+      "examples": [
+        "Read approved workflow result summaries and prepare panel metadata."
+      ]
+    },
+    {
+      "profileId": "trace_import_pending_review",
+      "profileState": "deferred",
+      "inputReferenceKind": "not-available",
+      "outputPolicy": "not available until a separate trace summary boundary exists",
+      "requiresUserApproval": true,
+      "auditRequired": true,
+      "allowedCapabilityIds": [],
+      "allowedInputContracts": [],
+      "allowedOutputContracts": [],
+      "examples": [
+        "Trace import remains blocked in this descriptor."
+      ]
+    },
+    {
+      "profileId": "write_action_pending_review",
+      "profileState": "deferred",
+      "inputReferenceKind": "not-available",
+      "outputPolicy": "not available until a separate write-capable boundary exists",
+      "requiresUserApproval": true,
+      "auditRequired": true,
+      "allowedCapabilityIds": [],
+      "allowedInputContracts": [],
+      "allowedOutputContracts": [],
+      "examples": [
+        "Report generation and repository mutation remain blocked."
+      ]
+    }
+  ],
+  "capabilityGates": [
+    {
+      "capabilityId": "plugin.manifest.validate",
+      "permissionProfile": "manifest_review_read_only",
+      "defaultDecision": "allowed_after_manifest_approval",
+      "sideEffectPolicy": "read-only manifest validation summary"
+    },
+    {
+      "capabilityId": "plugin.diagnostics.summary",
+      "permissionProfile": "diagnostics_summary_read_only",
+      "defaultDecision": "allowed_after_local_input_approval",
+      "sideEffectPolicy": "read-only diagnostics summary"
+    },
+    {
+      "capabilityId": "plugin.report.panel",
+      "permissionProfile": "report_panel_metadata_read_only",
+      "defaultDecision": "allowed_after_local_input_approval",
+      "sideEffectPolicy": "read-only report panel metadata"
+    },
+    {
+      "capabilityId": "plugin.trace.importer",
+      "permissionProfile": "trace_import_pending_review",
+      "defaultDecision": "blocked_until_separate_boundary",
+      "sideEffectPolicy": "not available in this boundary"
+    },
+    {
+      "capabilityId": "plugin.report.write",
+      "permissionProfile": "write_action_pending_review",
+      "defaultDecision": "blocked_until_separate_boundary",
+      "sideEffectPolicy": "not available in this boundary"
+    }
+  ],
+  "blockedActions": [
+    "dynamic-code-load",
+    "untrusted-execution",
+    "plugin-package-install",
+    "marketplace-flow",
+    "arbitrary-shell-command",
+    "repository-write-back",
+    "artifact-write",
+    "provider-call",
+    "network-call",
+    "hardware-probe",
+    "kv260-access",
+    "fpga-repo-access",
+    "runtime-launch",
+    "model-load",
+    "telemetry-upload",
+    "public-push",
+    "release-or-tag"
+  ],
+  "auditPolicy": {
+    "state": "planned",
+    "eventSchema": "pccx.lab.plugin-audit-event.v0",
+    "auditRequiredForAllowedProfiles": true,
+    "redactionRequired": true,
+    "privatePathEchoAllowed": false,
+    "stdoutCaptureAllowed": false,
+    "stderrCaptureAllowed": false,
+    "artifactPathEchoAllowed": false
+  },
+  "externalIntegrationBoundary": {
+    "state": "planned",
+    "consumers": [
+      "future GUI consumer",
+      "future editor consumer",
+      "future MCP/tool consumer"
+    ],
+    "rule": "External consumers may render approved plugin metadata, but must not load plugin code or bypass the CLI/core approval boundary."
+  },
+  "safetyFlags": {
+    "dataOnly": true,
+    "descriptorOnly": true,
+    "readOnly": true,
+    "pluginRuntimeImplemented": false,
+    "pluginCodeLoaded": false,
+    "dynamicLibrariesLoaded": false,
+    "untrustedExecutionAllowed": false,
+    "sandboxImplemented": false,
+    "stablePluginAbiPromised": false,
+    "marketplaceFlow": false,
+    "packageDistribution": false,
+    "commandExecution": false,
+    "shellExecution": false,
+    "runtimeExecution": false,
+    "networkCalls": false,
+    "providerCalls": false,
+    "hardwareAccess": false,
+    "kv260Access": false,
+    "fpgaRepoAccess": false,
+    "modelExecution": false,
+    "privatePathsIncluded": false,
+    "secretsIncluded": false,
+    "telemetry": false,
+    "writeBack": false,
+    "writesArtifacts": false,
+    "publicPush": false,
+    "releaseOrTag": false
+  },
+  "limitations": [
+    "This is a checked plugin permission planning boundary, not a permission runtime.",
+    "No plugin code is loaded and no sandbox is implemented.",
+    "No stable plugin ABI is promised.",
+    "No marketplace, package distribution, shell command, provider call, network call, hardware access, repository mutation, artifact write, public push, or release/tag control is implemented."
+  ],
+  "issueRefs": [
+    "pccxai/pccx-lab#21"
+  ]
+}

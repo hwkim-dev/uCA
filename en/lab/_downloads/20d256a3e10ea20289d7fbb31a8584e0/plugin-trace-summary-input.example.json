@@ -1,0 +1,199 @@
+{
+  "schemaVersion": "pccx.lab.plugin-trace-summary-input.v0",
+  "tool": "pccx-lab",
+  "contractId": "plugin-trace-summary-input-cli-core-contract",
+  "contractState": "descriptor_only",
+  "pluginRuntimeState": "not_implemented",
+  "loaderState": "not_implemented",
+  "defaultMode": "disabled",
+  "hostMode": "cli_first_gui_second",
+  "samplePluginRef": {
+    "pluginId": "example.trace.summary",
+    "manifestState": "example_manifest_only",
+    "entryKind": "manifest_only",
+    "codeLoaded": false,
+    "packageInstalled": false,
+    "dynamicLibrariesLoaded": false
+  },
+  "sourceBoundaryRefs": [
+    {
+      "refId": "plugin_input_contract",
+      "schemaVersion": "pccx.lab.plugin-input-contract.v0",
+      "examplePath": "docs/examples/plugin-input-contract.example.json",
+      "approvalState": "descriptor_only",
+      "pathEchoAllowed": false
+    },
+    {
+      "refId": "plugin_permission_model",
+      "schemaVersion": "pccx.lab.plugin-permission-model.v0",
+      "examplePath": "docs/examples/plugin-permission-model.example.json",
+      "approvalState": "descriptor_only",
+      "pathEchoAllowed": false
+    }
+  ],
+  "traceSummaryInputs": [
+    {
+      "inputId": "trace_event_summary",
+      "schemaVersion": "pccx.lab.plugin-trace-summary-input.v0",
+      "capabilityId": "plugin.trace.import.summary",
+      "inputKind": "trace_summary",
+      "inputState": "approved_summary_only",
+      "permissionProfile": "trace_summary_read_only",
+      "sourceRef": "approved-trace-summary-json",
+      "summary": "Bounded trace event counts approved before a future trace-summary plugin review.",
+      "summaryOnly": true,
+      "approvalRequired": true,
+      "localFileRead": false,
+      "rawTraceRead": false,
+      "rawReportRead": false,
+      "artifactRead": false,
+      "privatePathEchoAllowed": false,
+      "stdoutIncluded": false,
+      "stderrIncluded": false,
+      "rawLogIncluded": false,
+      "rawTraceIncluded": false,
+      "fieldDescriptors": [
+        {
+          "fieldName": "eventCount",
+          "valueKind": "integer",
+          "policy": "bounded count copied from an approved trace summary"
+        },
+        {
+          "fieldName": "signalCount",
+          "valueKind": "integer",
+          "policy": "bounded count; no signal path names are included"
+        },
+        {
+          "fieldName": "cycleRange",
+          "valueKind": "integer-range",
+          "policy": "start and end cycle numbers only"
+        },
+        {
+          "fieldName": "eventKindCounts",
+          "valueKind": "bounded-map",
+          "policy": "event-kind counters only; no waveform values or raw trace rows"
+        }
+      ]
+    }
+  ],
+  "sampleTraceSummary": {
+    "sourceRef": "approved-trace-summary-json",
+    "traceSummaryId": "trace-summary-placeholder-0001",
+    "eventCount": 128,
+    "signalCount": 12,
+    "cycleStart": 0,
+    "cycleEnd": 512,
+    "eventKindCounts": {
+      "read": 42,
+      "write": 37,
+      "stall": 9
+    },
+    "pathIncluded": false,
+    "signalNamesIncluded": false,
+    "rawTraceIncluded": false,
+    "privatePathsIncluded": false,
+    "stdoutIncluded": false,
+    "stderrIncluded": false,
+    "rawLogsIncluded": false,
+    "artifactPathsIncluded": false,
+    "generatedArtifactsIncluded": false
+  },
+  "inputPolicy": {
+    "state": "planned",
+    "summaryOnly": true,
+    "approvalRequired": true,
+    "auditRequired": true,
+    "trackedFileMutationAllowed": false,
+    "localFileReadAllowed": false,
+    "rawTraceReadAllowed": false,
+    "rawReportReadAllowed": false,
+    "artifactReadAllowed": false,
+    "pathEchoAllowed": false,
+    "stdoutAllowed": false,
+    "stderrAllowed": false,
+    "rawLogAllowed": false,
+    "privatePathsAllowed": false,
+    "generatedArtifactsAllowed": false,
+    "noMutationRule": "Future validation must prove tracked files are unchanged before and after preparing plugin trace-summary inputs.",
+    "redactionRule": "Trace summaries must omit private paths, signal path names, raw waveform rows, stdout, stderr, raw logs, secrets, tokens, model paths, and generated artifact paths."
+  },
+  "blockedActions": [
+    "dynamic-code-load",
+    "untrusted-execution",
+    "plugin-package-install",
+    "marketplace-flow",
+    "sandbox-bypass",
+    "arbitrary-shell-command",
+    "local-file-read",
+    "raw-trace-read",
+    "raw-report-read",
+    "artifact-read",
+    "artifact-write",
+    "repository-write-back",
+    "public-push",
+    "release-or-tag",
+    "provider-call",
+    "network-call",
+    "hardware-probe",
+    "kv260-access",
+    "fpga-repo-access",
+    "runtime-launch",
+    "model-load",
+    "telemetry-upload"
+  ],
+  "safetyFlags": {
+    "dataOnly": true,
+    "descriptorOnly": true,
+    "readOnly": true,
+    "inputFixtureOnly": true,
+    "summaryOnly": true,
+    "traceSummaryOnly": true,
+    "pluginRuntimeImplemented": false,
+    "pluginLoaderImplemented": false,
+    "pluginCodeLoaded": false,
+    "dynamicLibrariesLoaded": false,
+    "sandboxImplemented": false,
+    "permissionExecutorImplemented": false,
+    "inputReaderImplemented": false,
+    "traceImporterImplemented": false,
+    "rawTraceRead": false,
+    "rawReportRead": false,
+    "localFileRead": false,
+    "stablePluginAbiPromised": false,
+    "marketplaceFlow": false,
+    "packageDistribution": false,
+    "commandExecution": false,
+    "shellExecution": false,
+    "runtimeExecution": false,
+    "networkCalls": false,
+    "providerCalls": false,
+    "launcherExecution": false,
+    "editorExecution": false,
+    "hardwareAccess": false,
+    "kv260Access": false,
+    "fpgaRepoAccess": false,
+    "modelExecution": false,
+    "privatePathsIncluded": false,
+    "signalNamesIncluded": false,
+    "secretsIncluded": false,
+    "tokensIncluded": false,
+    "stdoutIncluded": false,
+    "stderrIncluded": false,
+    "rawLogsIncluded": false,
+    "telemetry": false,
+    "writeBack": false,
+    "readsArtifacts": false,
+    "writesArtifacts": false,
+    "publicPush": false,
+    "releaseOrTag": false
+  },
+  "limitations": [
+    "This is a checked plugin trace-summary input fixture, not a plugin loader, runtime, sandbox, permission executor, input reader, trace importer, command executor, or report writer.",
+    "The sample trace summary is descriptor-only metadata; it does not read raw traces, read reports, echo paths, include signal names, write artifacts, or mutate repositories.",
+    "No plugin code is loaded, no package is installed, no dynamic library is loaded, and no untrusted code executes.",
+    "No stable plugin ABI is promised. No marketplace, package distribution, release, tag, hardware, inference, throughput, or timing-closure claim is made."
+  ],
+  "issueRefs": [
+    "pccxai/pccx-lab#21"
+  ]
+}

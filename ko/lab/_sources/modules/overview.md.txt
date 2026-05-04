@@ -13,7 +13,7 @@
 | 코어        | `pccx-core`                                                 | `.pccx` 포맷, 트레이스 파싱, 하드웨어 모델, roofline / bottleneck / synth-report 파서 |
 | 파생        | `pccx-reports`, `pccx-verification`, `pccx-authoring`, `pccx-evolve` | 코어 표면을 소비하는 특화 생산자 (리포트, CI 게이트, ISA/API TOML 컴파일러, EAGLE 계열 프리미티브) |
 | IDE · 서비스| `pccx-ide` (Tauri 쉘), `pccx-lsp` (IntelliSense façade), `pccx-remote` (Phase 3 데몬 스캐폴드), `ui/` (React + Vite) | 경험 표면과, 그 위에 꽂히는 네트워크 / 언어 서버 레인 |
-| 브릿지      | `pccx-uvm-bridge`, `pccx-ai-copilot`                        | 비-Rust 경계: DPI-C 로 오가는 SystemVerilog/UVM, LLM 호출 래퍼 |
+| 브릿지      | `pccx-uvm-bridge`, `pccx-workflow-facade`                        | 비-Rust 경계: DPI-C 로 오가는 SystemVerilog/UVM, LLM 호출 래퍼 |
 
 의존성은 **안쪽으로만** 흐릅니다 — 모든 비-코어 crate 는 `pccx-core`
 에 의존(전이적으로 아무것도 없음)하고, 어느 crate 도 `pccx-ide` 또는
@@ -25,7 +25,7 @@
 
 기본 레이아웃은 데스크톱 검증 쉘입니다. 상단 메뉴바, 툴바, 탭
 스트립, 활성 작업 패널, 2개의 도킹 가능한 사이드 패널
-(Live Telemetry + Workflow Assistant) 로 구성됩니다.
+(Live Telemetry + Workflow Panel) 로 구성됩니다.
 
 ```{image} ../../_static/screenshots/timeline-fullwidth.png
 :alt: pccx-lab Timeline 뷰 — 사이클 축 위의 NPU 이벤트 스윔 레인

@@ -1,0 +1,156 @@
+{
+  "schemaVersion": "pccx.lab.mcp-approval-request.v0",
+  "tool": "pccx-lab",
+  "requestId": "mcp-approval-request-read-only-local-input-0001",
+  "requestState": "approval_required",
+  "adapterState": "not_implemented",
+  "defaultMode": "read_only",
+  "automationPath": "cli_core_first_gui_second",
+  "requestedTool": {
+    "toolId": "lab.analysis.readApprovedInput",
+    "commandKind": "read_only_cli_core",
+    "permissionProfile": "read_only_approved_local_file",
+    "inputReferenceKind": "approved-local-json-reference",
+    "outputBoundary": "pccx.lab.mcp-read-only-report-contract.v0",
+    "sideEffectPolicy": "no_repository_mutation",
+    "approvalRequired": true,
+    "fixedArgsPreview": [
+      "workflow-results",
+      "--format",
+      "json"
+    ]
+  },
+  "approvalPolicy": {
+    "state": "pending_review",
+    "decisionState": "not_approved",
+    "userApprovalRequired": true,
+    "writeActionAllowed": false,
+    "artifactWriteAllowed": false,
+    "repositoryMutationAllowed": false,
+    "pathEchoAllowed": false,
+    "rawShellCommandsAllowed": false,
+    "silentFallbackAllowed": false,
+    "backgroundMutationAllowed": false,
+    "publicPushAllowed": false,
+    "releaseOrTagAllowed": false
+  },
+  "repositoryMutationBoundary": {
+    "state": "blocked",
+    "requiredBeforeWrite": "separate-reviewed-write-boundary",
+    "trackedFileMutationAllowed": false,
+    "artifactWriteAllowed": false,
+    "writeBackAllowed": false,
+    "publicPushAllowed": false,
+    "releaseOrTagAllowed": false
+  },
+  "redactionPolicy": {
+    "state": "summary_only",
+    "approvedInputRefOnly": true,
+    "privatePathsIncluded": false,
+    "secretsIncluded": false,
+    "tokensIncluded": false,
+    "stdoutIncluded": false,
+    "stderrIncluded": false,
+    "rawLogsIncluded": false,
+    "modelWeightPathsIncluded": false
+  },
+  "approvalChecklist": [
+    {
+      "checkId": "permission_profile_selected",
+      "state": "available_as_data",
+      "requiredBefore": "request_review",
+      "summary": "The fixture references the read-only approved-local-file permission profile."
+    },
+    {
+      "checkId": "approved_input_reference_required",
+      "state": "approval_required",
+      "requiredBefore": "tool_invocation",
+      "summary": "Future local inputs must be approved by reference and not echoed as paths."
+    },
+    {
+      "checkId": "output_policy_reviewed",
+      "state": "available_as_data",
+      "requiredBefore": "report_summary_returned",
+      "summary": "The future output boundary is summary-only and does not write artifacts."
+    },
+    {
+      "checkId": "no_mutation_guard",
+      "state": "blocked",
+      "requiredBefore": "write_action",
+      "summary": "Repository mutation remains blocked until a separate write boundary exists."
+    },
+    {
+      "checkId": "audit_event_required",
+      "state": "planned",
+      "requiredBefore": "approved_tool_invocation",
+      "summary": "Future approved requests must produce a redacted audit event."
+    }
+  ],
+  "auditEventRef": {
+    "schemaVersion": "pccx.lab.mcp-audit-event.v0",
+    "examplePath": "docs/examples/mcp-audit-event.example.json",
+    "eventState": "example_only",
+    "storageState": "not_implemented"
+  },
+  "blockedActions": [
+    "mcp-server-start",
+    "mcp-client-session",
+    "permission-executor",
+    "arbitrary-shell-command",
+    "artifact-write",
+    "repository-write-back",
+    "provider-call",
+    "network-call",
+    "hardware-probe",
+    "kv260-access",
+    "fpga-repo-access",
+    "runtime-launch",
+    "model-load",
+    "telemetry-upload",
+    "public-push",
+    "release-or-tag"
+  ],
+  "safetyFlags": {
+    "dataOnly": true,
+    "descriptorOnly": true,
+    "readOnly": true,
+    "approvalFixtureOnly": true,
+    "mcpRuntimeImplemented": false,
+    "mcpServerImplemented": false,
+    "mcpClientImplemented": false,
+    "permissionExecutorImplemented": false,
+    "commandExecution": false,
+    "shellExecution": false,
+    "runtimeExecution": false,
+    "networkCalls": false,
+    "providerCalls": false,
+    "launcherExecution": false,
+    "editorExecution": false,
+    "hardwareAccess": false,
+    "kv260Access": false,
+    "fpgaRepoAccess": false,
+    "modelExecution": false,
+    "modelWeightsIncluded": false,
+    "privatePathsIncluded": false,
+    "secretsIncluded": false,
+    "tokensIncluded": false,
+    "stdoutIncluded": false,
+    "stderrIncluded": false,
+    "rawLogsIncluded": false,
+    "telemetry": false,
+    "writeBack": false,
+    "writesArtifacts": false,
+    "repositoryMutation": false,
+    "publicPush": false,
+    "releaseOrTag": false,
+    "stableApiAbiClaim": false
+  },
+  "limitations": [
+    "This is a checked approval-request fixture for a future MCP/tool adapter, not an MCP server, client, runtime, permission executor, command executor, or audit logger.",
+    "The fixture does not approve inputs, read local files, echo paths, execute commands, write reports, mutate repositories, call providers, access networks, touch hardware, load models, upload telemetry, push public branches, or create releases or tags.",
+    "Write actions require a separate reviewed boundary before any artifact write, repository mutation, public push, release, or tag behavior can exist."
+  ],
+  "issueRefs": [
+    "pccxai/pccx-lab#22"
+  ]
+}

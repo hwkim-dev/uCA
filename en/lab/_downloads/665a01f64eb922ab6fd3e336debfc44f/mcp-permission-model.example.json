@@ -1,0 +1,151 @@
+{
+  "schemaVersion": "pccx.lab.mcp-permission-model.v0",
+  "tool": "pccx-lab",
+  "modelId": "mcp-cli-core-permission-boundary",
+  "modelState": "descriptor_only",
+  "adapterState": "not_implemented",
+  "defaultMode": "read_only",
+  "approvalPolicy": {
+    "state": "planned",
+    "userApprovalRequiredForPathInput": true,
+    "userApprovalRequiredForWriteAction": true,
+    "userApprovalRequiredForArtifactOutput": true,
+    "rawShellCommandsAllowed": false,
+    "silentFallbackAllowed": false,
+    "backgroundMutationAllowed": false
+  },
+  "permissionProfiles": [
+    {
+      "profileId": "read_only_no_input",
+      "profileState": "planned",
+      "allowedCommandKinds": [
+        "pccx-lab-cli-fixed-args"
+      ],
+      "requiresUserApproval": false,
+      "inputReferenceKind": "none",
+      "outputPolicy": "summary_or_descriptor_json_only",
+      "auditRequired": true,
+      "examples": [
+        "lab.status.read",
+        "lab.workflows.list",
+        "lab.workflowProposals.preview",
+        "lab.workflowResults.summarize"
+      ]
+    },
+    {
+      "profileId": "read_only_approved_local_file",
+      "profileState": "planned",
+      "allowedCommandKinds": [
+        "pccx-lab-cli-approved-local-file"
+      ],
+      "requiresUserApproval": true,
+      "inputReferenceKind": "approved_local_file_reference",
+      "outputPolicy": "bounded_validation_summary_without_path_echo",
+      "auditRequired": true,
+      "examples": [
+        "lab.diagnosticsHandoff.validate",
+        "lab.deviceSessionStatus.validate",
+        "lab.fileShapeDiagnostics.analyze"
+      ]
+    },
+    {
+      "profileId": "write_action_pending_review",
+      "profileState": "deferred",
+      "allowedCommandKinds": [],
+      "requiresUserApproval": true,
+      "inputReferenceKind": "future_reviewed_request",
+      "outputPolicy": "not_available_in_this_boundary",
+      "auditRequired": true,
+      "examples": [
+        "lab.report.generate",
+        "lab.pullRequestSummary.prepare"
+      ]
+    }
+  ],
+  "actionClasses": [
+    {
+      "actionClass": "read_status",
+      "permissionProfile": "read_only_no_input",
+      "defaultDecision": "allow_descriptor_only",
+      "sideEffectPolicy": "read-only metadata"
+    },
+    {
+      "actionClass": "read_approved_local_json",
+      "permissionProfile": "read_only_approved_local_file",
+      "defaultDecision": "require_explicit_user_approval",
+      "sideEffectPolicy": "read-only validation summary; no path echo"
+    },
+    {
+      "actionClass": "write_artifact",
+      "permissionProfile": "write_action_pending_review",
+      "defaultDecision": "blocked_until_separate_boundary",
+      "sideEffectPolicy": "not available in this model"
+    },
+    {
+      "actionClass": "repository_mutation",
+      "permissionProfile": "write_action_pending_review",
+      "defaultDecision": "blocked_until_separate_boundary",
+      "sideEffectPolicy": "not available in this model"
+    }
+  ],
+  "blockedActions": [
+    "arbitrary-shell-command",
+    "public-push",
+    "release-or-tag",
+    "hidden-background-change",
+    "repository-write-back",
+    "artifact-write",
+    "provider-call",
+    "network-call",
+    "hardware-probe",
+    "kv260-access",
+    "fpga-repo-access",
+    "runtime-launch",
+    "model-load",
+    "telemetry-upload"
+  ],
+  "auditPolicy": {
+    "state": "planned",
+    "eventSchema": "pccx.lab.mcp-audit-event.v0",
+    "auditRequiredForAllowedProfiles": true,
+    "redactionRequired": true,
+    "pathEchoAllowed": false,
+    "stdoutCaptureAllowed": false,
+    "stderrCaptureAllowed": false
+  },
+  "safetyFlags": {
+    "dataOnly": true,
+    "descriptorOnly": true,
+    "readOnly": true,
+    "mcpRuntimeImplemented": false,
+    "mcpServerImplemented": false,
+    "commandExecution": false,
+    "shellExecution": false,
+    "runtimeExecution": false,
+    "networkCalls": false,
+    "providerCalls": false,
+    "hardwareAccess": false,
+    "kv260Access": false,
+    "fpgaRepoAccess": false,
+    "modelExecution": false,
+    "modelWeightsIncluded": false,
+    "privatePathsIncluded": false,
+    "secretsIncluded": false,
+    "tokensIncluded": false,
+    "telemetry": false,
+    "writeBack": false,
+    "writesArtifacts": false,
+    "publicPush": false,
+    "releaseOrTag": false,
+    "stableApiAbiClaim": false
+  },
+  "limitations": [
+    "This is a checked permission model for a future MCP/tool adapter, not an MCP runtime implementation.",
+    "No command is executed by this fixture, and no MCP server or client is implemented.",
+    "Write actions, artifact generation, repository mutation, public push, and release/tag control remain blocked until separate reviewed boundaries exist.",
+    "No provider call, network call, hardware access, KV260 access, FPGA repo access, model execution, telemetry, upload, write-back, or compatibility claim is made."
+  ],
+  "issueRefs": [
+    "pccxai/pccx-lab#22"
+  ]
+}
