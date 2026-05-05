@@ -14,8 +14,10 @@ The scheduler delivers three uop types to `mem_dispatcher`.
   uop is converted to an ACP channel command or an NPU channel command before
   being pushed into `mem_u_operation_queue`.
 - `memory_set_uop_t` (`IN_mem_set_uop`) — decoded output of a MEMSET
-  instruction. Written directly into the fmap or weight shape constant RAM
-  (`fmap_array_shape` / `weight_array_shape`), bypassing any FIFO.
+  instruction. Written directly into the unified shape constant RAM
+  (`shape_const_ram`, see {doc}`shape_const_ram`), bypassing any FIFO.
+  This replaces the legacy `fmap_array_shape` / `weight_array_shape`
+  pair from earlier revisions of the dispatch path.
 - `cvo_control_uop_t` (`IN_CVO_uop`) — decoded output of a CVO instruction.
   Monitored directly by `mem_CVO_stream_bridge`; does not pass through the
   dispatcher's operation queues.
