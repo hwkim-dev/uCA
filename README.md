@@ -139,18 +139,29 @@ Two sibling repositories round out the pccx project:
 - **[pccxai/pccx-FPGA-NPU-LLM-kv260](https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260)** — active v002 SystemVerilog sources (CI-cloned into `codes/v002/`).
 - **[pccxai/pccx-lab](https://github.com/pccxai/pccx-lab)** — performance simulator, CLI-first verification lab, and trace profiler (mounted under `/en/lab/` and `/ko/lab/` on the docs site).
 
+v003+ active RTL development will live in a separate repository — working
+name `pccxai/pccx-FPGA-NPU-LLM-v003`, public URL TBD. The hosting model
+mirrors v002: this docs repo will cross-link the v003 RTL repository and
+CI-clone it into `codes/v003/` at build time, the same way it currently
+CI-clones `pccx-FPGA-NPU-LLM-kv260` into `codes/v002/`. The v003 RTL
+repository has not been created yet.
+
 ---
 
 ## Roadmap — Staged release track
 
 pccx is developed across staged releases on a shared KV260 bitstream
 harness. v002.0 is the baseline integration; v002.1 layers sparsity and
-speculative decoding on the same RTL.
+speculative decoding on the same RTL; v003.x moves to a separate RTL
+repository as architectural novelties land. A long-term auto-porting
+compiler begins once the v002 / v003 lines are stable.
 
 | Release | RTL Repo | Target Model | Scope | Throughput Target | Status |
 |---------|----------|--------------|-------|-------------------|--------|
 | **v002.0** | [`pccxai/pccx-FPGA-NPU-LLM-kv260`](https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260) | Gemma 3N E4B | A–F baseline integration | measured-only (no figure until reported) | In progress |
 | **v002.1** | [`pccxai/pccx-FPGA-NPU-LLM-kv260`](https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260) | Gemma 3N E4B | G sparsity / H–H+ EAGLE-3 / I SSD / J Tree / K benchmark | 20 tok/s target | Planned |
+| **v003.0** | `pccxai/pccx-FPGA-NPU-LLM-v003` (URL TBD, repo not yet created) | Gemma 4 E4B | foundation + first architectural novelty | TBD | Planned |
+| **v003.1** | `pccxai/pccx-FPGA-NPU-LLM-v003` (URL TBD, repo not yet created) | Gemma 4 E4B | second novelty + KV/decoding co-design | TBD | Planned |
 | **Auto-Porting α** | [`pccxai/pccx`](https://github.com/pccxai/pccx) | Arbitrary Transformer | `config.json` → pccx ISA codegen | n/a | Planned (Y2) |
 
 **v002.1 compute budget**: $70–100 total for EAGLE head training ($40 if
