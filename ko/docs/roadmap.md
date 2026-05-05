@@ -18,6 +18,8 @@ novelty 가 등장하면서 별도 RTL 저장소로 옮겨가는 단계다.
 - 이 릴리스 라인의 처리량은 측정만 (measured-only) — 검증 근거가
   공개되기 전까지 타이밍이나 처리량을 완료 상태로 표현하지 않음
 
+추적 이슈: [pccxai/pccx#28 — v0.2.0 umbrella][v020].
+
 ## Next — v002.1: sparsity + speculative decoding 스택
 
 - 동일 RTL 저장소 (`pccx-FPGA-NPU-LLM-kv260`) 에서 v002.0 의 후속
@@ -37,8 +39,6 @@ novelty 가 등장하면서 별도 RTL 저장소로 옮겨가는 단계다.
   같은 방식
 - v003.0 — Gemma 4 E4B 파운데이션 + 첫 아키텍처 novelty; 처리량 TBD
 - v003.1 — 두 번째 novelty + KV/디코딩 co-design; 처리량 TBD
-
-추적 이슈: [pccxai/pccx#28 — v0.2.0 umbrella][v020].
 
 ## 링크
 

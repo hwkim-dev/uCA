@@ -18,6 +18,8 @@ architectural novelties land.
 - throughput is measured-only on this release line — no timing or
   throughput signoff claim until the verification evidence is published
 
+Tracking issue: [pccxai/pccx#28 — v0.2.0 umbrella][v020].
+
 ## Next — v002.1: sparsity + speculative decoding stack
 
 - same RTL repository (`pccx-FPGA-NPU-LLM-kv260`), continued from v002.0
@@ -37,8 +39,6 @@ architectural novelties land.
 - v003.0 — Gemma 4 E4B foundation + first architectural novelty;
   throughput TBD
 - v003.1 — second novelty + KV/decoding co-design; throughput TBD
-
-Tracking issue: [pccxai/pccx#28 — v0.2.0 umbrella][v020].
 
 ## Links
 
