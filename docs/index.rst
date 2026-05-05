@@ -160,3 +160,9 @@ risks, keeping the ecosystem safe for open-source hardware development.
 .. |Architecture| image:: https://img.shields.io/badge/Architecture-Scalable_NPU-purple
 .. |Target| image:: https://img.shields.io/badge/Target-Edge_AI-orange
 .. |Precision| image:: https://img.shields.io/badge/Precision-W4A8_Promotion-green
+
+.. toctree::
+   :hidden:
+
+   v003/index
+   vision-v001/index

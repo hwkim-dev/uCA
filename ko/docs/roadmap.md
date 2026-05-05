@@ -6,7 +6,9 @@ pccx 생태계 전체의 현재 릴리스 방향만 짧게 요약한다.
 릴리스 cadence 는 공통 KV260 비트스트림 하니스 위에서 단계적으로
 나뉜다. v002.0 은 베이스라인 통합, v002.1 은 동일 RTL 위에 sparsity
 + speculative decoding 스택을 얹는 단계, v003.x 는 새로운 아키텍처
-novelty 가 등장하면서 별도 RTL 저장소로 옮겨가는 단계다.
+novelty 가 등장하면서 별도 RTL 저장소로 옮겨가는 단계다. 또
+하나의 평행 트랙 **vision-v001** 은 같은 KV260 기반 위에 CNN 계열
+워크로드 (분류 / 검출) 를 얹으며, 자체 저장소를 가진다.
 
 ## Now — v002.0: KV260 베이스라인 통합
 
@@ -45,17 +47,48 @@ KV260 bring-up `[HW]` → 런타임 `[HW]` → 릴리스 증거 체크리스트
 - EAGLE head 학습용 컴퓨트 예산: $70–100 (TRC TPU grant 가
   들어오면 $40)
 
-## Later — v003.x: 별도 RTL 저장소
+## Later — v003.x: 별도 RTL 저장소 (LLM 라인 후속)
 
 - v003+ 의 활성 RTL 개발은 별도 저장소로 분리, 작업 이름
-  `pccx-FPGA-NPU-LLM-v003`, 공개 URL 미정; v003 RTL 저장소는 아직
-  생성되지 않았다
+  `pccx-LLM-v003`, 공개 URL 미정; v003 RTL 저장소는 아직 안정된
+  릴리스 브랜치를 가지지 않았다
 - 이 문서 저장소는 v003 RTL 저장소를 cross-link 하고 빌드 시
   `codes/v003/` 로 CI-clone 한다 — 현재
   `pccx-FPGA-NPU-LLM-kv260` 를 `codes/v002/` 로 CI-clone 하는 것과
   같은 방식
 - v003.0 — Gemma 4 E4B 파운데이션 + 첫 아키텍처 novelty; 처리량 TBD
-- v003.1 — 두 번째 novelty + KV/디코딩 co-design; 처리량 TBD
+- v003.1 — 두 번째 novelty + KV / 디코딩 co-design; 처리량 TBD
+- 트랙 placeholder 인덱스: {doc}`v003/index`
+
+## Parallel — vision-v001: KV260 위 CNN 추론 트랙
+
+LLM 라인과는 별개로, **vision** 워크로드 전용 두 번째 제품 라인을
+운영한다. 동일한 KV260 보드와 W4A8 NPU 기반을 공유하면서도 워크
+로드 family 는 다르다. 활성 RTL 개발은 전용 저장소에서 진행된다.
+
+- 작업 이름 `pccx-vision-v001`, 공개 URL 미정
+- LLM 라인과 substrate 공유 — 같은 KV260 보드, 같은 W4A8
+  weight × activation 비율, 같은 L2 URAM 구성
+- 데이터플로우는 다름 — 토큰 단위 KV 스트리밍이 아니라 dense conv
+  타일 재사용. GEMM systolic + GEMV 하이브리드는 conv 에 재사용
+- 첫 모델 후보 — ResNet18 / YOLOv8n / MobileNetV3
+  (footprint 가 가장 작은 변종 우선)
+- 증거 자세 — 동일한 릴리스 증거 체크리스트가 타이밍 / 처리량 /
+  bring-up 게이트 역할. FPS / mAP 수치는 게이트 통과 시점에만 이
+  문서 사이트에 등장
+- 트랙 placeholder 인덱스: {doc}`vision-v001/index`
+
+## Family overview
+
+```{figure} ../../_static/diagrams/pccx_family_tree.svg
+:name: fig-pccx-family-tree-ko
+:alt: pccx 제품군 트리 — 버전과 트랙별 분기
+
+v001 (archived) → v002 (활성 KV260 LLM 라인: v002.0 → v002.1) →
+v003.x (LLM 라인 후속, 별도 RTL 저장소). **vision-v001** 트랙은
+v002 KV260 substrate 에서 분기되어 자체 저장소에서 평행하게
+진행된다. 노드에 hover 하면 상태와 범위가 표시된다.
+```
 
 ## 링크
 

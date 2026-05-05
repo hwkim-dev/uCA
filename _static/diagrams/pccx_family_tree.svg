@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 460" role="img">
+  <title>pccx product family tree — versions and tracks</title>
+
+  <defs>
+    <marker id="arr-pft" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#000000"/>
+    </marker>
+    <style><![CDATA[
+      text { fill: #000000; font: 400 12px ui-sans-serif, system-ui, sans-serif; }
+      .t-title  { font-weight: 600; font-size: 13px; text-anchor: middle; }
+      .t-spec   { font-size: 10px; fill: #444444; text-anchor: middle; }
+      .t-stage  { font-weight: 600; font-size: 11px; text-anchor: start; }
+
+      .block-archived { fill: #e6e6e6; stroke: #000000; stroke-width: 0.8; }
+      .block-active   { fill: #e2efd8; stroke: #000000; stroke-width: 0.8; }
+      .block-working  { fill: #fce5c6; stroke: #000000; stroke-width: 0.8; }
+      .block-parallel { fill: #dae7f4; stroke: #000000; stroke-width: 0.8; }
+
+      .line-main   { stroke: #000000; stroke-width: 1.2; fill: none; marker-end: url(#arr-pft); }
+      .line-branch { stroke: #000000; stroke-width: 1; fill: none; marker-end: url(#arr-pft); stroke-dasharray: 4 2; }
+
+      g.node rect { transition: stroke-width 120ms; }
+      g.node:hover rect { stroke-width: 2; }
+    ]]></style>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="460" fill="#ffffff"/>
+
+  <text class="t-stage" x="40" y="38">pccx product family tree</text>
+
+  <rect class="block-archived" x="40" y="52" width="20" height="14"/>
+  <text class="t-spec" x="65" y="63" text-anchor="start">archived</text>
+  <rect class="block-active" x="135" y="52" width="20" height="14"/>
+  <text class="t-spec" x="160" y="63" text-anchor="start">active</text>
+  <rect class="block-working" x="220" y="52" width="20" height="14"/>
+  <text class="t-spec" x="245" y="63" text-anchor="start">working (not yet)</text>
+  <rect class="block-parallel" x="355" y="52" width="20" height="14"/>
+  <text class="t-spec" x="380" y="63" text-anchor="start">parallel track</text>
+
+  <text class="t-stage" x="22" y="160" transform="rotate(-90 22 160)">LLM line</text>
+  <text class="t-stage" x="22" y="350" transform="rotate(-90 22 350)">vision line</text>
+
+  <g class="node">
+    <rect class="block-archived" x="60" y="180" width="140" height="60"/>
+    <text class="t-title" x="130" y="205">v001</text>
+    <text class="t-spec"  x="130" y="222">archived</text>
+    <text class="t-spec"  x="130" y="234">prior NPU PoC</text>
+    <title>v001 — Archived. Original NPU proof of concept; preserved under docs/archive/experimental_v001/.</title>
+  </g>
+
+  <g class="node">
+    <rect class="block-active" x="240" y="180" width="160" height="60"/>
+    <text class="t-title" x="320" y="205">v002 (KV260 LLM)</text>
+    <text class="t-spec"  x="320" y="222">pccx-FPGA-NPU-LLM-kv260</text>
+    <text class="t-spec"  x="320" y="234">W4A8 NPU substrate</text>
+    <title>v002 — Active LLM line on KV260. Repository: pccx-FPGA-NPU-LLM-kv260. W4A8 (INT4 weight × INT8 activation) NPU substrate. Shared by all downstream tracks.</title>
+  </g>
+
+  <g class="node">
+    <rect class="block-active" x="440" y="100" width="140" height="60"/>
+    <text class="t-title" x="510" y="125">v002.0</text>
+    <text class="t-spec"  x="510" y="142">baseline integration</text>
+    <text class="t-spec"  x="510" y="154">in progress</text>
+    <title>v002.0 — KV260 baseline integration. Phase 3 step 1 (shape constant RAM unification) and Stage C cleanup are in progress. Throughput is measured-only on this release line.</title>
+  </g>
+
+  <g class="node">
+    <rect class="block-active" x="620" y="100" width="140" height="60"/>
+    <text class="t-title" x="690" y="125">v002.1</text>
+    <text class="t-spec"  x="690" y="142">sparsity + spec.</text>
+    <text class="t-spec"  x="690" y="154">decoding</text>
+    <title>v002.1 — sparsity + speculative decoding stack on the same RTL repository. EAGLE-3 / SSD / Tree / benchmark phases. 20 tok/s target lives on this release line.</title>
+  </g>
+
+  <g class="node">
+    <rect class="block-working" x="800" y="100" width="160" height="60"/>
+    <text class="t-title" x="880" y="125">v003</text>
+    <text class="t-spec"  x="880" y="142">pccx-LLM-v003</text>
+    <text class="t-spec"  x="880" y="154">Gemma 4 E4B foundation</text>
+    <title>v003 — LLM line continued on a separate RTL repository. Working name pccx-LLM-v003. Gemma 4 E4B foundation; one architectural novelty per release point.</title>
+  </g>
+
+  <g class="node">
+    <rect class="block-parallel" x="440" y="320" width="160" height="60"/>
+    <text class="t-title" x="520" y="345">vision-v001</text>
+    <text class="t-spec"  x="520" y="362">pccx-vision-v001</text>
+    <text class="t-spec"  x="520" y="374">CNN inference track</text>
+    <title>vision-v001 — Parallel CNN inference track on the same KV260 substrate. Working name pccx-vision-v001. First model candidates: ResNet18 / YOLOv8n / MobileNetV3.</title>
+  </g>
+
+  <line class="line-main" x1="200" y1="210" x2="240" y2="210"/>
+  <path class="line-main" d="M 400 200 Q 420 165 440 130"/>
+  <line class="line-main" x1="580" y1="130" x2="620" y2="130"/>
+  <line class="line-main" x1="760" y1="130" x2="800" y2="130"/>
+  <path class="line-branch" d="M 400 220 Q 420 280 440 350"/>
+
+</svg>
