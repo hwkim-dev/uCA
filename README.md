@@ -141,22 +141,21 @@ Two sibling repositories round out the pccx project:
 
 ---
 
-## Roadmap — Two-Track + Auto-Porting α
+## Roadmap — Staged release track
 
-pccx is developed along **two parallel tracks** as of 2026-04-20. The
-tracks share RTL assets (sparse weight fetcher, SSD dispatcher, tree mask
-generator, EAGLE training pipeline); a long-term auto-porting compiler
-begins once both tracks are stable.
+pccx is developed across staged releases on a shared KV260 bitstream
+harness. v002.0 is the baseline integration; v002.1 layers sparsity and
+speculative decoding on the same RTL.
 
-| Track | Target model | Goal | Horizon | Key phases |
-|-------|-------------|------|---------|------------|
-| **v002 Extended** | Gemma 3N E4B | **20 tok/s** target | Week 1–49 | A–F baseline → G sparsity → H/H+ EAGLE-3 → I SSD → J Tree → K benchmark |
-| **v003** | Gemma 4 E4B | **12–15 tok/s** | Week 16–52 (parallel) | 1 foundation → 2 EAGLE linear → 3 Tree → 4 SSD → 5 P-EAGLE + LTD |
-| **Auto-Porting α** | Arbitrary Transformer | `config.json` → pccx ISA codegen | Week 53+ (Year 2) | Parser → Resolver → Feature plugin → C-stub emitter |
+| Release | RTL Repo | Target Model | Scope | Throughput Target | Status |
+|---------|----------|--------------|-------|-------------------|--------|
+| **v002.0** | [`pccxai/pccx-FPGA-NPU-LLM-kv260`](https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260) | Gemma 3N E4B | A–F baseline integration | measured-only (no figure until reported) | In progress |
+| **v002.1** | [`pccxai/pccx-FPGA-NPU-LLM-kv260`](https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260) | Gemma 3N E4B | G sparsity / H–H+ EAGLE-3 / I SSD / J Tree / K benchmark | 20 tok/s target | Planned |
+| **Auto-Porting α** | [`pccxai/pccx`](https://github.com/pccxai/pccx) | Arbitrary Transformer | `config.json` → pccx ISA codegen | n/a | Planned (Y2) |
 
-**Compute budget**: $70–100 total for EAGLE head training ($40 if a TRC
-TPU grant lands). Both tracks run on the same KV260 bitstream harness —
-v003 branches off after v002 freeze.
+**v002.1 compute budget**: $70–100 total for EAGLE head training ($40 if
+a TRC TPU grant lands). The training plan is scoped to v002.1, where
+the speculative-decoding stack is integrated.
 
 → **[Full roadmap (EN)](https://pccxai.github.io/pccx/en/docs/roadmap.html)**
 &nbsp;·&nbsp; [**한국어**](https://pccxai.github.io/pccx/ko/docs/roadmap.html)

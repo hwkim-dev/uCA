@@ -2,10 +2,14 @@
 Gemma 3N E4B — Overview
 ========================
 
-pccx v002 is sized to run **Gemma 3N E4B** at 20 tok/s on a bare-metal
-Kria KV260. Before diving into the operator-level pipeline, this page
-fixes the key dimensions and enumerates the deviations from a "standard"
-decoder-only Transformer that the hardware has to accommodate.
+pccx v002 is sized for **Gemma 3N E4B** on a bare-metal Kria KV260. The
+20 tok/s decoding figure is the **v002.1** release-line target (sparsity
++ speculative decoding on top of the v002.0 baseline RTL); the v002.0
+release line is measured-only. See :doc:`../../roadmap` for the staged
+release split. Before diving into the operator-level pipeline, this
+page fixes the key dimensions and enumerates the deviations from a
+"standard" decoder-only Transformer that the hardware has to
+accommodate.
 
 1. Model Dimensions
 ===================

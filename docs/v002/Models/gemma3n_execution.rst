@@ -212,6 +212,13 @@ behaviors apply:
 Under the baseline configuration (W4A8 compute path, INT4 KV cache,
 ``L = 8192`` hard cap), the end-to-end decode target is:
 
+.. note::
+
+   The 20 tok/s figure is the **v002.1** release-line target (sparsity
+   + speculative decoding on top of the v002.0 baseline RTL). The v002.0
+   release line is measured-only — no throughput figure is asserted
+   until KV260 evidence is reported. See :doc:`../../roadmap`.
+
 .. list-table::
    :header-rows: 1
    :widths: 30 20 50
@@ -220,7 +227,7 @@ Under the baseline configuration (W4A8 compute path, INT4 KV cache,
      - Target
      - Source of bottleneck
    * - Decode throughput
-     - **20 tok/s**
+     - **20 tok/s** — v002.1 target
      - GEMV bandwidth at 400 MHz × 4 lanes × 1024 MAC/clk.
    * - L2 activation bandwidth
      - **~1.6 GB/s**
