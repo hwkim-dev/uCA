@@ -63,6 +63,13 @@ pccx는 엣지 디바이스에서 Transformer 기반 LLM을 가속하기 위한
 
             **hkimw.github.io/hkimw** — 블로그, 다른 프로젝트, 소개.
 
+v003+ 의 활성 RTL 개발은 별도 저장소로 분리됩니다 — 작업 이름
+``pccxai/pccx-FPGA-NPU-LLM-v003``, 공개 URL 미정. 호스팅 방식은 v002
+와 동일합니다: 이 문서 저장소는 v003 RTL 저장소를 cross-link 하고,
+빌드 시 ``codes/v003/`` 로 CI-clone 합니다 — 현재
+``pccx-FPGA-NPU-LLM-kv260`` 를 ``codes/v002/`` 로 CI-clone 하는
+것과 같은 방식입니다. v003 RTL 저장소는 아직 생성되지 않았습니다.
+
 도구 & 랩
 ---------
 

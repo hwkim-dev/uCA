@@ -103,8 +103,9 @@ GEMV, and SFU.
 plus token output during decoding.
 
 - DMA via AXI ACP port. Capped by host DDR4's 19.2 GB/s.
-- At ~20 tokens/s the host ↔ device traffic is dominated by KV cache
-  updates and new token writes — well within the budget.
+- At the v002.1 throughput target (~20 tokens/s; see
+  :doc:`../../roadmap`) the host ↔ device traffic is dominated by KV
+  cache updates and new token writes — well within the budget.
 
 3. Cache Operating Policy
 ==========================
