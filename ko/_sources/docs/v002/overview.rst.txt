@@ -51,6 +51,12 @@
 성능 목표
 ---------
 
+디코딩 처리량 목표는 **v002.1** 릴리스 라인 위에 위치한다 (v002.0
+베이스라인 RTL 위에 sparsity + speculative decoding 적층); 자세한
+내용은 :doc:`../roadmap` 참고. v002.0 릴리스 라인은 측정만
+(measured-only) — KV260 보드 근거가 보고되기 전까지 처리량 수치를
+주장하지 않는다.
+
 .. list-table::
    :header-rows: 1
    :widths: 30 30 40
@@ -59,7 +65,7 @@
      - 목표
      - 근거
    * - 디코딩 처리량
-     - **20 tok/s (Gemma 3N E4B)**
+     - **20 tok/s (Gemma 3N E4B)** — v002.1 목표
      - L2 캐시 — GEMV 코어 사이 bandwidth 매칭
    * - 코어 동작 주파수
      - **400 MHz**

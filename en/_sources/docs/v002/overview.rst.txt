@@ -54,6 +54,11 @@ pipeline.
 Performance Targets
 -------------------
 
+The decoding throughput target lives on the **v002.1** release line
+(sparsity + speculative decoding on top of the v002.0 baseline RTL); see
+:doc:`../roadmap`. The v002.0 release line is measured-only — no
+throughput figure is asserted until KV260 evidence is reported.
+
 .. list-table::
    :header-rows: 1
    :widths: 30 30 40
@@ -62,7 +67,7 @@ Performance Targets
      - Target
      - Rationale
    * - Decoding throughput
-     - **20 tok/s (Gemma 3N E4B)**
+     - **20 tok/s (Gemma 3N E4B)** — v002.1 target
      - Bandwidth-matched between L2 cache and the GEMV cores
    * - Core clock frequency
      - **400 MHz**

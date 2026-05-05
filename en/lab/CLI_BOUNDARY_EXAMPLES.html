@@ -288,12 +288,12 @@ wrappers backed by <code class="docutils literal notranslate"><span class="pre">
 <td><p>Treat runtime bridges as separate reviewed work.</p></td>
 </tr>
 <tr class="row-even"><td><p>Future MCP/tool consumer</p></td>
-<td><p>Descriptor, proposal, read-only tool-plan, report-contract, comparison, and PR handoff JSON</p></td>
-<td><p>Consume descriptor-only contracts until a controlled adapter exists.</p></td>
+<td><p>Descriptor, proposal, read-only tool-plan, invocation-request, report-contract, comparison, and PR handoff JSON</p></td>
+<td><p>Consume descriptor-only and blocked-gate contracts until a controlled adapter exists.</p></td>
 </tr>
 <tr class="row-odd"><td><p>Future plugin consumer</p></td>
-<td><p>Plugin boundary-plan, permission-model, input, trace-summary, audit-event, and output-contract JSON</p></td>
-<td><p>Treat manifest, capability, trace-summary, audit, and output data as planning metadata until a loader boundary exists.</p></td>
+<td><p>Plugin boundary-plan, permission-model, load-request, input, trace-summary, audit-event, and output-contract JSON</p></td>
+<td><p>Treat manifest, capability, load-gate, trace-summary, audit, and output data as planning metadata until a loader boundary exists.</p></td>
 </tr>
 </tbody>
 </table>
@@ -440,6 +440,91 @@ planning. It does not implement an MCP runtime and does not grant
 approval to execute writes, shell commands, provider calls, hardware
 access, launcher/editor bridges, release/tag control, or public pushes.</p>
 </section>
+<section id="mcp-tool-list">
+<h2>MCP Tool List<a class="headerlink" href="#mcp-tool-list" title="Link to this heading">¶</a></h2>
+<p>Full fixture:
+<a class="reference download internal" download="" href="_downloads/2c7d6bc98dd5fc814f6ee21dcaa21c02/mcp-tool-list.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">mcp-tool-list.example.json</span></code></span></a></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;schemaVersion&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pccx.lab.mcp-tool-list.v0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;listState&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;descriptor_only&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;adapterState&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;not_implemented&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;defaultMode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;read_only&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;toolListRequest&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;requestKind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;planned_mcp_tool_listing&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;summaryOnly&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;pathEchoAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;toolInvocationAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;commandExecutionAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;tools&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;toolId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;lab.status.read&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;approvedForListing&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;requiresSeparateInvocationBoundary&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;approvedForInvocation&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;toolInvocationAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Use this fixture to review the descriptor-only MCP tool listing surface
+before implementing any server, client, transport, runtime, or
+invocation path. It does not read files, echo paths, execute commands,
+write reports, mutate repositories, call providers, use the network,
+touch hardware, or control releases/tags. No runtime, marketplace, or
+API/ABI stability claim is made.</p>
+</section>
+<section id="mcp-tool-detail">
+<h2>MCP Tool Detail<a class="headerlink" href="#mcp-tool-detail" title="Link to this heading">¶</a></h2>
+<p>Full fixture:
+<a class="reference download internal" download="" href="_downloads/37cf8504325183f6c97777a744318513/mcp-tool-detail.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">mcp-tool-detail.example.json</span></code></span></a></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;schemaVersion&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pccx.lab.mcp-tool-detail.v0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;detailState&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;descriptor_only&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;adapterState&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;not_implemented&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;defaultMode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;read_only&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;toolDetailRequest&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;requestKind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;planned_mcp_tool_detail&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;selectedToolId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;lab.status.read&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;summaryOnly&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;pathEchoAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;toolInvocationAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;commandExecutionAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;selectedTool&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;toolId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;lab.status.read&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;detailState&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;visible_descriptor&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;inputDescriptor&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;descriptorState&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;metadata_only&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;localFileReadAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;secretsReadAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;tokensReadAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;outputDescriptor&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;payloadIncluded&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;stdoutIncluded&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;stderrIncluded&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;rawLogsIncluded&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;invocationPolicy&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;requiresSeparateInvocationBoundary&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;approvedForDetail&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;approvedForInvocation&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;toolInvocationAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Use this fixture to review a descriptor-only detail surface for one
+listed MCP tool before implementing any server, client, transport,
+runtime, or invocation path. It does not read inputs, echo paths, expose
+payloads, include stdout/stderr, execute commands, write reports, mutate
+repositories, call providers, use the network, touch hardware, or
+control releases/tags. No runtime, marketplace, or API/ABI stability
+claim is made.</p>
+</section>
 <section id="mcp-read-only-analysis-flow">
 <h2>MCP Read-Only Analysis Flow<a class="headerlink" href="#mcp-read-only-analysis-flow" title="Link to this heading">¶</a></h2>
 <p>Full fixture:
@@ -577,6 +662,95 @@ create PRs, comment on issues or PRs, update project boards, publish
 public text, mutate repositories, call providers, use the network, touch
 hardware, or control release/tag actions.</p>
 </section>
+<section id="mcp-evidence-detail">
+<h2>MCP Evidence Detail<a class="headerlink" href="#mcp-evidence-detail" title="Link to this heading">¶</a></h2>
+<p>Full fixture:
+<a class="reference download internal" download="" href="_downloads/92ac59c2b46d77e3c84320381a76956b/mcp-evidence-detail.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">mcp-evidence-detail.example.json</span></code></span></a></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;schemaVersion&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pccx.lab.mcp-evidence-detail.v0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;detailState&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;descriptor_only&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;adapterState&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;not_implemented&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;defaultMode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;read_only&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;evidenceDetailRequest&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;requestKind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;planned_mcp_evidence_detail&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;selectedEvidenceId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;lab_status_evidence_summary&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;summaryOnly&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;pathEchoAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;artifactReadAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;reportReadAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;toolInvocationAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;commandExecutionAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;selectedEvidence&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;evidenceId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;lab_status_evidence_summary&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;detailState&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;visible_descriptor&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;inputDescriptor&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;descriptorState&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;metadata_only&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;localFileReadAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;artifactReadAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;secretsReadAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;tokensReadAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;outputDescriptor&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;summaryOnly&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;payloadIncluded&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;reportContentIncluded&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;stdoutIncluded&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;stderrIncluded&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;rawLogsIncluded&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;accessPolicy&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;requiresSeparateArtifactReadBoundary&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;approvedForDetail&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;approvedForArtifactRead&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;approvedForReportRead&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;artifactReadAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;reportReadAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Use this fixture to review descriptor-only detail metadata for one
+approved evidence summary reference before implementing any raw evidence
+reader. It does not read files, echo paths, read artifacts, read report
+bodies, include payloads, include stdout/stderr, execute commands,
+invoke tools, write reports, mutate repositories, call providers, use
+the network, touch hardware, or control release/tag actions. No runtime,
+marketplace, hardware, or API/ABI stability claim is made.</p>
+</section>
+<section id="mcp-invocation-request">
+<h2>MCP Invocation Request<a class="headerlink" href="#mcp-invocation-request" title="Link to this heading">¶</a></h2>
+<p>Full fixture:
+<a class="reference download internal" download="" href="_downloads/ec0e67f2ebacd108dcf2022115d8297f/mcp-invocation-request.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">mcp-invocation-request.example.json</span></code></span></a></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;schemaVersion&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pccx.lab.mcp-invocation-request.v0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;requestState&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;blocked_by_policy&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;adapterState&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;not_implemented&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;defaultMode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;read_only&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;invocationRequest&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;requestKind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;planned_mcp_tool_invocation_gate&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;toolId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pccx-lab.analyze&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;summaryOnly&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;approvalRequired&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;approved&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;toolInvocationAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;invocationDecision&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;not_invoked&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;approved&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;toolInvocationStarted&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Use this fixture to review the blocked invocation-request gate a future
+MCP/tool adapter must pass through after permission, approval, review,
+and audit summaries are checked. It does not start an MCP runtime,
+invoke tools, execute commands, read files, write reports, mutate
+repositories, call providers, use the network, touch hardware, or
+control release/tag actions.</p>
+</section>
 <section id="plugin-boundary-plan">
 <h2>Plugin Boundary Plan<a class="headerlink" href="#plugin-boundary-plan" title="Link to this heading">¶</a></h2>
 <p>Full fixture:
@@ -610,6 +784,96 @@ any plugin loader. It does not load plugin code, execute untrusted code,
 define a package distribution flow, or grant approval to write files or
 mutate repositories.</p>
 </section>
+<section id="plugin-capability-list">
+<h2>Plugin Capability List<a class="headerlink" href="#plugin-capability-list" title="Link to this heading">¶</a></h2>
+<p>Full fixture:
+<a class="reference download internal" download="" href="_downloads/1b57175a7abaaf5e65f3f3c25f09728e/plugin-capability-list.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">plugin-capability-list.example.json</span></code></span></a></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;schemaVersion&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pccx.lab.plugin-capability-list.v0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;listState&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;descriptor_only&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;adapterState&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;not_implemented&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;defaultMode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;read_only&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;capabilityListRequest&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;requestKind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;planned_plugin_capability_listing&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;summaryOnly&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;manifestContentIncluded&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;pluginLoaderAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;capabilityDispatchAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;capabilities&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;capabilityId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;plugin.diagnostics.summary&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;approvedForListing&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;approvedForLoad&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;approvedForDispatch&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Use this fixture to review the descriptor-only capability listing
+surface before implementing a plugin loader or dispatcher. It does not
+read manifests or packages, load plugin code, dispatch capabilities,
+execute commands, write reports, mutate repositories, call providers,
+use the network, touch hardware, or control releases/tags. No stable
+plugin ABI, compatibility, or marketplace claim is made.</p>
+</section>
+<section id="plugin-capability-detail">
+<h2>Plugin Capability Detail<a class="headerlink" href="#plugin-capability-detail" title="Link to this heading">¶</a></h2>
+<p>Full fixture:
+<a class="reference download internal" download="" href="_downloads/5f1ecd1f9b1302b08a6f8912333cd75d/plugin-capability-detail.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">plugin-capability-detail.example.json</span></code></span></a></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;schemaVersion&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pccx.lab.plugin-capability-detail.v0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;detailState&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;descriptor_only&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;adapterState&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;not_implemented&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;defaultMode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;read_only&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;capabilityDetailRequest&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;requestKind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;planned_plugin_capability_detail&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;selectedCapabilityId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;plugin.diagnostics.summary&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;summaryOnly&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;manifestContentIncluded&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;pluginLoaderAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;capabilityDispatchAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;selectedCapability&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;capabilityId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;plugin.diagnostics.summary&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;detailState&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;visible_descriptor&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;inputDescriptor&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;descriptorState&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;metadata_only&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;manifestContentIncluded&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;localFileReadAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;secretsReadAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;tokensReadAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;outputDescriptor&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;payloadIncluded&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;reportContentIncluded&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;stdoutIncluded&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;stderrIncluded&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;rawLogsIncluded&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;dispatchPolicy&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;requiresSeparateLoadBoundary&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;requiresSeparateDispatchBoundary&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;approvedForDetail&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;approvedForLoad&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;approvedForDispatch&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;capabilityDispatchAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;pluginInvocationAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Use this fixture to review descriptor-only detail metadata for one
+listed plugin capability before implementing any loader, runtime,
+sandbox, host API binding, or capability dispatch path. It does not read
+manifests or packages, load plugin code, dispatch capabilities, execute
+commands, write reports, mutate repositories, call providers, use the
+network, touch hardware, or control releases/tags.
+No stable plugin ABI is promised, and no compatibility or marketplace
+claim is made.</p>
+</section>
 <section id="plugin-dry-run-flow">
 <h2>Plugin Dry-Run Flow<a class="headerlink" href="#plugin-dry-run-flow" title="Link to this heading">¶</a></h2>
 <p>Full fixture:
@@ -641,6 +905,39 @@ bounded dry-run flow. It does not load plugin code, install packages,
 execute commands, implement a sandbox, write reports, mutate
 repositories, call providers, use the network, touch hardware, or
 control releases/tags. No stable plugin ABI is promised.</p>
+</section>
+<section id="plugin-load-request">
+<h2>Plugin Load Request<a class="headerlink" href="#plugin-load-request" title="Link to this heading">¶</a></h2>
+<p>Full fixture:
+<a class="reference download internal" download="" href="_downloads/ecd75525972837adae785780a60a3bfc/plugin-load-request.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">plugin-load-request.example.json</span></code></span></a></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;schemaVersion&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pccx.lab.plugin-load-request.v0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;requestState&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;blocked_by_policy&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;adapterState&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;not_implemented&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;defaultMode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;loadRequest&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;requestKind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;planned_plugin_load_gate&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;summaryOnly&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;approvalRequired&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;dynamicCodeLoadAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;pluginRuntimeStartAllowed&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;loadDecision&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;state&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;not_loaded&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;approved&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;loaderStarted&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;pluginCodeLoaded&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Use this fixture to review the blocked load-request gate a future
+plugin loader path must pass through after manifest, permission,
+validation, audit, and review summaries are approved. It does not read
+manifests, load plugin code, start a runtime, start a sandbox, execute
+commands, install packages, distribute packages, use a marketplace flow,
+mutate repositories, call providers, use the network, touch hardware, or
+promise compatibility.</p>
 </section>
 <section id="plugin-trace-summary-input">
 <h2>Plugin Trace-Summary Input<a class="headerlink" href="#plugin-trace-summary-input" title="Link to this heading">¶</a></h2>
@@ -851,8 +1148,13 @@ is reviewed.</p></li>
 audit-plan alignment before implementing any adapter.</p></li>
 <li><p>Use the MCP report-contract fixture for summary-only report output
 alignment before implementing any adapter runtime or report writer.</p></li>
+<li><p>Use the MCP invocation-request fixture for blocked tool-invocation
+gate alignment before implementing any MCP runtime, executor, or tool
+invocation path.</p></li>
 <li><p>Use the plugin boundary-plan fixture for manifest and host API
 alignment before implementing any loader.</p></li>
+<li><p>Use the plugin load-request fixture for blocked loader-gate alignment
+before implementing any plugin loader, sandbox, or runtime path.</p></li>
 <li><p>Use the plugin output-contract fixture for summary-only output shape
 alignment before implementing any plugin runtime or report writer.</p></li>
 <li><p>Use the plugin audit-event fixture for redacted audit metadata
@@ -948,12 +1250,19 @@ logs, upload telemetry, or write files.</p>
 <li><a class="reference internal" href="#workflow-descriptors">Workflow Descriptors</a></li>
 <li><a class="reference internal" href="#workflow-proposals">Workflow Proposals</a></li>
 <li><a class="reference internal" href="#mcp-read-only-tool-plan">MCP Read-Only Tool Plan</a></li>
+<li><a class="reference internal" href="#mcp-tool-list">MCP Tool List</a></li>
+<li><a class="reference internal" href="#mcp-tool-detail">MCP Tool Detail</a></li>
 <li><a class="reference internal" href="#mcp-read-only-analysis-flow">MCP Read-Only Analysis Flow</a></li>
 <li><a class="reference internal" href="#mcp-read-only-report-contract">MCP Read-Only Report Contract</a></li>
 <li><a class="reference internal" href="#mcp-verification-run-comparison">MCP Verification-Run Comparison</a></li>
 <li><a class="reference internal" href="#mcp-pr-summary-handoff">MCP PR Summary Handoff</a></li>
+<li><a class="reference internal" href="#mcp-evidence-detail">MCP Evidence Detail</a></li>
+<li><a class="reference internal" href="#mcp-invocation-request">MCP Invocation Request</a></li>
 <li><a class="reference internal" href="#plugin-boundary-plan">Plugin Boundary Plan</a></li>
+<li><a class="reference internal" href="#plugin-capability-list">Plugin Capability List</a></li>
+<li><a class="reference internal" href="#plugin-capability-detail">Plugin Capability Detail</a></li>
 <li><a class="reference internal" href="#plugin-dry-run-flow">Plugin Dry-Run Flow</a></li>
+<li><a class="reference internal" href="#plugin-load-request">Plugin Load Request</a></li>
 <li><a class="reference internal" href="#plugin-trace-summary-input">Plugin Trace-Summary Input</a></li>
 <li><a class="reference internal" href="#plugin-output-contract">Plugin Output Contract</a></li>
 <li><a class="reference internal" href="#plugin-blocked-invocation-result">Plugin Blocked Invocation Result</a></li>

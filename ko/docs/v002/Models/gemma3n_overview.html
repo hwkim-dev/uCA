@@ -7,15 +7,15 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://pccxai.github.io/pccx/docs/v002/Models/gemma3n_overview.html" />
 <meta property="og:site_name" content="pccx — Parallel Compute Core eXecutor" />
-<meta property="og:description" content="pccx v002 는 베어메탈 Kria KV260 에서 Gemma 3N E4B 를 20 tok/s 로 돌리는 것을 기준으로 설계되었습니다. 연산자 수준 파이프라인으로 들어가기 전에, 이 페이지는 핵심 차원과 “표준” 디코더 전용 Transformer 에서 벗어난 부분을 정리합니다. 이 차이점들이 하드웨어가 반드시 수용해야 하는 제약입니다. 1. 모델 ..." />
+<meta property="og:description" content="pccx v002 는 베어메탈 Kria KV260 에서 Gemma 3N E4B 를 돌리는 것을 기준으로 설계되었습니다. 20 tok/s 디코딩 수치는 v002.1 릴리스 라인의 목표 (v002.0 베이스라인 RTL 위에 sparsity + speculative decoding 적층) 입니다 — v002.0 릴리스 라인은 측정만 (measured-onl..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="https://pccxai.github.io/pccx/_images/social_previews/summary_docs_v002_Models_gemma3n_overview_ff7831fc.png" />
-<meta property="og:image:alt" content="pccx v002 는 베어메탈 Kria KV260 에서 Gemma 3N E4B 를 20 tok/s 로 돌리는 것을 기준으로 설계되었습니다. 연산자 수준 파이프라인으로 들어가기 전에, 이 페이지는 핵심 차원과 “표준” 디코더 전용 Transformer 에서 벗어난 부분을 정리합니다. 이 차이점들이 하드웨어가 반드시 수용해야 하는 제약입니다. 1. 모델 ..." />
-<meta name="description" content="pccx v002 는 베어메탈 Kria KV260 에서 Gemma 3N E4B 를 20 tok/s 로 돌리는 것을 기준으로 설계되었습니다. 연산자 수준 파이프라인으로 들어가기 전에, 이 페이지는 핵심 차원과 “표준” 디코더 전용 Transformer 에서 벗어난 부분을 정리합니다. 이 차이점들이 하드웨어가 반드시 수용해야 하는 제약입니다. 1. 모델 ..." />
+<meta property="og:image" content="https://pccxai.github.io/pccx/_images/social_previews/summary_docs_v002_Models_gemma3n_overview_dbc36171.png" />
+<meta property="og:image:alt" content="pccx v002 는 베어메탈 Kria KV260 에서 Gemma 3N E4B 를 돌리는 것을 기준으로 설계되었습니다. 20 tok/s 디코딩 수치는 v002.1 릴리스 라인의 목표 (v002.0 베이스라인 RTL 위에 sparsity + speculative decoding 적층) 입니다 — v002.0 릴리스 라인은 측정만 (measured-onl..." />
+<meta name="description" content="pccx v002 는 베어메탈 Kria KV260 에서 Gemma 3N E4B 를 돌리는 것을 기준으로 설계되었습니다. 20 tok/s 디코딩 수치는 v002.1 릴리스 라인의 목표 (v002.0 베이스라인 RTL 위에 sparsity + speculative decoding 적층) 입니다 — v002.0 릴리스 라인은 측정만 (measured-onl..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["ko","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"Gemma 3N E4B — 개요","name":"Gemma 3N E4B — 개요","url":"https://pccxai.github.io/pccx/ko/docs/v002/Models/gemma3n_overview.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/ko/docs/v002/Models/gemma3n_overview.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-04","dateModified":"2026-05-04","description":"pccx documentation page: Gemma 3N E4B — 개요. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"ko","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="색인" href="../../../genindex.html"><link rel="search" title="검색" href="../../../search.html"><link rel="next" title="Gemma 3N E4B — 연산자 수준 파이프라인" href="gemma3n_pipeline.html"><link rel="prev" title="타깃 모델" href="index.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["ko","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"Gemma 3N E4B — 개요","name":"Gemma 3N E4B — 개요","url":"https://pccxai.github.io/pccx/ko/docs/v002/Models/gemma3n_overview.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/ko/docs/v002/Models/gemma3n_overview.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-05","dateModified":"2026-05-05","description":"pccx documentation page: Gemma 3N E4B — 개요. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"ko","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="색인" href="../../../genindex.html"><link rel="search" title="검색" href="../../../search.html"><link rel="next" title="Gemma 3N E4B — 연산자 수준 파이프라인" href="gemma3n_pipeline.html"><link rel="prev" title="타깃 모델" href="index.html">
         <link rel="canonical" href="https://pccxai.github.io/pccx/docs/v002/Models/gemma3n_overview.html">
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
@@ -476,11 +476,14 @@
         <article role="main" id="furo-main-content">
           <section id="gemma-3n-e4b">
 <h1>Gemma 3N E4B — 개요<a class="headerlink" href="#gemma-3n-e4b" title="Link to this heading">¶</a></h1>
-<p>pccx v002 는 베어메탈 Kria KV260 에서 <strong>Gemma 3N E4B</strong> 를 20 tok/s 로
-돌리는 것을 기준으로 설계되었습니다. 연산자 수준 파이프라인으로
-들어가기 전에, 이 페이지는 핵심 차원과 “표준” 디코더 전용 Transformer
-에서 벗어난 부분을 정리합니다. 이 차이점들이 하드웨어가 반드시
-수용해야 하는 제약입니다.</p>
+<p>pccx v002 는 베어메탈 Kria KV260 에서 <strong>Gemma 3N E4B</strong> 를 돌리는 것을
+기준으로 설계되었습니다. 20 tok/s 디코딩 수치는 <strong>v002.1</strong> 릴리스
+라인의 목표 (v002.0 베이스라인 RTL 위에 sparsity + speculative
+decoding 적층) 입니다 — v002.0 릴리스 라인은 측정만 (measured-only)
+입니다. 단계별 릴리스 구분은 <a class="reference internal" href="../../roadmap.html"><span class="doc">로드맵</span></a> 참고. 연산자 수준
+파이프라인으로 들어가기 전에, 이 페이지는 핵심 차원과 “표준” 디코더
+전용 Transformer 에서 벗어난 부분을 정리합니다. 이 차이점들이
+하드웨어가 반드시 수용해야 하는 제약입니다.</p>
 <section id="id1">
 <h2>1. 모델 차원<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
 <div class="table-wrapper colwidths-given docutils container">
@@ -700,7 +703,7 @@ critical path 바깥에 유지.</p></td>
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2026-05-04</div>
+              Last updated on 2026-05-05</div>
           </div>
           <div class="right-details">
             <div class="icons">

@@ -54,6 +54,13 @@ Ecosystem
 
             **hkimw.github.io/hkimw** — blog, other projects, about.
 
+v003+ active RTL development will live in a separate repository — working
+name ``pccxai/pccx-FPGA-NPU-LLM-v003``, public URL TBD. The hosting
+model mirrors v002: this docs repo will cross-link the v003 RTL
+repository and CI-clone it into ``codes/v003/`` at build time, the same
+way it currently CI-clones ``pccx-FPGA-NPU-LLM-kv260`` into
+``codes/v002/``. The v003 RTL repository has not been created yet.
+
 Tooling & Lab
 -------------
 

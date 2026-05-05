@@ -19,8 +19,8 @@ wrappers backed by `pccx-core`.
 | CI or headless worker | `pccx-lab ... --format json` | Parse deterministic JSON and keep logs bounded. |
 | Future editor consumer | CLI JSON, then reviewed IPC if needed | Do not bypass pccx-lab or read private GUI state. |
 | Future launcher consumer | Status, diagnostics handoff, proposals, summaries | Treat runtime bridges as separate reviewed work. |
-| Future MCP/tool consumer | Descriptor, proposal, read-only tool-plan, report-contract, comparison, and PR handoff JSON | Consume descriptor-only contracts until a controlled adapter exists. |
-| Future plugin consumer | Plugin boundary-plan, permission-model, input, trace-summary, audit-event, and output-contract JSON | Treat manifest, capability, trace-summary, audit, and output data as planning metadata until a loader boundary exists. |
+| Future MCP/tool consumer | Descriptor, proposal, read-only tool-plan, invocation-request, report-contract, comparison, and PR handoff JSON | Consume descriptor-only and blocked-gate contracts until a controlled adapter exists. |
+| Future plugin consumer | Plugin boundary-plan, permission-model, load-request, input, trace-summary, audit-event, and output-contract JSON | Treat manifest, capability, load-gate, trace-summary, audit, and output data as planning metadata until a loader boundary exists. |
 
 No stable plugin ABI is promised. No provider, launcher, editor, or MCP
 runtime is implemented by these examples.
@@ -178,6 +178,95 @@ planning. It does not implement an MCP runtime and does not grant
 approval to execute writes, shell commands, provider calls, hardware
 access, launcher/editor bridges, release/tag control, or public pushes.
 
+## MCP Tool List
+
+Full fixture:
+[`mcp-tool-list.example.json`](examples/mcp-tool-list.example.json)
+
+```json
+{
+  "schemaVersion": "pccx.lab.mcp-tool-list.v0",
+  "listState": "descriptor_only",
+  "adapterState": "not_implemented",
+  "defaultMode": "read_only",
+  "toolListRequest": {
+    "requestKind": "planned_mcp_tool_listing",
+    "summaryOnly": true,
+    "pathEchoAllowed": false,
+    "toolInvocationAllowed": false,
+    "commandExecutionAllowed": false
+  },
+  "tools": [
+    {
+      "toolId": "lab.status.read",
+      "approvedForListing": true,
+      "requiresSeparateInvocationBoundary": true,
+      "approvedForInvocation": false,
+      "toolInvocationAllowed": false
+    }
+  ]
+}
+```
+
+Use this fixture to review the descriptor-only MCP tool listing surface
+before implementing any server, client, transport, runtime, or
+invocation path. It does not read files, echo paths, execute commands,
+write reports, mutate repositories, call providers, use the network,
+touch hardware, or control releases/tags. No runtime, marketplace, or
+API/ABI stability claim is made.
+
+## MCP Tool Detail
+
+Full fixture:
+[`mcp-tool-detail.example.json`](examples/mcp-tool-detail.example.json)
+
+```json
+{
+  "schemaVersion": "pccx.lab.mcp-tool-detail.v0",
+  "detailState": "descriptor_only",
+  "adapterState": "not_implemented",
+  "defaultMode": "read_only",
+  "toolDetailRequest": {
+    "requestKind": "planned_mcp_tool_detail",
+    "selectedToolId": "lab.status.read",
+    "summaryOnly": true,
+    "pathEchoAllowed": false,
+    "toolInvocationAllowed": false,
+    "commandExecutionAllowed": false
+  },
+  "selectedTool": {
+    "toolId": "lab.status.read",
+    "detailState": "visible_descriptor",
+    "inputDescriptor": {
+      "descriptorState": "metadata_only",
+      "localFileReadAllowed": false,
+      "secretsReadAllowed": false,
+      "tokensReadAllowed": false
+    },
+    "outputDescriptor": {
+      "payloadIncluded": false,
+      "stdoutIncluded": false,
+      "stderrIncluded": false,
+      "rawLogsIncluded": false
+    },
+    "invocationPolicy": {
+      "requiresSeparateInvocationBoundary": true,
+      "approvedForDetail": true,
+      "approvedForInvocation": false,
+      "toolInvocationAllowed": false
+    }
+  }
+}
+```
+
+Use this fixture to review a descriptor-only detail surface for one
+listed MCP tool before implementing any server, client, transport,
+runtime, or invocation path. It does not read inputs, echo paths, expose
+payloads, include stdout/stderr, execute commands, write reports, mutate
+repositories, call providers, use the network, touch hardware, or
+control releases/tags. No runtime, marketplace, or API/ABI stability
+claim is made.
+
 ## MCP Read-Only Analysis Flow
 
 Full fixture:
@@ -323,6 +412,99 @@ create PRs, comment on issues or PRs, update project boards, publish
 public text, mutate repositories, call providers, use the network, touch
 hardware, or control release/tag actions.
 
+## MCP Evidence Detail
+
+Full fixture:
+[`mcp-evidence-detail.example.json`](examples/mcp-evidence-detail.example.json)
+
+```json
+{
+  "schemaVersion": "pccx.lab.mcp-evidence-detail.v0",
+  "detailState": "descriptor_only",
+  "adapterState": "not_implemented",
+  "defaultMode": "read_only",
+  "evidenceDetailRequest": {
+    "requestKind": "planned_mcp_evidence_detail",
+    "selectedEvidenceId": "lab_status_evidence_summary",
+    "summaryOnly": true,
+    "pathEchoAllowed": false,
+    "artifactReadAllowed": false,
+    "reportReadAllowed": false,
+    "toolInvocationAllowed": false,
+    "commandExecutionAllowed": false
+  },
+  "selectedEvidence": {
+    "evidenceId": "lab_status_evidence_summary",
+    "detailState": "visible_descriptor",
+    "inputDescriptor": {
+      "descriptorState": "metadata_only",
+      "localFileReadAllowed": false,
+      "artifactReadAllowed": false,
+      "secretsReadAllowed": false,
+      "tokensReadAllowed": false
+    },
+    "outputDescriptor": {
+      "summaryOnly": true,
+      "payloadIncluded": false,
+      "reportContentIncluded": false,
+      "stdoutIncluded": false,
+      "stderrIncluded": false,
+      "rawLogsIncluded": false
+    },
+    "accessPolicy": {
+      "requiresSeparateArtifactReadBoundary": true,
+      "approvedForDetail": true,
+      "approvedForArtifactRead": false,
+      "approvedForReportRead": false,
+      "artifactReadAllowed": false,
+      "reportReadAllowed": false
+    }
+  }
+}
+```
+
+Use this fixture to review descriptor-only detail metadata for one
+approved evidence summary reference before implementing any raw evidence
+reader. It does not read files, echo paths, read artifacts, read report
+bodies, include payloads, include stdout/stderr, execute commands,
+invoke tools, write reports, mutate repositories, call providers, use
+the network, touch hardware, or control release/tag actions. No runtime,
+marketplace, hardware, or API/ABI stability claim is made.
+
+## MCP Invocation Request
+
+Full fixture:
+[`mcp-invocation-request.example.json`](examples/mcp-invocation-request.example.json)
+
+```json
+{
+  "schemaVersion": "pccx.lab.mcp-invocation-request.v0",
+  "requestState": "blocked_by_policy",
+  "adapterState": "not_implemented",
+  "defaultMode": "read_only",
+  "invocationRequest": {
+    "requestKind": "planned_mcp_tool_invocation_gate",
+    "toolId": "pccx-lab.analyze",
+    "summaryOnly": true,
+    "approvalRequired": true,
+    "approved": false,
+    "toolInvocationAllowed": false
+  },
+  "invocationDecision": {
+    "state": "not_invoked",
+    "approved": false,
+    "toolInvocationStarted": false
+  }
+}
+```
+
+Use this fixture to review the blocked invocation-request gate a future
+MCP/tool adapter must pass through after permission, approval, review,
+and audit summaries are checked. It does not start an MCP runtime,
+invoke tools, execute commands, read files, write reports, mutate
+repositories, call providers, use the network, touch hardware, or
+control release/tag actions.
+
 ## Plugin Boundary Plan
 
 Full fixture:
@@ -358,6 +540,100 @@ any plugin loader. It does not load plugin code, execute untrusted code,
 define a package distribution flow, or grant approval to write files or
 mutate repositories.
 
+## Plugin Capability List
+
+Full fixture:
+[`plugin-capability-list.example.json`](examples/plugin-capability-list.example.json)
+
+```json
+{
+  "schemaVersion": "pccx.lab.plugin-capability-list.v0",
+  "listState": "descriptor_only",
+  "adapterState": "not_implemented",
+  "defaultMode": "read_only",
+  "capabilityListRequest": {
+    "requestKind": "planned_plugin_capability_listing",
+    "summaryOnly": true,
+    "manifestContentIncluded": false,
+    "pluginLoaderAllowed": false,
+    "capabilityDispatchAllowed": false
+  },
+  "capabilities": [
+    {
+      "capabilityId": "plugin.diagnostics.summary",
+      "approvedForListing": true,
+      "approvedForLoad": false,
+      "approvedForDispatch": false
+    }
+  ]
+}
+```
+
+Use this fixture to review the descriptor-only capability listing
+surface before implementing a plugin loader or dispatcher. It does not
+read manifests or packages, load plugin code, dispatch capabilities,
+execute commands, write reports, mutate repositories, call providers,
+use the network, touch hardware, or control releases/tags. No stable
+plugin ABI, compatibility, or marketplace claim is made.
+
+## Plugin Capability Detail
+
+Full fixture:
+[`plugin-capability-detail.example.json`](examples/plugin-capability-detail.example.json)
+
+```json
+{
+  "schemaVersion": "pccx.lab.plugin-capability-detail.v0",
+  "detailState": "descriptor_only",
+  "adapterState": "not_implemented",
+  "defaultMode": "read_only",
+  "capabilityDetailRequest": {
+    "requestKind": "planned_plugin_capability_detail",
+    "selectedCapabilityId": "plugin.diagnostics.summary",
+    "summaryOnly": true,
+    "manifestContentIncluded": false,
+    "pluginLoaderAllowed": false,
+    "capabilityDispatchAllowed": false
+  },
+  "selectedCapability": {
+    "capabilityId": "plugin.diagnostics.summary",
+    "detailState": "visible_descriptor",
+    "inputDescriptor": {
+      "descriptorState": "metadata_only",
+      "manifestContentIncluded": false,
+      "localFileReadAllowed": false,
+      "secretsReadAllowed": false,
+      "tokensReadAllowed": false
+    },
+    "outputDescriptor": {
+      "payloadIncluded": false,
+      "reportContentIncluded": false,
+      "stdoutIncluded": false,
+      "stderrIncluded": false,
+      "rawLogsIncluded": false
+    },
+    "dispatchPolicy": {
+      "requiresSeparateLoadBoundary": true,
+      "requiresSeparateDispatchBoundary": true,
+      "approvedForDetail": true,
+      "approvedForLoad": false,
+      "approvedForDispatch": false,
+      "capabilityDispatchAllowed": false,
+      "pluginInvocationAllowed": false
+    }
+  }
+}
+```
+
+Use this fixture to review descriptor-only detail metadata for one
+listed plugin capability before implementing any loader, runtime,
+sandbox, host API binding, or capability dispatch path. It does not read
+manifests or packages, load plugin code, dispatch capabilities, execute
+commands, write reports, mutate repositories, call providers, use the
+network, touch hardware, or control releases/tags.
+No stable plugin ABI is promised, and no compatibility or marketplace
+claim is made.
+
 ## Plugin Dry-Run Flow
 
 Full fixture:
@@ -391,6 +667,41 @@ bounded dry-run flow. It does not load plugin code, install packages,
 execute commands, implement a sandbox, write reports, mutate
 repositories, call providers, use the network, touch hardware, or
 control releases/tags. No stable plugin ABI is promised.
+
+## Plugin Load Request
+
+Full fixture:
+[`plugin-load-request.example.json`](examples/plugin-load-request.example.json)
+
+```json
+{
+  "schemaVersion": "pccx.lab.plugin-load-request.v0",
+  "requestState": "blocked_by_policy",
+  "adapterState": "not_implemented",
+  "defaultMode": "disabled",
+  "loadRequest": {
+    "requestKind": "planned_plugin_load_gate",
+    "summaryOnly": true,
+    "approvalRequired": true,
+    "dynamicCodeLoadAllowed": false,
+    "pluginRuntimeStartAllowed": false
+  },
+  "loadDecision": {
+    "state": "not_loaded",
+    "approved": false,
+    "loaderStarted": false,
+    "pluginCodeLoaded": false
+  }
+}
+```
+
+Use this fixture to review the blocked load-request gate a future
+plugin loader path must pass through after manifest, permission,
+validation, audit, and review summaries are approved. It does not read
+manifests, load plugin code, start a runtime, start a sandbox, execute
+commands, install packages, distribute packages, use a marketplace flow,
+mutate repositories, call providers, use the network, touch hardware, or
+promise compatibility.
 
 ## Plugin Trace-Summary Input
 
@@ -613,8 +924,13 @@ this summary contract.
   audit-plan alignment before implementing any adapter.
 - Use the MCP report-contract fixture for summary-only report output
   alignment before implementing any adapter runtime or report writer.
+- Use the MCP invocation-request fixture for blocked tool-invocation
+  gate alignment before implementing any MCP runtime, executor, or tool
+  invocation path.
 - Use the plugin boundary-plan fixture for manifest and host API
   alignment before implementing any loader.
+- Use the plugin load-request fixture for blocked loader-gate alignment
+  before implementing any plugin loader, sandbox, or runtime path.
 - Use the plugin output-contract fixture for summary-only output shape
   alignment before implementing any plugin runtime or report writer.
 - Use the plugin audit-event fixture for redacted audit metadata

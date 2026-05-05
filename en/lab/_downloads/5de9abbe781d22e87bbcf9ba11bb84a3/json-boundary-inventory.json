@@ -121,6 +121,380 @@
       "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#run-approved-workflow-command"
     },
     {
+      "boundaryKind": "sail-adoption-plan",
+      "examplePath": "docs/examples/sail-adoption-plan.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#sail-adoption-plan-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "sail-adoption-plan",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "sail_adoption_plan_example_keeps_descriptor_only_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#sail-adoption-plan-boundary"
+    },
+    {
+      "boundaryKind": "sail-interface-boundary",
+      "examplePath": "docs/examples/sail-interface-boundary.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#sail-interface-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "sail-interface-boundary",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "sail_interface_boundary_example_keeps_descriptor_only_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#sail-interface-boundary"
+    },
+    {
+      "boundaryKind": "sail-review-packet",
+      "examplePath": "docs/examples/sail-review-packet.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#sail-review-packet",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "sail-review-packet",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "sail_review_packet_example_keeps_summary_only_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#sail-review-packet"
+    },
+    {
+      "boundaryKind": "sail-evidence-manifest",
+      "examplePath": "docs/examples/sail-evidence-manifest.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#sail-evidence-manifest",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "sail-evidence-manifest",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "sail_evidence_manifest_example_keeps_summary_only_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#sail-evidence-manifest"
+    },
+    {
+      "boundaryKind": "sail-evidence-detail",
+      "examplePath": "docs/examples/sail-evidence-detail.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#sail-evidence-detail-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "sail-evidence-detail",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "sail_evidence_detail_example_keeps_descriptor_only_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#sail-evidence-detail-boundary"
+    },
+    {
+      "boundaryKind": "sail-model-readiness",
+      "examplePath": "docs/examples/sail-model-readiness.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#sail-model-readiness-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "sail-model-readiness",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "sail_model_readiness_example_keeps_descriptor_only_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#sail-model-readiness-boundary"
+    },
+    {
+      "boundaryKind": "sail-implementation-gap-matrix",
+      "examplePath": "docs/examples/sail-implementation-gap-matrix.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#sail-implementation-gap-matrix-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "sail-implementation-gap-matrix",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "sail_implementation_gap_matrix_example_keeps_descriptor_only_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#sail-implementation-gap-matrix-boundary"
+    },
+    {
+      "boundaryKind": "sail-source-intake-boundary",
+      "examplePath": "docs/examples/sail-source-intake-boundary.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#sail-source-intake-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "sail-source-intake-boundary",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "sail_source_intake_boundary_example_keeps_descriptor_only_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#sail-source-intake-boundary"
+    },
+    {
+      "boundaryKind": "sail-source-intake-approval",
+      "examplePath": "docs/examples/sail-source-intake-approval.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#sail-source-intake-approval-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "sail-source-intake-approval",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "sail_source_intake_approval_example_keeps_descriptor_only_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#sail-source-intake-approval-boundary"
+    },
+    {
+      "boundaryKind": "sail-source-intake-result",
+      "examplePath": "docs/examples/sail-source-intake-result.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#sail-source-intake-result-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "sail-source-intake-result",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "sail_source_intake_result_example_keeps_descriptor_only_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#sail-source-intake-result-boundary"
+    },
+    {
+      "boundaryKind": "sail-source-intake-handoff",
+      "examplePath": "docs/examples/sail-source-intake-handoff.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#sail-source-intake-handoff-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "sail-source-intake-handoff",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "sail_source_intake_handoff_example_keeps_descriptor_only_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#sail-source-intake-handoff-boundary"
+    },
+    {
+      "boundaryKind": "hybrid-strategy-plan",
+      "examplePath": "docs/examples/hybrid-strategy-plan.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#hybrid-strategy-plan-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "hybrid-strategy-plan",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "hybrid_strategy_plan_example_keeps_descriptor_only_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#hybrid-strategy-plan-boundary"
+    },
+    {
+      "boundaryKind": "hybrid-interface-boundary",
+      "examplePath": "docs/examples/hybrid-interface-boundary.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#hybrid-interface-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "hybrid-interface-boundary",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "hybrid_interface_boundary_example_keeps_descriptor_only_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#hybrid-interface-boundary"
+    },
+    {
+      "boundaryKind": "hybrid-review-packet",
+      "examplePath": "docs/examples/hybrid-review-packet.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#hybrid-review-packet",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "hybrid-review-packet",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "hybrid_review_packet_example_keeps_summary_only_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#hybrid-review-packet"
+    },
+    {
+      "boundaryKind": "hybrid-evidence-manifest",
+      "examplePath": "docs/examples/hybrid-evidence-manifest.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#hybrid-evidence-manifest",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "hybrid-evidence-manifest",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "hybrid_evidence_manifest_example_keeps_summary_only_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#hybrid-evidence-manifest"
+    },
+    {
+      "boundaryKind": "hybrid-evidence-detail",
+      "examplePath": "docs/examples/hybrid-evidence-detail.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#hybrid-evidence-detail-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "hybrid-evidence-detail",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "hybrid_evidence_detail_example_keeps_descriptor_only_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#hybrid-evidence-detail-boundary"
+    },
+    {
+      "boundaryKind": "hybrid-implementation-readiness",
+      "examplePath": "docs/examples/hybrid-implementation-readiness.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#hybrid-implementation-readiness-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "hybrid-implementation-readiness",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "hybrid_implementation_readiness_example_keeps_descriptor_only_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#hybrid-implementation-readiness-boundary"
+    },
+    {
+      "boundaryKind": "hybrid-implementation-gap-matrix",
+      "examplePath": "docs/examples/hybrid-implementation-gap-matrix.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#hybrid-implementation-gap-matrix-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "hybrid-implementation-gap-matrix",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "hybrid_implementation_gap_matrix_example_keeps_descriptor_only_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#hybrid-implementation-gap-matrix-boundary"
+    },
+    {
+      "boundaryKind": "hybrid-source-intake-boundary",
+      "examplePath": "docs/examples/hybrid-source-intake-boundary.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#hybrid-source-intake-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "hybrid-source-intake-boundary",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "hybrid_source_intake_boundary_example_keeps_descriptor_only_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#hybrid-source-intake-boundary"
+    },
+    {
+      "boundaryKind": "hybrid-source-intake-approval",
+      "examplePath": "docs/examples/hybrid-source-intake-approval.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#hybrid-source-intake-approval-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "hybrid-source-intake-approval",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "hybrid_source_intake_approval_example_keeps_descriptor_only_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#hybrid-source-intake-approval-boundary"
+    },
+    {
+      "boundaryKind": "hybrid-source-intake-result",
+      "examplePath": "docs/examples/hybrid-source-intake-result.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#hybrid-source-intake-result-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "hybrid-source-intake-result",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "hybrid_source_intake_result_example_keeps_descriptor_only_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#hybrid-source-intake-result-boundary"
+    },
+    {
+      "boundaryKind": "hybrid-source-intake-handoff",
+      "examplePath": "docs/examples/hybrid-source-intake-handoff.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#hybrid-source-intake-handoff-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "hybrid-source-intake-handoff",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "hybrid_source_intake_handoff_example_keeps_descriptor_only_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#hybrid-source-intake-handoff-boundary"
+    },
+    {
       "boundaryKind": "launcher-diagnostics-handoff",
       "examplePath": "docs/examples/launcher-diagnostics-handoff.example.json",
       "producingCommand": null,
@@ -170,6 +544,108 @@
         "testName": "mcp_read_only_tool_plan_example_keeps_descriptor_only_safety_boundary"
       },
       "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#mcp-read-only-tool-plan"
+    },
+    {
+      "boundaryKind": "mcp-tool-list",
+      "examplePath": "docs/examples/mcp-tool-list.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#mcp-tool-list-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "mcp-tool-list",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "mcp_tool_list_example_keeps_descriptor_only_listing_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#mcp-tool-list-boundary"
+    },
+    {
+      "boundaryKind": "mcp-tool-detail",
+      "examplePath": "docs/examples/mcp-tool-detail.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#mcp-tool-detail-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "mcp-tool-detail",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "mcp_tool_detail_example_keeps_descriptor_only_detail_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#mcp-tool-detail-boundary"
+    },
+    {
+      "boundaryKind": "mcp-sample-plan",
+      "examplePath": "docs/examples/mcp-sample-plan.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#mcp-sample-plan-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "mcp-sample-plan",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "mcp_sample_plan_example_keeps_descriptor_only_sample_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#mcp-sample-plan-boundary"
+    },
+    {
+      "boundaryKind": "mcp-sample-result",
+      "examplePath": "docs/examples/mcp-sample-result.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#mcp-sample-result-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "mcp-sample-result",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "mcp_sample_result_example_keeps_descriptor_only_result_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#mcp-sample-result-boundary"
+    },
+    {
+      "boundaryKind": "mcp-sample-catalog",
+      "examplePath": "docs/examples/mcp-sample-catalog.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#mcp-sample-catalog-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "mcp-sample-catalog",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "mcp_sample_catalog_example_keeps_descriptor_only_catalog_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#mcp-sample-catalog-boundary"
+    },
+    {
+      "boundaryKind": "mcp-sample-detail",
+      "examplePath": "docs/examples/mcp-sample-detail.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#mcp-sample-detail-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "mcp-sample-detail",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "mcp_sample_detail_example_keeps_descriptor_only_detail_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#mcp-sample-detail-boundary"
     },
     {
       "boundaryKind": "mcp-read-only-analysis-flow",
@@ -240,6 +716,57 @@
       "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#mcp-pr-summary-handoff-boundary"
     },
     {
+      "boundaryKind": "mcp-review-packet",
+      "examplePath": "docs/examples/mcp-review-packet.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#mcp-review-packet-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "mcp-review-packet",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "mcp_review_packet_example_keeps_summary_only_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#mcp-review-packet-boundary"
+    },
+    {
+      "boundaryKind": "mcp-evidence-manifest",
+      "examplePath": "docs/examples/mcp-evidence-manifest.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#mcp-evidence-manifest-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "mcp-evidence-manifest",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "mcp_evidence_manifest_example_keeps_summary_only_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#mcp-evidence-manifest-boundary"
+    },
+    {
+      "boundaryKind": "mcp-evidence-detail",
+      "examplePath": "docs/examples/mcp-evidence-detail.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#mcp-evidence-detail-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "mcp-evidence-detail",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "mcp_evidence_detail_example_keeps_descriptor_only_detail_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#mcp-evidence-detail-boundary"
+    },
+    {
       "boundaryKind": "mcp-permission-model",
       "examplePath": "docs/examples/mcp-permission-model.example.json",
       "producingCommand": null,
@@ -289,6 +816,40 @@
         "testName": "mcp_approval_decision_example_keeps_denied_decision_non_executing"
       },
       "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#mcp-approval-decision-boundary"
+    },
+    {
+      "boundaryKind": "mcp-invocation-request",
+      "examplePath": "docs/examples/mcp-invocation-request.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#mcp-invocation-request-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "mcp-invocation-request",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "mcp_invocation_request_example_keeps_invocation_blocked_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#mcp-invocation-request-boundary"
+    },
+    {
+      "boundaryKind": "mcp-client-session-state",
+      "examplePath": "docs/examples/mcp-client-session-state.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#mcp-client-session-state-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "mcp-client-session-state",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "mcp_client_session_state_example_keeps_client_session_blocked_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#mcp-client-session-state-boundary"
     },
     {
       "boundaryKind": "mcp-blocked-invocation-result",
@@ -357,6 +918,176 @@
         "testName": "plugin_manifest_validation_result_example_keeps_summary_only_boundary"
       },
       "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#plugin-manifest-validation-result-boundary"
+    },
+    {
+      "boundaryKind": "plugin-sample-plan",
+      "examplePath": "docs/examples/plugin-sample-plan.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#plugin-sample-plan-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "plugin-sample-plan",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "plugin_sample_plan_example_keeps_descriptor_only_sample_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#plugin-sample-plan-boundary"
+    },
+    {
+      "boundaryKind": "plugin-sample-result",
+      "examplePath": "docs/examples/plugin-sample-result.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#plugin-sample-result-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "plugin-sample-result",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "plugin_sample_result_example_keeps_descriptor_only_result_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#plugin-sample-result-boundary"
+    },
+    {
+      "boundaryKind": "plugin-sample-catalog",
+      "examplePath": "docs/examples/plugin-sample-catalog.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#plugin-sample-catalog-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "plugin-sample-catalog",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "plugin_sample_catalog_example_keeps_descriptor_only_catalog_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#plugin-sample-catalog-boundary"
+    },
+    {
+      "boundaryKind": "plugin-sample-detail",
+      "examplePath": "docs/examples/plugin-sample-detail.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#plugin-sample-detail-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "plugin-sample-detail",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "plugin_sample_detail_example_keeps_descriptor_only_detail_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#plugin-sample-detail-boundary"
+    },
+    {
+      "boundaryKind": "plugin-capability-list",
+      "examplePath": "docs/examples/plugin-capability-list.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#plugin-capability-list-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "plugin-capability-list",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "plugin_capability_list_example_keeps_descriptor_only_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#plugin-capability-list-boundary"
+    },
+    {
+      "boundaryKind": "plugin-capability-detail",
+      "examplePath": "docs/examples/plugin-capability-detail.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#plugin-capability-detail-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "plugin-capability-detail",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "plugin_capability_detail_example_keeps_descriptor_only_detail_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#plugin-capability-detail-boundary"
+    },
+    {
+      "boundaryKind": "plugin-load-request",
+      "examplePath": "docs/examples/plugin-load-request.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#plugin-load-request-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "plugin-load-request",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "plugin_load_request_example_keeps_loader_disabled_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#plugin-load-request-boundary"
+    },
+    {
+      "boundaryKind": "plugin-host-session-state",
+      "examplePath": "docs/examples/plugin-host-session-state.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#plugin-host-session-state-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "plugin-host-session-state",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "plugin_host_session_state_example_keeps_host_session_blocked_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#plugin-host-session-state-boundary"
+    },
+    {
+      "boundaryKind": "plugin-invocation-request",
+      "examplePath": "docs/examples/plugin-invocation-request.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#plugin-invocation-request-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "plugin-invocation-request",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "plugin_invocation_request_example_keeps_invocation_blocked_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#plugin-invocation-request-boundary"
+    },
+    {
+      "boundaryKind": "plugin-review-packet",
+      "examplePath": "docs/examples/plugin-review-packet.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#plugin-review-packet-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "plugin-review-packet",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "plugin_review_packet_example_keeps_summary_only_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#plugin-review-packet-boundary"
     },
     {
       "boundaryKind": "plugin-dry-run-flow",

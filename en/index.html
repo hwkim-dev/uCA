@@ -15,7 +15,7 @@
 <meta name="description" content="Welcome to the pccx(Parallel Compute Core eXecutor) documentation. pccx is a scalable NPU architecture for accelerating Transformer-based LLMs on edge devices. Select a section from the sidebar to ..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"pccx Documentation","name":"pccx Documentation","url":"https://pccxai.github.io/pccx/en/index.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/en/index.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-04","dateModified":"2026-05-04","description":"pccx documentation page: pccx Documentation. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="pccx: Parallel Compute Core eXecutor" href="docs/index.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"pccx Documentation","name":"pccx Documentation","url":"https://pccxai.github.io/pccx/en/index.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/en/index.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-05","dateModified":"2026-05-05","description":"pccx documentation page: pccx Documentation. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="pccx: Parallel Compute Core eXecutor" href="docs/index.html">
         <link rel="canonical" href="https://pccxai.github.io/pccx/index.html">
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
@@ -527,6 +527,12 @@ else (v003 / Gemma-4 / Llama) lives on the <a class="reference internal" href="d
 </div>
 </div>
 </div>
+<p>v003+ active RTL development will live in a separate repository — working
+name <code class="docutils literal notranslate"><span class="pre">pccxai/pccx-FPGA-NPU-LLM-v003</span></code>, public URL TBD. The hosting
+model mirrors v002: this docs repo will cross-link the v003 RTL
+repository and CI-clone it into <code class="docutils literal notranslate"><span class="pre">codes/v003/</span></code> at build time, the same
+way it currently CI-clones <code class="docutils literal notranslate"><span class="pre">pccx-FPGA-NPU-LLM-kv260</span></code> into
+<code class="docutils literal notranslate"><span class="pre">codes/v002/</span></code>. The v003 RTL repository has not been created yet.</p>
 </section>
 <section id="tooling-lab">
 <h2>Tooling &amp; Lab<a class="headerlink" href="#tooling-lab" title="Link to this heading">¶</a></h2>
@@ -604,9 +610,9 @@ Sail’s type checker before it fails silicon.</p>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="docs/roadmap.html">Roadmap</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="docs/roadmap.html#now-v0-2-0-fpga-bring-up-and-closure">Now — v0.2.0: FPGA bring-up and closure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="docs/roadmap.html#next-v0-3-0-lab-extensibility-and-user-workflow-split">Next — v0.3.0: Lab extensibility and user workflow split</a></li>
-<li class="toctree-l2"><a class="reference internal" href="docs/roadmap.html#later-v0-4-reviewed-hardware-software-workflows">Later — v0.4+: reviewed hardware/software workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/roadmap.html#now-v002-0-baseline-integration-on-kv260">Now — v002.0: baseline integration on KV260</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/roadmap.html#next-v002-1-sparsity-speculative-decoding-stack">Next — v002.1: sparsity + speculative decoding stack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docs/roadmap.html#later-v003-x-separate-rtl-repository">Later — v003.x: separate RTL repository</a></li>
 <li class="toctree-l2"><a class="reference internal" href="docs/roadmap.html#links">Links</a></li>
 </ul>
 </li>
@@ -681,7 +687,7 @@ Sail’s type checker before it fails silicon.</p>
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2026-05-04</div>
+              Last updated on 2026-05-05</div>
           </div>
           <div class="right-details">
             <div class="icons">

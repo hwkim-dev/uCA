@@ -103,8 +103,9 @@ GEMV, and SFU.
 plus token output during decoding.
 
 - DMA via AXI ACP port. Capped by host DDR4's 19.2 GB/s.
-- At ~20 tokens/s the host ↔ device traffic is dominated by KV cache
-  updates and new token writes — well within the budget.
+- v002.1 처리량 목표 (~20 tokens/s; :doc:`../../roadmap` 참고) 에서
+  host ↔ device 트래픽은 KV 캐시 업데이트와 새 토큰 쓰기가 지배 —
+  예산 내에 충분히 들어옵니다.
 
 3. Cache Operating Policy
 ==========================
