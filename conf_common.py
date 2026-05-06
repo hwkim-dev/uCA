@@ -345,6 +345,7 @@ html_css_files = [
     "custom.css",
     "image-lightbox.css",
     "language-switcher.css",
+    "css/kr-typography.css",
 ]
 html_js_files = [
     "image-lightbox.js",
