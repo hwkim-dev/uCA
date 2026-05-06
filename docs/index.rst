@@ -82,12 +82,25 @@ pccx balances efficiency with accuracy:
 3. Documentation
 ----------------
 
-Detailed technical specifications live under :doc:`v002/index`:
+Detailed technical specifications for the active **v002** line live
+under :doc:`v002/index`:
 
 1. :doc:`v002/ISA/index` — 64-bit custom instruction set.
 2. :doc:`v002/Architecture/index` — hardware architecture and
    floorplan.
 3. :doc:`v002/Drivers/index` — driver and SDK documentation.
+
+Working tracks for the next release lines:
+
+- :doc:`v003/index` — LLM line continued on a separate RTL repository
+  (working name ``pccx-LLM-v003``, Gemma 4 E4B foundation; no release
+  branch yet).
+- :doc:`vision-v001/index` — parallel CNN inference track on the same
+  KV260 substrate (working name ``pccx-vision-v001``; first model
+  candidates ResNet18 / YOLOv8n / MobileNetV3).
+
+The :doc:`roadmap` summarises how the three tracks relate, and the
+``pccx`` family-tree figure on that page links them visually.
 
 The v001 architecture is archived at
 :doc:`archive/experimental_v001/index`.
@@ -125,6 +138,29 @@ risks, keeping the ecosystem safe for open-source hardware development.
 
       Every v002 RTL reference page on this site links back to the exact
       ``.sv`` file in that repository.
+
+   .. grid-item-card:: :octicon:`zap;1em;sd-mr-1` pccx-LLM-v003 (working)
+      :columns: 12 12 4 4
+      :link: https://github.com/pccxai/pccx-LLM-v003
+      :link-type: url
+      :link-alt: Open the pccx-LLM-v003 repository on GitHub
+
+      **github.com/pccxai/pccx-LLM-v003**
+
+      LLM line continued on a separate RTL repository. Foundation
+      Gemma 4 E4B; no release branch yet. See :doc:`v003/index`.
+
+   .. grid-item-card:: :octicon:`zap;1em;sd-mr-1` pccx-vision-v001 (working)
+      :columns: 12 12 4 4
+      :link: https://github.com/pccxai/pccx-vision-v001
+      :link-type: url
+      :link-alt: Open the pccx-vision-v001 repository on GitHub
+
+      **github.com/pccxai/pccx-vision-v001**
+
+      Parallel CNN inference track on the same KV260 substrate. First
+      model candidates ResNet18 / YOLOv8n / MobileNetV3. See
+      :doc:`vision-v001/index`.
 
    .. grid-item::
       :columns: 12 12 4 4
