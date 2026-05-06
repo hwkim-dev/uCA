@@ -16,7 +16,7 @@
     <style><![CDATA[
       /* Shared pccx palette: self-contained white canvas, fixed pastel
          block fills, black borders, and black text. */
-      text         { fill: #000000; font: 400 12px ui-sans-serif, system-ui, sans-serif; }
+      text         { fill: #000000; font: 400 12px "IBM Plex Mono", "Courier New", "JetBrains Mono", ui-monospace, monospace; }
       .t-pe        { font-weight: 600; font-size: 13px; text-anchor: middle; }
       .t-axis      { font-size: 10.5px; letter-spacing: 0.02em; }
 

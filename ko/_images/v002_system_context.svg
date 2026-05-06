@@ -23,7 +23,7 @@
          fills.  Same appearance in Furo light and dark mode (the
          diagram is a fixed card, not theme-adaptive).  Palette is
          shared across all pccx diagrams. */
-      text          { fill: #000000; font: 400 12px ui-sans-serif, system-ui, sans-serif; }
+      text          { fill: #000000; font: 400 12px "IBM Plex Mono", "Courier New", "JetBrains Mono", ui-monospace, monospace; }
       .t-title      { font-weight: 600; font-size: 13px; }
       .t-sub        { font-size: 11px; }
       .t-axis       { font-size: 10.5px; letter-spacing: 0.02em; }
