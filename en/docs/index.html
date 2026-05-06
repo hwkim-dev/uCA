@@ -562,13 +562,25 @@ caches access each other concurrently without arbitration overhead.</p></li>
 <hr class="docutils" />
 <section id="documentation">
 <h2>3. Documentation<a class="headerlink" href="#documentation" title="Link to this heading">¶</a></h2>
-<p>Detailed technical specifications live under <a class="reference internal" href="v002/index.html"><span class="doc">pccx v002 Architecture</span></a>:</p>
+<p>Detailed technical specifications for the active <strong>v002</strong> line live
+under <a class="reference internal" href="v002/index.html"><span class="doc">pccx v002 Architecture</span></a>:</p>
 <ol class="arabic simple">
 <li><p><a class="reference internal" href="v002/ISA/index.html"><span class="doc">Instruction Set Architecture (ISA)</span></a> — 64-bit custom instruction set.</p></li>
 <li><p><a class="reference internal" href="v002/Architecture/index.html"><span class="doc">Hardware Architecture</span></a> — hardware architecture and
 floorplan.</p></li>
 <li><p><a class="reference internal" href="v002/Drivers/index.html"><span class="doc">Software Stack</span></a> — driver and SDK documentation.</p></li>
 </ol>
+<p>Working tracks for the next release lines:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="v003/index.html"><span class="doc">pccx v003 — LLM line, separate RTL repository</span></a> — LLM line continued on a separate RTL repository
+(working name <code class="docutils literal notranslate"><span class="pre">pccx-LLM-v003</span></code>, Gemma 4 E4B foundation; no release
+branch yet).</p></li>
+<li><p><a class="reference internal" href="vision-v001/index.html"><span class="doc">pccx vision-v001 — CNN inference track on KV260</span></a> — parallel CNN inference track on the same
+KV260 substrate (working name <code class="docutils literal notranslate"><span class="pre">pccx-vision-v001</span></code>; first model
+candidates ResNet18 / YOLOv8n / MobileNetV3).</p></li>
+</ul>
+<p>The <a class="reference internal" href="roadmap.html"><span class="doc">Roadmap</span></a> summarises how the three tracks relate, and the
+<code class="docutils literal notranslate"><span class="pre">pccx</span></code> family-tree figure on that page links them visually.</p>
 <p>The v001 architecture is archived at
 <a class="reference internal" href="archive/experimental_v001/index.html"><span class="doc">Archive: v001 Experimental Architecture</span></a>.</p>
 </section>
@@ -597,6 +609,29 @@ is the Xilinx Kria <strong>KV260</strong> (Zynq UltraScale+ ZU5EV).</p>
 <code class="docutils literal notranslate"><span class="pre">.sv</span></code> file in that repository.</p>
 </div>
 <a class="sd-stretched-link sd-hide-link-text reference external" href="https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260"><span>Open the pccx-FPGA-NPU-LLM-kv260 repository on GitHub</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row sd-col-12 sd-col-xs-12 sd-col-sm-12 sd-col-md-4 sd-col-lg-4 docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-zap sd-mr-1" viewBox="0 0 16 16" aria-hidden="true"><path d="M9.504.43a1.516 1.516 0 0 1 2.437 1.713L10.415 5.5h2.123c1.57 0 2.346 1.909 1.22 3.004l-7.34 7.142a1.249 1.249 0 0 1-.871.354h-.302a1.25 1.25 0 0 1-1.157-1.723L5.633 10.5H3.462c-1.57 0-2.346-1.909-1.22-3.004L9.503.429Zm1.047 1.074L3.286 8.571A.25.25 0 0 0 3.462 9H6.75a.75.75 0 0 1 .694 1.034l-1.713 4.188 6.982-6.793A.25.25 0 0 0 12.538 7H9.25a.75.75 0 0 1-.683-1.06l2.008-4.418.003-.006a.036.036 0 0 0-.004-.009l-.006-.006-.008-.001c-.003 0-.006.002-.009.004Z"></path></svg> pccx-LLM-v003 (working)</div>
+<p class="sd-card-text"><strong>github.com/pccxai/pccx-LLM-v003</strong></p>
+<p class="sd-card-text">LLM line continued on a separate RTL repository. Foundation
+Gemma 4 E4B; no release branch yet. See <a class="reference internal" href="v003/index.html"><span class="doc">pccx v003 — LLM line, separate RTL repository</span></a>.</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference external" href="https://github.com/pccxai/pccx-LLM-v003"><span>Open the pccx-LLM-v003 repository on GitHub</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row sd-col-12 sd-col-xs-12 sd-col-sm-12 sd-col-md-4 sd-col-lg-4 docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+<svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-zap sd-mr-1" viewBox="0 0 16 16" aria-hidden="true"><path d="M9.504.43a1.516 1.516 0 0 1 2.437 1.713L10.415 5.5h2.123c1.57 0 2.346 1.909 1.22 3.004l-7.34 7.142a1.249 1.249 0 0 1-.871.354h-.302a1.25 1.25 0 0 1-1.157-1.723L5.633 10.5H3.462c-1.57 0-2.346-1.909-1.22-3.004L9.503.429Zm1.047 1.074L3.286 8.571A.25.25 0 0 0 3.462 9H6.75a.75.75 0 0 1 .694 1.034l-1.713 4.188 6.982-6.793A.25.25 0 0 0 12.538 7H9.25a.75.75 0 0 1-.683-1.06l2.008-4.418.003-.006a.036.036 0 0 0-.004-.009l-.006-.006-.008-.001c-.003 0-.006.002-.009.004Z"></path></svg> pccx-vision-v001 (working)</div>
+<p class="sd-card-text"><strong>github.com/pccxai/pccx-vision-v001</strong></p>
+<p class="sd-card-text">Parallel CNN inference track on the same KV260 substrate. First
+model candidates ResNet18 / YOLOv8n / MobileNetV3. See
+<a class="reference internal" href="vision-v001/index.html"><span class="doc">pccx vision-v001 — CNN inference track on KV260</span></a>.</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference external" href="https://github.com/pccxai/pccx-vision-v001"><span>Open the pccx-vision-v001 repository on GitHub</span></a></div>
 </div>
 <div class="sd-col sd-d-flex-column sd-col-12 sd-col-xs-12 sd-col-sm-12 sd-col-md-4 sd-col-lg-4 docutils">
 <div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
