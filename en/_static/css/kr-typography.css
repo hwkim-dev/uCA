@@ -1,34 +1,46 @@
 /*
- * K&R-inspired typography for the pccx documentation site.
+ * pccx — unified IBM Plex Mono typography.
  *
- * The body falls back to a serif stack (the same Times-family used in
- * Kernighan & Ritchie's "The C Programming Language"); code, UI
- * elements, and all hand-crafted SVG diagrams use IBM Plex Mono with
- * Courier New as the second-choice fallback. This matches the FigJam
- * board for the family-tree overview.
+ * Body, headings, code, UI elements, and all hand-crafted SVG diagrams
+ * share a single IBM Plex Mono stack so the page reads as one coherent
+ * printed listing. The fallback chain prioritises modern monospace
+ * faces (JetBrains Mono, SF Mono, Menlo, Consolas) before reaching
+ * Courier New as a last resort, so environments without IBM Plex Mono
+ * installed still get an evenly weighted glyph rather than the much
+ * wider Courier New.
  */
 
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap");
 
 :root,
 body {
-    --font-stack: "Times New Roman", Times, Georgia, serif;
-    --font-stack--monospace: "IBM Plex Mono", "Courier New",
-        "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+    --font-stack: "IBM Plex Mono", "JetBrains Mono", "Fira Code",
+        "SF Mono", Menlo, Consolas, ui-monospace, "Courier New",
+        monospace;
+    --font-stack--monospace: "IBM Plex Mono", "JetBrains Mono",
+        "Fira Code", "SF Mono", Menlo, Consolas, ui-monospace,
+        "Courier New", monospace;
 }
 
-/* Furo reads these CSS variables for body and inline-code typography;
- * the explicit selectors below cover the few places where the theme
- * does not pick up the variable directly (sidebar nav and the figure
- * captions that ride on Sphinx's own classes). */
-
+/* Body / headings / paragraphs / list items / table cells — all share
+ * the same monospace stack. Furo reads ``--font-stack`` for its body
+ * text but a few selectors explicitly inherit from the base sans-serif
+ * cascade, so we set them by name. */
 body,
 .sidebar-tree,
 .toctree-wrapper,
-.content {
+.content,
+article,
+h1, h2, h3, h4, h5, h6,
+p, li, td, th, dt, dd,
+.caption, .caption-text,
+.headerlink {
     font-family: var(--font-stack);
 }
 
+/* Code, pre-formatted listings, and the literalinclude blocks pick up
+ * the same stack so SHA admonition contents and the embedded RTL share
+ * the same vertical rhythm as the prose. */
 code,
 pre,
 kbd,
@@ -41,11 +53,35 @@ tt,
     font-family: var(--font-stack--monospace);
 }
 
-/* The repo-name pill, page header, and admonition titles benefit from
- * the same monospace tone so that the "Last verified against" SHA
- * boxes read as printed listings rather than UI chrome. */
+/* Admonition titles, sidebar brand text, and signature names use the
+ * same monospace face as the body so the entire chrome reads as one
+ * surface. */
 .admonition-title,
 .sidebar-brand-text,
 .sig-name {
     font-family: var(--font-stack--monospace);
+}
+
+/* Monospace body text reads denser than proportional faces, so loosen
+ * line-height a notch and cap the readable line length to keep long
+ * paragraphs scannable. */
+body,
+p,
+li,
+dd,
+td {
+    line-height: 1.6;
+}
+
+article p,
+article li,
+article dd {
+    max-width: 78ch;
+}
+
+/* Slightly tighter heading line-height stays inside Furo's vertical
+ * rhythm while picking up the monospace stack. */
+h1, h2, h3, h4, h5, h6 {
+    line-height: 1.3;
+    letter-spacing: -0.005em;
 }
