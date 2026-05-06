@@ -1,0 +1,51 @@
+/*
+ * K&R-inspired typography for the pccx documentation site.
+ *
+ * The body falls back to a serif stack (the same Times-family used in
+ * Kernighan & Ritchie's "The C Programming Language"); code, UI
+ * elements, and all hand-crafted SVG diagrams use IBM Plex Mono with
+ * Courier New as the second-choice fallback. This matches the FigJam
+ * board for the family-tree overview.
+ */
+
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap");
+
+:root,
+body {
+    --font-stack: "Times New Roman", Times, Georgia, serif;
+    --font-stack--monospace: "IBM Plex Mono", "Courier New",
+        "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+
+/* Furo reads these CSS variables for body and inline-code typography;
+ * the explicit selectors below cover the few places where the theme
+ * does not pick up the variable directly (sidebar nav and the figure
+ * captions that ride on Sphinx's own classes). */
+
+body,
+.sidebar-tree,
+.toctree-wrapper,
+.content {
+    font-family: var(--font-stack);
+}
+
+code,
+pre,
+kbd,
+samp,
+tt,
+.highlight pre,
+.literal-block,
+.code-block,
+.sig {
+    font-family: var(--font-stack--monospace);
+}
+
+/* The repo-name pill, page header, and admonition titles benefit from
+ * the same monospace tone so that the "Last verified against" SHA
+ * boxes read as printed listings rather than UI chrome. */
+.admonition-title,
+.sidebar-brand-text,
+.sig-name {
+    font-family: var(--font-stack--monospace);
+}
