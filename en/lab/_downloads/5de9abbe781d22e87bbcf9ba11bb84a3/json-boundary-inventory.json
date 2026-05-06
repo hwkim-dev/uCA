@@ -121,6 +121,23 @@
       "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#run-approved-workflow-command"
     },
     {
+      "boundaryKind": "json-boundary-health-summary",
+      "examplePath": "docs/examples/json-boundary-health-summary.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#json-boundary-health-summary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "json-boundary-health-summary",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "json_boundary_health_summary_example_keeps_descriptor_only_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#json-boundary-health-summary"
+    },
+    {
       "boundaryKind": "sail-adoption-plan",
       "examplePath": "docs/examples/sail-adoption-plan.example.json",
       "producingCommand": null,
@@ -306,6 +323,23 @@
         "testName": "sail_source_intake_handoff_example_keeps_descriptor_only_boundary"
       },
       "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#sail-source-intake-handoff-boundary"
+    },
+    {
+      "boundaryKind": "sail-source-intake-status-summary",
+      "examplePath": "docs/examples/sail-source-intake-status-summary.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#sail-source-intake-status-summary-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "sail-source-intake-status-summary",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "sail_source_intake_status_summary_example_keeps_descriptor_only_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#sail-source-intake-status-summary-boundary"
     },
     {
       "boundaryKind": "hybrid-strategy-plan",
@@ -495,6 +529,23 @@
       "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#hybrid-source-intake-handoff-boundary"
     },
     {
+      "boundaryKind": "hybrid-source-intake-status-summary",
+      "examplePath": "docs/examples/hybrid-source-intake-status-summary.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#hybrid-source-intake-status-summary-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "hybrid-source-intake-status-summary",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "hybrid_source_intake_status_summary_example_keeps_descriptor_only_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#hybrid-source-intake-status-summary-boundary"
+    },
+    {
       "boundaryKind": "launcher-diagnostics-handoff",
       "examplePath": "docs/examples/launcher-diagnostics-handoff.example.json",
       "producingCommand": null,
@@ -646,6 +697,23 @@
         "testName": "mcp_sample_detail_example_keeps_descriptor_only_detail_boundary"
       },
       "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#mcp-sample-detail-boundary"
+    },
+    {
+      "boundaryKind": "mcp-sample-status-summary",
+      "examplePath": "docs/examples/mcp-sample-status-summary.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#mcp-sample-status-summary-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "mcp-sample-status-summary",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "mcp_sample_status_summary_example_keeps_descriptor_only_status_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#mcp-sample-status-summary-boundary"
     },
     {
       "boundaryKind": "mcp-read-only-analysis-flow",
@@ -986,6 +1054,23 @@
         "testName": "plugin_sample_detail_example_keeps_descriptor_only_detail_boundary"
       },
       "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#plugin-sample-detail-boundary"
+    },
+    {
+      "boundaryKind": "plugin-sample-status-summary",
+      "examplePath": "docs/examples/plugin-sample-status-summary.example.json",
+      "producingCommand": null,
+      "coreGeneratorOrReader": "docs/CLI_CORE_BOUNDARY.md#plugin-sample-status-summary-boundary",
+      "readerOnly": true,
+      "shapeValidation": {
+        "kind": "plugin-sample-status-summary",
+        "validator": "scripts/json_boundary_shape_validator.py",
+        "fixtureTest": "scripts/test-json-boundary-shapes.sh"
+      },
+      "rustValidation": {
+        "testPath": "crates/core/tests/json_boundary_examples.rs",
+        "testName": "plugin_sample_status_summary_example_keeps_descriptor_only_status_boundary"
+      },
+      "docsAnchor": "docs/CLI_CORE_BOUNDARY.md#plugin-sample-status-summary-boundary"
     },
     {
       "boundaryKind": "plugin-capability-list",

@@ -15,7 +15,7 @@
 <meta name="description" content="The pccx v002 driver is a C/C++ hardware abstraction layer (HAL) plus a thin public API. Its responsibilities: Encoding and dispatching 64-bit VLIW instructions via the CMD_IN FIFO., Preloading sha..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"Software Stack","name":"Software Stack","url":"https://pccxai.github.io/pccx/en/docs/v002/Drivers/index.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/en/docs/v002/Drivers/index.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-05","dateModified":"2026-05-05","description":"pccx documentation page: Software Stack. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="C API Overview" href="api.html"><link rel="prev" title="Formal Model — Sail" href="../Formal/index.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"Software Stack","name":"Software Stack","url":"https://pccxai.github.io/pccx/en/docs/v002/Drivers/index.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/en/docs/v002/Drivers/index.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-06","dateModified":"2026-05-06","description":"pccx documentation page: Software Stack. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="C API Overview" href="api.html"><link rel="prev" title="Formal Model — Sail" href="../Formal/index.html">
         <link rel="canonical" href="https://pccxai.github.io/pccx/docs/v002/Drivers/index.html">
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
@@ -351,6 +351,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../RTL/frontend.html">NPU Frontend Modules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/memory_l2.html">L2 Cache (URAM)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/memory_dispatch.html">Memory Dispatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../RTL/shape_const_ram.html">Shape Constant RAM</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/preprocess.html">PREPROCESS RTL Reference</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/packages.html">Compile-Priority Packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/library.html">Shared Library</a></li>
@@ -496,6 +497,18 @@ end-to-end <code class="docutils literal notranslate"><span class="pre">MEMSET</
 not yet been validated against the RTL on hardware. See
 <a class="reference internal" href="../Verification/index.html"><span class="doc">Verification</span></a> §2 for the open verification items.</p>
 </div>
+<div class="note admonition">
+<p class="admonition-title">Local LLM launcher — status surface boundary</p>
+<p>Driver bring-up is being mirrored at the launcher boundary by
+<code class="docutils literal notranslate"><span class="pre">pccx-llm-launcher</span></code>. The launcher’s chat surface gates inputs and
+outputs through a documented set of boundaries — chat status
+summary, evidence manifest, gap matrix, review packet, redaction
+policy, clipboard policy, accessibility, and empty-state — none of
+which produce hardware-measured numbers at this stage. The launcher
+is referenced here so contributors can locate the workflow
+boundary; runtime / inference numbers will appear here only after
+the release evidence checklist gates them in.</p>
+</div>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api.html">C API Overview</a></li>
@@ -544,7 +557,7 @@ not yet been validated against the RTL on hardware. See
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2026-05-05</div>
+              Last updated on 2026-05-06</div>
           </div>
           <div class="right-details">
             <div class="icons">

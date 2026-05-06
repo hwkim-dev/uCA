@@ -15,7 +15,7 @@
 <meta name="description" content="This page shows how data actually moves through the hardware once an instruction is dispatched. The figures below recast the block diagram from 탑레벨 아키텍처 through an instruction’s lens. 1. GEMM: GEMM..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["ko","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"Per-Instruction Dataflow","name":"Per-Instruction Dataflow","url":"https://pccxai.github.io/pccx/ko/docs/v002/ISA/dataflow.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/ko/docs/v002/ISA/dataflow.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-05","dateModified":"2026-05-05","description":"pccx documentation page: Per-Instruction Dataflow. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"ko","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="색인" href="../../../genindex.html"><link rel="search" title="검색" href="../../../search.html"><link rel="next" title="형식 모델 — Sail" href="../Formal/index.html"><link rel="prev" title="명령어 상세 인코딩" href="instructions.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["ko","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"Per-Instruction Dataflow","name":"Per-Instruction Dataflow","url":"https://pccxai.github.io/pccx/ko/docs/v002/ISA/dataflow.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/ko/docs/v002/ISA/dataflow.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-06","dateModified":"2026-05-06","description":"pccx documentation page: Per-Instruction Dataflow. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"ko","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="색인" href="../../../genindex.html"><link rel="search" title="검색" href="../../../search.html"><link rel="next" title="형식 모델 — Sail" href="../Formal/index.html"><link rel="prev" title="명령어 상세 인코딩" href="instructions.html">
         <link rel="canonical" href="https://pccxai.github.io/pccx/docs/v002/ISA/dataflow.html">
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
@@ -351,6 +351,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../RTL/frontend.html">NPU 프론트엔드 모듈</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/memory_l2.html">L2 캐시 (URAM)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/memory_dispatch.html">메모리 디스패치</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../RTL/shape_const_ram.html">Shape 상수 RAM</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/preprocess.html">PREPROCESS RTL 레퍼런스</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/packages.html">컴파일 우선순위 패키지</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/library.html">공유 라이브러리</a></li>
@@ -485,7 +486,7 @@ from <a class="reference internal" href="../Architecture/top_level.html"><span c
 <a class="reference internal image-reference" href="../../../_images/DataFlow_GEMM_v002.png"><img alt="GEMM instruction dataflow" src="../../../_images/DataFlow_GEMM_v002.png" style="width: 85%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">그림 12 </span><span class="caption-text"><strong>Figure 5.</strong> Dataflow when a GEMM instruction dispatches.
+<p><span class="caption-number">그림 13 </span><span class="caption-text"><strong>Figure 5.</strong> Dataflow when a GEMM instruction dispatches.
 <code class="docutils literal notranslate"><span class="pre">dest_addr</span></code> and <code class="docutils literal notranslate"><span class="pre">src_addr</span></code> live in the L2 cache address space;
 shape / size pointers index the Constant Cache.</span><a class="headerlink" href="#id2" title="Link to this image">¶</a></p>
 </figcaption>
@@ -509,7 +510,7 @@ ports.</p></li>
 <a class="reference internal image-reference" href="../../../_images/DataFlow_GEMV_v002.png"><img alt="GEMV instruction dataflow" src="../../../_images/DataFlow_GEMV_v002.png" style="width: 85%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">그림 13 </span><span class="caption-text"><strong>Figure 6.</strong> Dataflow for a GEMV instruction. Same ISA layout as
+<p><span class="caption-number">그림 14 </span><span class="caption-text"><strong>Figure 6.</strong> Dataflow for a GEMV instruction. Same ISA layout as
 GEMM, but weights are consumed in a <strong>Weight Streaming</strong> pattern,
 fanning out across 4 GEMV cores in parallel.</span><a class="headerlink" href="#id3" title="Link to this image">¶</a></p>
 </figcaption>
@@ -531,7 +532,7 @@ fanning out across 4 GEMV cores in parallel.</span><a class="headerlink" href="#
 <a class="reference internal image-reference" href="../../../_images/DataFlow_MEMCPY_v002.png.png"><img alt="MEMCPY instruction dataflow" src="../../../_images/DataFlow_MEMCPY_v002.png.png" style="width: 70%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">그림 14 </span><span class="caption-text"><strong>Figure 7.</strong> MEMCPY instruction. The <code class="docutils literal notranslate"><span class="pre">from_device</span></code> / <code class="docutils literal notranslate"><span class="pre">to_device</span></code>
+<p><span class="caption-number">그림 15 </span><span class="caption-text"><strong>Figure 7.</strong> MEMCPY instruction. The <code class="docutils literal notranslate"><span class="pre">from_device</span></code> / <code class="docutils literal notranslate"><span class="pre">to_device</span></code>
 combination supports host ↔ NPU and NPU ↔ NPU transfers.</span><a class="headerlink" href="#id4" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
@@ -576,7 +577,7 @@ immediately. The Global Scheduler tracks the completion fence.</p>
 <a class="reference internal image-reference" href="../../../_images/DataFlow_MEMSET_v002.png"><img alt="MEMSET instruction dataflow" src="../../../_images/DataFlow_MEMSET_v002.png" style="width: 70%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">그림 15 </span><span class="caption-text"><strong>Figure 8.</strong> MEMSET writes directly from the Dispatcher into the
+<p><span class="caption-number">그림 16 </span><span class="caption-text"><strong>Figure 8.</strong> MEMSET writes directly from the Dispatcher into the
 Constant Cache — the only instruction that bypasses the L2 cache.</span><a class="headerlink" href="#id5" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
@@ -600,7 +601,7 @@ to execute non-linear operations.</p>
 <a class="reference internal image-reference" href="../../../_images/v002_dataflow_sfu.svg"><img alt="../../../_images/v002_dataflow_sfu.svg" src="../../../_images/v002_dataflow_sfu.svg" style="width: 70%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">그림 16 </span><span class="caption-text"><strong>Figure 9.</strong> SFU (CVO) instruction dataflow. Supports both L2 cache
+<p><span class="caption-number">그림 17 </span><span class="caption-text"><strong>Figure 9.</strong> SFU (CVO) instruction dataflow. Supports both L2 cache
 streaming and a direct fast-path from the GEMV cores.</span><a class="headerlink" href="#fig-dataflow-sfu" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
@@ -663,7 +664,7 @@ the AXI-Lite STAT_OUT register.</p>
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2026-05-05</div>
+              Last updated on 2026-05-06</div>
           </div>
           <div class="right-details">
             <div class="icons">

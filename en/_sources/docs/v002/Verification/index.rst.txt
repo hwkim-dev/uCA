@@ -105,6 +105,25 @@ section will cover:
   bring-up scripts, and golden-trace comparison against the
   :doc:`host-side C driver </docs/v002/Drivers/api>`.
 
+.. admonition:: External tool interface — status surface boundaries
+   :class: note
+
+   The verification workflow is incrementally surfacing JSON status
+   summaries that external tools can consume without parsing free-form
+   logs. These boundaries live outside this docs site:
+
+   * **pccx-lab** — JSON / Sail / hybrid source-intake status summary
+     boundaries, plus sample boundaries for plugins and external tool
+     interfaces. Treated as an evolving boundary; no stability promise
+     is made until the v002.0 verification evidence is published.
+   * **systemverilog-ide** — module-graph reports (path, edge, port
+     connection audit, reachability, span, file-layout, order) exposed
+     as a separate boundary; consumed by reviewers but not part of the
+     pccx documentation surface.
+
+   These boundaries are referenced here for traceability only. They
+   do not constitute verification evidence on their own.
+
 .. seealso::
 
    :doc:`/docs/v002/Architecture/index`

@@ -298,49 +298,57 @@ separate workflow logic island.</p>
 <td><p>disabled-by-default pilot</p></td>
 <td><p>Fixed allowlisted runner pilot; blocked unless explicitly enabled.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-adoption-plan.example.json</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/json-boundary-health-summary.example.json</span></code></p></td>
+<td><p>planned inventory health boundary</p></td>
+<td><p>Checked descriptor-only JSON boundary inventory health summary; no inventory reader, validator runner, Rust test runner, report writer, adapter runtime, or repository mutation path is implemented.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-adoption-plan.example.json</span></code></p></td>
 <td><p>planned Sail adoption boundary</p></td>
 <td><p>Checked descriptor-only Sail adoption plan for future reference-model review; no Sail source reader, parser, compiler, model execution, refinement check, proof path, report writer, artifact writer, or hardware path is implemented.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-interface-boundary.example.json</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-interface-boundary.example.json</span></code></p></td>
 <td><p>planned Sail interface boundary</p></td>
 <td><p>Checked descriptor-only Sail CLI/core handoff boundary over approved summaries; no Sail source reader, parser, compiler, AST reader, model execution, refinement check, proof path, report reader/writer, artifact reader/writer, or hardware path is implemented.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-review-packet.example.json</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-review-packet.example.json</span></code></p></td>
 <td><p>planned Sail review packet</p></td>
 <td><p>Checked summary-only Sail review packet over approved adoption, interface, workflow, verification, and report-gate summaries; no Sail source reader, RTL source reader, AST reader, parser, compiler, model generator, model execution, refinement check, proof path, report reader/writer, artifact reader/writer, or hardware path is implemented.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-evidence-manifest.example.json</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-evidence-manifest.example.json</span></code></p></td>
 <td><p>planned Sail evidence manifest</p></td>
 <td><p>Checked summary-only Sail evidence manifest over approved adoption, interface, review, workflow, and verification-gate summaries; no Sail source reader, RTL source reader, AST reader, parser, compiler, model generator, model execution, refinement check, proof path, report reader/writer, artifact reader/writer, command runner, repository reader, or hardware path is implemented.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-evidence-detail.example.json</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-evidence-detail.example.json</span></code></p></td>
 <td><p>planned Sail evidence detail</p></td>
 <td><p>Checked descriptor-only Sail evidence detail for one selected approved evidence summary reference; no Sail source reader, RTL source reader, AST reader, generated-model reader, parser, compiler, model generator, model execution, refinement check, proof path, verification run, report reader/writer, artifact reader/writer, command runner, repository reader, marketplace flow, or hardware path is implemented.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-model-readiness.example.json</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-model-readiness.example.json</span></code></p></td>
 <td><p>planned Sail model readiness</p></td>
 <td><p>Checked descriptor-only Sail model readiness gate over approved Sail boundary summaries; no Sail source reader, RTL source reader, AST reader, generated-model reader, parser, compiler, model generator, model execution, refinement check, proof path, verification run, report reader/writer, artifact reader/writer, command runner, repository reader, marketplace flow, or hardware path is implemented.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-implementation-gap-matrix.example.json</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-implementation-gap-matrix.example.json</span></code></p></td>
 <td><p>planned Sail implementation gap matrix</p></td>
 <td><p>Checked descriptor-only Sail implementation gap matrix over approved Sail boundary summaries; no Sail source reader, RTL source reader, AST reader, generated-model reader, parser, compiler, model generator, model execution, refinement check, proof path, verification run, report reader/writer, artifact reader/writer, command runner, repository reader, release flow, marketplace flow, or hardware path is implemented.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-source-intake-boundary.example.json</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-source-intake-boundary.example.json</span></code></p></td>
 <td><p>planned Sail source intake boundary</p></td>
 <td><p>Checked descriptor-only Sail source-intake boundary over approved Sail boundary summaries; no Sail source reader, RTL source reader, source path/content/hash/metadata reader, manifest reader, AST reader, generated-model reader, parser, compiler, model generator, model execution, refinement check, proof path, verification run, report reader/writer, artifact reader/writer, command runner, repository reader, release flow, marketplace flow, or hardware path is implemented.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-source-intake-approval.example.json</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-source-intake-approval.example.json</span></code></p></td>
 <td><p>planned Sail source intake approval gate</p></td>
 <td><p>Checked descriptor-only Sail source-intake approval gate over approved Sail boundary summaries; no approval executor, source-intake dispatch, Sail source reader, RTL source reader, source path/content/hash/metadata reader, manifest reader, AST reader, generated-model reader, parser, compiler, model generator, model execution, refinement check, proof path, verification run, report reader/writer, artifact reader/writer, command runner, repository reader, release flow, marketplace flow, or hardware path is implemented.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-source-intake-result.example.json</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-source-intake-result.example.json</span></code></p></td>
 <td><p>planned Sail source intake result boundary</p></td>
 <td><p>Checked descriptor-only Sail source-intake result boundary over approved Sail boundary summaries; no approval executor, source-intake dispatch, Sail source reader, RTL source reader, source path/content/hash/metadata reader, manifest reader, AST reader, generated-model reader, parser, compiler, model generator, model execution, refinement check, proof path, verification run, report reader/writer, artifact reader/writer, command runner, repository reader, release flow, marketplace flow, or hardware path is implemented.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-source-intake-handoff.example.json</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-source-intake-handoff.example.json</span></code></p></td>
 <td><p>planned Sail source intake handoff boundary</p></td>
 <td><p>Checked descriptor-only Sail source-intake handoff boundary over approved Sail boundary summaries; no approval executor, source-intake dispatch, Sail source reader, RTL source reader, source path/content/hash/metadata reader, manifest reader, AST reader, generated-model reader, parser, compiler, model generator, model execution, refinement check, proof path, verification run, report reader/writer, artifact reader/writer, command runner, repository reader, public handoff publication, release flow, marketplace flow, or hardware path is implemented.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-source-intake-status-summary.example.json</span></code></p></td>
+<td><p>planned Sail source intake status summary</p></td>
+<td><p>Checked descriptor-only Sail source-intake status summary over approved source-intake boundary, approval, result, handoff, gap-matrix, and evidence-detail summaries; no approval executor, source-intake dispatch, Sail source reader, RTL source reader, source path/content/hash/metadata reader, manifest reader, AST reader, generated-model reader, parser, compiler, model generator, model execution, refinement check, proof path, verification run, report reader/writer, artifact reader/writer, command runner, repository reader, public handoff publication, release flow, marketplace flow, or hardware path is implemented.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/hybrid-strategy-plan.example.json</span></code></p></td>
 <td><p>planned hybrid strategy boundary</p></td>
@@ -378,45 +386,53 @@ separate workflow logic island.</p>
 <td><p>planned hybrid source intake approval gate</p></td>
 <td><p>Checked descriptor-only hybrid source-intake approval gate over approved hybrid boundary summaries; no approval executor, source-intake dispatch, C++/SystemVerilog/custom-script source reader, grammar reader, source path/content/hash/metadata reader, manifest reader, parser, compiler, runtime, script execution, simulator runner, verification run, report reader/writer, artifact reader/writer, command runner, repository reader, release flow, marketplace flow, or hardware-control path is implemented.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-lab</span> <span class="pre">analyze</span> <span class="pre">&lt;file&gt;</span> <span class="pre">--format</span> <span class="pre">json</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/hybrid-source-intake-status-summary.example.json</span></code></p></td>
+<td><p>planned hybrid source intake status summary</p></td>
+<td><p>Checked descriptor-only hybrid source-intake status summary over approved source-intake boundary, approval, result, handoff, gap-matrix, and evidence-detail summaries; no approval executor, source-intake dispatch, C++/SystemVerilog/custom-script source reader, grammar reader, source path/content/hash/metadata reader, manifest reader, parser, compiler, runtime, script execution, simulator runner, verification run, report reader/writer, artifact reader/writer, command runner, repository reader, public handoff publication, release flow, marketplace flow, or hardware-control path is implemented.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-lab</span> <span class="pre">analyze</span> <span class="pre">&lt;file&gt;</span> <span class="pre">--format</span> <span class="pre">json</span></code></p></td>
 <td><p>early scaffold</p></td>
 <td><p>File-shape diagnostics only.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-lab</span> <span class="pre">diagnostics-handoff</span> <span class="pre">validate</span> <span class="pre">--file</span> <span class="pre">&lt;path&gt;</span> <span class="pre">--format</span> <span class="pre">json</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-lab</span> <span class="pre">diagnostics-handoff</span> <span class="pre">validate</span> <span class="pre">--file</span> <span class="pre">&lt;path&gt;</span> <span class="pre">--format</span> <span class="pre">json</span></code></p></td>
 <td><p>read-only validator</p></td>
 <td><p>Launcher diagnostics handoff schema reader.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-lab</span> <span class="pre">device-session-status</span> <span class="pre">validate</span> <span class="pre">--file</span> <span class="pre">&lt;path&gt;</span> <span class="pre">--format</span> <span class="pre">json</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pccx-lab</span> <span class="pre">device-session-status</span> <span class="pre">validate</span> <span class="pre">--file</span> <span class="pre">&lt;path&gt;</span> <span class="pre">--format</span> <span class="pre">json</span></code></p></td>
 <td><p>read-only validator</p></td>
 <td><p>Launcher device/session status schema reader.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-read-only-tool-plan.example.json</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-read-only-tool-plan.example.json</span></code></p></td>
 <td><p>planned boundary map</p></td>
 <td><p>Checked future MCP/tool adapter plan over fixed CLI/core commands; no runtime is implemented.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-tool-list.example.json</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-tool-list.example.json</span></code></p></td>
 <td><p>planned tool list</p></td>
 <td><p>Checked descriptor-only MCP tool listing over approved boundary summaries; no server, client, runtime, transport, command executor, tool invocation path, file reader, report writer, audit logger, or write path is implemented.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-tool-detail.example.json</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-tool-detail.example.json</span></code></p></td>
 <td><p>planned tool detail</p></td>
 <td><p>Checked descriptor-only detail view for one selected listed tool; no server, client, runtime, transport, command executor, tool invocation path, input reader, output payload reader, report writer, audit logger, or write path is implemented.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-sample-plan.example.json</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-sample-plan.example.json</span></code></p></td>
 <td><p>planned sample plan</p></td>
 <td><p>Checked descriptor-only MCP sample plan over approved tool, flow, report, and permission summaries; no server, client, runtime, transport, command executor, permission executor, audit logger, report writer, or tool invocation path is implemented.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-sample-result.example.json</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-sample-result.example.json</span></code></p></td>
 <td><p>planned sample result</p></td>
 <td><p>Checked descriptor-only MCP sample result metadata over approved sample-plan, tool-detail, report, evidence, and blocked-result summaries; no server, client, runtime, transport, command executor, result reader, report reader/writer, artifact reader/writer, or tool invocation path is implemented.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-sample-catalog.example.json</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-sample-catalog.example.json</span></code></p></td>
 <td><p>planned sample catalog</p></td>
 <td><p>Checked descriptor-only MCP sample catalog over approved sample-plan, sample-result, tool-detail, and permission summaries; no sample discovery, server, client, runtime, transport, command executor, result reader, report reader/writer, artifact reader/writer, audit logger, or tool invocation path is implemented.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-sample-detail.example.json</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-sample-detail.example.json</span></code></p></td>
 <td><p>planned sample detail</p></td>
 <td><p>Checked descriptor-only MCP sample detail over approved sample-catalog, sample-result, sample-plan, tool-detail, and permission summaries; no sample discovery, server, client, runtime, transport, command executor, result reader, report reader/writer, artifact reader/writer, audit logger, or tool invocation path is implemented.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-sample-status-summary.example.json</span></code></p></td>
+<td><p>planned sample status summary</p></td>
+<td><p>Checked descriptor-only MCP sample status summary over approved sample-plan, sample-result, sample-catalog, sample-detail, tool-detail, and permission summaries; no sample discovery, server, client, runtime, transport, command executor, result reader, report reader/writer, artifact reader/writer, audit logger, or tool invocation path is implemented.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-read-only-analysis-flow.example.json</span></code></p></td>
 <td><p>planned flow contract</p></td>
@@ -494,83 +510,87 @@ separate workflow logic island.</p>
 <td><p>planned sample detail</p></td>
 <td><p>Checked descriptor-only selected sample detail over approved sample-catalog, sample-result, sample-plan, capability, and permission summaries; no sample discovery, manifest/package/source reader, loader, runtime, sandbox, dispatch, invocation, payload reader, report reader/writer, or artifact reader/writer is implemented.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-dry-run-flow.example.json</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-sample-status-summary.example.json</span></code></p></td>
+<td><p>planned sample status summary</p></td>
+<td><p>Checked descriptor-only plugin sample status summary over approved sample-plan, sample-result, sample-catalog, sample-detail, capability, and permission summaries; no sample discovery, manifest/package/source reader, loader, runtime, sandbox, dispatch, invocation, permission executor, audit logger, result reader, report reader/writer, artifact reader/writer, package distribution, or marketplace path is implemented.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-dry-run-flow.example.json</span></code></p></td>
 <td><p>planned flow contract</p></td>
 <td><p>Checked dry-run plugin flow contract over approved summaries; no plugin loader, runtime, sandbox, or command executor is implemented.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-input-contract.example.json</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-input-contract.example.json</span></code></p></td>
 <td><p>planned input contract</p></td>
 <td><p>Checked summary-only plugin input shape for approved diagnostics and workflow-result summaries; no plugin runtime or input reader is implemented.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-trace-summary-input.example.json</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-trace-summary-input.example.json</span></code></p></td>
 <td><p>planned trace-summary input gate</p></td>
 <td><p>Checked summary-only trace metadata input shape for future plugin trace review; no trace importer, raw trace reader, plugin runtime, or input reader is implemented.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-output-contract.example.json</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-output-contract.example.json</span></code></p></td>
 <td><p>planned output contract</p></td>
 <td><p>Checked summary-only plugin output shape for diagnostic, report-panel, and report item previews; no plugin runtime or report writer is implemented.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-blocked-invocation-result.example.json</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-blocked-invocation-result.example.json</span></code></p></td>
 <td><p>planned blocked result</p></td>
 <td><p>Checked blocked, non-executed plugin invocation result; no plugin loader, runtime, sandbox, permission executor, input reader, or report writer is implemented.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-permission-model.example.json</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-permission-model.example.json</span></code></p></td>
 <td><p>planned permission map</p></td>
 <td><p>Checked plugin capability profiles, sandbox requirements, and approval gates; no plugin runtime, sandbox, or permission executor is implemented.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-audit-event.example.json</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-audit-event.example.json</span></code></p></td>
 <td><p>planned audit event shape</p></td>
 <td><p>Checked redacted audit-event shape for future approved plugin metadata review; no logger, runtime, or plugin loader is implemented.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-manifest-validation-result.example.json</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-manifest-validation-result.example.json</span></code></p></td>
 <td><p>planned manifest validation result</p></td>
 <td><p>Checked summary-only result shape for a future approved manifest validation request; no manifest reader, validator command, plugin runtime, or loader is implemented.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-capability-list.example.json</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-capability-list.example.json</span></code></p></td>
 <td><p>planned capability list</p></td>
 <td><p>Checked descriptor-only capability listing for future CLI/core and GUI consumers; no manifest reader, package reader, loader, runtime, dispatcher, compatibility claim, or marketplace flow is implemented.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-capability-detail.example.json</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-capability-detail.example.json</span></code></p></td>
 <td><p>planned capability detail</p></td>
 <td><p>Checked descriptor-only detail view for one selected listed capability; no manifest reader, package reader, loader, runtime, sandbox, dispatcher, compatibility claim, or marketplace flow is implemented.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-load-request.example.json</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-load-request.example.json</span></code></p></td>
 <td><p>planned load-request gate</p></td>
 <td><p>Checked blocked load-request shape for a future reviewed plugin loader gate; no loader, runtime, sandbox, manifest reader, package install, or dynamic code loading is implemented.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-host-session-state.example.json</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-host-session-state.example.json</span></code></p></td>
 <td><p>planned host/session state</p></td>
 <td><p>Checked blocked host/session state for a future reviewed plugin loader gate; no loader, runtime, sandbox, host API binding, capability dispatch, or command execution is implemented.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-invocation-request.example.json</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-invocation-request.example.json</span></code></p></td>
 <td><p>planned invocation request</p></td>
 <td><p>Checked blocked invocation-request shape for a future reviewed plugin capability dispatch gate; no loader, runtime, sandbox, host API binding, capability dispatch, or command execution is implemented.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-review-packet.example.json</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-review-packet.example.json</span></code></p></td>
 <td><p>planned review packet contract</p></td>
 <td><p>Checked summary-only review packet shape over plugin permission, input, output, blocked-result, manifest-validation, and audit summaries; no plugin loader, runtime, writer, package, marketplace, or repository mutation path is implemented.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lab_status</span></code> Tauri command</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lab_status</span></code> Tauri command</p></td>
 <td><p>available</p></td>
 <td><p>GUI reads the same core status struct.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">theme_contract</span></code> Tauri command</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">theme_contract</span></code> Tauri command</p></td>
 <td><p>experimental</p></td>
 <td><p>GUI reads the same core theme-token struct.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">workflow_descriptors</span></code> Tauri command</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">workflow_descriptors</span></code> Tauri command</p></td>
 <td><p>available</p></td>
 <td><p>GUI reads descriptor-only workflow metadata.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">workflow_proposals</span></code> Tauri command</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">workflow_proposals</span></code> Tauri command</p></td>
 <td><p>available</p></td>
 <td><p>GUI reads proposal-only workflow previews.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">workflow_result_summaries</span></code> Tauri command</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">workflow_result_summaries</span></code> Tauri command</p></td>
 <td><p>available</p></td>
 <td><p>GUI reads summary-only workflow result metadata.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">workflow_runner_status</span></code> Tauri command</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">workflow_runner_status</span></code> Tauri command</p></td>
 <td><p>available</p></td>
 <td><p>GUI reads disabled runner pilot status only.</p></td>
 </tr>
@@ -588,6 +608,20 @@ For command snippets and consumer handoff notes, see
 <a class="reference download internal" download="" href="_downloads/5de9abbe781d22e87bbcf9ba11bb84a3/json-boundary-inventory.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">scripts/fixtures/json-boundary-inventory.json</span></code></span></a>.
 It keeps the documented examples, shape checks, and Rust example tests
 aligned.</p>
+</section>
+<section id="json-boundary-health-summary">
+<h2>JSON boundary health summary<a class="headerlink" href="#json-boundary-health-summary" title="Link to this heading">¶</a></h2>
+<p><a class="reference download internal" download="" href="_downloads/b0e211132ea8cc610a7bedcd84e4de89/json-boundary-health-summary.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">docs/examples/json-boundary-health-summary.example.json</span></code></span></a>
+defines a checked descriptor-only health summary for the JSON boundary
+inventory, shape validator, and Rust example-test coverage. It records
+bounded counts, coverage cards, and drift gates for future docs, CI, and
+tool consumers.</p>
+<p>The fixture is not a dynamic inventory reader, validator runner, Rust
+test runner, report writer, adapter runtime, approval executor, or
+repository mutation path. It does not read local files, execute commands,
+write reports, inspect artifacts, call providers, use the network, touch
+hardware, access KV260, access FPGA repos, load models, push publicly,
+or control releases/tags.</p>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
@@ -633,59 +667,69 @@ aligned.</p>
 <td><p><code class="docutils literal notranslate"><span class="pre">pccx-lab</span> <span class="pre">run-approved-workflow</span> <span class="pre">&lt;proposal-id&gt;</span> <span class="pre">--format</span> <span class="pre">json</span></code>; <code class="docutils literal notranslate"><span class="pre">pccx_core::runner::blocked_workflow_result</span></code></p></td>
 <td><p>Shape validator, inventory test, Rust deserialize test</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sail-adoption-plan</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">json-boundary-health-summary</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/json-boundary-health-summary.example.json</span></code></p></td>
+<td><p>Reader only; planned descriptor-only inventory health summary over documented JSON boundary examples</p></td>
+<td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sail-adoption-plan</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-adoption-plan.example.json</span></code></p></td>
 <td><p>Reader only; planned descriptor-only Sail adoption boundary over approved CLI/core planning summaries</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sail-interface-boundary</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sail-interface-boundary</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-interface-boundary.example.json</span></code></p></td>
 <td><p>Reader only; planned descriptor-only Sail CLI/core handoff boundary over approved summaries</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sail-review-packet</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sail-review-packet</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-review-packet.example.json</span></code></p></td>
 <td><p>Reader only; planned summary-only Sail review packet over approved adoption, interface, workflow, verification, and report-gate summaries</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sail-evidence-manifest</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sail-evidence-manifest</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-evidence-manifest.example.json</span></code></p></td>
 <td><p>Reader only; planned summary-only Sail evidence manifest over approved adoption, interface, review, workflow, and verification-gate summaries</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sail-evidence-detail</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sail-evidence-detail</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-evidence-detail.example.json</span></code></p></td>
 <td><p>Reader only; planned descriptor-only Sail evidence detail over one approved evidence summary reference</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sail-model-readiness</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sail-model-readiness</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-model-readiness.example.json</span></code></p></td>
 <td><p>Reader only; planned descriptor-only Sail model-readiness gate over approved Sail boundary summaries</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sail-implementation-gap-matrix</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sail-implementation-gap-matrix</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-implementation-gap-matrix.example.json</span></code></p></td>
 <td><p>Reader only; planned descriptor-only Sail implementation gap matrix over approved Sail boundary summaries</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sail-source-intake-boundary</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sail-source-intake-boundary</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-source-intake-boundary.example.json</span></code></p></td>
 <td><p>Reader only; planned descriptor-only Sail source-intake boundary over approved Sail boundary summaries</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sail-source-intake-approval</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sail-source-intake-approval</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-source-intake-approval.example.json</span></code></p></td>
 <td><p>Reader only; planned descriptor-only Sail source-intake approval gate over approved Sail source-intake summaries</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sail-source-intake-result</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sail-source-intake-result</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-source-intake-result.example.json</span></code></p></td>
 <td><p>Reader only; planned descriptor-only Sail source-intake result boundary over approved Sail source-intake summaries</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sail-source-intake-handoff</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sail-source-intake-handoff</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-source-intake-handoff.example.json</span></code></p></td>
 <td><p>Reader only; planned descriptor-only Sail source-intake handoff summary over approved Sail source-intake summaries</p></td>
+<td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sail-source-intake-status-summary</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-source-intake-status-summary.example.json</span></code></p></td>
+<td><p>Reader only; planned descriptor-only Sail source-intake status summary over approved Sail source-intake summaries</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hybrid-strategy-plan</span></code></p></td>
@@ -733,49 +777,59 @@ aligned.</p>
 <td><p>Reader only; planned descriptor-only hybrid source-intake approval gate over approved hybrid source-intake summaries</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">launcher-diagnostics-handoff</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hybrid-source-intake-status-summary</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/hybrid-source-intake-status-summary.example.json</span></code></p></td>
+<td><p>Reader only; planned descriptor-only hybrid source-intake status summary over approved hybrid source-intake summaries</p></td>
+<td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">launcher-diagnostics-handoff</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/launcher-diagnostics-handoff.example.json</span></code></p></td>
 <td><p>Reader only; <code class="docutils literal notranslate"><span class="pre">pccx_core::diagnostics_handoff::validate_diagnostics_handoff_json</span></code></p></td>
 <td><p>Shape validator, inventory test, Rust reader validation test</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">launcher-device-session-status</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">launcher-device-session-status</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/launcher-device-session-status.example.json</span></code></p></td>
 <td><p>Reader only; <code class="docutils literal notranslate"><span class="pre">pccx_core::device_session_status::validate_device_session_status_json</span></code></p></td>
 <td><p>Shape validator, inventory test, Rust reader validation test</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mcp-read-only-tool-plan</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mcp-read-only-tool-plan</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-read-only-tool-plan.example.json</span></code></p></td>
 <td><p>Reader only; planned future MCP/tool adapter boundary over existing CLI/core commands</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mcp-tool-list</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mcp-tool-list</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-tool-list.example.json</span></code></p></td>
 <td><p>Reader only; planned descriptor-only MCP tool listing over approved boundary summaries</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mcp-tool-detail</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mcp-tool-detail</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-tool-detail.example.json</span></code></p></td>
 <td><p>Reader only; planned descriptor-only MCP tool detail over one listed tool summary</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mcp-sample-plan</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mcp-sample-plan</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-sample-plan.example.json</span></code></p></td>
 <td><p>Reader only; planned descriptor-only MCP sample plan over approved tool, flow, report, and permission summaries</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mcp-sample-result</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mcp-sample-result</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-sample-result.example.json</span></code></p></td>
 <td><p>Reader only; planned descriptor-only MCP sample result metadata over approved sample-plan, tool-detail, report, evidence, and blocked-result summaries</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mcp-sample-catalog</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mcp-sample-catalog</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-sample-catalog.example.json</span></code></p></td>
 <td><p>Reader only; planned descriptor-only MCP sample catalog over approved sample summaries</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mcp-sample-detail</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mcp-sample-detail</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-sample-detail.example.json</span></code></p></td>
 <td><p>Reader only; planned descriptor-only MCP sample detail over one listed sample summary</p></td>
+<td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mcp-sample-status-summary</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-sample-status-summary.example.json</span></code></p></td>
+<td><p>Reader only; planned descriptor-only MCP sample status summary over approved sample summaries</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mcp-read-only-analysis-flow</span></code></p></td>
@@ -878,67 +932,72 @@ aligned.</p>
 <td><p>Reader only; planned descriptor-only plugin sample detail over one listed sample summary</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-capability-list</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-sample-status-summary</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-sample-status-summary.example.json</span></code></p></td>
+<td><p>Reader only; planned descriptor-only plugin sample status summary over approved sample summaries</p></td>
+<td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-capability-list</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-capability-list.example.json</span></code></p></td>
 <td><p>Reader only; planned descriptor-only capability listing over approved plugin boundary summaries</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-capability-detail</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-capability-detail</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-capability-detail.example.json</span></code></p></td>
 <td><p>Reader only; planned descriptor-only plugin capability detail over one listed capability summary</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-load-request</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-load-request</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-load-request.example.json</span></code></p></td>
 <td><p>Reader only; planned blocked load-request gate over approved plugin manifest, permission, validation, audit, and review summaries</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-host-session-state</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-host-session-state</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-host-session-state.example.json</span></code></p></td>
 <td><p>Reader only; planned blocked host/session state over approved plugin plan, permission, validation, review, load-request, and audit summaries</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-invocation-request</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-invocation-request</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-invocation-request.example.json</span></code></p></td>
 <td><p>Reader only; planned blocked invocation-request gate over approved plugin permission, input, review, load-request, host/session, and audit summaries</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-review-packet</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-review-packet</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-review-packet.example.json</span></code></p></td>
 <td><p>Reader only; planned summary-only review packet shape over approved plugin permission, input, output, blocked-result, manifest-validation, and audit summaries</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-dry-run-flow</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-dry-run-flow</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-dry-run-flow.example.json</span></code></p></td>
 <td><p>Reader only; planned dry-run plugin flow contract over approved manifest, capability, diagnostics, and workflow-result summaries</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-input-contract</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-input-contract</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-input-contract.example.json</span></code></p></td>
 <td><p>Reader only; planned summary-only plugin input shape over approved diagnostics and workflow-result summaries</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-trace-summary-input</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-trace-summary-input</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-trace-summary-input.example.json</span></code></p></td>
 <td><p>Reader only; planned summary-only trace metadata input gate for future plugin trace review</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-output-contract</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-output-contract</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-output-contract.example.json</span></code></p></td>
 <td><p>Reader only; planned summary-only plugin output shape for future diagnostic, report-panel, and report item previews</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-blocked-invocation-result</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-blocked-invocation-result</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-blocked-invocation-result.example.json</span></code></p></td>
 <td><p>Reader only; planned blocked, non-executed plugin invocation result over approved summaries</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-permission-model</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-permission-model</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-permission-model.example.json</span></code></p></td>
 <td><p>Reader only; planned plugin permission profiles, sandbox requirements, and approval gates</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-audit-event</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">plugin-audit-event</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-audit-event.example.json</span></code></p></td>
 <td><p>Reader only; planned redacted audit-event shape for future approved plugin metadata review</p></td>
 <td><p>Shape validator, inventory test, Rust JSON-shape test</p></td>
@@ -1560,6 +1619,38 @@ handling, evidence publication, release flow, or marketplace-facing
 flow can exist. No runtime, hardware, marketplace, release, or API/ABI
 stability claim is made.</p>
 </section>
+<section id="sail-source-intake-status-summary-boundary">
+<h2>Sail source-intake status-summary boundary<a class="headerlink" href="#sail-source-intake-status-summary-boundary" title="Link to this heading">¶</a></h2>
+<p><a class="reference download internal" download="" href="_downloads/ad117b8aea453deb2e9b75f6258cea1a/sail-source-intake-status-summary.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">docs/examples/sail-source-intake-status-summary.example.json</span></code></span></a>
+defines the checked descriptor-only status summary shape for future
+Sail source-intake display. It links the source-intake boundary,
+approval, result, handoff, gap-matrix, and evidence-detail summaries,
+then records blocked status cards without executing approval, dispatching
+source intake, reading sources, materializing result payloads, generating
+public handoff text, or publishing a handoff.</p>
+<p>The fixture is summary-only metadata. It does not echo paths, include raw
+commands, include source paths, include source contents, include source
+hashes, include source metadata, include manifests, include Sail sources,
+include RTL sources, include ASTs, include generated models, include
+report bodies, include raw logs, include artifact paths, read local
+files, read repositories, read raw traces, read raw reports, write
+reports, write artifacts, run approval executors, dispatch source
+intake, run parsers, run compilers, generate models, execute models, run
+refinement checks, run proofs, run simulators, run verification, mutate
+repositories, publish public handoffs, call providers, use the network,
+touch hardware, access KV260, access FPGA repos, load models, upload
+telemetry, push publicly, or control releases/tags.</p>
+<p>The Sail source-intake status summary is approved for descriptor summary
+metadata only. Future implementation work still requires separate
+reviewed boundaries before any approval execution, source-intake
+dispatch, source reading, source path/content/hash/metadata reading,
+manifest reading, AST reading, generated-model reading, parser/compiler
+behavior, model generation, model execution, refinement, proof,
+verification, hardware control, result payload, handoff payload, public
+handoff text, report output, artifact handling, repository read/mutation,
+release flow, or marketplace-facing flow can exist. No runtime, hardware,
+marketplace, release, or API/ABI stability claim is made.</p>
+</section>
 <section id="hybrid-strategy-plan-boundary">
 <h2>Hybrid strategy plan boundary<a class="headerlink" href="#hybrid-strategy-plan-boundary" title="Link to this heading">¶</a></h2>
 <p><a class="reference download internal" download="" href="_downloads/09a4cc2a00c5e7ad70fa191ca3aaf8fc/hybrid-strategy-plan.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">docs/examples/hybrid-strategy-plan.example.json</span></code></span></a>
@@ -1872,6 +1963,40 @@ evidence publication, release flow, or marketplace-facing flow can
 exist. No runtime, hardware, marketplace, release, or API/ABI stability
 claim is made.</p>
 </section>
+<section id="hybrid-source-intake-status-summary-boundary">
+<h2>Hybrid source-intake status-summary boundary<a class="headerlink" href="#hybrid-source-intake-status-summary-boundary" title="Link to this heading">¶</a></h2>
+<p><a class="reference download internal" download="" href="_downloads/0fbf697cbce339ef245d96750eb207c5/hybrid-source-intake-status-summary.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">docs/examples/hybrid-source-intake-status-summary.example.json</span></code></span></a>
+defines the checked descriptor-only status summary shape for future
+hybrid source-intake display. It links the source-intake boundary,
+approval, result, handoff, gap-matrix, and evidence-detail summaries,
+then records blocked status cards without executing approval, dispatching
+source intake, reading sources, materializing result payloads, generating
+public handoff text, or publishing a handoff.</p>
+<p>The fixture is summary-only metadata. It does not echo paths, include raw
+commands, include source paths, include source contents, include source
+hashes, include source metadata, include manifests, include C++ sources,
+include SystemVerilog sources, include custom-script sources, include
+grammar content, include parser output, include compiler output, include
+runtime plans, include script execution output, include simulator output,
+include verification output, include report bodies, include raw logs,
+include artifact paths, read local files, read repositories, read raw
+traces, read raw reports, write reports, write artifacts, run approval
+executors, dispatch source intake, run parsers, run compilers, execute
+runtimes, execute scripts, run simulators, run verification, mutate
+repositories, publish public handoffs, call providers, use the network,
+touch hardware, access KV260, access FPGA repos, load models, upload
+telemetry, push publicly, or control releases/tags.</p>
+<p>The hybrid source-intake status summary is approved for descriptor
+summary metadata only. Future implementation work still requires
+separate reviewed boundaries before any approval execution, source-intake
+dispatch, source reading, source path/content/hash/metadata reading,
+manifest reading, parser/compiler behavior, runtime behavior, script
+execution, simulator execution, verification, hardware control, read or
+write reports, read or write artifacts, execute commands, read
+repositories, mutate repositories, publish public text, call providers,
+use the network, touch hardware, access KV260, access FPGA repos, load
+models, upload telemetry, push publicly, or control releases/tags.</p>
+</section>
 <section id="analyze-command">
 <h2>analyze command<a class="headerlink" href="#analyze-command" title="Link to this heading">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pccx</span><span class="o">-</span><span class="n">lab</span> <span class="n">analyze</span> <span class="o">&lt;</span><span class="n">path</span><span class="o">&gt;</span> <span class="p">[</span><span class="o">--</span><span class="nb">format</span> <span class="n">json</span><span class="p">]</span>
@@ -2175,6 +2300,32 @@ approval execution, audit persistence, payload reading, report
 reading/writing, artifact reading/writing, or repository mutation. No
 runtime, marketplace, hardware, throughput, timing-closure, release, or
 API/ABI stability claim is made.</p>
+</section>
+<section id="mcp-sample-status-summary-boundary">
+<h2>MCP sample-status-summary boundary<a class="headerlink" href="#mcp-sample-status-summary-boundary" title="Link to this heading">¶</a></h2>
+<p><a class="reference download internal" download="" href="_downloads/8d66ead3d18e4204fc22b0376e1a45c5/mcp-sample-status-summary.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">docs/examples/mcp-sample-status-summary.example.json</span></code></span></a>
+defines the checked descriptor-only status summary shape for planned
+read-only MCP samples. It links the sample-plan, sample-result,
+sample-catalog, sample-detail, selected tool detail, and permission
+model summaries, then records blocked status cards without discovering
+files, starting an MCP server or client, opening a transport, executing
+commands, or invoking tools.</p>
+<p>The fixture is summary-only metadata. It does not echo paths, include
+raw commands, read local files, read repositories, read raw traces, read
+raw reports, read raw logs, read reports, read artifacts, include
+lab-status payloads, include workflow result content, read result
+payloads, read or write reports, read or write artifacts, create audit
+logs, execute commands, invoke tools, mutate repositories, call
+providers, use the network, touch hardware, access KV260, access FPGA
+repos, load models, upload telemetry, push publicly, or control
+releases/tags.</p>
+<p>The MCP sample status summary is approved for descriptor summary
+metadata only. It is not approved for sample discovery, client
+implementation, transport, runtime, command execution, invocation,
+permission execution, approval execution, audit persistence, payload
+reading, report reading/writing, artifact reading/writing, or repository
+mutation. No runtime, marketplace, hardware, throughput, timing-closure,
+release, or API/ABI stability claim is made.</p>
 </section>
 <section id="mcp-read-only-analysis-flow">
 <h2>MCP read-only analysis flow<a class="headerlink" href="#mcp-read-only-analysis-flow" title="Link to this heading">¶</a></h2>
@@ -2608,6 +2759,36 @@ dispatch, invocation, permission execution, input reading, payload
 reading, report reading/writing, artifact reading/writing, or repository
 mutation. No plugin ABI stability, compatibility promise, marketplace
 claim, runtime claim, or hardware claim is made.</p>
+</section>
+<section id="plugin-sample-status-summary-boundary">
+<h2>plugin sample-status-summary boundary<a class="headerlink" href="#plugin-sample-status-summary-boundary" title="Link to this heading">¶</a></h2>
+<p><a class="reference download internal" download="" href="_downloads/96deb83695476bfc472eb853f6b12800/plugin-sample-status-summary.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">docs/examples/plugin-sample-status-summary.example.json</span></code></span></a>
+defines the checked descriptor-only status summary shape for planned
+plugin samples. It links the sample-plan, sample-result, sample-catalog,
+sample-detail, selected capability detail, and permission model
+summaries, then records blocked status cards without discovering files,
+reading manifests, reading packages, reading source, loading plugins,
+starting a sandbox, dispatching capabilities, or invoking samples.</p>
+<p>The fixture is summary-only metadata. It does not echo paths, include raw
+commands, include manifest contents, include package contents, include
+source code, include diagnostics payloads, include workflow result
+content, include sample result payloads, read local files, read
+repositories, read raw traces, read raw reports, read raw logs, read
+reports, read artifacts, write reports, write artifacts, load plugin
+code, start a sandbox, bind a host API, dispatch capabilities, invoke
+plugins, execute commands, mutate repositories, install or distribute
+packages, publish marketplace artifacts, call providers, use the
+network, touch hardware, access KV260, access FPGA repos, load models,
+upload telemetry, push publicly, or control releases/tags.</p>
+<p>The plugin sample status summary is approved for descriptor summary
+metadata only. It is not approved for sample discovery,
+manifest/package/source reading, code generation, package build, loading,
+sandbox start, dispatch, invocation, permission execution, approval
+execution, audit persistence, input reading, payload reading, report
+reading/writing, artifact reading/writing, repository mutation, package
+distribution, or marketplace publication. No plugin ABI stability,
+compatibility promise, marketplace claim, runtime claim, hardware claim,
+or API/ABI stability claim is made.</p>
 </section>
 <section id="plugin-manifest-validation-result-boundary">
 <h2>plugin manifest validation result boundary<a class="headerlink" href="#plugin-manifest-validation-result-boundary" title="Link to this heading">¶</a></h2>
@@ -3055,6 +3236,7 @@ not a separate workflow engine or a separate product surface.</p>
 <li><a class="reference internal" href="#principle">Principle</a></li>
 <li><a class="reference internal" href="#current-boundary-artifacts">Current boundary artifacts</a></li>
 <li><a class="reference internal" href="#json-example-inventory">JSON example inventory</a></li>
+<li><a class="reference internal" href="#json-boundary-health-summary">JSON boundary health summary</a></li>
 <li><a class="reference internal" href="#current-cross-repo-direction">Current cross-repo direction</a></li>
 <li><a class="reference internal" href="#local-workflow-panel-boundary">Local workflow panel boundary</a></li>
 <li><a class="reference internal" href="#status-command">status command</a></li>
@@ -3074,6 +3256,7 @@ not a separate workflow engine or a separate product surface.</p>
 <li><a class="reference internal" href="#sail-source-intake-approval-boundary">Sail source-intake approval boundary</a></li>
 <li><a class="reference internal" href="#sail-source-intake-result-boundary">Sail source-intake result boundary</a></li>
 <li><a class="reference internal" href="#sail-source-intake-handoff-boundary">Sail source-intake handoff boundary</a></li>
+<li><a class="reference internal" href="#sail-source-intake-status-summary-boundary">Sail source-intake status-summary boundary</a></li>
 <li><a class="reference internal" href="#hybrid-strategy-plan-boundary">Hybrid strategy plan boundary</a></li>
 <li><a class="reference internal" href="#hybrid-interface-boundary">Hybrid interface boundary</a></li>
 <li><a class="reference internal" href="#hybrid-review-packet">Hybrid review packet</a></li>
@@ -3085,6 +3268,7 @@ not a separate workflow engine or a separate product surface.</p>
 <li><a class="reference internal" href="#hybrid-source-intake-approval-boundary">Hybrid source-intake approval boundary</a></li>
 <li><a class="reference internal" href="#hybrid-source-intake-result-boundary">Hybrid source-intake result boundary</a></li>
 <li><a class="reference internal" href="#hybrid-source-intake-handoff-boundary">Hybrid source-intake handoff boundary</a></li>
+<li><a class="reference internal" href="#hybrid-source-intake-status-summary-boundary">Hybrid source-intake status-summary boundary</a></li>
 <li><a class="reference internal" href="#analyze-command">analyze command</a></li>
 <li><a class="reference internal" href="#diagnostics-handoff-command">diagnostics-handoff command</a></li>
 <li><a class="reference internal" href="#device-session-status-command">device-session-status command</a></li>
@@ -3095,6 +3279,7 @@ not a separate workflow engine or a separate product surface.</p>
 <li><a class="reference internal" href="#mcp-sample-result-boundary">MCP sample-result boundary</a></li>
 <li><a class="reference internal" href="#mcp-sample-catalog-boundary">MCP sample-catalog boundary</a></li>
 <li><a class="reference internal" href="#mcp-sample-detail-boundary">MCP sample-detail boundary</a></li>
+<li><a class="reference internal" href="#mcp-sample-status-summary-boundary">MCP sample-status-summary boundary</a></li>
 <li><a class="reference internal" href="#mcp-read-only-analysis-flow">MCP read-only analysis flow</a></li>
 <li><a class="reference internal" href="#mcp-read-only-report-contract">MCP read-only report contract</a></li>
 <li><a class="reference internal" href="#mcp-verification-run-comparison-boundary">MCP verification-run comparison boundary</a></li>
@@ -3114,6 +3299,7 @@ not a separate workflow engine or a separate product surface.</p>
 <li><a class="reference internal" href="#plugin-sample-result-boundary">plugin sample-result boundary</a></li>
 <li><a class="reference internal" href="#plugin-sample-catalog-boundary">plugin sample-catalog boundary</a></li>
 <li><a class="reference internal" href="#plugin-sample-detail-boundary">plugin sample-detail boundary</a></li>
+<li><a class="reference internal" href="#plugin-sample-status-summary-boundary">plugin sample-status-summary boundary</a></li>
 <li><a class="reference internal" href="#plugin-manifest-validation-result-boundary">plugin manifest validation result boundary</a></li>
 <li><a class="reference internal" href="#plugin-capability-list-boundary">plugin capability list boundary</a></li>
 <li><a class="reference internal" href="#plugin-capability-detail-boundary">plugin capability-detail boundary</a></li>

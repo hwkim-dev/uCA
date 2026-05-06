@@ -15,7 +15,7 @@
 <meta name="description" content="This page documents the Vivado build flow for the pccx v002 NPU core. All build scripts reside under hw/vivado/; build.sh is the single entry point. Source files are managed in the pccxai/pccx-FPGA..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"Vivado Build","name":"Vivado Build","url":"https://pccxai.github.io/pccx/en/docs/v002/Build/index.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/en/docs/v002/Build/index.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-05","dateModified":"2026-05-05","description":"pccx documentation page: Vivado Build. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="Devices" href="../../Devices/index.html"><link rel="prev" title="Verification" href="../Verification/index.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"Vivado Build","name":"Vivado Build","url":"https://pccxai.github.io/pccx/en/docs/v002/Build/index.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/en/docs/v002/Build/index.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-06","dateModified":"2026-05-06","description":"pccx documentation page: Vivado Build. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="Devices" href="../../Devices/index.html"><link rel="prev" title="Verification" href="../Verification/index.html">
         <link rel="canonical" href="https://pccxai.github.io/pccx/docs/v002/Build/index.html">
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
@@ -351,6 +351,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../RTL/frontend.html">NPU Frontend Modules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/memory_l2.html">L2 Cache (URAM)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/memory_dispatch.html">Memory Dispatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../RTL/shape_const_ram.html">Shape Constant RAM</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/preprocess.html">PREPROCESS RTL Reference</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/packages.html">Compile-Priority Packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/library.html">Shared Library</a></li>
@@ -585,7 +586,7 @@ it performs one-to-one signal expansion only.</p>
 <p>The external interface exposed by the wrapper is as follows.</p>
 <div class="table-wrapper docutils container" id="tbl-wrapper-interfaces">
 <table class="docutils align-default" id="tbl-wrapper-interfaces">
-<caption><span class="caption-number">Table 8 </span><span class="caption-text">npu_core_wrapper external interfaces</span><a class="headerlink" href="#tbl-wrapper-interfaces" title="Link to this table">¶</a></caption>
+<caption><span class="caption-number">Table 10 </span><span class="caption-text">npu_core_wrapper external interfaces</span><a class="headerlink" href="#tbl-wrapper-interfaces" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Port group</p></th>
 <th class="head"><p>Direction</p></th>
@@ -639,7 +640,7 @@ design that wraps this core.</p>
 <p>Two clock domains are declared.</p>
 <div class="table-wrapper docutils container" id="tbl-clock-domains">
 <table class="docutils align-default" id="tbl-clock-domains">
-<caption><span class="caption-number">Table 9 </span><span class="caption-text">Clock domain definitions</span><a class="headerlink" href="#tbl-clock-domains" title="Link to this table">¶</a></caption>
+<caption><span class="caption-number">Table 11 </span><span class="caption-text">Clock domain definitions</span><a class="headerlink" href="#tbl-clock-domains" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Clock name</p></th>
 <th class="head"><p>Period</p></th>
@@ -704,7 +705,7 @@ rtl/Constants/compilePriority_Order/E_obs_pkg/perf_counter_pkg.sv
 <p>The full file is organized into the following sections.</p>
 <div class="table-wrapper docutils container" id="tbl-filelist-sections">
 <table class="docutils align-default" id="tbl-filelist-sections">
-<caption><span class="caption-number">Table 10 </span><span class="caption-text">filelist.f section structure</span><a class="headerlink" href="#tbl-filelist-sections" title="Link to this table">¶</a></caption>
+<caption><span class="caption-number">Table 12 </span><span class="caption-text">filelist.f section structure</span><a class="headerlink" href="#tbl-filelist-sections" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Section</p></th>
 <th class="head"><p>Contents</p></th>
@@ -807,7 +808,7 @@ rtl/Constants/compilePriority_Order/E_obs_pkg/perf_counter_pkg.sv
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2026-05-05</div>
+              Last updated on 2026-05-06</div>
           </div>
           <div class="right-details">
             <div class="icons">

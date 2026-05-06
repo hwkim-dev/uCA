@@ -12,11 +12,28 @@ novelty 가 등장하면서 별도 RTL 저장소로 옮겨가는 단계다.
 
 - `pccx-FPGA-NPU-LLM-kv260` 의 남은 RTL 통합 마무리
 - v002.0 릴리스 라인의 A–F 베이스라인 단계
+  - 진행 중: Phase 3 step 1 (shape constant RAM 통합,
+    {doc}`v002/RTL/shape_const_ram` 참고) 및 Stage C 정리
+    (카운터 / 상수 / `GLOBAL_CONST` 합치기)
 - `pccx-lab` 기반 trace-driven verification
 - Sail execute 증분 작업
 - xsim / KV260 베이스라인 bring-up 로그 정리
+- 릴리스 증거 체크리스트 (`pccx-FPGA-NPU-LLM-kv260` 의
+  `docs/RELEASE_EVIDENCE_CHECKLIST.md`) 가 타이밍 / 처리량 /
+  bring-up 표현이 이 문서 사이트에 등장하기 전 단계의 게이트 역할
 - 이 릴리스 라인의 처리량은 측정만 (measured-only) — 검증 근거가
   공개되기 전까지 타이밍이나 처리량을 완료 상태로 표현하지 않음
+
+```{figure} ../../_static/diagrams/v002_evidence_flow.svg
+:name: fig-v002-evidence-flow-ko
+:alt: pccx v002 릴리스 증거 흐름
+
+RTL 소스 → xsim 테스트벤치 → synthesis / implementation →
+KV260 bring-up `[HW]` → 런타임 `[HW]` → 릴리스 증거 체크리스트
+(`RELEASE_EVIDENCE_CHECKLIST.md`) 가 태그 게이트 역할. 하드웨어
+게이트 단계는 체크리스트가 게이트를 통과시킨 시점에만 이 문서
+사이트에서 수치로 인용된다.
+```
 
 추적 이슈: [pccxai/pccx#28 — v0.2.0 umbrella][v020].
 

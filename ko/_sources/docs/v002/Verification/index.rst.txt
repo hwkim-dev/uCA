@@ -101,6 +101,25 @@
   스크립트, :doc:`호스트 C 드라이버 </docs/v002/Drivers/api>` 대비
   골든 트레이스 비교.
 
+.. admonition:: 외부 도구 인터페이스 — 상태 표면 boundary
+   :class: note
+
+   verification 워크플로는 외부 도구가 free-form 로그를 파싱하지 않고도
+   소비할 수 있는 JSON status summary 를 점진적으로 노출하고 있다.
+   해당 boundary 는 이 문서 사이트 외부에 있다:
+
+   * **pccx-lab** — JSON / Sail / hybrid source-intake status summary
+     boundary, 그리고 plugin 및 외부 도구 인터페이스 샘플 boundary.
+     v002.0 verification evidence 가 공개되기 전까지는 안정성을
+     보장하지 않는 진화 중 boundary 로 취급한다.
+   * **systemverilog-ide** — module-graph 보고서 (path / edge /
+     port connection audit / reachability / span / file-layout /
+     order) 를 별도 boundary 로 노출. 리뷰용으로 소비되며 pccx 문서
+     표면의 일부는 아니다.
+
+   이 boundary 들은 추적성을 위한 참조이며, 그 자체로 verification
+   증거가 되지 않는다.
+
 .. seealso::
 
    :doc:`/docs/v002/Architecture/index`

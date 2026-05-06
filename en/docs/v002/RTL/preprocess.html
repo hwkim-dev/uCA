@@ -15,7 +15,7 @@
 <meta name="description" content="The PREPROCESS subdirectory contains five SystemVerilog modules. barrel_shifter_BF16.sv is not present in the current working tree. preprocess_fmap: hw/rtl/PREPROCESS/preprocess_fmap.sv, Receives a..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"PREPROCESS RTL Reference","name":"PREPROCESS RTL Reference","url":"https://pccxai.github.io/pccx/en/docs/v002/RTL/preprocess.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/en/docs/v002/RTL/preprocess.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-05","dateModified":"2026-05-05","description":"pccx documentation page: PREPROCESS RTL Reference. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="Compile-Priority Packages" href="packages.html"><link rel="prev" title="Memory Dispatch" href="memory_dispatch.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"PREPROCESS RTL Reference","name":"PREPROCESS RTL Reference","url":"https://pccxai.github.io/pccx/en/docs/v002/RTL/preprocess.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/en/docs/v002/RTL/preprocess.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-06","dateModified":"2026-05-06","description":"pccx documentation page: PREPROCESS RTL Reference. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="Compile-Priority Packages" href="packages.html"><link rel="prev" title="Shape Constant RAM" href="shape_const_ram.html">
         <link rel="canonical" href="https://pccxai.github.io/pccx/docs/v002/RTL/preprocess.html">
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
@@ -351,6 +351,7 @@
 <li class="toctree-l3"><a class="reference internal" href="frontend.html">NPU Frontend Modules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="memory_l2.html">L2 Cache (URAM)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="memory_dispatch.html">Memory Dispatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shape_const_ram.html">Shape Constant RAM</a></li>
 <li class="toctree-l3 current current-page"><a class="current reference internal" href="#">PREPROCESS RTL Reference</a></li>
 <li class="toctree-l3"><a class="reference internal" href="packages.html">Compile-Priority Packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="library.html">Shared Library</a></li>
@@ -647,14 +648,14 @@ every cycle where <code class="docutils literal notranslate"><span class="pre">r
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="memory_dispatch.html">
+          <a class="prev-page" href="shape_const_ram.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Memory Dispatch</div>
+                <div class="title">Shape Constant RAM</div>
                 
               </div>
             </a>
@@ -667,7 +668,7 @@ every cycle where <code class="docutils literal notranslate"><span class="pre">r
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2026-05-05</div>
+              Last updated on 2026-05-06</div>
           </div>
           <div class="right-details">
             <div class="icons">

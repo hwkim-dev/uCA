@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 200" role="img">
+  <title>pccx v002 — release evidence flow (RTL → verification → release gate)</title>
+
+  <defs>
+    <marker id="arr-evf" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#000000"/>
+    </marker>
+    <style><![CDATA[
+      text { fill: #000000; font: 400 12px ui-sans-serif, system-ui, sans-serif; }
+      .t-title { font-weight: 600; font-size: 13px; text-anchor: middle; }
+      .t-spec  { font-size: 10px; fill: #444444; text-anchor: middle; }
+
+      .block-mem  { fill: #e2efd8; stroke: #000000; stroke-width: 0.8; }
+      .block-ctrl { fill: #fce5c6; stroke: #000000; stroke-width: 0.8; }
+      .block-host { fill: #dae7f4; stroke: #000000; stroke-width: 0.8; }
+      .line       { stroke: #000000; stroke-width: 1.2; fill: none; marker-end: url(#arr-evf); }
+    ]]></style>
+  </defs>
+
+  <!-- White canvas -->
+  <rect x="0" y="0" width="880" height="200" fill="#ffffff"/>
+
+  <!-- 1. RTL source -->
+  <rect class="block-mem" x="20" y="60" width="120" height="70"/>
+  <text class="t-title" x="80" y="86">RTL source</text>
+  <text class="t-spec"  x="80" y="104">xvlog</text>
+  <text class="t-spec"  x="80" y="118">smoke testbench</text>
+
+  <!-- 2. xsim TBs -->
+  <rect class="block-mem" x="160" y="60" width="120" height="70"/>
+  <text class="t-title" x="220" y="86">xsim TBs</text>
+  <text class="t-spec"  x="220" y="104">per-TB PASS/FAIL</text>
+  <text class="t-spec"  x="220" y="118">.pccx trace</text>
+
+  <!-- 3. Synth + Impl -->
+  <rect class="block-mem" x="300" y="60" width="120" height="70"/>
+  <text class="t-title" x="360" y="86">Synth + Impl</text>
+  <text class="t-spec"  x="360" y="104">utilization</text>
+  <text class="t-spec"  x="360" y="118">post-route timing</text>
+
+  <!-- 4. KV260 bring-up [HW] -->
+  <rect class="block-host" x="440" y="60" width="120" height="70"/>
+  <text class="t-title" x="500" y="86">KV260 bring-up</text>
+  <text class="t-spec"  x="500" y="104">[HW] gated</text>
+  <text class="t-spec"  x="500" y="118">UART / JTAG log</text>
+
+  <!-- 5. Runtime [HW] -->
+  <rect class="block-host" x="580" y="60" width="120" height="70"/>
+  <text class="t-title" x="640" y="86">Runtime</text>
+  <text class="t-spec"  x="640" y="104">[HW] gated</text>
+  <text class="t-spec"  x="640" y="118">measured tok/s</text>
+
+  <!-- 6. Release evidence checklist (tag gate) -->
+  <rect class="block-ctrl" x="720" y="40" width="140" height="110"/>
+  <text class="t-title" x="790" y="68">Release</text>
+  <text class="t-title" x="790" y="84">evidence</text>
+  <text class="t-title" x="790" y="100">checklist</text>
+  <text class="t-spec"  x="790" y="120">RELEASE_EVIDENCE_</text>
+  <text class="t-spec"  x="790" y="134">CHECKLIST.md</text>
+  <text class="t-spec"  x="790" y="150">→ tag gate</text>
+
+  <!-- arrows: 1 → 2 → 3 → 4 → 5 → 6 -->
+  <line class="line" x1="140" y1="95" x2="160" y2="95"/>
+  <line class="line" x1="280" y1="95" x2="300" y2="95"/>
+  <line class="line" x1="420" y1="95" x2="440" y2="95"/>
+  <line class="line" x1="560" y1="95" x2="580" y2="95"/>
+  <line class="line" x1="700" y1="95" x2="720" y2="95"/>
+
+</svg>

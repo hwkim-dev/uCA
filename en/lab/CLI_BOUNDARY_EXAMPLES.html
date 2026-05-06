@@ -301,6 +301,27 @@ wrappers backed by <code class="docutils literal notranslate"><span class="pre">
 <p>No stable plugin ABI is promised. No provider, launcher, editor, or MCP
 runtime is implemented by these examples.</p>
 </section>
+<section id="json-boundary-health">
+<h2>JSON Boundary Health<a class="headerlink" href="#json-boundary-health" title="Link to this heading">¶</a></h2>
+<p>Full fixture:
+<a class="reference download internal" download="" href="_downloads/b0e211132ea8cc610a7bedcd84e4de89/json-boundary-health-summary.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">json-boundary-health-summary.example.json</span></code></span></a></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;schemaVersion&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pccx.lab.json-boundary-health-summary.v0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;summaryState&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;descriptor_only&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;inventoryState&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;checked_fixture&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;coverageSummary&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;summaryKind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;json_boundary_inventory_health&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;overallState&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;checked&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;driftState&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;no_known_drift_in_fixture&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Use this fixture to display JSON boundary inventory coverage and drift
+gates. It does not read inventory files dynamically, run validators,
+run Rust tests, write reports, mutate repositories, or start an adapter
+runtime.</p>
+</section>
 <section id="status">
 <h2>Status<a class="headerlink" href="#status" title="Link to this heading">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pccx-lab<span class="w"> </span>status<span class="w"> </span>--format<span class="w"> </span>json
@@ -1245,6 +1266,7 @@ logs, upload telemetry, or write files.</p>
             <ul>
 <li><a class="reference internal" href="#">pccx-lab CLI boundary examples</a><ul>
 <li><a class="reference internal" href="#consumer-rule">Consumer rule</a></li>
+<li><a class="reference internal" href="#json-boundary-health">JSON Boundary Health</a></li>
 <li><a class="reference internal" href="#status">Status</a></li>
 <li><a class="reference internal" href="#theme">Theme</a></li>
 <li><a class="reference internal" href="#workflow-descriptors">Workflow Descriptors</a></li>

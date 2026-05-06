@@ -23,6 +23,7 @@ separate workflow logic island.
 | `pccx-lab workflow-proposals --format json` | available | Proposal-only workflow previews from `pccx-core`. |
 | `pccx-lab workflow-results --format json` | available | Summary-only workflow result metadata from `pccx-core`. |
 | `pccx-lab run-approved-workflow <proposal-id> --format json` | disabled-by-default pilot | Fixed allowlisted runner pilot; blocked unless explicitly enabled. |
+| `docs/examples/json-boundary-health-summary.example.json` | planned inventory health boundary | Checked descriptor-only JSON boundary inventory health summary; no inventory reader, validator runner, Rust test runner, report writer, adapter runtime, or repository mutation path is implemented. |
 | `docs/examples/sail-adoption-plan.example.json` | planned Sail adoption boundary | Checked descriptor-only Sail adoption plan for future reference-model review; no Sail source reader, parser, compiler, model execution, refinement check, proof path, report writer, artifact writer, or hardware path is implemented. |
 | `docs/examples/sail-interface-boundary.example.json` | planned Sail interface boundary | Checked descriptor-only Sail CLI/core handoff boundary over approved summaries; no Sail source reader, parser, compiler, AST reader, model execution, refinement check, proof path, report reader/writer, artifact reader/writer, or hardware path is implemented. |
 | `docs/examples/sail-review-packet.example.json` | planned Sail review packet | Checked summary-only Sail review packet over approved adoption, interface, workflow, verification, and report-gate summaries; no Sail source reader, RTL source reader, AST reader, parser, compiler, model generator, model execution, refinement check, proof path, report reader/writer, artifact reader/writer, or hardware path is implemented. |
@@ -34,6 +35,7 @@ separate workflow logic island.
 | `docs/examples/sail-source-intake-approval.example.json` | planned Sail source intake approval gate | Checked descriptor-only Sail source-intake approval gate over approved Sail boundary summaries; no approval executor, source-intake dispatch, Sail source reader, RTL source reader, source path/content/hash/metadata reader, manifest reader, AST reader, generated-model reader, parser, compiler, model generator, model execution, refinement check, proof path, verification run, report reader/writer, artifact reader/writer, command runner, repository reader, release flow, marketplace flow, or hardware path is implemented. |
 | `docs/examples/sail-source-intake-result.example.json` | planned Sail source intake result boundary | Checked descriptor-only Sail source-intake result boundary over approved Sail boundary summaries; no approval executor, source-intake dispatch, Sail source reader, RTL source reader, source path/content/hash/metadata reader, manifest reader, AST reader, generated-model reader, parser, compiler, model generator, model execution, refinement check, proof path, verification run, report reader/writer, artifact reader/writer, command runner, repository reader, release flow, marketplace flow, or hardware path is implemented. |
 | `docs/examples/sail-source-intake-handoff.example.json` | planned Sail source intake handoff boundary | Checked descriptor-only Sail source-intake handoff boundary over approved Sail boundary summaries; no approval executor, source-intake dispatch, Sail source reader, RTL source reader, source path/content/hash/metadata reader, manifest reader, AST reader, generated-model reader, parser, compiler, model generator, model execution, refinement check, proof path, verification run, report reader/writer, artifact reader/writer, command runner, repository reader, public handoff publication, release flow, marketplace flow, or hardware path is implemented. |
+| `docs/examples/sail-source-intake-status-summary.example.json` | planned Sail source intake status summary | Checked descriptor-only Sail source-intake status summary over approved source-intake boundary, approval, result, handoff, gap-matrix, and evidence-detail summaries; no approval executor, source-intake dispatch, Sail source reader, RTL source reader, source path/content/hash/metadata reader, manifest reader, AST reader, generated-model reader, parser, compiler, model generator, model execution, refinement check, proof path, verification run, report reader/writer, artifact reader/writer, command runner, repository reader, public handoff publication, release flow, marketplace flow, or hardware path is implemented. |
 | `docs/examples/hybrid-strategy-plan.example.json` | planned hybrid strategy boundary | Checked descriptor-only C++/SystemVerilog and custom-script control plan; no source reader, grammar reader, parser, compiler, runtime, simulator runner, verification run, report writer, artifact writer, or hardware-control path is implemented. |
 | `docs/examples/hybrid-interface-boundary.example.json` | planned hybrid interface boundary | Checked descriptor-only hybrid CLI/core handoff boundary over approved summaries; no C++/SystemVerilog/custom-script source reader, grammar reader, parser, compiler, runtime, script execution, simulator runner, verification run, report reader/writer, artifact reader/writer, or hardware-control path is implemented. |
 | `docs/examples/hybrid-review-packet.example.json` | planned hybrid review packet | Checked summary-only hybrid review packet over approved strategy, interface, workflow, verification, and report-gate summaries; no source reader, grammar reader, parser, compiler, runtime, script execution, simulator runner, verification run, report reader/writer, artifact reader/writer, or hardware-control path is implemented. |
@@ -43,6 +45,7 @@ separate workflow logic island.
 | `docs/examples/hybrid-implementation-gap-matrix.example.json` | planned hybrid implementation gap matrix | Checked descriptor-only hybrid implementation gap matrix over approved hybrid boundary summaries; no source reader, grammar reader, parser, compiler, runtime, script execution, simulator runner, verification run, report reader/writer, artifact reader/writer, command runner, repository reader, release flow, marketplace flow, or hardware-control path is implemented. |
 | `docs/examples/hybrid-source-intake-boundary.example.json` | planned hybrid source intake boundary | Checked descriptor-only hybrid source-intake boundary over approved hybrid boundary summaries; no C++/SystemVerilog/custom-script source reader, grammar reader, source path/content/hash/metadata reader, manifest reader, parser, compiler, runtime, script execution, simulator runner, verification run, report reader/writer, artifact reader/writer, command runner, repository reader, release flow, marketplace flow, or hardware-control path is implemented. |
 | `docs/examples/hybrid-source-intake-approval.example.json` | planned hybrid source intake approval gate | Checked descriptor-only hybrid source-intake approval gate over approved hybrid boundary summaries; no approval executor, source-intake dispatch, C++/SystemVerilog/custom-script source reader, grammar reader, source path/content/hash/metadata reader, manifest reader, parser, compiler, runtime, script execution, simulator runner, verification run, report reader/writer, artifact reader/writer, command runner, repository reader, release flow, marketplace flow, or hardware-control path is implemented. |
+| `docs/examples/hybrid-source-intake-status-summary.example.json` | planned hybrid source intake status summary | Checked descriptor-only hybrid source-intake status summary over approved source-intake boundary, approval, result, handoff, gap-matrix, and evidence-detail summaries; no approval executor, source-intake dispatch, C++/SystemVerilog/custom-script source reader, grammar reader, source path/content/hash/metadata reader, manifest reader, parser, compiler, runtime, script execution, simulator runner, verification run, report reader/writer, artifact reader/writer, command runner, repository reader, public handoff publication, release flow, marketplace flow, or hardware-control path is implemented. |
 | `pccx-lab analyze <file> --format json` | early scaffold | File-shape diagnostics only. |
 | `pccx-lab diagnostics-handoff validate --file <path> --format json` | read-only validator | Launcher diagnostics handoff schema reader. |
 | `pccx-lab device-session-status validate --file <path> --format json` | read-only validator | Launcher device/session status schema reader. |
@@ -53,6 +56,7 @@ separate workflow logic island.
 | `docs/examples/mcp-sample-result.example.json` | planned sample result | Checked descriptor-only MCP sample result metadata over approved sample-plan, tool-detail, report, evidence, and blocked-result summaries; no server, client, runtime, transport, command executor, result reader, report reader/writer, artifact reader/writer, or tool invocation path is implemented. |
 | `docs/examples/mcp-sample-catalog.example.json` | planned sample catalog | Checked descriptor-only MCP sample catalog over approved sample-plan, sample-result, tool-detail, and permission summaries; no sample discovery, server, client, runtime, transport, command executor, result reader, report reader/writer, artifact reader/writer, audit logger, or tool invocation path is implemented. |
 | `docs/examples/mcp-sample-detail.example.json` | planned sample detail | Checked descriptor-only MCP sample detail over approved sample-catalog, sample-result, sample-plan, tool-detail, and permission summaries; no sample discovery, server, client, runtime, transport, command executor, result reader, report reader/writer, artifact reader/writer, audit logger, or tool invocation path is implemented. |
+| `docs/examples/mcp-sample-status-summary.example.json` | planned sample status summary | Checked descriptor-only MCP sample status summary over approved sample-plan, sample-result, sample-catalog, sample-detail, tool-detail, and permission summaries; no sample discovery, server, client, runtime, transport, command executor, result reader, report reader/writer, artifact reader/writer, audit logger, or tool invocation path is implemented. |
 | `docs/examples/mcp-read-only-analysis-flow.example.json` | planned flow contract | Checked dry-run analysis-flow contract over existing CLI/core summaries; no runtime or command executor is implemented. |
 | `docs/examples/mcp-read-only-report-contract.example.json` | planned report contract | Checked summary-only report output shape for a future read-only tool adapter; no report writer is implemented. |
 | `docs/examples/mcp-verification-run-comparison.example.json` | planned comparison contract | Checked summary-only verification-run comparison shape for future MCP/tool review; no file reader, report writer, or command executor is implemented. |
@@ -72,6 +76,7 @@ separate workflow logic island.
 | `docs/examples/plugin-sample-result.example.json` | planned sample result | Checked descriptor-only sample plugin result metadata over approved sample-plan, capability, output, review, and blocked-result summaries; no plugin loader, runtime, sandbox, host API binding, dispatch, invocation, result reader, report reader/writer, or artifact reader/writer is implemented. |
 | `docs/examples/plugin-sample-catalog.example.json` | planned sample catalog | Checked descriptor-only sample catalog over approved sample-plan, sample-result, capability, and permission summaries; no sample discovery, manifest/package/source reader, loader, runtime, sandbox, dispatch, invocation, result reader, report reader/writer, or artifact reader/writer is implemented. |
 | `docs/examples/plugin-sample-detail.example.json` | planned sample detail | Checked descriptor-only selected sample detail over approved sample-catalog, sample-result, sample-plan, capability, and permission summaries; no sample discovery, manifest/package/source reader, loader, runtime, sandbox, dispatch, invocation, payload reader, report reader/writer, or artifact reader/writer is implemented. |
+| `docs/examples/plugin-sample-status-summary.example.json` | planned sample status summary | Checked descriptor-only plugin sample status summary over approved sample-plan, sample-result, sample-catalog, sample-detail, capability, and permission summaries; no sample discovery, manifest/package/source reader, loader, runtime, sandbox, dispatch, invocation, permission executor, audit logger, result reader, report reader/writer, artifact reader/writer, package distribution, or marketplace path is implemented. |
 | `docs/examples/plugin-dry-run-flow.example.json` | planned flow contract | Checked dry-run plugin flow contract over approved summaries; no plugin loader, runtime, sandbox, or command executor is implemented. |
 | `docs/examples/plugin-input-contract.example.json` | planned input contract | Checked summary-only plugin input shape for approved diagnostics and workflow-result summaries; no plugin runtime or input reader is implemented. |
 | `docs/examples/plugin-trace-summary-input.example.json` | planned trace-summary input gate | Checked summary-only trace metadata input shape for future plugin trace review; no trace importer, raw trace reader, plugin runtime, or input reader is implemented. |
@@ -105,6 +110,21 @@ The machine-readable inventory lives at
 It keeps the documented examples, shape checks, and Rust example tests
 aligned.
 
+## JSON boundary health summary
+
+[`docs/examples/json-boundary-health-summary.example.json`](examples/json-boundary-health-summary.example.json)
+defines a checked descriptor-only health summary for the JSON boundary
+inventory, shape validator, and Rust example-test coverage. It records
+bounded counts, coverage cards, and drift gates for future docs, CI, and
+tool consumers.
+
+The fixture is not a dynamic inventory reader, validator runner, Rust
+test runner, report writer, adapter runtime, approval executor, or
+repository mutation path. It does not read local files, execute commands,
+write reports, inspect artifacts, call providers, use the network, touch
+hardware, access KV260, access FPGA repos, load models, push publicly,
+or control releases/tags.
+
 | Boundary | Example | Producer/reader | Validation coverage |
 |---|---|---|---|
 | `diagnostics-envelope` | `docs/examples/diagnostics-envelope.example.json` | `pccx-lab analyze <path> --format json` | Shape validator, inventory test, Rust JSON-shape test |
@@ -114,6 +134,7 @@ aligned.
 | `workflow-proposals` | `docs/examples/workflow-proposals.example.json` | `pccx-lab workflow-proposals --format json`; `pccx_core::proposals::workflow_proposals` | Shape validator, inventory test, Rust deserialize test |
 | `workflow-results` | `docs/examples/workflow-results.example.json` | `pccx-lab workflow-results --format json`; `pccx_core::results::workflow_result_summaries` | Shape validator, inventory test, Rust deserialize test |
 | `workflow-runner-result` | `docs/examples/workflow-runner-blocked.example.json` | `pccx-lab run-approved-workflow <proposal-id> --format json`; `pccx_core::runner::blocked_workflow_result` | Shape validator, inventory test, Rust deserialize test |
+| `json-boundary-health-summary` | `docs/examples/json-boundary-health-summary.example.json` | Reader only; planned descriptor-only inventory health summary over documented JSON boundary examples | Shape validator, inventory test, Rust JSON-shape test |
 | `sail-adoption-plan` | `docs/examples/sail-adoption-plan.example.json` | Reader only; planned descriptor-only Sail adoption boundary over approved CLI/core planning summaries | Shape validator, inventory test, Rust JSON-shape test |
 | `sail-interface-boundary` | `docs/examples/sail-interface-boundary.example.json` | Reader only; planned descriptor-only Sail CLI/core handoff boundary over approved summaries | Shape validator, inventory test, Rust JSON-shape test |
 | `sail-review-packet` | `docs/examples/sail-review-packet.example.json` | Reader only; planned summary-only Sail review packet over approved adoption, interface, workflow, verification, and report-gate summaries | Shape validator, inventory test, Rust JSON-shape test |
@@ -125,6 +146,7 @@ aligned.
 | `sail-source-intake-approval` | `docs/examples/sail-source-intake-approval.example.json` | Reader only; planned descriptor-only Sail source-intake approval gate over approved Sail source-intake summaries | Shape validator, inventory test, Rust JSON-shape test |
 | `sail-source-intake-result` | `docs/examples/sail-source-intake-result.example.json` | Reader only; planned descriptor-only Sail source-intake result boundary over approved Sail source-intake summaries | Shape validator, inventory test, Rust JSON-shape test |
 | `sail-source-intake-handoff` | `docs/examples/sail-source-intake-handoff.example.json` | Reader only; planned descriptor-only Sail source-intake handoff summary over approved Sail source-intake summaries | Shape validator, inventory test, Rust JSON-shape test |
+| `sail-source-intake-status-summary` | `docs/examples/sail-source-intake-status-summary.example.json` | Reader only; planned descriptor-only Sail source-intake status summary over approved Sail source-intake summaries | Shape validator, inventory test, Rust JSON-shape test |
 | `hybrid-strategy-plan` | `docs/examples/hybrid-strategy-plan.example.json` | Reader only; planned descriptor-only hybrid C++/SystemVerilog and custom-script boundary over approved CLI/core planning summaries | Shape validator, inventory test, Rust JSON-shape test |
 | `hybrid-interface-boundary` | `docs/examples/hybrid-interface-boundary.example.json` | Reader only; planned descriptor-only hybrid CLI/core handoff boundary over approved summaries | Shape validator, inventory test, Rust JSON-shape test |
 | `hybrid-review-packet` | `docs/examples/hybrid-review-packet.example.json` | Reader only; planned summary-only hybrid review packet over approved strategy, interface, workflow, verification, and report-gate summaries | Shape validator, inventory test, Rust JSON-shape test |
@@ -134,6 +156,7 @@ aligned.
 | `hybrid-implementation-gap-matrix` | `docs/examples/hybrid-implementation-gap-matrix.example.json` | Reader only; planned descriptor-only hybrid implementation gap matrix over approved hybrid boundary summaries | Shape validator, inventory test, Rust JSON-shape test |
 | `hybrid-source-intake-boundary` | `docs/examples/hybrid-source-intake-boundary.example.json` | Reader only; planned descriptor-only hybrid source-intake boundary over approved hybrid boundary summaries | Shape validator, inventory test, Rust JSON-shape test |
 | `hybrid-source-intake-approval` | `docs/examples/hybrid-source-intake-approval.example.json` | Reader only; planned descriptor-only hybrid source-intake approval gate over approved hybrid source-intake summaries | Shape validator, inventory test, Rust JSON-shape test |
+| `hybrid-source-intake-status-summary` | `docs/examples/hybrid-source-intake-status-summary.example.json` | Reader only; planned descriptor-only hybrid source-intake status summary over approved hybrid source-intake summaries | Shape validator, inventory test, Rust JSON-shape test |
 | `launcher-diagnostics-handoff` | `docs/examples/launcher-diagnostics-handoff.example.json` | Reader only; `pccx_core::diagnostics_handoff::validate_diagnostics_handoff_json` | Shape validator, inventory test, Rust reader validation test |
 | `launcher-device-session-status` | `docs/examples/launcher-device-session-status.example.json` | Reader only; `pccx_core::device_session_status::validate_device_session_status_json` | Shape validator, inventory test, Rust reader validation test |
 | `mcp-read-only-tool-plan` | `docs/examples/mcp-read-only-tool-plan.example.json` | Reader only; planned future MCP/tool adapter boundary over existing CLI/core commands | Shape validator, inventory test, Rust JSON-shape test |
@@ -143,6 +166,7 @@ aligned.
 | `mcp-sample-result` | `docs/examples/mcp-sample-result.example.json` | Reader only; planned descriptor-only MCP sample result metadata over approved sample-plan, tool-detail, report, evidence, and blocked-result summaries | Shape validator, inventory test, Rust JSON-shape test |
 | `mcp-sample-catalog` | `docs/examples/mcp-sample-catalog.example.json` | Reader only; planned descriptor-only MCP sample catalog over approved sample summaries | Shape validator, inventory test, Rust JSON-shape test |
 | `mcp-sample-detail` | `docs/examples/mcp-sample-detail.example.json` | Reader only; planned descriptor-only MCP sample detail over one listed sample summary | Shape validator, inventory test, Rust JSON-shape test |
+| `mcp-sample-status-summary` | `docs/examples/mcp-sample-status-summary.example.json` | Reader only; planned descriptor-only MCP sample status summary over approved sample summaries | Shape validator, inventory test, Rust JSON-shape test |
 | `mcp-read-only-analysis-flow` | `docs/examples/mcp-read-only-analysis-flow.example.json` | Reader only; planned dry-run read-only analysis-flow contract over existing CLI/core summaries | Shape validator, inventory test, Rust JSON-shape test |
 | `mcp-read-only-report-contract` | `docs/examples/mcp-read-only-report-contract.example.json` | Reader only; planned summary-only report output shape for a future read-only tool adapter | Shape validator, inventory test, Rust JSON-shape test |
 | `mcp-verification-run-comparison` | `docs/examples/mcp-verification-run-comparison.example.json` | Reader only; planned summary-only comparison shape over approved workflow-result summaries | Shape validator, inventory test, Rust JSON-shape test |
@@ -163,6 +187,7 @@ aligned.
 | `plugin-sample-result` | `docs/examples/plugin-sample-result.example.json` | Reader only; planned descriptor-only plugin sample result metadata over approved plugin boundary summaries | Shape validator, inventory test, Rust JSON-shape test |
 | `plugin-sample-catalog` | `docs/examples/plugin-sample-catalog.example.json` | Reader only; planned descriptor-only plugin sample catalog over approved sample summaries | Shape validator, inventory test, Rust JSON-shape test |
 | `plugin-sample-detail` | `docs/examples/plugin-sample-detail.example.json` | Reader only; planned descriptor-only plugin sample detail over one listed sample summary | Shape validator, inventory test, Rust JSON-shape test |
+| `plugin-sample-status-summary` | `docs/examples/plugin-sample-status-summary.example.json` | Reader only; planned descriptor-only plugin sample status summary over approved sample summaries | Shape validator, inventory test, Rust JSON-shape test |
 | `plugin-capability-list` | `docs/examples/plugin-capability-list.example.json` | Reader only; planned descriptor-only capability listing over approved plugin boundary summaries | Shape validator, inventory test, Rust JSON-shape test |
 | `plugin-capability-detail` | `docs/examples/plugin-capability-detail.example.json` | Reader only; planned descriptor-only plugin capability detail over one listed capability summary | Shape validator, inventory test, Rust JSON-shape test |
 | `plugin-load-request` | `docs/examples/plugin-load-request.example.json` | Reader only; planned blocked load-request gate over approved plugin manifest, permission, validation, audit, and review summaries | Shape validator, inventory test, Rust JSON-shape test |
@@ -723,6 +748,40 @@ handling, evidence publication, release flow, or marketplace-facing
 flow can exist. No runtime, hardware, marketplace, release, or API/ABI
 stability claim is made.
 
+## Sail source-intake status-summary boundary
+
+[`docs/examples/sail-source-intake-status-summary.example.json`](examples/sail-source-intake-status-summary.example.json)
+defines the checked descriptor-only status summary shape for future
+Sail source-intake display. It links the source-intake boundary,
+approval, result, handoff, gap-matrix, and evidence-detail summaries,
+then records blocked status cards without executing approval, dispatching
+source intake, reading sources, materializing result payloads, generating
+public handoff text, or publishing a handoff.
+
+The fixture is summary-only metadata. It does not echo paths, include raw
+commands, include source paths, include source contents, include source
+hashes, include source metadata, include manifests, include Sail sources,
+include RTL sources, include ASTs, include generated models, include
+report bodies, include raw logs, include artifact paths, read local
+files, read repositories, read raw traces, read raw reports, write
+reports, write artifacts, run approval executors, dispatch source
+intake, run parsers, run compilers, generate models, execute models, run
+refinement checks, run proofs, run simulators, run verification, mutate
+repositories, publish public handoffs, call providers, use the network,
+touch hardware, access KV260, access FPGA repos, load models, upload
+telemetry, push publicly, or control releases/tags.
+
+The Sail source-intake status summary is approved for descriptor summary
+metadata only. Future implementation work still requires separate
+reviewed boundaries before any approval execution, source-intake
+dispatch, source reading, source path/content/hash/metadata reading,
+manifest reading, AST reading, generated-model reading, parser/compiler
+behavior, model generation, model execution, refinement, proof,
+verification, hardware control, result payload, handoff payload, public
+handoff text, report output, artifact handling, repository read/mutation,
+release flow, or marketplace-facing flow can exist. No runtime, hardware,
+marketplace, release, or API/ABI stability claim is made.
+
 ## Hybrid strategy plan boundary
 
 [`docs/examples/hybrid-strategy-plan.example.json`](examples/hybrid-strategy-plan.example.json)
@@ -1057,6 +1116,42 @@ evidence publication, release flow, or marketplace-facing flow can
 exist. No runtime, hardware, marketplace, release, or API/ABI stability
 claim is made.
 
+## Hybrid source-intake status-summary boundary
+
+[`docs/examples/hybrid-source-intake-status-summary.example.json`](examples/hybrid-source-intake-status-summary.example.json)
+defines the checked descriptor-only status summary shape for future
+hybrid source-intake display. It links the source-intake boundary,
+approval, result, handoff, gap-matrix, and evidence-detail summaries,
+then records blocked status cards without executing approval, dispatching
+source intake, reading sources, materializing result payloads, generating
+public handoff text, or publishing a handoff.
+
+The fixture is summary-only metadata. It does not echo paths, include raw
+commands, include source paths, include source contents, include source
+hashes, include source metadata, include manifests, include C++ sources,
+include SystemVerilog sources, include custom-script sources, include
+grammar content, include parser output, include compiler output, include
+runtime plans, include script execution output, include simulator output,
+include verification output, include report bodies, include raw logs,
+include artifact paths, read local files, read repositories, read raw
+traces, read raw reports, write reports, write artifacts, run approval
+executors, dispatch source intake, run parsers, run compilers, execute
+runtimes, execute scripts, run simulators, run verification, mutate
+repositories, publish public handoffs, call providers, use the network,
+touch hardware, access KV260, access FPGA repos, load models, upload
+telemetry, push publicly, or control releases/tags.
+
+The hybrid source-intake status summary is approved for descriptor
+summary metadata only. Future implementation work still requires
+separate reviewed boundaries before any approval execution, source-intake
+dispatch, source reading, source path/content/hash/metadata reading,
+manifest reading, parser/compiler behavior, runtime behavior, script
+execution, simulator execution, verification, hardware control, read or
+write reports, read or write artifacts, execute commands, read
+repositories, mutate repositories, publish public text, call providers,
+use the network, touch hardware, access KV260, access FPGA repos, load
+models, upload telemetry, push publicly, or control releases/tags.
+
 ## analyze command
 
 ```
@@ -1334,6 +1429,34 @@ approval execution, audit persistence, payload reading, report
 reading/writing, artifact reading/writing, or repository mutation. No
 runtime, marketplace, hardware, throughput, timing-closure, release, or
 API/ABI stability claim is made.
+
+## MCP sample-status-summary boundary
+
+[`docs/examples/mcp-sample-status-summary.example.json`](examples/mcp-sample-status-summary.example.json)
+defines the checked descriptor-only status summary shape for planned
+read-only MCP samples. It links the sample-plan, sample-result,
+sample-catalog, sample-detail, selected tool detail, and permission
+model summaries, then records blocked status cards without discovering
+files, starting an MCP server or client, opening a transport, executing
+commands, or invoking tools.
+
+The fixture is summary-only metadata. It does not echo paths, include
+raw commands, read local files, read repositories, read raw traces, read
+raw reports, read raw logs, read reports, read artifacts, include
+lab-status payloads, include workflow result content, read result
+payloads, read or write reports, read or write artifacts, create audit
+logs, execute commands, invoke tools, mutate repositories, call
+providers, use the network, touch hardware, access KV260, access FPGA
+repos, load models, upload telemetry, push publicly, or control
+releases/tags.
+
+The MCP sample status summary is approved for descriptor summary
+metadata only. It is not approved for sample discovery, client
+implementation, transport, runtime, command execution, invocation,
+permission execution, approval execution, audit persistence, payload
+reading, report reading/writing, artifact reading/writing, or repository
+mutation. No runtime, marketplace, hardware, throughput, timing-closure,
+release, or API/ABI stability claim is made.
 
 ## MCP read-only analysis flow
 
@@ -1805,6 +1928,38 @@ dispatch, invocation, permission execution, input reading, payload
 reading, report reading/writing, artifact reading/writing, or repository
 mutation. No plugin ABI stability, compatibility promise, marketplace
 claim, runtime claim, or hardware claim is made.
+
+## plugin sample-status-summary boundary
+
+[`docs/examples/plugin-sample-status-summary.example.json`](examples/plugin-sample-status-summary.example.json)
+defines the checked descriptor-only status summary shape for planned
+plugin samples. It links the sample-plan, sample-result, sample-catalog,
+sample-detail, selected capability detail, and permission model
+summaries, then records blocked status cards without discovering files,
+reading manifests, reading packages, reading source, loading plugins,
+starting a sandbox, dispatching capabilities, or invoking samples.
+
+The fixture is summary-only metadata. It does not echo paths, include raw
+commands, include manifest contents, include package contents, include
+source code, include diagnostics payloads, include workflow result
+content, include sample result payloads, read local files, read
+repositories, read raw traces, read raw reports, read raw logs, read
+reports, read artifacts, write reports, write artifacts, load plugin
+code, start a sandbox, bind a host API, dispatch capabilities, invoke
+plugins, execute commands, mutate repositories, install or distribute
+packages, publish marketplace artifacts, call providers, use the
+network, touch hardware, access KV260, access FPGA repos, load models,
+upload telemetry, push publicly, or control releases/tags.
+
+The plugin sample status summary is approved for descriptor summary
+metadata only. It is not approved for sample discovery,
+manifest/package/source reading, code generation, package build, loading,
+sandbox start, dispatch, invocation, permission execution, approval
+execution, audit persistence, input reading, payload reading, report
+reading/writing, artifact reading/writing, repository mutation, package
+distribution, or marketplace publication. No plugin ABI stability,
+compatibility promise, marketplace claim, runtime claim, hardware claim,
+or API/ABI stability claim is made.
 
 ## plugin manifest validation result boundary
 

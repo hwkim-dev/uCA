@@ -25,6 +25,29 @@ wrappers backed by `pccx-core`.
 No stable plugin ABI is promised. No provider, launcher, editor, or MCP
 runtime is implemented by these examples.
 
+## JSON Boundary Health
+
+Full fixture:
+[`json-boundary-health-summary.example.json`](examples/json-boundary-health-summary.example.json)
+
+```json
+{
+  "schemaVersion": "pccx.lab.json-boundary-health-summary.v0",
+  "summaryState": "descriptor_only",
+  "inventoryState": "checked_fixture",
+  "coverageSummary": {
+    "summaryKind": "json_boundary_inventory_health",
+    "overallState": "checked",
+    "driftState": "no_known_drift_in_fixture"
+  }
+}
+```
+
+Use this fixture to display JSON boundary inventory coverage and drift
+gates. It does not read inventory files dynamically, run validators,
+run Rust tests, write reports, mutate repositories, or start an adapter
+runtime.
+
 ## Status
 
 ```bash

@@ -15,7 +15,7 @@
 <meta name="description" content="Last revised: 2026-04-29. The cycle/ directory is the artefact store for a 4-role review loop that iteratively evaluates pccx-lab changes across evidence, planning, and implementation records. The ..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"Cycle Loop","name":"Cycle Loop","url":"https://pccxai.github.io/pccx/en/docs/Lab/self-evolution.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/en/docs/Lab/self-evolution.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-05","dateModified":"2026-05-05","description":"pccx documentation page: Cycle Loop. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="pccx-lab Quickstart" href="quickstart.html"><link rel="prev" title="UVM Bridge" href="uvm-bridge.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"Cycle Loop","name":"Cycle Loop","url":"https://pccxai.github.io/pccx/en/docs/Lab/self-evolution.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/en/docs/Lab/self-evolution.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-06","dateModified":"2026-05-06","description":"pccx documentation page: Cycle Loop. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="pccx-lab Quickstart" href="quickstart.html"><link rel="prev" title="UVM Bridge" href="uvm-bridge.html">
         <link rel="canonical" href="https://pccxai.github.io/pccx/docs/Lab/self-evolution.html">
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
@@ -351,6 +351,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../v002/RTL/frontend.html">NPU Frontend Modules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../v002/RTL/memory_l2.html">L2 Cache (URAM)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../v002/RTL/memory_dispatch.html">Memory Dispatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../v002/RTL/shape_const_ram.html">Shape Constant RAM</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../v002/RTL/preprocess.html">PREPROCESS RTL Reference</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../v002/RTL/packages.html">Compile-Priority Packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../v002/RTL/library.html">Shared Library</a></li>
@@ -519,7 +520,7 @@ No commit is made without a passing build and test run.</p>
 file set.</p>
 <div class="table-wrapper colwidths-given docutils container" id="tbl-round-artefacts">
 <table class="docutils align-default" id="tbl-round-artefacts">
-<caption><span class="caption-number">Table 12 </span><span class="caption-text">Standard file set per round directory</span><a class="headerlink" href="#tbl-round-artefacts" title="Link to this table">¶</a></caption>
+<caption><span class="caption-number">Table 14 </span><span class="caption-text">Standard file set per round directory</span><a class="headerlink" href="#tbl-round-artefacts" title="Link to this table">¶</a></caption>
 <colgroup>
 <col style="width: 30.0%" />
 <col style="width: 20.0%" />
@@ -568,7 +569,7 @@ wake-up is scheduled.</p>
 <p>The table below summarises rounds 1–6 based on <code class="docutils literal notranslate"><span class="pre">cycle/ROUNDS.md</span></code>.</p>
 <div class="table-wrapper colwidths-given docutils container" id="tbl-round-grades">
 <table class="docutils align-default" id="tbl-round-grades">
-<caption><span class="caption-number">Table 13 </span><span class="caption-text">Judge grade and key deliverables by round</span><a class="headerlink" href="#tbl-round-grades" title="Link to this table">¶</a></caption>
+<caption><span class="caption-number">Table 15 </span><span class="caption-text">Judge grade and key deliverables by round</span><a class="headerlink" href="#tbl-round-grades" title="Link to this table">¶</a></caption>
 <colgroup>
 <col style="width: 10.0%" />
 <col style="width: 15.0%" />
@@ -696,7 +697,7 @@ tickets is emitted at every tenth round (10, 20, 30, 40).</p>
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2026-05-05</div>
+              Last updated on 2026-05-06</div>
           </div>
           <div class="right-details">
             <div class="icons">

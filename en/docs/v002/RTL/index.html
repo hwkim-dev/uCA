@@ -15,7 +15,7 @@
 <meta name="description" content="This section embeds key SystemVerilog modules from the pccx v002 RTL repository: pccxai/pccx-FPGA-NPU-LLM-kv260. The RTL is cloned into codes/v002/ at CI build time. Local development requires a ma..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"RTL Source Reference (v002)","name":"RTL Source Reference (v002)","url":"https://pccxai.github.io/pccx/en/docs/v002/RTL/index.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/en/docs/v002/RTL/index.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-05","dateModified":"2026-05-05","description":"pccx documentation page: RTL Source Reference (v002). Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="ISA Type Package" href="isa_pkg.html"><link rel="prev" title="Gemma 3N E4B on pccx v002 — Execution and Scheduling" href="../Models/gemma3n_execution.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"RTL Source Reference (v002)","name":"RTL Source Reference (v002)","url":"https://pccxai.github.io/pccx/en/docs/v002/RTL/index.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/en/docs/v002/RTL/index.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-06","dateModified":"2026-05-06","description":"pccx documentation page: RTL Source Reference (v002). Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="ISA Type Package" href="isa_pkg.html"><link rel="prev" title="Gemma 3N E4B on pccx v002 — Execution and Scheduling" href="../Models/gemma3n_execution.html">
         <link rel="canonical" href="https://pccxai.github.io/pccx/docs/v002/RTL/index.html">
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
@@ -216,7 +216,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -351,6 +351,7 @@
 <li class="toctree-l3"><a class="reference internal" href="frontend.html">NPU Frontend Modules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="memory_l2.html">L2 Cache (URAM)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="memory_dispatch.html">Memory Dispatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shape_const_ram.html">Shape Constant RAM</a></li>
 <li class="toctree-l3"><a class="reference internal" href="preprocess.html">PREPROCESS RTL Reference</a></li>
 <li class="toctree-l3"><a class="reference internal" href="packages.html">Compile-Priority Packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="library.html">Shared Library</a></li>
@@ -469,7 +470,7 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
@@ -492,11 +493,80 @@ development requires a manual clone:</p>
 <li class="toctree-l1"><a class="reference internal" href="frontend.html">NPU Frontend Modules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="memory_l2.html">L2 Cache (URAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="memory_dispatch.html">Memory Dispatch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shape_const_ram.html">Shape Constant RAM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="preprocess.html">PREPROCESS RTL Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="packages.html">Compile-Priority Packages</a></li>
 <li class="toctree-l1"><a class="reference internal" href="library.html">Shared Library</a></li>
 </ul>
 </div>
+<section id="module-status-matrix-release-line-v002-0">
+<h2>Module status matrix (release-line v002.0)<a class="headerlink" href="#module-status-matrix-release-line-v002-0" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper colwidths-given docutils container" id="tbl-v002-rtl-status-en">
+<table class="docutils align-default" id="tbl-v002-rtl-status-en">
+<caption><span class="caption-number">Table 9 </span><span class="caption-text">pccx v002 RTL module status (release-line v002.0)</span><a class="headerlink" href="#tbl-v002-rtl-status-en" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 35.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Module / page</p></th>
+<th class="head"><p>Phase status</p></th>
+<th class="head"><p>Last verified against</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="isa_pkg.html"><span class="doc">ISA Type Package</span></a></p></td>
+<td><p>landed</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8c09e5e</span></code> (2026-04-29)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="npu_top.html"><span class="doc">NPU Top-Level</span></a></p></td>
+<td><p>landed</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8c09e5e</span></code> (2026-04-29)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compute_cores.html"><span class="doc">Compute Core Modules</span></a></p></td>
+<td><p>landed</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8c09e5e</span></code> (2026-04-29)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="controller.html"><span class="doc">NPU Controller Modules</span></a></p></td>
+<td><p>landed</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8c09e5e</span></code> (2026-04-29)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="frontend.html"><span class="doc">NPU Frontend Modules</span></a></p></td>
+<td><p>landed</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8c09e5e</span></code> (2026-04-29)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="memory_l2.html"><span class="doc">L2 Cache (URAM)</span></a></p></td>
+<td><p>landed</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8c09e5e</span></code> (2026-04-29)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="memory_dispatch.html"><span class="doc">Memory Dispatch</span></a></p></td>
+<td><p>landed</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8c09e5e</span></code> (2026-04-29)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="shape_const_ram.html"><span class="doc">Shape Constant RAM</span></a></p></td>
+<td><p>in progress (Phase 3 step 1 migration)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">18d4631</span></code> (2026-05-06)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="preprocess.html"><span class="doc">PREPROCESS RTL Reference</span></a></p></td>
+<td><p>landed</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8c09e5e</span></code> (2026-04-29)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="packages.html"><span class="doc">Compile-Priority Packages</span></a></p></td>
+<td><p>landed</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8c09e5e</span></code> (2026-04-29)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="library.html"><span class="doc">Shared Library</span></a></p></td>
+<td><p>landed</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8c09e5e</span></code> (2026-04-29)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The “Last verified against” column tracks the upstream commit at which
+each page’s RTL excerpt and behaviour description were last reviewed.
+“in progress” entries are subject to change while the migration lands.</p>
+</section>
 </section>
 
     <script type="text/javascript">
@@ -539,7 +609,7 @@ development requires a manual clone:</p>
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2026-05-05</div>
+              Last updated on 2026-05-06</div>
           </div>
           <div class="right-details">
             <div class="icons">
@@ -554,8 +624,27 @@ development requires a manual clone:</p>
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">RTL Source Reference (v002)</a><ul>
+<li><a class="reference internal" href="#module-status-matrix-release-line-v002-0">Module status matrix (release-line v002.0)</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

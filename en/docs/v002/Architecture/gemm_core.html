@@ -15,7 +15,7 @@
 <meta name="description" content="The GEMM core handles the large matrix-matrix multiplications that dominate the prefill stage of a Transformer. pccx v002 uses one 32 × 32 2D systolic array whose accumulation cascade is broken at ..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"GEMM Core (Systolic Array)","name":"GEMM Core (Systolic Array)","url":"https://pccxai.github.io/pccx/en/docs/v002/Architecture/gemm_core.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/en/docs/v002/Architecture/gemm_core.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-05","dateModified":"2026-05-05","description":"pccx documentation page: GEMM Core (Systolic Array). Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="GEMV Core" href="gemv_core.html"><link rel="prev" title="KV Cache Optimization Strategy" href="kv_cache.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"GEMM Core (Systolic Array)","name":"GEMM Core (Systolic Array)","url":"https://pccxai.github.io/pccx/en/docs/v002/Architecture/gemm_core.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/en/docs/v002/Architecture/gemm_core.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-06","dateModified":"2026-05-06","description":"pccx documentation page: GEMM Core (Systolic Array). Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="GEMV Core" href="gemv_core.html"><link rel="prev" title="KV Cache Optimization Strategy" href="kv_cache.html">
         <link rel="canonical" href="https://pccxai.github.io/pccx/docs/v002/Architecture/gemm_core.html">
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
@@ -351,6 +351,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../RTL/frontend.html">NPU Frontend Modules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/memory_l2.html">L2 Cache (URAM)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/memory_dispatch.html">Memory Dispatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../RTL/shape_const_ram.html">Shape Constant RAM</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/preprocess.html">PREPROCESS RTL Reference</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/packages.html">Compile-Priority Packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/library.html">Shared Library</a></li>
@@ -495,7 +496,7 @@ operation, see <a class="reference internal" href="gemv_core.html"><span class="
 <a class="reference internal image-reference" href="../../../_images/Processing_Elements_GEMM_3_v002.png"><img alt="GEMM operands — weight and activation matrices" src="../../../_images/Processing_Elements_GEMM_3_v002.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Figure 5 </span><span class="caption-text"><strong>Figure GEMM-Operands.</strong> GEMM takes two 2D tensors (weight and
+<p><span class="caption-number">Figure 6 </span><span class="caption-text"><strong>Figure GEMM-Operands.</strong> GEMM takes two 2D tensors (weight and
 activation) and produces a partial-sum result. Both operands are
 defined as Row × Col; tile shapes are chosen by the software layer.</span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
 </figcaption>
@@ -544,7 +545,7 @@ instantiates <code class="docutils literal notranslate"><span class="pre">GEMM_d
 <a class="reference internal image-reference" href="../../../_images/Processing_Elements_GEMM_1_v002.png"><img alt="GEMM systolic array block diagram" src="../../../_images/Processing_Elements_GEMM_1_v002.png" style="width: 92%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Figure 6 </span><span class="caption-text"><strong>Figure GEMM-Array.</strong> The systolic array is a <strong>Weight Stationary</strong>
+<p><span class="caption-number">Figure 7 </span><span class="caption-text"><strong>Figure GEMM-Array.</strong> The systolic array is a <strong>Weight Stationary</strong>
 structure: weights enter from the left, activations from the top, and
 partial sums collect in the Result Accumulator at the bottom. The
 zoomed-in green box shows the internals of a single PE.</span><a class="headerlink" href="#id2" title="Link to this image">¶</a></p>
@@ -667,7 +668,7 @@ lower accumulator. The math and the Verilog implementation live in
 <a class="reference internal image-reference" href="../../../_images/Processing_Elements_GEMM_2_v002.png"><img alt="GEMM PE internals" src="../../../_images/Processing_Elements_GEMM_2_v002.png" style="width: 70%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Figure 7 </span><span class="caption-text"><strong>Figure GEMM-PE.</strong> A single PE consists of the weight / activation
+<p><span class="caption-number">Figure 8 </span><span class="caption-text"><strong>Figure GEMM-PE.</strong> A single PE consists of the weight / activation
 input flip-flops, the DSP48E2 multiplier, the P register, the
 accumulator, and on/off control signals. The <code class="docutils literal notranslate"><span class="pre">Instruction</span></code> port
 carries μops extracted from the instruction (enable / flush /
@@ -836,7 +837,7 @@ of the device’s 1,248-slice budget.</p>
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2026-05-05</div>
+              Last updated on 2026-05-06</div>
           </div>
           <div class="right-details">
             <div class="icons">

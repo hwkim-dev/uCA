@@ -15,7 +15,7 @@
 <meta name="description" content="pccx v002 NPU 코어의 Vivado 빌드 흐름을 설명한다. 빌드 스크립트는 hw/vivado/ 아래에 위치하며, build.sh 가 단일 진입점이다. 구현 파일은 pccxai/pccx-FPGA-NPU-LLM-kv260 저장소에서 관리한다. 빌드 흐름: build.sh 는 Vivado 배치(batch) 모드 실행의 얇은 래퍼다. 인자에 따라 네..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["ko","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"Vivado 빌드","name":"Vivado 빌드","url":"https://pccxai.github.io/pccx/ko/docs/v002/Build/index.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/ko/docs/v002/Build/index.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-05","dateModified":"2026-05-05","description":"pccx documentation page: Vivado 빌드. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"ko","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="색인" href="../../../genindex.html"><link rel="search" title="검색" href="../../../search.html"><link rel="next" title="지원 디바이스" href="../../Devices/index.html"><link rel="prev" title="검증" href="../Verification/index.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["ko","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"Vivado 빌드","name":"Vivado 빌드","url":"https://pccxai.github.io/pccx/ko/docs/v002/Build/index.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/ko/docs/v002/Build/index.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-06","dateModified":"2026-05-06","description":"pccx documentation page: Vivado 빌드. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"ko","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="색인" href="../../../genindex.html"><link rel="search" title="검색" href="../../../search.html"><link rel="next" title="지원 디바이스" href="../../Devices/index.html"><link rel="prev" title="검증" href="../Verification/index.html">
         <link rel="canonical" href="https://pccxai.github.io/pccx/docs/v002/Build/index.html">
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
@@ -351,6 +351,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../RTL/frontend.html">NPU 프론트엔드 모듈</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/memory_l2.html">L2 캐시 (URAM)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/memory_dispatch.html">메모리 디스패치</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../RTL/shape_const_ram.html">Shape 상수 RAM</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/preprocess.html">PREPROCESS RTL 레퍼런스</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/packages.html">컴파일 우선순위 패키지</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/library.html">공유 라이브러리</a></li>
@@ -581,7 +582,7 @@ Vivado 2023.2 이상이 필요하다.</p>
 <p>래퍼가 노출하는 외부 인터페이스는 다음과 같다.</p>
 <div class="table-wrapper docutils container" id="tbl-wrapper-interfaces">
 <table class="docutils align-default" id="tbl-wrapper-interfaces">
-<caption><span class="caption-number">표 8 </span><span class="caption-text">npu_core_wrapper 외부 인터페이스</span><a class="headerlink" href="#tbl-wrapper-interfaces" title="Link to this table">¶</a></caption>
+<caption><span class="caption-number">표 10 </span><span class="caption-text">npu_core_wrapper 외부 인터페이스</span><a class="headerlink" href="#tbl-wrapper-interfaces" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>포트 그룹</p></th>
 <th class="head"><p>방향</p></th>
@@ -635,7 +636,7 @@ Vivado 2023.2 이상이 필요하다.</p>
 <p>두 개의 클럭 도메인이 정의된다.</p>
 <div class="table-wrapper docutils container" id="tbl-clock-domains">
 <table class="docutils align-default" id="tbl-clock-domains">
-<caption><span class="caption-number">표 9 </span><span class="caption-text">클럭 도메인 정의</span><a class="headerlink" href="#tbl-clock-domains" title="Link to this table">¶</a></caption>
+<caption><span class="caption-number">표 11 </span><span class="caption-text">클럭 도메인 정의</span><a class="headerlink" href="#tbl-clock-domains" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>클럭 이름</p></th>
 <th class="head"><p>주기</p></th>
@@ -699,7 +700,7 @@ rtl/Constants/compilePriority_Order/E_obs_pkg/perf_counter_pkg.sv
 <p>전체 파일은 다음 섹션으로 구성된다.</p>
 <div class="table-wrapper docutils container" id="tbl-filelist-sections">
 <table class="docutils align-default" id="tbl-filelist-sections">
-<caption><span class="caption-number">표 10 </span><span class="caption-text">filelist.f 섹션 구성</span><a class="headerlink" href="#tbl-filelist-sections" title="Link to this table">¶</a></caption>
+<caption><span class="caption-number">표 12 </span><span class="caption-text">filelist.f 섹션 구성</span><a class="headerlink" href="#tbl-filelist-sections" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>섹션</p></th>
 <th class="head"><p>내용</p></th>
@@ -801,7 +802,7 @@ rtl/Constants/compilePriority_Order/E_obs_pkg/perf_counter_pkg.sv
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2026-05-05</div>
+              Last updated on 2026-05-06</div>
           </div>
           <div class="right-details">
             <div class="icons">

@@ -15,7 +15,7 @@
 <meta name="description" content="최근 개정: 2026-04-29. pccx-uvm-bridge 크레이트는 pccx-core 사이클 추정기를 SystemVerilog UVM 테스트벤치에 노출하는 C ABI DPI-C 익스포트 모음 이다. 시뮬레이터는 공유 라이브러리( cdylib)를 링크하고, SV 쪽에서 import &quot;DPI-C&quot; 선언 하나로 Rust 분석기를 런타..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["ko","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"UVM 브리지","name":"UVM 브리지","url":"https://pccxai.github.io/pccx/ko/docs/Lab/uvm-bridge.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/ko/docs/Lab/uvm-bridge.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-05","dateModified":"2026-05-05","description":"pccx documentation page: UVM 브리지. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"ko","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="색인" href="../../genindex.html"><link rel="search" title="검색" href="../../search.html"><link rel="next" title="사이클 루프" href="self-evolution.html"><link rel="prev" title=".pccx 바이너리 포맷" href="pccx-format.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["ko","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"UVM 브리지","name":"UVM 브리지","url":"https://pccxai.github.io/pccx/ko/docs/Lab/uvm-bridge.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/ko/docs/Lab/uvm-bridge.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-06","dateModified":"2026-05-06","description":"pccx documentation page: UVM 브리지. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"ko","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="색인" href="../../genindex.html"><link rel="search" title="검색" href="../../search.html"><link rel="next" title="사이클 루프" href="self-evolution.html"><link rel="prev" title=".pccx 바이너리 포맷" href="pccx-format.html">
         <link rel="canonical" href="https://pccxai.github.io/pccx/docs/Lab/uvm-bridge.html">
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
@@ -351,6 +351,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../v002/RTL/frontend.html">NPU 프론트엔드 모듈</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../v002/RTL/memory_l2.html">L2 캐시 (URAM)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../v002/RTL/memory_dispatch.html">메모리 디스패치</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../v002/RTL/shape_const_ram.html">Shape 상수 RAM</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../v002/RTL/preprocess.html">PREPROCESS RTL 레퍼런스</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../v002/RTL/packages.html">컴파일 우선순위 패키지</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../v002/RTL/library.html">공유 라이브러리</a></li>
@@ -505,7 +506,7 @@ DPI-C 함수를 호출해 사이클 견적을 수신하고, 이를 assertion 임
 전체 DPI-C 익스포트 목록이다.</p>
 <div class="table-wrapper colwidths-given docutils container" id="tbl-dpi-c-exports">
 <table class="docutils align-default" id="tbl-dpi-c-exports">
-<caption><span class="caption-number">표 11 </span><span class="caption-text">DPI-C 익스포트 함수</span><a class="headerlink" href="#tbl-dpi-c-exports" title="Link to this table">¶</a></caption>
+<caption><span class="caption-number">표 13 </span><span class="caption-text">DPI-C 익스포트 함수</span><a class="headerlink" href="#tbl-dpi-c-exports" title="Link to this table">¶</a></caption>
 <colgroup>
 <col style="width: 35.0%" />
 <col style="width: 45.0%" />
@@ -683,7 +684,7 @@ IEEE 1800-2017 DPI-C 표준이 정의한다.</p>
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2026-05-05</div>
+              Last updated on 2026-05-06</div>
           </div>
           <div class="right-details">
             <div class="icons">

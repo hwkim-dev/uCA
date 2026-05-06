@@ -15,7 +15,7 @@
 <meta name="description" content="본 섹션은 v002 RTL 에 딸린 유닛 레벨 검증 harness 의 현 상태를 추적합니다. 시스템 레벨 기능 · formal · 실리콘 검증은 계획 단계이며 아직 자리 잡지 않았습니다 — 범위는 페이지 끝에 따로 정리되어 있습니다. 1. 현재 테스트 스위트: 모든 테스트는 RTL 리포의 hw/sim/run_verification.sh 통합 러너로 V..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["ko","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"검증","name":"검증","url":"https://pccxai.github.io/pccx/ko/docs/v002/Verification/index.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/ko/docs/v002/Verification/index.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-05","dateModified":"2026-05-05","description":"pccx documentation page: 검증. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"ko","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="색인" href="../../../genindex.html"><link rel="search" title="검색" href="../../../search.html"><link rel="next" title="Vivado 빌드" href="../Build/index.html"><link rel="prev" title="공유 라이브러리" href="../RTL/library.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["ko","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"검증","name":"검증","url":"https://pccxai.github.io/pccx/ko/docs/v002/Verification/index.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/ko/docs/v002/Verification/index.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-06","dateModified":"2026-05-06","description":"pccx documentation page: 검증. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"ko","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="색인" href="../../../genindex.html"><link rel="search" title="검색" href="../../../search.html"><link rel="next" title="Vivado 빌드" href="../Build/index.html"><link rel="prev" title="공유 라이브러리" href="../RTL/library.html">
         <link rel="canonical" href="https://pccxai.github.io/pccx/docs/v002/Verification/index.html">
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
@@ -351,6 +351,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../RTL/frontend.html">NPU 프론트엔드 모듈</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/memory_l2.html">L2 캐시 (URAM)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/memory_dispatch.html">메모리 디스패치</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../RTL/shape_const_ram.html">Shape 상수 RAM</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/preprocess.html">PREPROCESS RTL 레퍼런스</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/packages.html">컴파일 우선순위 패키지</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/library.html">공유 라이브러리</a></li>
@@ -598,6 +599,24 @@ SymbiYosys / JasperGold property.</p></li>
 스크립트, <a class="reference internal" href="../Drivers/api.html"><span class="doc">호스트 C 드라이버</span></a> 대비
 골든 트레이스 비교.</p></li>
 </ul>
+<div class="note admonition">
+<p class="admonition-title">외부 도구 인터페이스 — 상태 표면 boundary</p>
+<p>verification 워크플로는 외부 도구가 free-form 로그를 파싱하지 않고도
+소비할 수 있는 JSON status summary 를 점진적으로 노출하고 있다.
+해당 boundary 는 이 문서 사이트 외부에 있다:</p>
+<ul class="simple">
+<li><p><strong>pccx-lab</strong> — JSON / Sail / hybrid source-intake status summary
+boundary, 그리고 plugin 및 외부 도구 인터페이스 샘플 boundary.
+v002.0 verification evidence 가 공개되기 전까지는 안정성을
+보장하지 않는 진화 중 boundary 로 취급한다.</p></li>
+<li><p><strong>systemverilog-ide</strong> — module-graph 보고서 (path / edge /
+port connection audit / reachability / span / file-layout /
+order) 를 별도 boundary 로 노출. 리뷰용으로 소비되며 pccx 문서
+표면의 일부는 아니다.</p></li>
+</ul>
+<p>이 boundary 들은 추적성을 위한 참조이며, 그 자체로 verification
+증거가 되지 않는다.</p>
+</div>
 <div class="admonition seealso">
 <p class="admonition-title">더 보기</p>
 <dl class="simple">
@@ -652,7 +671,7 @@ SymbiYosys / JasperGold property.</p></li>
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2026-05-05</div>
+              Last updated on 2026-05-06</div>
           </div>
           <div class="right-details">
             <div class="icons">

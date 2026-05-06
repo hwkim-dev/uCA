@@ -15,7 +15,7 @@
 <meta name="description" content="GEMV 코어는 LLM 자기회귀 디코딩(Autoregressive Decoding) 단계의 지배적 연산인 행렬 × 벡터(``y = W x``) 를 담당한다. 배치 1 · 시퀀스 1의 디코딩에서는 전체 FLOPs의 85 ~ 98% 이상이 GEMV이므로, GEMV 처리량이 초당 토큰 생성률(TPS)에 직접 비례 한다. 1. 연산 대상: GEMV의 입력은 ..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["ko","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"GEMV 코어","name":"GEMV 코어","url":"https://pccxai.github.io/pccx/ko/docs/v002/Architecture/gemv_core.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/ko/docs/v002/Architecture/gemv_core.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-05","dateModified":"2026-05-05","description":"pccx documentation page: GEMV 코어. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"ko","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="색인" href="../../../genindex.html"><link rel="search" title="검색" href="../../../search.html"><link rel="next" title="SFU 코어 (Complex Vector Operations)" href="sfu_core.html"><link rel="prev" title="GEMM 코어 (시스톨릭 어레이)" href="gemm_core.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["ko","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"GEMV 코어","name":"GEMV 코어","url":"https://pccxai.github.io/pccx/ko/docs/v002/Architecture/gemv_core.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/ko/docs/v002/Architecture/gemv_core.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-06","dateModified":"2026-05-06","description":"pccx documentation page: GEMV 코어. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"ko","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="색인" href="../../../genindex.html"><link rel="search" title="검색" href="../../../search.html"><link rel="next" title="SFU 코어 (Complex Vector Operations)" href="sfu_core.html"><link rel="prev" title="GEMM 코어 (시스톨릭 어레이)" href="gemm_core.html">
         <link rel="canonical" href="https://pccxai.github.io/pccx/docs/v002/Architecture/gemv_core.html">
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
@@ -351,6 +351,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../RTL/frontend.html">NPU 프론트엔드 모듈</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/memory_l2.html">L2 캐시 (URAM)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/memory_dispatch.html">메모리 디스패치</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../RTL/shape_const_ram.html">Shape 상수 RAM</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/preprocess.html">PREPROCESS RTL 레퍼런스</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/packages.html">컴파일 우선순위 패키지</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/library.html">공유 라이브러리</a></li>
@@ -495,7 +496,7 @@ L2 Cache를 공유하는 이기종(heterogeneous) 구조를 채택했다.</p>
 <a class="reference internal image-reference" href="../../../_images/Processing_Elements_GEMV_2_v002.png"><img alt="GEMV 연산 대상 — Activation 벡터 × Weight 행렬" src="../../../_images/Processing_Elements_GEMV_2_v002.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">그림 8 </span><span class="caption-text"><strong>Figure GEMV-Operands.</strong> Activation은 1 × N 행 벡터, Weight는
+<p><span class="caption-number">그림 9 </span><span class="caption-text"><strong>Figure GEMV-Operands.</strong> Activation은 1 × N 행 벡터, Weight는
 N × N 행렬이며 두 피연산자의 내적 결과가 새 길이 N의 출력 벡터를
 구성한다. Attention의 <code class="docutils literal notranslate"><span class="pre">Q·Kᵀ</span></code>, FFN의 projection에 모두 동일한
 형태가 적용된다.</span><a class="headerlink" href="#id6" title="Link to this image">¶</a></p>
@@ -545,7 +546,7 @@ N × N 행렬이며 두 피연산자의 내적 결과가 새 길이 N의 출력 
 <a class="reference internal image-reference" href="../../../_images/Processing_Elements_GEMV_1_v002.png"><img alt="GEMV 코어 파이프라인과 reduction tree" src="../../../_images/Processing_Elements_GEMV_1_v002.png" style="width: 90%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">그림 9 </span><span class="caption-text"><strong>Figure GEMV-Core.</strong> Activation 1행과 Weight 1열을 <strong>Pre-Process</strong>
+<p><span class="caption-number">그림 10 </span><span class="caption-text"><strong>Figure GEMV-Core.</strong> Activation 1행과 Weight 1열을 <strong>Pre-Process</strong>
 블록에서 dequantize하여, 32개 LUT 기반 곱셈기가 (W × A)를 단일
 사이클에 병렬 수행한다. 32개의 부분곱은 5단계 reduction adder
 tree(Stage 1: DSP48E2 16 슬라이스, Stage 2–5: LUT)를 거쳐 스칼라로
@@ -700,7 +701,7 @@ MAC 한 번에 해당하는 값이 Stage 1 누적 DSP 로 바로 흘러간다.</
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2026-05-05</div>
+              Last updated on 2026-05-06</div>
           </div>
           <div class="right-details">
             <div class="icons">

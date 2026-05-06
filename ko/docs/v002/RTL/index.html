@@ -15,7 +15,7 @@
 <meta name="description" content="이 섹션은 pccx v002 RTL 레포지토리의 핵심 SystemVerilog 모듈을 직접 임베드한다: pccxai/pccx-FPGA-NPU-LLM-kv260. RTL은 CI 빌드 시 codes/v002/ 에 자동 clone된다. 로컬 개발에서는 아래 명령으로 직접 clone한다: ISA 타입 패키지, NPU 최상위 모듈, 컴퓨트 코어 모듈, NPU ..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["ko","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"RTL 소스 레퍼런스 (v002)","name":"RTL 소스 레퍼런스 (v002)","url":"https://pccxai.github.io/pccx/ko/docs/v002/RTL/index.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/ko/docs/v002/RTL/index.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-05","dateModified":"2026-05-05","description":"pccx documentation page: RTL 소스 레퍼런스 (v002). Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"ko","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="색인" href="../../../genindex.html"><link rel="search" title="검색" href="../../../search.html"><link rel="next" title="ISA 타입 패키지" href="isa_pkg.html"><link rel="prev" title="Gemma 3N E4B 를 pccx v002 에서 실행 — Execution / Scheduling" href="../Models/gemma3n_execution.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["ko","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"RTL 소스 레퍼런스 (v002)","name":"RTL 소스 레퍼런스 (v002)","url":"https://pccxai.github.io/pccx/ko/docs/v002/RTL/index.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/ko/docs/v002/RTL/index.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-06","dateModified":"2026-05-06","description":"pccx documentation page: RTL 소스 레퍼런스 (v002). Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"ko","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="색인" href="../../../genindex.html"><link rel="search" title="검색" href="../../../search.html"><link rel="next" title="ISA 타입 패키지" href="isa_pkg.html"><link rel="prev" title="Gemma 3N E4B 를 pccx v002 에서 실행 — Execution / Scheduling" href="../Models/gemma3n_execution.html">
         <link rel="canonical" href="https://pccxai.github.io/pccx/docs/v002/RTL/index.html">
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
@@ -216,7 +216,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -351,6 +351,7 @@
 <li class="toctree-l3"><a class="reference internal" href="frontend.html">NPU 프론트엔드 모듈</a></li>
 <li class="toctree-l3"><a class="reference internal" href="memory_l2.html">L2 캐시 (URAM)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="memory_dispatch.html">메모리 디스패치</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shape_const_ram.html">Shape 상수 RAM</a></li>
 <li class="toctree-l3"><a class="reference internal" href="preprocess.html">PREPROCESS RTL 레퍼런스</a></li>
 <li class="toctree-l3"><a class="reference internal" href="packages.html">컴파일 우선순위 패키지</a></li>
 <li class="toctree-l3"><a class="reference internal" href="library.html">공유 라이브러리</a></li>
@@ -469,7 +470,7 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
@@ -492,11 +493,80 @@
 <li class="toctree-l1"><a class="reference internal" href="frontend.html">NPU 프론트엔드 모듈</a></li>
 <li class="toctree-l1"><a class="reference internal" href="memory_l2.html">L2 캐시 (URAM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="memory_dispatch.html">메모리 디스패치</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shape_const_ram.html">Shape 상수 RAM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="preprocess.html">PREPROCESS RTL 레퍼런스</a></li>
 <li class="toctree-l1"><a class="reference internal" href="packages.html">컴파일 우선순위 패키지</a></li>
 <li class="toctree-l1"><a class="reference internal" href="library.html">공유 라이브러리</a></li>
 </ul>
 </div>
+<section id="v002-0">
+<h2>모듈 상태 매트릭스 (릴리스 라인 v002.0)<a class="headerlink" href="#v002-0" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper colwidths-given docutils container" id="tbl-v002-rtl-status-ko">
+<table class="docutils align-default" id="tbl-v002-rtl-status-ko">
+<caption><span class="caption-number">표 9 </span><span class="caption-text">pccx v002 RTL 모듈 상태 (릴리스 라인 v002.0)</span><a class="headerlink" href="#tbl-v002-rtl-status-ko" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 35.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>모듈 / 페이지</p></th>
+<th class="head"><p>단계 상태</p></th>
+<th class="head"><p>마지막 검증 대상</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="isa_pkg.html"><span class="doc">ISA 타입 패키지</span></a></p></td>
+<td><p>landed</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8c09e5e</span></code> (2026-04-29)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="npu_top.html"><span class="doc">NPU 최상위 모듈</span></a></p></td>
+<td><p>landed</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8c09e5e</span></code> (2026-04-29)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compute_cores.html"><span class="doc">컴퓨트 코어 모듈</span></a></p></td>
+<td><p>landed</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8c09e5e</span></code> (2026-04-29)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="controller.html"><span class="doc">NPU 컨트롤러 모듈</span></a></p></td>
+<td><p>landed</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8c09e5e</span></code> (2026-04-29)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="frontend.html"><span class="doc">NPU 프론트엔드 모듈</span></a></p></td>
+<td><p>landed</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8c09e5e</span></code> (2026-04-29)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="memory_l2.html"><span class="doc">L2 캐시 (URAM)</span></a></p></td>
+<td><p>landed</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8c09e5e</span></code> (2026-04-29)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="memory_dispatch.html"><span class="doc">메모리 디스패치</span></a></p></td>
+<td><p>landed</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8c09e5e</span></code> (2026-04-29)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="shape_const_ram.html"><span class="doc">Shape 상수 RAM</span></a></p></td>
+<td><p>진행 중 (Phase 3 step 1 마이그레이션)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">18d4631</span></code> (2026-05-06)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="preprocess.html"><span class="doc">PREPROCESS RTL 레퍼런스</span></a></p></td>
+<td><p>landed</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8c09e5e</span></code> (2026-04-29)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="packages.html"><span class="doc">컴파일 우선순위 패키지</span></a></p></td>
+<td><p>landed</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8c09e5e</span></code> (2026-04-29)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="library.html"><span class="doc">공유 라이브러리</span></a></p></td>
+<td><p>landed</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">8c09e5e</span></code> (2026-04-29)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>“마지막 검증 대상” 컬럼은 각 페이지의 RTL 인용 / 동작 설명이 마지막
+으로 리뷰된 업스트림 커밋을 추적한다. “진행 중” 표시는 마이그레이션
+이 안정될 때까지 변경될 수 있다.</p>
+</section>
 </section>
 
     <script type="text/javascript">
@@ -539,7 +609,7 @@
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2026-05-05</div>
+              Last updated on 2026-05-06</div>
           </div>
           <div class="right-details">
             <div class="icons">
@@ -554,8 +624,27 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">RTL 소스 레퍼런스 (v002)</a><ul>
+<li><a class="reference internal" href="#v002-0">모듈 상태 매트릭스 (릴리스 라인 v002.0)</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

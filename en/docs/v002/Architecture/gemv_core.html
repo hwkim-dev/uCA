@@ -15,7 +15,7 @@
 <meta name="description" content="The GEMV core handles the dominant operation during autoregressive decoding — the matrix-vector product y = W x. In batch-1, sequence-1 decoding, 85 – 98% of the FLOPs come from GEMV, which makes G..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"GEMV Core","name":"GEMV Core","url":"https://pccxai.github.io/pccx/en/docs/v002/Architecture/gemv_core.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/en/docs/v002/Architecture/gemv_core.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-05","dateModified":"2026-05-05","description":"pccx documentation page: GEMV Core. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="SFU Core (Complex Vector Operations)" href="sfu_core.html"><link rel="prev" title="GEMM Core (Systolic Array)" href="gemm_core.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccxai.github.io/pccx/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"GEMV Core","name":"GEMV Core","url":"https://pccxai.github.io/pccx/en/docs/v002/Architecture/gemv_core.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccxai.github.io/pccx/en/docs/v002/Architecture/gemv_core.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccxai.github.io/pccx/"},"datePublished":"2026-05-06","dateModified":"2026-05-06","description":"pccx documentation page: GEMV Core. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccxai.github.io/pccx/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html"><link rel="next" title="SFU Core (Complex Vector Operations)" href="sfu_core.html"><link rel="prev" title="GEMM Core (Systolic Array)" href="gemm_core.html">
         <link rel="canonical" href="https://pccxai.github.io/pccx/docs/v002/Architecture/gemv_core.html">
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
@@ -351,6 +351,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../RTL/frontend.html">NPU Frontend Modules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/memory_l2.html">L2 Cache (URAM)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/memory_dispatch.html">Memory Dispatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../RTL/shape_const_ram.html">Shape Constant RAM</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/preprocess.html">PREPROCESS RTL Reference</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/packages.html">Compile-Priority Packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../RTL/library.html">Shared Library</a></li>
@@ -496,7 +497,7 @@ weight matrix</strong>.</p>
 <a class="reference internal image-reference" href="../../../_images/Processing_Elements_GEMV_2_v002.png"><img alt="GEMV operands — activation vector × weight matrix" src="../../../_images/Processing_Elements_GEMV_2_v002.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Figure 8 </span><span class="caption-text"><strong>Figure GEMV-Operands.</strong> Activation is a 1 × N row vector, Weight is
+<p><span class="caption-number">Figure 9 </span><span class="caption-text"><strong>Figure GEMV-Operands.</strong> Activation is a 1 × N row vector, Weight is
 an N × N matrix. Their inner product produces a new length-N output
 vector. Both Attention’s <code class="docutils literal notranslate"><span class="pre">Q·Kᵀ</span></code> and FFN projections follow this
 same shape.</span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
@@ -546,7 +547,7 @@ per slice across upper / lower halves of the floorplan)</p></td>
 <a class="reference internal image-reference" href="../../../_images/Processing_Elements_GEMV_1_v002.png"><img alt="GEMV core pipeline and reduction tree" src="../../../_images/Processing_Elements_GEMV_1_v002.png" style="width: 90%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Figure 9 </span><span class="caption-text"><strong>Figure GEMV-Core.</strong> The <strong>Pre-Process</strong> block dequantizes one
+<p><span class="caption-number">Figure 10 </span><span class="caption-text"><strong>Figure GEMV-Core.</strong> The <strong>Pre-Process</strong> block dequantizes one
 activation row and one weight column, then 32 LUT-based multipliers
 compute <code class="docutils literal notranslate"><span class="pre">W</span> <span class="pre">×</span> <span class="pre">A</span></code> in a single cycle. The 32 partial products feed a
 5-stage reduction adder tree (Stage 1: 16 DSP48E2 slices; Stages 2–5:
@@ -588,7 +589,7 @@ matching entry.</p></li>
 <span id="v002-gemv-reduction-fig"></span><a class="reference internal image-reference" href="../../../_images/v002_gemv_reduction.svg"><img alt="../../../_images/v002_gemv_reduction.svg" src="../../../_images/v002_gemv_reduction.svg" style="width: 600px;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Figure 10 </span><span class="caption-text"><strong>Figure GEMV-Reduction.</strong> GEMV uses a 32-lane reduction tree to
+<p><span class="caption-number">Figure 11 </span><span class="caption-text"><strong>Figure GEMV-Reduction.</strong> GEMV uses a 32-lane reduction tree to
 collapse partial products into a single scalar. Stage 1 uses DSP48E2
 slices for high-speed addition; subsequent stages use LUT-based
 FP/Int adders.</span><a class="headerlink" href="#fig-gemv-reduction" title="Link to this image">¶</a></p>
@@ -712,7 +713,7 @@ round-trip latency. See <a class="reference internal" href="sfu_core.html"><span
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2026-05-05</div>
+              Last updated on 2026-05-06</div>
           </div>
           <div class="right-details">
             <div class="icons">
