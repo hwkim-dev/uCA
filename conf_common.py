@@ -350,6 +350,7 @@ html_css_files = [
 html_js_files = [
     "image-lightbox.js",
     "language-switcher.js",
+    "auto-translate-dismiss.js",
 ]
 
 html_show_sphinx = False

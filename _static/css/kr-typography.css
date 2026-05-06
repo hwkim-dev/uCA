@@ -1,31 +1,31 @@
 /*
- * pccx — unified IBM Plex Mono typography.
+ * pccx — typography + auto-translate banner controls.
  *
- * Body, headings, code, UI elements, and all hand-crafted SVG diagrams
- * share a single IBM Plex Mono stack so the page reads as one coherent
- * printed listing. The fallback chain prioritises modern monospace
- * faces (JetBrains Mono, SF Mono, Menlo, Consolas) before reaching
- * Courier New as a last resort, so environments without IBM Plex Mono
- * installed still get an evenly weighted glyph rather than the much
- * wider Courier New.
+ * Body uses IBM Plex Sans for prose readability; code, signatures,
+ * and the eight hand-crafted SVG diagrams stay in IBM Plex Mono so
+ * the printed-listing tone is preserved where it earns its keep
+ * (instructions, hex addresses, RTL excerpts) without dragging long
+ * paragraphs through monospace.
+ *
+ * Both faces ship from the same family ("IBM Plex") to keep the
+ * page tonally coherent. Modern monospace fallbacks (JetBrains Mono,
+ * SF Mono, Menlo, Consolas) come before Courier New so unfontified
+ * environments still get an evenly weighted glyph.
  */
 
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap");
 
 :root,
 body {
-    --font-stack: "IBM Plex Mono", "JetBrains Mono", "Fira Code",
-        "SF Mono", Menlo, Consolas, ui-monospace, "Courier New",
-        monospace;
+    --font-stack: "IBM Plex Sans", -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, "Helvetica Neue", Helvetica, Arial,
+        sans-serif;
     --font-stack--monospace: "IBM Plex Mono", "JetBrains Mono",
         "Fira Code", "SF Mono", Menlo, Consolas, ui-monospace,
         "Courier New", monospace;
 }
 
-/* Body / headings / paragraphs / list items / table cells — all share
- * the same monospace stack. Furo reads ``--font-stack`` for its body
- * text but a few selectors explicitly inherit from the base sans-serif
- * cascade, so we set them by name. */
+/* Body, headings, prose blocks — IBM Plex Sans. */
 body,
 .sidebar-tree,
 .toctree-wrapper,
@@ -38,9 +38,7 @@ p, li, td, th, dt, dd,
     font-family: var(--font-stack);
 }
 
-/* Code, pre-formatted listings, and the literalinclude blocks pick up
- * the same stack so SHA admonition contents and the embedded RTL share
- * the same vertical rhythm as the prose. */
+/* Code, pre-formatted listings, signatures — IBM Plex Mono. */
 code,
 pre,
 kbd,
@@ -49,39 +47,83 @@ tt,
 .highlight pre,
 .literal-block,
 .code-block,
-.sig {
-    font-family: var(--font-stack--monospace);
-}
-
-/* Admonition titles, sidebar brand text, and signature names use the
- * same monospace face as the body so the entire chrome reads as one
- * surface. */
-.admonition-title,
-.sidebar-brand-text,
+.sig,
 .sig-name {
     font-family: var(--font-stack--monospace);
 }
 
-/* Monospace body text reads denser than proportional faces, so loosen
- * line-height a notch and cap the readable line length to keep long
- * paragraphs scannable. */
+/* Admonition titles and sidebar brand stay in mono so the chrome
+ * hints "this is a printed listing on top of a written document". */
+.admonition-title,
+.sidebar-brand-text {
+    font-family: var(--font-stack--monospace);
+}
+
+/* Reading geometry for the body face. */
 body,
 p,
 li,
 dd,
 td {
-    line-height: 1.6;
+    line-height: 1.55;
 }
 
 article p,
 article li,
 article dd {
-    max-width: 78ch;
+    max-width: 72ch;
 }
 
-/* Slightly tighter heading line-height stays inside Furo's vertical
- * rhythm while picking up the monospace stack. */
 h1, h2, h3, h4, h5, h6 {
     line-height: 1.3;
     letter-spacing: -0.005em;
+}
+
+/*
+ * Auto-translate banner dismiss controls — the JavaScript that
+ * accompanies these styles only runs on Korean pages and inserts an
+ * "X" close button and a "Don't show again" checkbox into Furo's
+ * announcement bar. Both controls degrade gracefully if JavaScript
+ * is disabled (the bar simply stays visible).
+ */
+.announcement-content {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.6em;
+}
+
+.pccx-banner-dont-show {
+    cursor: pointer;
+    font-size: 0.85em;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    user-select: none;
+}
+
+.pccx-banner-dont-show input {
+    margin: 0;
+}
+
+.pccx-banner-close {
+    background: none;
+    border: 1px solid currentColor;
+    border-radius: 3px;
+    color: inherit;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.85em;
+    padding: 0.05em 0.45em;
+    margin-left: auto;
+    line-height: 1;
+}
+
+.pccx-banner-close:hover {
+    opacity: 0.75;
+}
+
+.pccx-banner-close:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 1px;
 }
