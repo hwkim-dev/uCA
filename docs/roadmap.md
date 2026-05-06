@@ -12,11 +12,28 @@ architectural novelties land.
 
 - finish remaining RTL integration on `pccx-FPGA-NPU-LLM-kv260`
 - A–F baseline phases on the v002.0 release line
+  - in progress: Phase 3 step 1 (shape constant RAM unification, see
+    {doc}`v002/RTL/shape_const_ram`) and Stage C cleanup (counters,
+    constants, `GLOBAL_CONST` consolidation)
 - trace-driven verification on `pccx-lab`
 - Sail execute increments
 - xsim / KV260 baseline bring-up logs
+- release evidence checklist (`docs/RELEASE_EVIDENCE_CHECKLIST.md`
+  in `pccx-FPGA-NPU-LLM-kv260`) gates timing / throughput / bring-up
+  wording before any claim lands in this docs site
 - throughput is measured-only on this release line — no timing or
   throughput signoff claim until the verification evidence is published
+
+```{figure} ../_static/diagrams/v002_evidence_flow.svg
+:name: fig-v002-evidence-flow-en
+:alt: pccx v002 release evidence flow
+
+RTL source → xsim testbenches → synthesis / implementation →
+KV260 bring-up `[HW]` → runtime `[HW]` → release evidence checklist
+(`RELEASE_EVIDENCE_CHECKLIST.md`) acting as the tag gate. Hardware-gated
+stages do not produce numbers that are quoted on this docs site until
+the checklist gates them in.
+```
 
 Tracking issue: [pccxai/pccx#28 — v0.2.0 umbrella][v020].
 

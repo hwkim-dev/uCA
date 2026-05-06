@@ -23,6 +23,19 @@ ISA 참조 URL 만 pccx v002 기준으로 갱신.
    상에서 RTL 과 검증되지 않았다. 미해결 검증 항목은
    :doc:`../Verification/index` §2 참고.
 
+.. admonition:: local LLM launcher — 상태 표면 boundary
+   :class: note
+
+   드라이버 bring-up 은 ``pccx-llm-launcher`` 측 boundary 에서
+   미러된다. launcher 의 chat 표면은 입력 / 출력을 문서화된 boundary
+   집합 — chat status summary, evidence manifest, gap matrix, review
+   packet, redaction policy, clipboard policy, 접근성, empty-state —
+   를 통해 게이트한다. 이 중 어느 것도 현재 단계에서 하드웨어로
+   측정된 수치를 만들지 않는다. launcher 는 기여자가 워크플로
+   boundary 를 찾을 수 있도록 참조해 두며, 런타임 / 추론 수치는
+   릴리스 증거 체크리스트가 이를 게이트로 통과시킨 시점에만 이
+   페이지에 나타난다.
+
 .. toctree::
    :maxdepth: 1
 

@@ -24,6 +24,19 @@ comment updates for the pccx v002 ISA reference URL.
    not yet been validated against the RTL on hardware. See
    :doc:`../Verification/index` §2 for the open verification items.
 
+.. admonition:: Local LLM launcher — status surface boundary
+   :class: note
+
+   Driver bring-up is being mirrored at the launcher boundary by
+   ``pccx-llm-launcher``. The launcher's chat surface gates inputs and
+   outputs through a documented set of boundaries — chat status
+   summary, evidence manifest, gap matrix, review packet, redaction
+   policy, clipboard policy, accessibility, and empty-state — none of
+   which produce hardware-measured numbers at this stage. The launcher
+   is referenced here so contributors can locate the workflow
+   boundary; runtime / inference numbers will appear here only after
+   the release evidence checklist gates them in.
+
 .. toctree::
    :maxdepth: 1
 
