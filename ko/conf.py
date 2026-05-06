@@ -58,10 +58,16 @@ exclude_patterns = [
 html_theme_options = {
     **html_theme_options,
     "source_directory": "ko/docs/",
-    # Default announcement is empty — the sidebar's EN · 한국어 switch
-    # handles language.  `_ext.archive_banner` selectively fills this
-    # slot when the reader lands on an archived (non-active) page.
-    "announcement": "",
+    # The Korean tree is produced by external translation tooling; the
+    # English page is the canonical source. ``_ext.archive_banner``
+    # overrides this slot on archived pages with its own redirect, so
+    # the auto-translation notice only appears on active pages.
+    "announcement": (
+        '<strong>Auto-translated.</strong> '
+        'This Korean page is produced by external translation '
+        'tooling; the English page is the source of truth. '
+        '<strong>자동 번역 페이지</strong> — 영문판이 정본입니다.'
+    ),
     "footer_icons": build_footer_icons("ko"),
 }
 
