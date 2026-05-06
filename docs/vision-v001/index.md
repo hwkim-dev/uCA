@@ -44,6 +44,32 @@ power, or accuracy figure is claimed on this page until the release
 evidence checklist gates it in. References to existing vendor / QAT
 IPs are landscape context only.
 
+### Reference points from public benchmarks
+
+The figures below are **publicly reported** benchmarks of the two
+families above. They are **not** vision-v001 results; they exist
+solely to anchor the differentiation matrix in numbers external
+readers can verify.
+
+- **Vendor DPU IP on KV260 (Xilinx DPUCZDX8G B4096)** — MobileNet V1
+  ≈ 187 FPS / 5.3 ms latency; ResNet-50 ≈ 62 FPS / 16.1 ms latency.
+  Per-layer efficiency varies between input layers (≈ 54–259 GOP/s)
+  and mid-stage 3 × 3 convolutions (≈ 470–500 GOP/s) — a 5–9 ×
+  spread on the same model.
+- **Streaming-dataflow QAT (FINN)** — ResNet-50 ≈ 2 000 FPS at
+  ≈ 70 W on Alveo U250 (~400 K LUTs); the same approach scaled
+  down to KV260 (~256 K LUTs) typically lands 2–4 × lower.
+- **W4A8 vision regime** — INT8 dominates the KV260 model zoo;
+  sub-4-bit (binary / ternary / 2-bit) work appears under the
+  streaming-dataflow line. The W4A8 weight × activation regime that
+  pccx v002 uses for LLMs has not yet been published as a KV260
+  vision benchmark.
+
+These reference points anchor the differentiation matrix; they do
+not constitute a benchmark of vision-v001 itself, and no
+vision-v001 figure is claimed on this docs site until the release
+evidence checklist gates it in.
+
 ## Status snapshot
 
 ```{table} vision-v001 layer status (placeholder)
