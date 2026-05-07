@@ -14,7 +14,7 @@ NPU 최상위 모듈
 4개 서브코어 (GEMM, GEMV, CVO, mem_dispatcher) 모두 여기서 인스턴스화되어
 중앙 L2 캐시 버스로 연결됩니다.
 
-.. literalinclude:: ../../../../codes/v002/hw/rtl/NPU_top.sv
+.. literalinclude:: ../../../../codes/v002/LLM/rtl/top/pccx_npu_top.sv
    :language: systemverilog
    :caption: hw/rtl/NPU_top.sv
 

@@ -19,7 +19,7 @@ ISA 타입 패키지
 7. 메모리 라우팅 열거형 (``data_route_e``)
 8. 각 명령어에서 디코딩되는 마이크로 옵 구조체
 
-.. literalinclude:: ../../../../codes/v002/hw/rtl/NPU_Controller/NPU_Control_Unit/ISA_PACKAGE/isa_pkg.sv
+.. literalinclude:: ../../../../codes/v002/LLM/rtl/packages/isa/isa_pkg.sv
    :language: systemverilog
    :caption: hw/rtl/NPU_Controller/NPU_Control_Unit/ISA_PACKAGE/isa_pkg.sv
 
@@ -38,7 +38,7 @@ ISA 타입 패키지
 ``isa_x64.svh`` 의 오피코드와 1:1 일치한다고 명시하므로, 필드 폭이
 바뀔 때마다 SV 헤더와 드라이버 헤더가 함께 이동한다.
 
-.. literalinclude:: ../../../../codes/v002/hw/rtl/NPU_Controller/NPU_Control_Unit/ISA_PACKAGE/isa_x64.svh
+.. literalinclude:: ../../../../codes/v002/LLM/rtl/packages/isa/isa_x64.svh
    :language: systemverilog
    :caption: hw/rtl/NPU_Controller/NPU_Control_Unit/ISA_PACKAGE/isa_x64.svh
 

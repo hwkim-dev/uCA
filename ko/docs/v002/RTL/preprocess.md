@@ -5,7 +5,7 @@ PREPROCESS 서브디렉터리는 다섯 개의 SystemVerilog 모듈로 구성된
 
 ## `preprocess_fmap`
 
-```{literalinclude} ../../../../codes/v002/hw/rtl/PREPROCESS/preprocess_fmap.sv
+```{literalinclude} ../../../../codes/v002/LLM/rtl/core/preprocess/preprocess_fmap.sv
 :language: systemverilog
 :caption: hw/rtl/PREPROCESS/preprocess_fmap.sv
 :start-at: module preprocess_fmap
@@ -22,7 +22,7 @@ XPM block FIFO를 통해 256-bit으로 묶은 뒤 지수 캐싱과 가수 정렬
 
 ## `preprocess_bf16_fixed_pipeline`
 
-```{literalinclude} ../../../../codes/v002/hw/rtl/PREPROCESS/preprocess_bf16_fixed_pipeline.sv
+```{literalinclude} ../../../../codes/v002/LLM/rtl/core/preprocess/preprocess_bf16_fixed_pipeline.sv
 :language: systemverilog
 :caption: hw/rtl/PREPROCESS/preprocess_bf16_fixed_pipeline.sv
 :start-at: module preprocess_bf16_fixed_pipeline
@@ -65,7 +65,7 @@ driver-computed scale + Constant Cache 방식으로 설계될 예정이며,
 
 ## `fmap_cache`
 
-```{literalinclude} ../../../../codes/v002/hw/rtl/PREPROCESS/fmap_cache.sv
+```{literalinclude} ../../../../codes/v002/LLM/rtl/core/preprocess/fmap_cache.sv
 :language: systemverilog
 :caption: hw/rtl/PREPROCESS/fmap_cache.sv
 :start-at: module fmap_cache
