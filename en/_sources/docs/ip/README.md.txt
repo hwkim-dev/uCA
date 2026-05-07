@@ -20,6 +20,8 @@ and independently governed.
   inventions, classification procedure before disclosure.
 - [Trademarks](trademarks.md) — claimed common-law marks; formal
   registration TBD.
+- [Trademark filing log](trademark-filing-log.md) — public-safe
+  pending-application docket (KR Class 09 / 42).
 - [Trade secret policy](trade-secret-policy.md) — what is treated
   as trade secret and how access is controlled.
 - [Contributor License Agreement (placeholder)](contributor-license-agreement.md)
