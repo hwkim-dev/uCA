@@ -66,7 +66,7 @@ Tooling & Lab
    :class-container: pccx-toolchain-grid
 
    .. grid-item-card:: :octicon:`beaker;1.2em;sd-mr-1` pccx-lab
-      :link: https://pccxai.github.io/pccx/en/lab/
+      :link: https://pccx.pages.dev/en/lab/
       :link-type: url
       :link-alt: Open the pccx-lab verification lab
       :class-card: pccx-lab-card
@@ -80,7 +80,7 @@ Tooling & Lab
       Source: github.com/pccxai/pccx-lab
 
    .. grid-item-card:: :octicon:`project-roadmap;1.2em;sd-mr-1` Design rationale
-      :link: https://pccxai.github.io/pccx/en/lab/design/rationale.html
+      :link: https://pccx.pages.dev/en/lab/design/rationale.html
       :link-type: url
       :link-alt: Read the pccx-lab design rationale
 
@@ -145,4 +145,4 @@ Tooling & Lab
    :maxdepth: 1
    :caption: Tools
 
-   pccx-lab — Verification Lab <https://pccxai.github.io/pccx/en/lab/>
+   pccx-lab — Verification Lab <https://pccx.pages.dev/en/lab/>

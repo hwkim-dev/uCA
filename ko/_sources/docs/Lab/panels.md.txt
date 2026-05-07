@@ -335,8 +335,8 @@ FPS를 노출한다. `get_license_info`는 App 레벨에서 호출되고
                   hardware view, verification, and editing components},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://pccxai.github.io/pccx/ko/docs/Lab/panels.html}},
-  note         = {Part of pccx: \url{https://pccxai.github.io/pccx/}}
+  howpublished = {\url{https://pccx.pages.dev/ko/docs/Lab/panels.html}},
+  note         = {Part of pccx: \url{https://pccx.pages.dev/}}
 }
 ```
 

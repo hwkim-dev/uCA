@@ -197,8 +197,8 @@ IPC 커맨드 레퍼런스:
   title        = {pccx-lab Verification Workflow: RTL to .pccx to golden-diff gate},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://pccxai.github.io/pccx/ko/docs/Lab/verification-workflow.html}},
-  note         = {Part of pccx: \url{https://pccxai.github.io/pccx/}}
+  howpublished = {\url{https://pccx.pages.dev/ko/docs/Lab/verification-workflow.html}},
+  note         = {Part of pccx: \url{https://pccx.pages.dev/}}
 }
 ```
 

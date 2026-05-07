@@ -28,4 +28,4 @@ Trace profiling, verification surfaces, and CLI-backed workflow descriptors for 
    :gutter: 3
 
    .. grid-item-card:: Back to pccx main docs
-      :link: https://pccxai.github.io/pccx/en/
+      :link: https://pccx.pages.dev/en/
