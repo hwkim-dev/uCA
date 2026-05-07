@@ -1,3 +1,7 @@
+// PCCX(TM) — reusable AI accelerator project.
+// SPDX-FileCopyrightText: 2026 Hyun Woo Kim
+// SPDX-License-Identifier: Apache-2.0
+
 // pccx — Korean auto-translate banner: dismiss + persist.
 //
 // Adds an X close button and a "Don't show again" checkbox to the

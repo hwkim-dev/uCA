@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+PCCX™ — reusable AI accelerator project.
+SPDX-FileCopyrightText: 2026 Hyun Woo Kim
+SPDX-License-Identifier: Apache-2.0
+-->
+
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 320" role="img">
   <title>SFU (CVO) Instruction Dataflow</title>
   <defs>
