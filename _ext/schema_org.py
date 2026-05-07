@@ -8,7 +8,7 @@ pccx — Schema.org JSON-LD injector.
 Emits a ``<script type="application/ld+json">`` block in every page's
 ``<head>`` with a ``TechArticle`` / ``WebSite`` entry that points Google
 (and any citation-aware LLM crawler) at the canonical
-``https://pccxai.github.io/pccx/`` URL.
+``https://pccx.pages.dev/`` URL.
 
 The goal is twofold:
 
@@ -20,7 +20,7 @@ The goal is twofold:
 2. **LLM citation hygiene** — when an LLM scrapes the site for training
    or RAG, the JSON-LD block tells it unambiguously who the author is and
    where the canonical URL lives.  Subsequent summaries are much more
-   likely to cite ``pccxai.github.io/pccx`` verbatim.
+   likely to cite ``pccx.pages.dev`` verbatim.
 
 The extension is zero-config — wire it up in ``extensions`` and the
 event fires on every ``html-page-context``.  Pages can override fields
@@ -39,7 +39,7 @@ from sphinx.util import logging
 
 logger = logging.getLogger(__name__)
 
-_CANONICAL_ROOT = "https://pccxai.github.io/pccx/"
+_CANONICAL_ROOT = "https://pccx.pages.dev/"
 
 
 def _website_entry(app: Sphinx) -> dict[str, Any]:

@@ -8,9 +8,9 @@
 [![Target](https://img.shields.io/badge/Target-Xilinx_Kria_KV260-red)](https://www.xilinx.com/products/som/kria/kv260-vision-starter-kit.html)
 [![Architecture](https://img.shields.io/badge/Architecture-v002_Active-purple)](#architecture)
 [![Precision](https://img.shields.io/badge/Precision-W4A8_→_BF16%2FFP32-green)](#precision)
-[![Docs](https://img.shields.io/badge/Docs-Online-brightgreen)](https://pccxai.github.io/pccx/)
+[![Docs](https://img.shields.io/badge/Docs-Online-brightgreen)](https://pccx.pages.dev/)
 
-**[Full Documentation →](https://pccxai.github.io/pccx/)**
+**[Full Documentation →](https://pccx.pages.dev/)**
 
 </div>
 
@@ -25,7 +25,7 @@ issues are welcome.
 
 | Entry point | Link |
 | --- | --- |
-| Documentation | <https://pccxai.github.io/pccx/> |
+| Documentation | <https://pccx.pages.dev/> |
 | Releases | <https://github.com/pccxai/pccx/releases> |
 | `v0.1.0-alpha` notes | [docs/releases/v0.1.0-alpha.md](docs/releases/v0.1.0-alpha.md) |
 | Roadmap (project board) | <https://github.com/orgs/pccxai/projects/1> |
@@ -179,8 +179,8 @@ stable.
 a TRC TPU grant lands). The training plan is scoped to v002.1, where
 the speculative-decoding stack is integrated.
 
-→ **[Full roadmap (EN)](https://pccxai.github.io/pccx/en/docs/roadmap.html)**
-&nbsp;·&nbsp; [**한국어**](https://pccxai.github.io/pccx/ko/docs/roadmap.html)
+→ **[Full roadmap (EN)](https://pccx.pages.dev/en/docs/roadmap.html)**
+&nbsp;·&nbsp; [**한국어**](https://pccx.pages.dev/ko/docs/roadmap.html)
 
 ---
 
@@ -191,7 +191,7 @@ the speculative-decoding stack is integrated.
 Performance simulator, CLI-first verification lab, and trace profiler for the pccx NPU. Pre-RTL bottleneck detection, UVM co-simulation, and testbench/trace workflow support share one workflow.
 
 - Repository: https://github.com/pccxai/pccx-lab
-- Documentation: https://pccxai.github.io/pccx/en/lab/ (Korean: https://pccxai.github.io/pccx/ko/lab/)
+- Documentation: https://pccx.pages.dev/en/lab/ (Korean: https://pccx.pages.dev/ko/lab/)
 - Status: Work in Progress
 
 ---
@@ -200,15 +200,15 @@ Performance simulator, CLI-first verification lab, and trace profiler for the pc
 
 The full technical documentation — architecture deep-dives, ISA encoding tables, DSP48E2 bit-packing derivation, driver API, and embedded RTL source — is published at:
 
-### **[pccxai.github.io/pccx/](https://pccxai.github.io/pccx/)**
+### **[pccx.pages.dev/](https://pccx.pages.dev/)**
 
 Available in **English** and **한국어 (Korean)**.
 
 Highlights:
-- [Architecture Overview](https://pccxai.github.io/pccx/en/docs/v002/Architecture/top_level.html) — block diagram, design rationale, 3.125× gain breakdown
-- [DSP48E2 W4A8 Derivation](https://pccxai.github.io/pccx/en/docs/v002/Architecture/dsp48e2_w4a8.html) — dual-channel bit packing math
-- [Custom ISA Reference](https://pccxai.github.io/pccx/en/docs/v002/ISA/index.html) — 64-bit VLIW encoding, opcode table, dataflow
-- [RTL Source Reference](https://pccxai.github.io/pccx/en/docs/v002/RTL/index.html) — embedded SystemVerilog with live syntax highlighting
+- [Architecture Overview](https://pccx.pages.dev/en/docs/v002/Architecture/top_level.html) — block diagram, design rationale, 3.125× gain breakdown
+- [DSP48E2 W4A8 Derivation](https://pccx.pages.dev/en/docs/v002/Architecture/dsp48e2_w4a8.html) — dual-channel bit packing math
+- [Custom ISA Reference](https://pccx.pages.dev/en/docs/v002/ISA/index.html) — 64-bit VLIW encoding, opcode table, dataflow
+- [RTL Source Reference](https://pccx.pages.dev/en/docs/v002/RTL/index.html) — embedded SystemVerilog with live syntax highlighting
 
 ### Documentation map
 
@@ -275,6 +275,6 @@ use, and the public-safe filing docket.
 
 <div align="center">
 
-Built by [@hkimw](https://hkimw.github.io/hkimw/) · [Documentation](https://pccxai.github.io/pccx/) · [Issues](https://github.com/pccxai/pccx/issues)
+Built by [@hkimw](https://hkimw.github.io/hkimw/) · [Documentation](https://pccx.pages.dev/) · [Issues](https://github.com/pccxai/pccx/issues)
 
 </div>

@@ -179,8 +179,8 @@ Current values: `MAJOR_VERSION = 0x01`, `MINOR_VERSION = 0x01`
   title        = {.pccx Binary Format Specification: container format for NPU profiling traces},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://pccxai.github.io/pccx/en/docs/Lab/pccx-format.html}},
-  note         = {Part of pccx: \url{https://pccxai.github.io/pccx/}}
+  howpublished = {\url{https://pccx.pages.dev/en/docs/Lab/pccx-format.html}},
+  note         = {Part of pccx: \url{https://pccx.pages.dev/}}
 }
 ```
 

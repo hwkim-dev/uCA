@@ -8,7 +8,7 @@ the FPGA-oriented LLM inference accelerator stack.  Releases are
 
 - Pre-1.0 (`0.x.y`): minor bumps may carry breaking spec changes.
 - Tag format: `vX.Y.Z[-alpha|-beta|-rc]`.
-- The documentation site (`pccxai.github.io/pccx`) tracks `main`;
+- The documentation site (`pccx.pages.dev`) tracks `main`;
   tagged releases are also published as immutable snapshots through
   `sphinx-multiversion` (see `conf_common.py` `smv_*` allowlists).
 - The first tag is planned as `v0.1.0-alpha` — see `CHANGELOG.md`.

@@ -32,8 +32,8 @@ sys.path.insert(0, _CONF_COMMON_DIR)
 # =============================================================================
 
 project = "pccx"
-author = "hwkim"
-copyright = f"{date.today().year}, {author}"
+author = "Hyun Woo Kim"
+copyright = f"{date.today().year} {author}"
 release = "v002"
 version = "v002"
 
@@ -269,7 +269,7 @@ def build_footer_icons(lang_prefix: str = "en") -> list:
     KO-page click lands on the KO sub-site; the other destinations are
     language-agnostic external repos / pages.
     """
-    lab_url = f"https://pccxai.github.io/pccx/{lang_prefix}/lab/"
+    lab_url = f"https://pccx.pages.dev/{lang_prefix}/lab/"
     return [
         {
             "name":  "RTL implementation — github.com/pccxai/pccx-FPGA-NPU-LLM-kv260",
@@ -431,11 +431,11 @@ intersphinx_timeout = 10
 # SEO / social
 # =============================================================================
 
-html_baseurl = "https://pccxai.github.io/pccx/"
+html_baseurl = "https://pccx.pages.dev/"
 sitemap_url_scheme = "{link}"
 # sitemap_filename is overridden per-language in concrete conf.py.
 
-ogp_site_url = "https://pccxai.github.io/pccx/"
+ogp_site_url = "https://pccx.pages.dev/"
 ogp_site_name = "pccx — Parallel Compute Core eXecutor"
 ogp_image = None                         # add once a social card exists
 ogp_type = "website"
