@@ -100,7 +100,9 @@ Working tracks for the next release lines:
   candidates ResNet18 / YOLOv8n / MobileNetV3).
 
 The :doc:`roadmap` summarises how the three tracks relate, and the
-``pccx`` family-tree figure on that page links them visually.
+``pccx`` family-tree figure on that page links them visually. Public
+architecture defaults that need a stable reference are recorded in
+:doc:`design-decisions`.
 
 The v001 architecture is archived at
 :doc:`archive/experimental_v001/index`.
@@ -202,3 +204,4 @@ risks, keeping the ecosystem safe for open-source hardware development.
 
    v003/index
    vision-v001/index
+   design-decisions
