@@ -1,0 +1,18 @@
+arch: pccx-v002
+package_repo: pccx-v002
+domains:
+  - LLM
+  - Vision
+  - Voice
+isa_version: TBD
+register_abi_version: TBD
+driver_abi_version: TBD
+top_interface_version: TBD
+weight_format: TBD
+activation_format: TBD
+nonlinear_precision: TBD
+control_bus: TBD
+model_specific: false
+board_specific: false
+known_application_repos:
+  - pccx-FPGA-NPU-LLM-kv260      # LLM package, Gemma 3N E4B target
