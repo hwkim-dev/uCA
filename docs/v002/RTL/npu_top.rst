@@ -14,7 +14,7 @@ NPU Top-Level
 All four sub-cores (GEMM, GEMV, CVO, mem_dispatcher) are instantiated
 here and connected through the shared L2 cache bus.
 
-.. literalinclude:: ../../../codes/v002/hw/rtl/NPU_top.sv
+.. literalinclude:: ../../../codes/v002/LLM/rtl/top/pccx_npu_top.sv
    :language: systemverilog
    :caption: hw/rtl/NPU_top.sv
 

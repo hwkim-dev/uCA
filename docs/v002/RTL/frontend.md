@@ -30,7 +30,7 @@ FIFO; `0x008` inserts a kick marker with `bit63 = 1`.
 The kick marker signals a batch boundary to the downstream dispatcher.
 A pop occurs each cycle that both `OUT_valid` and `IN_decoder_ready` are asserted.
 
-```{literalinclude} ../../../codes/v002/hw/rtl/NPU_Controller/NPU_frontend/AXIL_CMD_IN.sv
+```{literalinclude} ../../../codes/v002/LLM/rtl/core/controller/AXIL_CMD_IN.sv
 :language: systemverilog
 :caption: hw/rtl/NPU_Controller/NPU_frontend/AXIL_CMD_IN.sv (AXI4-Lite Write Path)
 :start-at: "  /*─────────────────────────────────────────────"
@@ -49,7 +49,7 @@ On an AR-channel handshake the FIFO head is latched into `rdata_r` and `s_rvalid
 asserted. The response is held until the host acknowledges with `s_rready`.
 `s_arready` deasserts when the FIFO is empty or when an R response is still in progress.
 
-```{literalinclude} ../../../codes/v002/hw/rtl/NPU_Controller/NPU_frontend/AXIL_STAT_OUT.sv
+```{literalinclude} ../../../codes/v002/LLM/rtl/core/controller/AXIL_STAT_OUT.sv
 :language: systemverilog
 :caption: hw/rtl/NPU_Controller/NPU_frontend/AXIL_STAT_OUT.sv (AXI4-Lite Read Path)
 :start-at: "  /*─────────────────────────────────────────────"
@@ -67,7 +67,7 @@ The status path accepts `IN_enc_stat` and `IN_enc_valid` directly from the encod
 `ctrl_npu_interface.sv` is currently a placeholder for future per-core interface
 aggregation.
 
-```{literalinclude} ../../../codes/v002/hw/rtl/NPU_Controller/NPU_frontend/ctrl_npu_frontend.sv
+```{literalinclude} ../../../codes/v002/LLM/rtl/core/controller/ctrl_npu_frontend.sv
 :language: systemverilog
 :caption: hw/rtl/NPU_Controller/NPU_frontend/ctrl_npu_frontend.sv (instance wiring)
 :start-at: "  AXIL_CMD_IN #("
@@ -83,14 +83,14 @@ aggregation.
 `axis_if` provides an AXI-Stream interface carrying tdata, tvalid, tready, tlast,
 and tkeep; it is used by data-path modules that transfer activation and weight streams.
 
-```{literalinclude} ../../../codes/v002/hw/rtl/NPU_Controller/npu_interfaces.svh
+```{literalinclude} ../../../codes/v002/common/rtl/interfaces/npu_interfaces.svh
 :language: systemverilog
 :caption: hw/rtl/NPU_Controller/npu_interfaces.svh (axis_if)
 :start-at: "interface axis_if"
 :end-before: "// axil_if.sv"
 ```
 
-```{literalinclude} ../../../codes/v002/hw/rtl/NPU_Controller/npu_interfaces.svh
+```{literalinclude} ../../../codes/v002/common/rtl/interfaces/npu_interfaces.svh
 :language: systemverilog
 :caption: hw/rtl/NPU_Controller/npu_interfaces.svh (axil_if)
 :start-at: "// axil_if.sv"

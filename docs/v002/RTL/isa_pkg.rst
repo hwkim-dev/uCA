@@ -19,7 +19,7 @@ The package is organized in compilation order:
 7. Memory routing enums (``data_route_e``)
 8. Micro-op structs decoded from each instruction
 
-.. literalinclude:: ../../../codes/v002/hw/rtl/NPU_Controller/NPU_Control_Unit/ISA_PACKAGE/isa_pkg.sv
+.. literalinclude:: ../../../codes/v002/LLM/rtl/packages/isa/isa_pkg.sv
    :language: systemverilog
    :caption: hw/rtl/NPU_Controller/NPU_Control_Unit/ISA_PACKAGE/isa_pkg.sv
 
@@ -38,7 +38,7 @@ The host C driver's ``uCA_v1_api.h`` claims its bit layout matches
 ``isa_x64.svh`` opcode-by-opcode; whenever a field width changes the
 SV header and the driver header must move together.
 
-.. literalinclude:: ../../../codes/v002/hw/rtl/NPU_Controller/NPU_Control_Unit/ISA_PACKAGE/isa_x64.svh
+.. literalinclude:: ../../../codes/v002/LLM/rtl/packages/isa/isa_x64.svh
    :language: systemverilog
    :caption: hw/rtl/NPU_Controller/NPU_Control_Unit/ISA_PACKAGE/isa_x64.svh
 
