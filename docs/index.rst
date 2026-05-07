@@ -92,9 +92,8 @@ under :doc:`v002/index`:
 
 Working tracks for the next release lines:
 
-- :doc:`v003/index` — LLM line continued on a separate RTL repository
-  (working name ``pccx-LLM-v003``, Gemma 4 E4B foundation; no release
-  branch yet).
+- :doc:`v003/index` — future LLM IP-core line in ``pccx-v003``
+  (Gemma 4 E4B is tracked only as a non-binding first-application note).
 - :doc:`vision-v001/index` — parallel CNN inference track on the same
   KV260 substrate (working name ``pccx-vision-v001``; first model
   candidates ResNet18 / YOLOv8n / MobileNetV3).
@@ -123,7 +122,7 @@ risks, keeping the ecosystem safe for open-source hardware development.
    :gutter: 3 4 4 4
    :class-container: pccx-ecosystem-grid
 
-   .. grid-item-card:: :octicon:`cpu;1.5em;sd-mr-2` RTL Implementation
+   .. grid-item-card:: :octicon:`cpu;1.5em;sd-mr-2` KV260 integration
       :columns: 12 12 8 8
       :class-card: pccx-hero-card
       :link: https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260
@@ -132,23 +131,23 @@ risks, keeping the ecosystem safe for open-source hardware development.
 
       **github.com/pccxai/pccx-FPGA-NPU-LLM-kv260**
 
-      The active **v002** SystemVerilog sources — ISA package, controller,
-      compute cores (GEMM / GEMV / CVO), memory hierarchy. Target device
-      is the Xilinx Kria **KV260** (Zynq UltraScale+ ZU5EV).
+      KV260 + LLM application integration for the **v002** line. Reusable
+      IP-core sources live in ``pccx-v002``; this repository owns board
+      flow, driver handoff, and application wiring.
 
       Every v002 RTL reference page on this site links back to the exact
       ``.sv`` file in that repository.
 
-   .. grid-item-card:: :octicon:`zap;1em;sd-mr-1` pccx-LLM-v003 (working)
+   .. grid-item-card:: :octicon:`zap;1em;sd-mr-1` pccx-v003 (future)
       :columns: 12 12 4 4
-      :link: https://github.com/pccxai/pccx-LLM-v003
-      :link-type: url
-      :link-alt: Open the pccx-LLM-v003 repository on GitHub
+      :link: v003/index
+      :link-type: doc
+      :link-alt: Read the pccx v003 placeholder
 
-      **github.com/pccxai/pccx-LLM-v003**
+      **pccx-v003**
 
-      LLM line continued on a separate RTL repository. Foundation
-      Gemma 4 E4B; no release branch yet. See :doc:`v003/index`.
+      Future LLM IP-core package. Gemma 4 E4B is tracked only as a
+      non-binding first-application note. See :doc:`v003/index`.
 
    .. grid-item-card:: :octicon:`zap;1em;sd-mr-1` pccx-vision-v001 (working)
       :columns: 12 12 4 4
