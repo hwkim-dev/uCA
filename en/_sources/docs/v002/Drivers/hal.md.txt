@@ -33,13 +33,12 @@ The HAL stores all state in a single file-scope singleton,
 `g_mmio_base` (`volatile uint32_t *`). No context pointer is used;
 a single process is expected to communicate with one NPU instance.
 
-```{literalinclude} ../../../codes/v002/sw/driver/uCA_v1_hal.c
-:language: c
-:start-at: static volatile uint32_t
-:end-before: // ===| HAL Init
-:caption: uCA_v1_hal.c — MMIO base pointer declaration
-:name: lst-hal-mmio-ptr
-```
+The KV260 bare-metal HAL source files (`sw/driver/uCA_v1_hal.{c,h}`)
+remain in the board integration repository,
+[`pccxai/pccx-FPGA-NPU-LLM-kv260`](https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260),
+because they encode KV260 board-side bare-metal pointer MMIO. The
+authoritative reading is the source files in that repo; this page
+no longer embeds the listing inline.
 
 ## Register Map
 
@@ -47,13 +46,7 @@ The MMIO base address is `UCA_MMIO_BASE_ADDR = 0xA0000000`. This value
 must match the AXI-Lite slave address assigned in the Vivado block
 design.
 
-```{literalinclude} ../../../codes/v002/sw/driver/uCA_v1_hal.h
-:language: c
-:start-at: // ===| MMIO Base Address
-:end-before: // ===| Status Register
-:caption: uCA_v1_hal.h — base address and register offset definitions
-:name: lst-hal-regmap
-```
+(see the linked KV260 board integration repo above for the source listing)
 
 ```{list-table} Register map
 :header-rows: 1
@@ -82,13 +75,7 @@ design.
 A 64-bit instruction is written as a pair, **LO first, HI second**.
 The HI write triggers the controller's instruction latch.
 
-```{literalinclude} ../../../codes/v002/sw/driver/uCA_v1_hal.c
-:language: c
-:start-at: void uca_hal_issue_instr
-:end-before: // ===| Status Polling
-:caption: uCA_v1_hal.c — uca_hal_issue_instr implementation
-:name: lst-hal-issue-instr
-```
+(see the linked KV260 board integration repo above for the source listing)
 
 ## CMD_IN / STAT_OUT Mechanics
 
@@ -99,13 +86,7 @@ pipeline.
 
 Status register `UCA_REG_STATUS` bit fields:
 
-```{literalinclude} ../../../codes/v002/sw/driver/uCA_v1_hal.h
-:language: c
-:start-at: // ===| Status Register Bit Fields
-:end-before: // ===| HAL Init
-:caption: uCA_v1_hal.h — status bit definitions
-:name: lst-hal-status-bits
-```
+(see the linked KV260 board integration repo above for the source listing)
 
 - **`UCA_STAT_BUSY` (bit 0)** — NPU is executing an instruction. Do not
   issue a new instruction while this bit is set.
@@ -116,12 +97,7 @@ driver is yet available on the bare-metal KV260, the current
 implementation uses a busy-wait loop with an iteration count estimated
 at the 400 MHz core rate.
 
-```{literalinclude} ../../../codes/v002/sw/driver/uCA_v1_hal.c
-:language: c
-:start-at: int uca_hal_wait_idle
-:caption: uCA_v1_hal.c — uca_hal_wait_idle implementation
-:name: lst-hal-wait-idle
-```
+(see the linked KV260 board integration repo above for the source listing)
 
 When `timeout_us` decrements to zero, -1 is returned. The NPU state is
 not forced-reset on timeout; the caller is responsible for error
@@ -138,13 +114,7 @@ recovery.
 3. If the return value is `0xFFFFFFFF`, the AXI bus is not responding;
    returns `-1`. Otherwise returns `0`.
 
-```{literalinclude} ../../../codes/v002/sw/driver/uCA_v1_hal.c
-:language: c
-:start-at: int uca_hal_init
-:end-before: void uca_hal_deinit
-:caption: uCA_v1_hal.c — uca_hal_init implementation
-:name: lst-hal-init
-```
+(see the linked KV260 board integration repo above for the source listing)
 
 `uca_hal_deinit` sets `g_mmio_base` to `NULL`. Any subsequent
 `uca_hal_write32` or `uca_hal_read32` call will dereference a null

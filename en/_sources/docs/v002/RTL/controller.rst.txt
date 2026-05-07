@@ -12,7 +12,7 @@ NPU Controller Modules
 ``npu_controller_top.sv`` integrates the AXI-Lite frontend, instruction
 decoder, and global scheduler into a single controller boundary.
 
-.. literalinclude:: ../../../codes/v002/hw/rtl/NPU_Controller/npu_controller_top.sv
+.. literalinclude:: ../../../codes/v002/LLM/rtl/core/controller/npu_controller_top.sv
    :language: systemverilog
    :caption: hw/rtl/NPU_Controller/npu_controller_top.sv
 
@@ -23,7 +23,7 @@ decoder, and global scheduler into a single controller boundary.
 the 4-bit opcode and routes the 60-bit body into the appropriate
 typed struct (``GEMV_op_x64_t``, ``memcpy_op_x64_t``, etc.).
 
-.. literalinclude:: ../../../codes/v002/hw/rtl/NPU_Controller/NPU_Control_Unit/ctrl_npu_decoder.sv
+.. literalinclude:: ../../../codes/v002/LLM/rtl/core/controller/ctrl_npu_decoder.sv
    :language: systemverilog
    :caption: hw/rtl/NPU_Controller/NPU_Control_Unit/ctrl_npu_decoder.sv
 
@@ -35,7 +35,7 @@ per-core control μops, tracks in-flight async instructions, maintains
 the dependency scoreboard, and gates new dispatches when a hazard is
 detected.
 
-.. literalinclude:: ../../../codes/v002/hw/rtl/NPU_Controller/Global_Scheduler.sv
+.. literalinclude:: ../../../codes/v002/LLM/rtl/core/controller/Global_Scheduler.sv
    :language: systemverilog
    :caption: hw/rtl/NPU_Controller/Global_Scheduler.sv
 

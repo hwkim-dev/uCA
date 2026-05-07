@@ -506,7 +506,7 @@ SPDX-License-Identifier: Apache-2.0
 <p><code class="docutils literal notranslate"><span class="pre">npu_controller_top.sv</span></code>는 AXI-Lite 프론트엔드, 명령어 디코더,
 글로벌 스케줄러를 단일 컨트롤러 경계로 통합한다.</p>
 <div class="literal-block-wrapper docutils container" id="id4">
-<div class="code-block-caption"><span class="caption-number">리스팅 14 </span><span class="caption-text">hw/rtl/NPU_Controller/npu_controller_top.sv</span><a class="headerlink" href="#id4" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">리스팅 8 </span><span class="caption-text">hw/rtl/NPU_Controller/npu_controller_top.sv</span><a class="headerlink" href="#id4" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="no">`timescale</span><span class="w"> </span><span class="mi">1</span><span class="n">ns</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1</span><span class="n">ps</span>
 
 <span class="no">`include</span><span class="w"> </span><span class="s">&quot;GLOBAL_CONST.svh&quot;</span>
@@ -601,7 +601,7 @@ SPDX-License-Identifier: Apache-2.0
 분리하고 60비트 바디를 적절한 타입 구조체
 (<code class="docutils literal notranslate"><span class="pre">GEMV_op_x64_t</span></code>, <code class="docutils literal notranslate"><span class="pre">memcpy_op_x64_t</span></code> 등)로 라우팅한다.</p>
 <div class="literal-block-wrapper docutils container" id="id5">
-<div class="code-block-caption"><span class="caption-number">리스팅 15 </span><span class="caption-text">hw/rtl/NPU_Controller/NPU_Control_Unit/ctrl_npu_decoder.sv</span><a class="headerlink" href="#id5" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">리스팅 9 </span><span class="caption-text">hw/rtl/NPU_Controller/NPU_Control_Unit/ctrl_npu_decoder.sv</span><a class="headerlink" href="#id5" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="no">`timescale</span><span class="w"> </span><span class="mi">1</span><span class="n">ns</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1</span><span class="n">ps</span>
 <span class="no">`include</span><span class="w"> </span><span class="s">&quot;GLOBAL_CONST.svh&quot;</span>
 
@@ -702,7 +702,7 @@ SPDX-License-Identifier: Apache-2.0
 대한 제어 μop을 발행하고, in-flight 비동기 명령어를 추적하며, 의존성
 스코어보드를 유지하고, 해저드 감지 시 새 디스패치를 게이팅한다.</p>
 <div class="literal-block-wrapper docutils container" id="id6">
-<div class="code-block-caption"><span class="caption-number">리스팅 16 </span><span class="caption-text">hw/rtl/NPU_Controller/Global_Scheduler.sv</span><a class="headerlink" href="#id6" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">리스팅 10 </span><span class="caption-text">hw/rtl/NPU_Controller/Global_Scheduler.sv</span><a class="headerlink" href="#id6" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="no">`timescale</span><span class="w"> </span><span class="mi">1</span><span class="n">ns</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1</span><span class="n">ps</span>
 <span class="no">`include</span><span class="w"> </span><span class="s">&quot;GEMM_Array.svh&quot;</span>
 <span class="no">`include</span><span class="w"> </span><span class="s">&quot;GLOBAL_CONST.svh&quot;</span>

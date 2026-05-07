@@ -5,7 +5,7 @@ The PREPROCESS subdirectory contains five SystemVerilog modules.
 
 ## `preprocess_fmap`
 
-```{literalinclude} ../../../codes/v002/hw/rtl/PREPROCESS/preprocess_fmap.sv
+```{literalinclude} ../../../codes/v002/LLM/rtl/core/preprocess/preprocess_fmap.sv
 :language: systemverilog
 :caption: hw/rtl/PREPROCESS/preprocess_fmap.sv
 :start-at: module preprocess_fmap
@@ -23,7 +23,7 @@ are driven to MAT_CORE.
 
 ## `preprocess_bf16_fixed_pipeline`
 
-```{literalinclude} ../../../codes/v002/hw/rtl/PREPROCESS/preprocess_bf16_fixed_pipeline.sv
+```{literalinclude} ../../../codes/v002/LLM/rtl/core/preprocess/preprocess_bf16_fixed_pipeline.sv
 :language: systemverilog
 :caption: hw/rtl/PREPROCESS/preprocess_bf16_fixed_pipeline.sv
 :start-at: module preprocess_bf16_fixed_pipeline
@@ -75,7 +75,7 @@ RTL repo as well.
 
 ## `fmap_cache`
 
-```{literalinclude} ../../../codes/v002/hw/rtl/PREPROCESS/fmap_cache.sv
+```{literalinclude} ../../../codes/v002/LLM/rtl/core/preprocess/fmap_cache.sv
 :language: systemverilog
 :caption: hw/rtl/PREPROCESS/fmap_cache.sv
 :start-at: module fmap_cache

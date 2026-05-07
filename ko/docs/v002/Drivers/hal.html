@@ -526,35 +526,18 @@ KV260 베어메탈 포인터 MMIO 에 직접 의존.</p></td>
 <p>HAL 은 <code class="docutils literal notranslate"><span class="pre">volatile</span> <span class="pre">uint32_t</span> <span class="pre">*</span></code> 파일 스코프 싱글턴 <code class="docutils literal notranslate"><span class="pre">g_mmio_base</span></code> 하나로
 전체 상태를 보관한다. 컨텍스트 포인터를 사용하지 않으므로 단일 프로세스
 내에서 NPU 인스턴스가 하나임을 전제한다.</p>
-<div class="literal-block-wrapper docutils container" id="lst-hal-mmio-ptr">
-<div class="code-block-caption"><span class="caption-number">리스팅 1 </span><span class="caption-text">uCA_v1_hal.c — MMIO 기반 포인터 선언</span><a class="headerlink" href="#lst-hal-mmio-ptr" title="Link to this code">¶</a></div>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="k">volatile</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="o">*</span><span class="n">g_mmio_base</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
-
-</pre></div>
-</div>
-</div>
+<p>The KV260 bare-metal HAL source files (<code class="docutils literal notranslate"><span class="pre">sw/driver/uCA_v1_hal.{c,h}</span></code>)
+remain in the board integration repository,
+<a class="reference external" href="https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260"><code class="docutils literal notranslate"><span class="pre">pccxai/pccx-FPGA-NPU-LLM-kv260</span></code></a>,
+because they encode KV260 board-side bare-metal pointer MMIO. The
+authoritative reading is the source files in that repo; this page
+no longer embeds the listing inline.</p>
 </section>
 <section id="id1">
 <h2>레지스터 맵<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
 <p>MMIO 기반 주소는 <code class="docutils literal notranslate"><span class="pre">UCA_MMIO_BASE_ADDR</span> <span class="pre">=</span> <span class="pre">0xA0000000</span></code> 이다. 이 값은
 Vivado 블록 디자인의 AXI-Lite 슬레이브 주소 할당과 일치해야 한다.</p>
-<div class="literal-block-wrapper docutils container" id="lst-hal-regmap">
-<div class="code-block-caption"><span class="caption-number">리스팅 2 </span><span class="caption-text">uCA_v1_hal.h — 기반 주소 및 레지스터 오프셋 정의</span><a class="headerlink" href="#lst-hal-regmap" title="Link to this code">¶</a></div>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// ===| MMIO Base Address |=======================================================</span>
-<span class="c1">// Must match the AXI-Lite slave address assigned in the Vivado block design.</span>
-<span class="cp">#define UCA_MMIO_BASE_ADDR  0xA0000000UL</span>
-
-<span class="c1">// ===| Register Offsets |========================================================</span>
-<span class="c1">// All offsets are byte offsets from UCA_MMIO_BASE_ADDR.</span>
-<span class="c1">// The 64-bit instruction register is split into two 32-bit words.</span>
-<span class="c1">// Write LO first; writing HI triggers the NPU instruction latch.</span>
-<span class="cp">#define UCA_REG_INSTR_LO    0x00  </span><span class="c1">// [31:0]  lower 32 bits of 64-bit VLIW instruction</span>
-<span class="cp">#define UCA_REG_INSTR_HI    0x04  </span><span class="c1">// [63:32] upper 32 bits; writing this latches the instruction</span>
-<span class="cp">#define UCA_REG_STATUS      0x08  </span><span class="c1">// [31:0]  NPU status (read-only)</span>
-
-</pre></div>
-</div>
-</div>
+<p>(see the linked KV260 board integration repo above for the source listing)</p>
 <div class="table-wrapper docutils container" id="tbl-hal-regmap">
 <table class="docutils align-default" id="tbl-hal-regmap">
 <caption><span class="caption-number">표 6 </span><span class="caption-text">레지스터 맵</span><a class="headerlink" href="#tbl-hal-regmap" title="Link to this table">¶</a></caption>
@@ -586,18 +569,7 @@ Vivado 블록 디자인의 AXI-Lite 슬레이브 주소 할당과 일치해야 �
 </div>
 <p>64-bit 명령어는 쌍으로 기록되며, <strong>LO 먼저, HI 나중</strong> 순서를 지켜야
 한다. HI 쓰기가 컨트롤러의 명령어 래칭을 트리거한다.</p>
-<div class="literal-block-wrapper docutils container" id="lst-hal-issue-instr">
-<div class="code-block-caption"><span class="caption-number">리스팅 3 </span><span class="caption-text">uCA_v1_hal.c — uca_hal_issue_instr 구현</span><a class="headerlink" href="#lst-hal-issue-instr" title="Link to this code">¶</a></div>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">uca_hal_issue_instr</span><span class="p">(</span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">instr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Write lower word first.</span>
-<span class="w">    </span><span class="c1">// Writing the upper word triggers the NPU instruction latch (ISA §8).</span>
-<span class="w">    </span><span class="n">uca_hal_write32</span><span class="p">(</span><span class="n">UCA_REG_INSTR_LO</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">)(</span><span class="n">instr</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0xFFFFFFFFULL</span><span class="p">));</span>
-<span class="w">    </span><span class="n">uca_hal_write32</span><span class="p">(</span><span class="n">UCA_REG_INSTR_HI</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">)(</span><span class="n">instr</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">32</span><span class="p">));</span>
-<span class="p">}</span>
-
-</pre></div>
-</div>
-</div>
+<p>(see the linked KV260 board integration repo above for the source listing)</p>
 </section>
 <section id="cmd-in-stat-out">
 <h2>CMD_IN / STAT_OUT 메커니즘<a class="headerlink" href="#cmd-in-stat-out" title="Link to this heading">¶</a></h2>
@@ -605,15 +577,7 @@ Vivado 블록 디자인의 AXI-Lite 슬레이브 주소 할당과 일치해야 �
 NPU 의 CMD_IN 경로에 명령어를 제출한다. 발행 후 즉시 반환하며,
 NPU 컨트롤러는 내부 파이프라인에서 독립적으로 명령어를 실행한다.</p>
 <p>상태 레지스터 <code class="docutils literal notranslate"><span class="pre">UCA_REG_STATUS</span></code> 의 비트 필드:</p>
-<div class="literal-block-wrapper docutils container" id="lst-hal-status-bits">
-<div class="code-block-caption"><span class="caption-number">리스팅 4 </span><span class="caption-text">uCA_v1_hal.h — 상태 비트 정의</span><a class="headerlink" href="#lst-hal-status-bits" title="Link to this code">¶</a></div>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// ===| Status Register Bit Fields |==============================================</span>
-<span class="cp">#define UCA_STAT_BUSY       (1U &lt;&lt; 0)  </span><span class="c1">// NPU is executing — do not issue new instruction</span>
-<span class="cp">#define UCA_STAT_DONE       (1U &lt;&lt; 1)  </span><span class="c1">// Last operation completed successfully</span>
-
-</pre></div>
-</div>
-</div>
+<p>(see the linked KV260 board integration repo above for the source listing)</p>
 <ul class="simple">
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">UCA_STAT_BUSY</span></code> (bit 0)</strong> — NPU 가 명령어를 실행 중임을 나타낸다.
 이 비트가 세트된 상태에서 새 명령어를 발행하지 않는다.</p></li>
@@ -622,22 +586,7 @@ NPU 컨트롤러는 내부 파이프라인에서 독립적으로 명령어를 �
 <p>폴링은 <code class="docutils literal notranslate"><span class="pre">uca_hal_wait_idle</span></code> 이 수행한다. 베어메탈 환경이므로 하드웨어
 타이머가 없으며, 현재 구현은 400 MHz 코어 기준 반복 횟수 추정치를
 사용한 busy-wait 루프다.</p>
-<div class="literal-block-wrapper docutils container" id="lst-hal-wait-idle">
-<div class="code-block-caption"><span class="caption-number">리스팅 5 </span><span class="caption-text">uCA_v1_hal.c — uca_hal_wait_idle 구현</span><a class="headerlink" href="#lst-hal-wait-idle" title="Link to this code">¶</a></div>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">uca_hal_wait_idle</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">timeout_us</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Bare-metal busy-wait.</span>
-<span class="w">    </span><span class="c1">// TODO: replace with a hardware timer once a timer driver is available.</span>
-<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">timeout_us</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">400</span><span class="p">;</span><span class="w">  </span><span class="c1">// ~1 iteration per ns at 400 MHz estimate</span>
-<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">count</span><span class="o">--</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">uca_hal_read_status</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">UCA_STAT_BUSY</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">  </span><span class="c1">// Idle</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w">  </span><span class="c1">// Timeout</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
+<p>(see the linked KV260 board integration repo above for the source listing)</p>
 <p><code class="docutils literal notranslate"><span class="pre">timeout_us</span></code> 가 0 이 되면 -1 을 반환한다. 타임아웃이 발생해도 NPU 상태를
 강제로 초기화하지 않으며, 상위 계층이 오류 처리를 담당한다.</p>
 </section>
@@ -651,23 +600,7 @@ KV260 베어메탈 환경에서는 물리 주소가 직접 접근 가능하다.<
 <li><p>반환값이 <code class="docutils literal notranslate"><span class="pre">0xFFFFFFFF</span></code> 이면 AXI 버스가 응답하지 않는 것으로 판단하고
 <code class="docutils literal notranslate"><span class="pre">-1</span></code> 을 반환한다. 그 외에는 <code class="docutils literal notranslate"><span class="pre">0</span></code> 을 반환한다.</p></li>
 </ol>
-<div class="literal-block-wrapper docutils container" id="lst-hal-init">
-<div class="code-block-caption"><span class="caption-number">리스팅 6 </span><span class="caption-text">uCA_v1_hal.c — uca_hal_init 구현</span><a class="headerlink" href="#lst-hal-init" title="Link to this code">¶</a></div>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">uca_hal_init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// On bare-metal KV260, physical addresses are directly accessible.</span>
-<span class="w">    </span><span class="n">g_mmio_base</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">volatile</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">UCA_MMIO_BASE_ADDR</span><span class="p">;</span>
-
-<span class="w">    </span><span class="c1">// Sanity check: status register reads all-ones on an unconnected AXI bus.</span>
-<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">stat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uca_hal_read32</span><span class="p">(</span><span class="n">UCA_REG_STATUS</span><span class="p">);</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">stat</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mh">0xFFFFFFFFU</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w">  </span><span class="c1">// Hardware not responding</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-
-</pre></div>
-</div>
-</div>
+<p>(see the linked KV260 board integration repo above for the source listing)</p>
 <p><code class="docutils literal notranslate"><span class="pre">uca_hal_deinit</span></code> 은 <code class="docutils literal notranslate"><span class="pre">g_mmio_base</span></code> 를 <code class="docutils literal notranslate"><span class="pre">NULL</span></code> 로 설정한다. 이후 발생하는
 <code class="docutils literal notranslate"><span class="pre">uca_hal_write32</span></code> / <code class="docutils literal notranslate"><span class="pre">uca_hal_read32</span></code> 호출은 널 포인터 역참조가 되므로,
 <code class="docutils literal notranslate"><span class="pre">deinit</span></code> 이후 HAL 호출이 없도록 상위 계층이 보장해야 한다.</p>

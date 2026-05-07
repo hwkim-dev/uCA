@@ -15,7 +15,7 @@
 에서 가중치 타일을, L2 캐시에서 활성화 행을 수신하고 누산 결과를
 후처리기 (post-processor) 로 스트리밍합니다.
 
-.. literalinclude:: ../../../../codes/v002/hw/rtl/MAT_CORE/GEMM_systolic_top.sv
+.. literalinclude:: ../../../../codes/v002/LLM/rtl/core/mat/GEMM_systolic_top.sv
    :language: systemverilog
    :caption: hw/rtl/MAT_CORE/GEMM_systolic_top.sv
 
@@ -28,7 +28,7 @@
 32-wide LUT 기반 MAC 과 5 단 reduction tree (Stage 1: DSP48E2 16 슬라이스,
 Stage 2–5: LUT 가산기) 를 가지며, HP2/HP3 에서 가중치를 스트리밍합니다.
 
-.. literalinclude:: ../../../../codes/v002/hw/rtl/VEC_CORE/GEMV_top.sv
+.. literalinclude:: ../../../../codes/v002/LLM/rtl/core/vec/GEMV_top.sv
    :language: systemverilog
    :caption: hw/rtl/VEC_CORE/GEMV_top.sv
 
@@ -41,7 +41,7 @@ Stage 2–5: LUT 가산기) 를 가지며, HP2/HP3 에서 가중치를 스트리
 CORDIC + LUT 하이브리드 함수 유닛을 조율합니다.
 모든 연산에서 정밀도는 BF16/FP32로 승격됩니다.
 
-.. literalinclude:: ../../../../codes/v002/hw/rtl/CVO_CORE/CVO_top.sv
+.. literalinclude:: ../../../../codes/v002/LLM/rtl/core/cvo/CVO_top.sv
    :language: systemverilog
    :caption: hw/rtl/CVO_CORE/CVO_top.sv
 
@@ -54,7 +54,7 @@ CORDIC + LUT 하이브리드 함수 유닛을 조율합니다.
 구현합니다. 비트 패킹 유도 과정은 :doc:`/docs/v002/Architecture/dsp48e2_w4a8`
 를 참조하세요.
 
-.. literalinclude:: ../../../../codes/v002/hw/rtl/MAT_CORE/GEMM_dsp_unit.sv
+.. literalinclude:: ../../../../codes/v002/LLM/rtl/core/mat/GEMM_dsp_unit.sv
    :language: systemverilog
    :caption: hw/rtl/MAT_CORE/GEMM_dsp_unit.sv
 

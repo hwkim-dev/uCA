@@ -503,7 +503,7 @@ SPDX-License-Identifier: Apache-2.0
 <p><code class="docutils literal notranslate"><span class="pre">npu_controller_top.sv</span></code> integrates the AXI-Lite frontend, instruction
 decoder, and global scheduler into a single controller boundary.</p>
 <div class="literal-block-wrapper docutils container" id="id1">
-<div class="code-block-caption"><span class="caption-number">Listing 14 </span><span class="caption-text">hw/rtl/NPU_Controller/npu_controller_top.sv</span><a class="headerlink" href="#id1" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 8 </span><span class="caption-text">hw/rtl/NPU_Controller/npu_controller_top.sv</span><a class="headerlink" href="#id1" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="no">`timescale</span><span class="w"> </span><span class="mi">1</span><span class="n">ns</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1</span><span class="n">ps</span>
 
 <span class="no">`include</span><span class="w"> </span><span class="s">&quot;GLOBAL_CONST.svh&quot;</span>
@@ -598,7 +598,7 @@ decoder, and global scheduler into a single controller boundary.</p>
 the 4-bit opcode and routes the 60-bit body into the appropriate
 typed struct (<code class="docutils literal notranslate"><span class="pre">GEMV_op_x64_t</span></code>, <code class="docutils literal notranslate"><span class="pre">memcpy_op_x64_t</span></code>, etc.).</p>
 <div class="literal-block-wrapper docutils container" id="id2">
-<div class="code-block-caption"><span class="caption-number">Listing 15 </span><span class="caption-text">hw/rtl/NPU_Controller/NPU_Control_Unit/ctrl_npu_decoder.sv</span><a class="headerlink" href="#id2" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 9 </span><span class="caption-text">hw/rtl/NPU_Controller/NPU_Control_Unit/ctrl_npu_decoder.sv</span><a class="headerlink" href="#id2" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="no">`timescale</span><span class="w"> </span><span class="mi">1</span><span class="n">ns</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1</span><span class="n">ps</span>
 <span class="no">`include</span><span class="w"> </span><span class="s">&quot;GLOBAL_CONST.svh&quot;</span>
 
@@ -700,7 +700,7 @@ per-core control μops, tracks in-flight async instructions, maintains
 the dependency scoreboard, and gates new dispatches when a hazard is
 detected.</p>
 <div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-number">Listing 16 </span><span class="caption-text">hw/rtl/NPU_Controller/Global_Scheduler.sv</span><a class="headerlink" href="#id3" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 10 </span><span class="caption-text">hw/rtl/NPU_Controller/Global_Scheduler.sv</span><a class="headerlink" href="#id3" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="no">`timescale</span><span class="w"> </span><span class="mi">1</span><span class="n">ns</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1</span><span class="n">ps</span>
 <span class="no">`include</span><span class="w"> </span><span class="s">&quot;GEMM_Array.svh&quot;</span>
 <span class="no">`include</span><span class="w"> </span><span class="s">&quot;GLOBAL_CONST.svh&quot;</span>

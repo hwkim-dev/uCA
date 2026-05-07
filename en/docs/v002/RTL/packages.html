@@ -535,7 +535,7 @@ counts <code class="docutils literal notranslate"><span class="pre">VecPipelineC
 reference these values, making this file the first edit point for any
 architecture-level change.</p>
 <div class="literal-block-wrapper docutils container" id="id1">
-<div class="code-block-caption"><span class="caption-number">Listing 25 </span><span class="caption-text">Constants/compilePriority_Order/B_device_pkg/device_pkg.sv</span><a class="headerlink" href="#id1" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 19 </span><span class="caption-text">Constants/compilePriority_Order/B_device_pkg/device_pkg.sv</span><a class="headerlink" href="#id1" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span><span class="w"> </span><span class="n">device_pkg</span><span class="p">;</span>
 
 <span class="w">  </span><span class="c1">// ===| Feature Map (Activation) Type |========================================</span>
@@ -587,7 +587,7 @@ modport reverses direction.</p>
 itself takes <code class="docutils literal notranslate"><span class="pre">clk</span></code> and <code class="docutils literal notranslate"><span class="pre">rst_n</span></code> as ports. The <code class="docutils literal notranslate"><span class="pre">slave</span></code> modport takes AW/W/AR
 channels as inputs and drives B/R channels.</p>
 <div class="literal-block-wrapper docutils container" id="id2">
-<div class="code-block-caption"><span class="caption-number">Listing 26 </span><span class="caption-text">NPU_Controller/npu_interfaces.svh</span><a class="headerlink" href="#id2" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 20 </span><span class="caption-text">NPU_Controller/npu_interfaces.svh</span><a class="headerlink" href="#id2" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="k">interface</span><span class="w"> </span><span class="n">axis_if</span><span class="w"> </span><span class="p">#(</span>
 <span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">DATA_WIDTH</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">128</span>
 <span class="p">)</span><span class="w"> </span><span class="p">();</span>

@@ -522,7 +522,7 @@ FIFO가 가득 차면 <code class="docutils literal notranslate"><span class="pr
 kick 마커는 하위 디스패처가 배치 경계를 감지하는 데 사용된다.
 <code class="docutils literal notranslate"><span class="pre">OUT_valid</span> <span class="pre">&amp;&amp;</span> <span class="pre">IN_decoder_ready</span></code> 핸드셰이크가 성립하는 사이클마다 FIFO에서 팝이 일어난다.</p>
 <div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-number">리스팅 17 </span><span class="caption-text">hw/rtl/NPU_Controller/NPU_frontend/AXIL_CMD_IN.sv (AXI4-Lite Write Path)</span><a class="headerlink" href="#id3" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">리스팅 11 </span><span class="caption-text">hw/rtl/NPU_Controller/NPU_frontend/AXIL_CMD_IN.sv (AXI4-Lite Write Path)</span><a class="headerlink" href="#id3" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="cm">/*─────────────────────────────────────────────</span>
 <span class="cm">  Register Address Map</span>
 <span class="cm">  ───────────────────────────────────────────────*/</span>
@@ -542,7 +542,7 @@ FIFO가 가득 차면 <code class="docutils literal notranslate"><span class="pr
 어서트한다. <code class="docutils literal notranslate"><span class="pre">s_rready</span></code>가 도착하면 <code class="docutils literal notranslate"><span class="pre">rvalid</span></code>를 해제한다.
 <code class="docutils literal notranslate"><span class="pre">s_arready</span></code>는 FIFO가 비어 있거나 R 응답이 아직 진행 중일 때 디어서트된다.</p>
 <div class="literal-block-wrapper docutils container" id="id4">
-<div class="code-block-caption"><span class="caption-number">리스팅 18 </span><span class="caption-text">hw/rtl/NPU_Controller/NPU_frontend/AXIL_STAT_OUT.sv (AXI4-Lite Read Path)</span><a class="headerlink" href="#id4" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">리스팅 12 </span><span class="caption-text">hw/rtl/NPU_Controller/NPU_frontend/AXIL_STAT_OUT.sv (AXI4-Lite Read Path)</span><a class="headerlink" href="#id4" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="cm">/*─────────────────────────────────────────────</span>
 <span class="cm">  FIFO  (simple synchronous, FIFO_DEPTH entries)</span>
 <span class="cm">  Push : IN_valid from upper module</span>
@@ -615,7 +615,7 @@ CMD_IN의 출력(<code class="docutils literal notranslate"><span class="pre">cm
 STAT_OUT 방향은 <code class="docutils literal notranslate"><span class="pre">IN_enc_stat</span></code> / <code class="docutils literal notranslate"><span class="pre">IN_enc_valid</span></code>를 인코더 FSM으로부터 직접 수신한다.
 <code class="docutils literal notranslate"><span class="pre">ctrl_npu_interface.sv</span></code>는 향후 코어별 인터페이스 집계를 위한 플레이스홀더다.</p>
 <div class="literal-block-wrapper docutils container" id="id5">
-<div class="code-block-caption"><span class="caption-number">리스팅 19 </span><span class="caption-text">hw/rtl/NPU_Controller/NPU_frontend/ctrl_npu_frontend.sv (인스턴스 배선)</span><a class="headerlink" href="#id5" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">리스팅 13 </span><span class="caption-text">hw/rtl/NPU_Controller/NPU_frontend/ctrl_npu_frontend.sv (인스턴스 배선)</span><a class="headerlink" href="#id5" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="n">AXIL_CMD_IN</span><span class="w"> </span><span class="p">#(</span>
 <span class="w">      </span><span class="p">.</span><span class="n">FIFO_DEPTH</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
 <span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="n">u_cmd_in</span><span class="w"> </span><span class="p">(</span>
@@ -676,7 +676,7 @@ STAT_OUT 방향은 <code class="docutils literal notranslate"><span class="pre">
 <code class="docutils literal notranslate"><span class="pre">axis_if</span></code>는 tdata/tvalid/tready/tlast/tkeep의 AXI-Stream 인터페이스로,
 데이터 경로 모듈이 사용한다.</p>
 <div class="literal-block-wrapper docutils container" id="id6">
-<div class="code-block-caption"><span class="caption-number">리스팅 20 </span><span class="caption-text">hw/rtl/NPU_Controller/npu_interfaces.svh (axis_if)</span><a class="headerlink" href="#id6" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">리스팅 14 </span><span class="caption-text">hw/rtl/NPU_Controller/npu_interfaces.svh (axis_if)</span><a class="headerlink" href="#id6" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="k">interface</span><span class="w"> </span><span class="n">axis_if</span><span class="w"> </span><span class="p">#(</span>
 <span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">DATA_WIDTH</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">128</span>
 <span class="p">)</span><span class="w"> </span><span class="p">();</span>
@@ -696,7 +696,7 @@ STAT_OUT 방향은 <code class="docutils literal notranslate"><span class="pre">
 </div>
 </div>
 <div class="literal-block-wrapper docutils container" id="id7">
-<div class="code-block-caption"><span class="caption-number">리스팅 21 </span><span class="caption-text">hw/rtl/NPU_Controller/npu_interfaces.svh (axil_if)</span><a class="headerlink" href="#id7" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">리스팅 15 </span><span class="caption-text">hw/rtl/NPU_Controller/npu_interfaces.svh (axil_if)</span><a class="headerlink" href="#id7" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="c1">// axil_if.sv</span>
 <span class="k">interface</span><span class="w"> </span><span class="n">axil_if</span><span class="w"> </span><span class="p">#(</span>
 <span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ADDR_W</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span>

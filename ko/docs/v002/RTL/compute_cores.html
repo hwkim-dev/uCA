@@ -509,7 +509,7 @@ SPDX-License-Identifier: Apache-2.0
 에서 가중치 타일을, L2 캐시에서 활성화 행을 수신하고 누산 결과를
 후처리기 (post-processor) 로 스트리밍합니다.</p>
 <div class="literal-block-wrapper docutils container" id="id2">
-<div class="code-block-caption"><span class="caption-number">리스팅 10 </span><span class="caption-text">hw/rtl/MAT_CORE/GEMM_systolic_top.sv</span><a class="headerlink" href="#id2" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">리스팅 4 </span><span class="caption-text">hw/rtl/MAT_CORE/GEMM_systolic_top.sv</span><a class="headerlink" href="#id2" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="no">`timescale</span><span class="w"> </span><span class="mi">1</span><span class="n">ns</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1</span><span class="n">ps</span>
 
 <span class="no">`include</span><span class="w"> </span><span class="s">&quot;GLOBAL_CONST.svh&quot;</span>
@@ -520,7 +520,7 @@ SPDX-License-Identifier: Apache-2.0
 <span class="c1">//                Hosts the weight-stationary 32×32 PE array plus its weight</span>
 <span class="c1">//                unpacker, staggered fmap delay lines, and e_max pipe.</span>
 <span class="c1">// Spec ref     : pccx v002 §2.2 (Matrix Core), §3.3 (GEMM uop).</span>
-<span class="c1">// Target       : KV260 @ 400 MHz core; cascade break at row 16 per spec.</span>
+<span class="c1">// Target       : Core clock target 400 MHz; cascade break at row 16 per spec.</span>
 <span class="c1">// Clock        : clk @ 400 MHz.</span>
 <span class="c1">// Reset        : rst_n active-low; i_clear synchronous soft-clear.</span>
 <span class="c1">// Topology     : weight_dispatcher → systolic_array → V_ACC_out (raw_res_sum).</span>
@@ -728,7 +728,7 @@ SPDX-License-Identifier: Apache-2.0
 32-wide LUT 기반 MAC 과 5 단 reduction tree (Stage 1: DSP48E2 16 슬라이스,
 Stage 2–5: LUT 가산기) 를 가지며, HP2/HP3 에서 가중치를 스트리밍합니다.</p>
 <div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-number">리스팅 11 </span><span class="caption-text">hw/rtl/VEC_CORE/GEMV_top.sv</span><a class="headerlink" href="#id3" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">리스팅 5 </span><span class="caption-text">hw/rtl/VEC_CORE/GEMV_top.sv</span><a class="headerlink" href="#id3" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="no">`timescale</span><span class="w"> </span><span class="mi">1</span><span class="n">ns</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1</span><span class="n">ps</span>
 
 <span class="no">`include</span><span class="w"> </span><span class="s">&quot;GEMV_Vec_Matrix_MUL.svh&quot;</span>
@@ -919,7 +919,7 @@ Stage 2–5: LUT 가산기) 를 가지며, HP2/HP3 에서 가중치를 스트리
 CORDIC + LUT 하이브리드 함수 유닛을 조율합니다.
 모든 연산에서 정밀도는 BF16/FP32로 승격됩니다.</p>
 <div class="literal-block-wrapper docutils container" id="id4">
-<div class="code-block-caption"><span class="caption-number">리스팅 12 </span><span class="caption-text">hw/rtl/CVO_CORE/CVO_top.sv</span><a class="headerlink" href="#id4" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">리스팅 6 </span><span class="caption-text">hw/rtl/CVO_CORE/CVO_top.sv</span><a class="headerlink" href="#id4" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="no">`timescale</span><span class="w"> </span><span class="mi">1</span><span class="n">ns</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1</span><span class="n">ps</span>
 <span class="no">`include</span><span class="w"> </span><span class="s">&quot;GLOBAL_CONST.svh&quot;</span>
 
@@ -1161,7 +1161,7 @@ CORDIC + LUT 하이브리드 함수 유닛을 조율합니다.
 구현합니다. 비트 패킹 유도 과정은 <a class="reference internal" href="../Architecture/dsp48e2_w4a8.html"><span class="doc">DSP48E2 W4A8 비트 패킹과 부호 복원</span></a>
 를 참조하세요.</p>
 <div class="literal-block-wrapper docutils container" id="id5">
-<div class="code-block-caption"><span class="caption-number">리스팅 13 </span><span class="caption-text">hw/rtl/MAT_CORE/GEMM_dsp_unit.sv</span><a class="headerlink" href="#id5" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">리스팅 7 </span><span class="caption-text">hw/rtl/MAT_CORE/GEMM_dsp_unit.sv</span><a class="headerlink" href="#id5" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="no">`timescale</span><span class="w"> </span><span class="mi">1</span><span class="n">ns</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1</span><span class="n">ps</span>
 
 <span class="c1">// ===============================================================================</span>

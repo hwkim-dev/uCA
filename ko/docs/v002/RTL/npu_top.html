@@ -507,7 +507,7 @@ SPDX-License-Identifier: Apache-2.0
 <p>4개 서브코어 (GEMM, GEMV, CVO, mem_dispatcher) 모두 여기서 인스턴스화되어
 중앙 L2 캐시 버스로 연결됩니다.</p>
 <div class="literal-block-wrapper docutils container" id="id1">
-<div class="code-block-caption"><span class="caption-number">리스팅 9 </span><span class="caption-text">hw/rtl/NPU_top.sv</span><a class="headerlink" href="#id1" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">리스팅 3 </span><span class="caption-text">hw/rtl/NPU_top.sv</span><a class="headerlink" href="#id1" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="no">`include</span><span class="w"> </span><span class="s">&quot;GLOBAL_CONST.svh&quot;</span>
 <span class="no">`timescale</span><span class="w"> </span><span class="mi">1</span><span class="n">ns</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1</span><span class="n">ps</span>
 <span class="no">`include</span><span class="w"> </span><span class="s">&quot;GEMM_Array.svh&quot;</span>
@@ -518,14 +518,13 @@ SPDX-License-Identifier: Apache-2.0
 <span class="kn">import</span><span class="w"> </span><span class="nn">vec_core_pkg::*</span><span class="p">;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">bf16_math_pkg::*</span><span class="p">;</span>
 
-<span class="c1">// ===| Module: NPU_top — pccx v002 SoC integration wrapper |====================</span>
-<span class="c1">// Purpose      : Top-level integration of all v002 NPU subsystems on KV260.</span>
-<span class="c1">// Spec ref     : pccx v002 §1 (architecture overview), §6 (KV260 target).</span>
-<span class="c1">// Target       : Xilinx Kria KV260 (xck26-sfvc784-2LV-c), ZU5EV.</span>
+<span class="c1">// ===| Module: pccx_npu_top — pccx v002 IP-core integration wrapper |===========</span>
+<span class="c1">// Purpose      : Top-level integration of reusable v002 NPU subsystems.</span>
+<span class="c1">// Spec ref     : pccx v002 architecture overview and top interface contract.</span>
 <span class="c1">// Clock        : clk_core @ 400 MHz (compute), clk_axi @ 250 MHz (HP/AXIL).</span>
 <span class="c1">// Reset        : rst_n_core / rst_axi_n active-low. Synchronous release.</span>
 <span class="c1">// Soft-clear   : i_clear (active-high, sync) — combined with reset wherever</span>
-<span class="c1">//                state is latched. See CLAUDE.md §3 reset convention.</span>
+<span class="c1">//                state is latched. Follows the package reset convention.</span>
 <span class="c1">// Throughput   : Steady-state, dual-lane W4A8 systolic = 32 × 32 × 2 MAC/clk.</span>
 <span class="c1">// Backpressure : HP weight FIFOs (mem_HP_buffer) provide CDC + skid; ACP fmap</span>
 <span class="c1">//                FIFO (preprocess_fmap) holds at boundary when broadcast stalls.</span>
@@ -549,7 +548,7 @@ SPDX-License-Identifier: Apache-2.0
 <span class="c1">//   bit 31:2 reserved.</span>
 <span class="c1">// ===============================================================================</span>
 
-<span class="k">module</span><span class="w"> </span><span class="n">NPU_top</span><span class="w"> </span><span class="p">(</span>
+<span class="k">module</span><span class="w"> </span><span class="n">pccx_npu_top</span><span class="w"> </span><span class="p">(</span>
 <span class="w">    </span><span class="c1">// ===| Clock &amp; Reset |=======================================================</span>
 <span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">clk_core</span><span class="p">,</span>
 <span class="w">    </span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">rst_n_core</span><span class="p">,</span>

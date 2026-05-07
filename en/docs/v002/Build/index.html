@@ -530,71 +530,19 @@ isolation before a block-design wrapper is available.</p>
 </section>
 <section id="sv-interface-wrapper">
 <h2>SV Interface Wrapper<a class="headerlink" href="#sv-interface-wrapper" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">hw/vivado/npu_core_wrapper.sv</span></code> converts <code class="docutils literal notranslate"><span class="pre">NPU_top</span></code>’s SystemVerilog
-interface ports into plain AXI4-Lite and AXI4-Stream signal bundles so
-the core can be packaged as a Vivado IP and placed alongside the Zynq PS
-in a block design. The wrapper contains no registers and no CDC logic;
-it performs one-to-one signal expansion only.</p>
-<div class="literal-block-wrapper docutils container" id="lst-npu-core-wrapper-ports">
-<div class="code-block-caption"><span class="caption-number">Listing 30 </span><span class="caption-text">npu_core_wrapper — port declarations</span><a class="headerlink" href="#lst-npu-core-wrapper-ports" title="Link to this code">¶</a></div>
-<div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="k">module</span><span class="w"> </span><span class="n">npu_core_wrapper</span><span class="w"> </span><span class="p">#(</span>
-<span class="w">  </span><span class="k">parameter</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">AXIL_ADDR_W</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span>
-<span class="w">  </span><span class="k">parameter</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">AXIL_DATA_W</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">64</span><span class="p">,</span>
-<span class="w">  </span><span class="k">parameter</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">HP_DATA_W</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mi">128</span><span class="p">,</span>
-<span class="w">  </span><span class="k">parameter</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ACP_DATA_W</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mi">128</span>
-<span class="p">)</span><span class="w"> </span><span class="p">(</span>
-<span class="w">  </span><span class="c1">// ===| Clocks and resets |==================================================</span>
-<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">clk_core</span><span class="p">,</span>
-<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">rst_n_core</span><span class="p">,</span>
-<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">clk_axi</span><span class="p">,</span>
-<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">rst_axi_n</span><span class="p">,</span>
-<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">i_clear</span><span class="p">,</span>
-
-<span class="w">  </span><span class="c1">// ===| S_AXIL_CTRL (AXI4-Lite slave) |======================================</span>
-<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">AXIL_ADDR_W</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w">  </span><span class="n">s_axil_awaddr</span><span class="p">,</span>
-<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w">                    </span><span class="n">s_axil_awvalid</span><span class="p">,</span>
-<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w">                    </span><span class="n">s_axil_awready</span><span class="p">,</span>
-<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">AXIL_DATA_W</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w">  </span><span class="n">s_axil_wdata</span><span class="p">,</span>
-<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">AXIL_DATA_W</span><span class="o">/</span><span class="mi">8</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">s_axil_wstrb</span><span class="p">,</span>
-<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w">                    </span><span class="n">s_axil_wvalid</span><span class="p">,</span>
-<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w">                    </span><span class="n">s_axil_wready</span><span class="p">,</span>
-<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w">              </span><span class="n">s_axil_bresp</span><span class="p">,</span>
-<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w">                    </span><span class="n">s_axil_bvalid</span><span class="p">,</span>
-<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w">                    </span><span class="n">s_axil_bready</span><span class="p">,</span>
-<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">AXIL_ADDR_W</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w">  </span><span class="n">s_axil_araddr</span><span class="p">,</span>
-<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w">                    </span><span class="n">s_axil_arvalid</span><span class="p">,</span>
-<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w">                    </span><span class="n">s_axil_arready</span><span class="p">,</span>
-<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">AXIL_DATA_W</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w">  </span><span class="n">s_axil_rdata</span><span class="p">,</span>
-<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w">              </span><span class="n">s_axil_rresp</span><span class="p">,</span>
-<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w">                    </span><span class="n">s_axil_rvalid</span><span class="p">,</span>
-<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w">                    </span><span class="n">s_axil_rready</span><span class="p">,</span>
-
-<span class="w">  </span><span class="c1">// ===| S_AXI_HP0..3_WEIGHT (AXIS slave, 128-bit each) |====================</span>
-<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">HP_DATA_W</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">s_axis_hp0_tdata</span><span class="p">,</span>
-<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w">                 </span><span class="n">s_axis_hp0_tvalid</span><span class="p">,</span>
-<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w">                 </span><span class="n">s_axis_hp0_tready</span><span class="p">,</span>
-<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">HP_DATA_W</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">s_axis_hp1_tdata</span><span class="p">,</span>
-<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w">                 </span><span class="n">s_axis_hp1_tvalid</span><span class="p">,</span>
-<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w">                 </span><span class="n">s_axis_hp1_tready</span><span class="p">,</span>
-<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">HP_DATA_W</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">s_axis_hp2_tdata</span><span class="p">,</span>
-<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w">                 </span><span class="n">s_axis_hp2_tvalid</span><span class="p">,</span>
-<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w">                 </span><span class="n">s_axis_hp2_tready</span><span class="p">,</span>
-<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">HP_DATA_W</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">s_axis_hp3_tdata</span><span class="p">,</span>
-<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w">                 </span><span class="n">s_axis_hp3_tvalid</span><span class="p">,</span>
-<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w">                 </span><span class="n">s_axis_hp3_tready</span><span class="p">,</span>
-
-<span class="w">  </span><span class="c1">// ===| ACP FMap (AXIS slave) + Result (AXIS master) |======================</span>
-<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">ACP_DATA_W</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">s_axis_acp_fmap_tdata</span><span class="p">,</span>
-<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w">                  </span><span class="n">s_axis_acp_fmap_tvalid</span><span class="p">,</span>
-<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w">                  </span><span class="n">s_axis_acp_fmap_tready</span><span class="p">,</span>
-
-<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="n">ACP_DATA_W</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">m_axis_acp_result_tdata</span><span class="p">,</span>
-<span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w">                  </span><span class="n">m_axis_acp_result_tvalid</span><span class="p">,</span>
-<span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w">                  </span><span class="n">m_axis_acp_result_tready</span>
-<span class="p">);</span>
-</pre></div>
-</div>
-</div>
+<p>The board-side SystemVerilog wrapper (<code class="docutils literal notranslate"><span class="pre">npu_core_wrapper.sv</span></code>) converts
+<code class="docutils literal notranslate"><span class="pre">NPU_top</span></code>’s SystemVerilog interface ports into plain AXI4-Lite and
+AXI4-Stream signal bundles so the core can be packaged as a Vivado IP
+and placed alongside the Zynq PS in a block design. The wrapper
+contains no registers and no CDC logic; it performs one-to-one signal
+expansion only.</p>
+<p>The wrapper file is part of the KV260 board integration repository
+(<a class="reference external" href="https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260"><code class="docutils literal notranslate"><span class="pre">pccxai/pccx-FPGA-NPU-LLM-kv260</span></code></a>),
+not the reusable IP-core package. After the v002 extraction it
+remains in the board integration layer rather than <code class="docutils literal notranslate"><span class="pre">pccx-v002</span></code>,
+because it encodes board-side packaging concerns. The current
+authoritative source is therefore the board integration repo’s
+<code class="docutils literal notranslate"><span class="pre">hw/vivado/npu_core_wrapper.sv</span></code>.</p>
 <p>The external interface exposed by the wrapper is as follows.</p>
 <div class="table-wrapper docutils container" id="tbl-wrapper-interfaces">
 <table class="docutils align-default" id="tbl-wrapper-interfaces">
@@ -694,23 +642,12 @@ the Vivado project.</p>
 <p>Compile order follows the declaration order in the file. Packages and
 interfaces must appear before the modules that import them.</p>
 <div class="literal-block-wrapper docutils container" id="lst-filelist-packages">
-<div class="code-block-caption"><span class="caption-number">Listing 31 </span><span class="caption-text">filelist.f — package compile order (leading section)</span><a class="headerlink" href="#lst-filelist-packages" title="Link to this code">¶</a></div>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>rtl/Constants/compilePriority_Order/B_device_pkg/device_pkg.sv
-
-# ===| C: dtype / mem packages (depend on B) |=================================
-rtl/Constants/compilePriority_Order/C_type_pkg/dtype_pkg.sv
-rtl/Constants/compilePriority_Order/C_type_pkg/mem_pkg.sv
-
-# ===| D: vector-core configuration package (depends on B+C) |=================
-rtl/Constants/compilePriority_Order/D_pipeline_pkg/vec_core_pkg.sv
-
-# ===| E: observability counter package (depends on int only) |================
-# Vocabulary-only at Stage C: PerfCountersEnableDefault, counter widths, and
-# the handshake_counter_t struct. No module imports it yet; opt-in counter
-# wiring will arrive as a separate Stage D MVP commit.
-rtl/Constants/compilePriority_Order/E_obs_pkg/perf_counter_pkg.sv
-
-# ===| Library packages and interfaces |=======================================
+<div class="code-block-caption"><span class="caption-number">Listing 24 </span><span class="caption-text">filelist.f — package compile order (leading section)</span><a class="headerlink" href="#lst-filelist-packages" title="Link to this code">¶</a></div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>common/rtl/packages/device_pkg.sv
+common/rtl/packages/dtype_pkg.sv
+common/rtl/packages/mem_pkg.sv
+common/rtl/packages/vec_core_pkg.sv
+common/rtl/packages/perf_counter_pkg.sv
 </pre></div>
 </div>
 </div>

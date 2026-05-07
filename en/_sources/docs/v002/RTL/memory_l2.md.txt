@@ -35,13 +35,13 @@ simultaneously. Port B reads carry the same 3-cycle latency characteristic.
 
 The Port A (ACP) and Port B (NPU) control signals are:
 
-```{literalinclude} ../../../codes/v002/hw/rtl/MEM_control/memory/mem_GLOBAL_cache.sv
+```{literalinclude} ../../../codes/v002/LLM/rtl/core/memory/mem_GLOBAL_cache.sv
 :language: systemverilog
 :start-at: // ===| Port A — ACP DMA control |
 :end-before: // ===| Port B — NPU compute direct access |
 ```
 
-```{literalinclude} ../../../codes/v002/hw/rtl/MEM_control/memory/mem_GLOBAL_cache.sv
+```{literalinclude} ../../../codes/v002/LLM/rtl/core/memory/mem_GLOBAL_cache.sv
 :language: systemverilog
 :start-at: // ===| Port B — NPU compute direct access |
 :end-before: );

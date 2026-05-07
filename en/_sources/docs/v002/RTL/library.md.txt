@@ -14,7 +14,7 @@ containing `empty` and `full`. External logic that needs to inspect queue state
 uses this type rather than reading the raw signals directly. A STACK entry is
 reserved as a commented stub.
 
-```{literalinclude} ../../../codes/v002/hw/rtl/Library/Algorithms/Algorithms.sv
+```{literalinclude} ../../../codes/v002/common/rtl/packages/Algorithms.sv
 :language: systemverilog
 :caption: Library/Algorithms/Algorithms.sv
 :start-at: package algorithms_pkg;
@@ -42,7 +42,7 @@ Exposed types and functions:
   NaN, and Inf handling are not included; the autoregressive decode path operates
   exclusively on normalised BF16 operands.
 
-```{literalinclude} ../../../codes/v002/hw/rtl/Library/Algorithms/BF16_math.sv
+```{literalinclude} ../../../codes/v002/common/rtl/packages/BF16_math.sv
 :language: systemverilog
 :caption: Library/Algorithms/BF16_math.sv
 :start-at: package bf16_math_pkg;
@@ -70,7 +70,7 @@ Three modports:
 - `owner` — Used by the QUEUE module itself. Receives all handshake signals as
   inputs; drives `wr_ptr`/`rd_ptr` and references `mem` via `ref`.
 
-```{literalinclude} ../../../codes/v002/hw/rtl/Library/Algorithms/QUEUE/IF_queue.sv
+```{literalinclude} ../../../codes/v002/common/rtl/interfaces/IF_queue.sv
 :language: systemverilog
 :caption: Library/Algorithms/QUEUE/IF_queue.sv
 :start-at: modport producer

@@ -502,7 +502,7 @@ QUEUE 상태 구조체 <code class="docutils literal notranslate"><span class="p
 packed struct이며, QUEUE 모듈 외부에서 상태를 참조할 때 사용한다. STACK 지원은
 스텁(stub)으로 예약되어 있다.</p>
 <div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-number">리스팅 27 </span><span class="caption-text">Library/Algorithms/Algorithms.sv</span><a class="headerlink" href="#id3" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">리스팅 21 </span><span class="caption-text">Library/Algorithms/Algorithms.sv</span><a class="headerlink" href="#id3" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span><span class="w"> </span><span class="n">algorithms_pkg</span><span class="p">;</span>
 
 <span class="w">  </span><span class="cm">/*─────────────────────────────────────────────</span>
@@ -537,7 +537,7 @@ bit)는 저장하지 않는다.</p>
 처리는 포함하지 않는다(autoregressive 디코딩 경로의 정규화 BF16 피연산자 전제).</p></li>
 </ul>
 <div class="literal-block-wrapper docutils container" id="id4">
-<div class="code-block-caption"><span class="caption-number">리스팅 28 </span><span class="caption-text">Library/Algorithms/BF16_math.sv</span><a class="headerlink" href="#id4" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">리스팅 22 </span><span class="caption-text">Library/Algorithms/BF16_math.sv</span><a class="headerlink" href="#id4" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span><span class="w"> </span><span class="n">bf16_math_pkg</span><span class="p">;</span>
 
 <span class="w">  </span><span class="cm">/*─────────────────────────────────────────────</span>
@@ -653,7 +653,7 @@ bit)는 저장하지 않는다.</p>
 출력한다.</p></li>
 </ul>
 <div class="literal-block-wrapper docutils container" id="id5">
-<div class="code-block-caption"><span class="caption-number">리스팅 29 </span><span class="caption-text">Library/Algorithms/QUEUE/IF_queue.sv</span><a class="headerlink" href="#id5" title="Link to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">리스팅 23 </span><span class="caption-text">Library/Algorithms/QUEUE/IF_queue.sv</span><a class="headerlink" href="#id5" title="Link to this code">¶</a></div>
 <div class="highlight-systemverilog notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="k">modport</span><span class="w"> </span><span class="n">producer</span><span class="p">(</span><span class="k">import</span><span class="w"> </span><span class="n">push</span><span class="p">,</span><span class="w"> </span><span class="k">input</span><span class="w"> </span><span class="n">empty</span><span class="p">,</span><span class="w"> </span><span class="n">full</span><span class="p">,</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span><span class="w"> </span><span class="n">rst_n</span><span class="p">,</span><span class="w"> </span><span class="k">output</span><span class="w"> </span><span class="n">push_data</span><span class="p">,</span><span class="w"> </span><span class="n">push_en</span><span class="p">);</span>
 
 <span class="w">  </span><span class="c1">// consumer : only pops</span>

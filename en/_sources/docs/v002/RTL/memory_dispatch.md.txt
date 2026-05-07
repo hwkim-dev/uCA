@@ -45,7 +45,7 @@ identical field layout.
 
 RTL definition:
 
-```{literalinclude} ../../../codes/v002/hw/rtl/NPU_Controller/NPU_Control_Unit/ISA_PACKAGE/isa_pkg.sv
+```{literalinclude} ../../../codes/v002/LLM/rtl/packages/isa/isa_pkg.sv
 :language: systemverilog
 :start-at: // ===| ACP / NPU Transfer uops (used by mem_dispatcher) |
 :end-before: endpackage

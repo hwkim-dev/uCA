@@ -15,7 +15,7 @@ split at row 16 into two 32 × 16 sub-chains). It receives weight tiles
 from HP0/HP1 and activation rows from the L2 cache, and streams
 accumulated results to the post-processor.
 
-.. literalinclude:: ../../../codes/v002/hw/rtl/MAT_CORE/GEMM_systolic_top.sv
+.. literalinclude:: ../../../codes/v002/LLM/rtl/core/mat/GEMM_systolic_top.sv
    :language: systemverilog
    :caption: hw/rtl/MAT_CORE/GEMM_systolic_top.sv
 
@@ -28,7 +28,7 @@ accumulated results to the post-processor.
 32-wide LUT-based MAC and a 5-stage reduction tree (Stage 1 uses 16
 DSP48E2 slices; Stages 2–5 are LUT adders). Weights stream from HP2/HP3.
 
-.. literalinclude:: ../../../codes/v002/hw/rtl/VEC_CORE/GEMV_top.sv
+.. literalinclude:: ../../../codes/v002/LLM/rtl/core/vec/GEMV_top.sv
    :language: systemverilog
    :caption: hw/rtl/VEC_CORE/GEMV_top.sv
 
@@ -42,7 +42,7 @@ non-linear operations: ``exp``, ``sqrt``, ``gelu``, ``sin``, ``cos``,
 ``reduce_sum``, ``scale``, ``recip``. Precision is promoted to BF16/FP32
 for all computations.
 
-.. literalinclude:: ../../../codes/v002/hw/rtl/CVO_CORE/CVO_top.sv
+.. literalinclude:: ../../../codes/v002/LLM/rtl/core/cvo/CVO_top.sv
    :language: systemverilog
    :caption: hw/rtl/CVO_CORE/CVO_top.sv
 
@@ -55,7 +55,7 @@ for all computations.
 DSP48E2 slice. See :doc:`/docs/v002/Architecture/dsp48e2_w4a8` for the
 bit-packing derivation.
 
-.. literalinclude:: ../../../codes/v002/hw/rtl/MAT_CORE/GEMM_dsp_unit.sv
+.. literalinclude:: ../../../codes/v002/LLM/rtl/core/mat/GEMM_dsp_unit.sv
    :language: systemverilog
    :caption: hw/rtl/MAT_CORE/GEMM_dsp_unit.sv
 
