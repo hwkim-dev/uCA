@@ -102,6 +102,32 @@ Working tracks for the next release lines:
 The :doc:`roadmap` summarises how the three tracks relate, and the
 ``pccx`` family-tree figure on that page links them visually.
 
+Evidence-gated v002.1 pointers:
+
+.. list-table::
+   :header-rows: 1
+   :widths: 24 44 32
+
+   * - Item
+     - Link
+     - Guard
+   * - Architecture explainer
+     - `docs/spec/v002.1-architecture-explainer.md (PR #48) <https://github.com/pccxai/pccx/blob/docs/v002.1-architecture-explainer/docs/spec/v002.1-architecture-explainer.md>`__
+     - Draft explainer; no board-run, closed-timing, deployable-bitstream,
+       or measured-throughput claim.
+   * - Evidence inventory
+     - `pccx-FPGA-NPU-LLM-kv260 evidence inventory (PR #95) <https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260/blob/docs/v002.1-evidence-inventory/docs/evidence/v002.1-evidence-inventory.md>`__
+     - Inventory of landed and pending evidence; release claims remain
+       gated by measured artifacts.
+   * - Bitstream runbook
+     - `pccx-FPGA-NPU-LLM-kv260 bitstream runbook (PR #82) <https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260/blob/build/v002-kv260-bitstream-runbook/docs/runbooks/v002.1-bitstream-build.md>`__
+     - Pre-flight runbook; Vivado and KV260 board execution are not
+       claimed by this link.
+   * - Project board
+     - `PCCX Roadmap project board <https://github.com/orgs/pccxai/projects/1>`__
+     - Planning tracker; status must be read with the evidence gates
+       above.
+
 The v001 architecture is archived at
 :doc:`archive/experimental_v001/index`.
 
