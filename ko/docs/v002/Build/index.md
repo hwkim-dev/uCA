@@ -143,8 +143,8 @@ Vivado 프로젝트에 추가한다.
 
 ```{literalinclude} ../../../../codes/v002/LLM/scripts/filelist.f
 :language: text
-:start-at: B_device_pkg/device_pkg.sv
-:end-before: Library/Algorithms/BF16_math.sv
+:start-at: common/rtl/packages/device_pkg.sv
+:end-before: common/rtl/packages/BF16_math.sv
 :caption: filelist.f — 패키지 컴파일 순서 (앞부분)
 :name: lst-filelist-packages
 ```
