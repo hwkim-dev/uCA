@@ -85,10 +85,12 @@ pccx balances efficiency with accuracy:
 Detailed technical specifications for the active **v002** line live
 under :doc:`v002/index`:
 
-1. :doc:`v002/ISA/index` — 64-bit custom instruction set.
-2. :doc:`v002/Architecture/index` — hardware architecture and
+1. :doc:`quickstart` — reader path for release-line claims, evidence,
+   local checks, deploy posture, and common v002.1 questions.
+2. :doc:`v002/ISA/index` — 64-bit custom instruction set.
+3. :doc:`v002/Architecture/index` — hardware architecture and
    floorplan.
-3. :doc:`v002/Drivers/index` — driver and SDK documentation.
+4. :doc:`v002/Drivers/index` — driver and SDK documentation.
 
 Working tracks for the next release lines:
 
@@ -200,5 +202,6 @@ risks, keeping the ecosystem safe for open-source hardware development.
 .. toctree::
    :hidden:
 
+   quickstart
    v003/index
    vision-v001/index

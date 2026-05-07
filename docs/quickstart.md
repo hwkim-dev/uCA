@@ -2,125 +2,145 @@
 myst:
   html_meta:
     description lang=en: |
-      One-command reproducer for the pccx NPU — clone, build, load the
-      sample .pccx trace, run the Sail formal model, open the pccx-lab
-      profiler.  Docker recipe + native bare-metal paths, both tested
-      on Ubuntu 24.04.
+      Reader quickstart for the pccx v002.1 path: resolve the spec,
+      inventory public evidence, run the local docs checks, understand
+      deployment, and answer common review questions without treating
+      targets as measured results.
 ---
 
 # Quickstart
 
-The shortest path from "git clone" to "I'm looking at a pccx trace".
-Everything on this page is the **reproducer**: `docker compose up`
-lands you at a running profiler with a real capture loaded.
+This page is the shortest reader path through the active pccx line.
+It is not a benchmark recipe. Use it to decide what is specified, what
+is evidenced, what remains pending, and which commands keep a docs
+change honest.
 
-## 0. What you get
+## 1. Read the spec resolution
 
-```{mermaid}
-flowchart LR
-    A[RTL Repository<br>Vivado Synth] -->|generates| B(16-token .pccx trace)
-    A -->|produces| C(Sail ISA Model)
-    
-    B -.->|loads into| D{pccx-lab Profiler}
-    C -.->|type-checks in| E[OCaml / opam]
-    
-    D --> F[CLI Analytics<br>roofline / report]
-    D --> G[Tauri Desktop App<br>Visual IDE]
-    
-    style D fill:#ff7a00,stroke:#fff,color:#fff
-```
+Start by separating release-line intent from measured evidence:
 
-| Artefact | Produced by | Opens with |
-|---|---|---|
-| `.pccx` trace (16-token Gemma-3N decode) | `pccx-FPGA-NPU-LLM-kv260/hw/sim/run_verification.sh` | `pccx-lab` (Tauri app), `pccx_cli` |
-| Sail ISA model (type-checked)            | `pccx-FPGA-NPU-LLM-kv260/formal/sail/`                | `sail`, `sail --doc` |
-| Vivado synth + timing reports            | `pccx-FPGA-NPU-LLM-kv260/vivado/build.sh synth`       | `pccx-lab` IDE → Verification → Synth Status |
-| Trace analytics                          | `pccx-lab` workspace                                  | `pccx_cli --roofline --report-md`, IDE analyzer tabs |
+- {doc}`v002/overview` defines the active architecture line. v002.0 is
+  the baseline KV260 integration line; v002.1 layers sparsity and
+  speculative decoding on top of that baseline.
+- {doc}`roadmap` is the release-line map. It records the v002.1
+  throughput figure as a target, not as an achieved result.
+- {doc}`v002/Models/gemma3n_overview` and
+  {doc}`v002/Models/gemma3n_pipeline` describe the Gemma 3N E4B model
+  path that v002.1 is meant to exercise.
+- {doc}`v002/ISA/index` and {doc}`v002/Formal/index` explain the ISA
+  contract and the Sail model. Encoding details still resolve back to
+  the active RTL package when documentation and implementation differ.
 
-## 1. Prerequisites
+Reader rule: a claim about a planned v002.1 mechanism can live in the
+architecture or model docs; a claim that it has run on KV260 belongs on
+the evidence page only after the release checklist gates it in.
 
-A single 64-bit Linux box (Ubuntu 24.04 tested) with:
+## 2. Inventory the evidence
 
-- `git` ≥ 2.40
-- `opam` + `ocaml` ≥ 4.14 — for Sail
-- `docker` ≥ 24 — for the reproducer container
-- `rustup` (stable toolchain) — for `pccx-core` + Tauri
-- *(optional)* Xilinx Vivado 2024.1 — for the RTL synth path
-- *(optional)* Xilinx Kria KV260 board — for live token-generation
+Read {doc}`Evidence/index` before interpreting any performance wording.
+That page is the public inventory of measured, reproducible artefacts
+and pending gates.
 
-Only the first four are required to reproduce the **software** half of
-the project.  Board access is optional.
+Use this checklist while reading:
 
-## 2. Clone all three repos
+| Question | Where to check |
+|---|---|
+| Is the value measured, pending, or a target? | {doc}`Evidence/index` and {doc}`roadmap` |
+| Which testbench or tool produced it? | {doc}`v002/Verification/index` and {doc}`Lab/verification-workflow` |
+| Does it depend on Vivado synth, implementation, or board bring-up? | {doc}`v002/Build/index` |
+| Is it a model-mapping claim rather than hardware evidence? | {doc}`v002/Models/gemma3n_execution` |
 
-pccx is a **three-repo federation** (see the ecosystem section on
-{doc}`index`).  Clone them into sibling directories:
+If a number is not present in {doc}`Evidence/index`, treat it as design
+intent or release planning text. Do not quote it as a measured result.
 
-```bash
-mkdir -p ~/pccx-ws && cd ~/pccx-ws
-git clone https://github.com/pccxai/pccx.git                    # docs (this site)
-git clone https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260.git  # RTL + Sail model
-git clone https://github.com/pccxai/pccx-lab.git                 # profiler + UVM workflow facade
-```
+## 3. Run the local docs runbook
 
-## 3. One-command reproducer (Docker)
-
-```{admonition} Planned — not yet shipped
-:class: warning
-
-The Docker reproducer (`scripts/docker/quickstart.yml`) is tracked on
-the pccx-lab roadmap but has not landed on `main` yet.  Until it does,
-follow the [native path below](#4-native-path-no-docker) — it is
-identical to what the container will run internally.
-```
-
-## 4. Native path (no Docker)
+For docs-only review, clone this repository and run the strict build:
 
 ```bash
-# ── Sail model ─────────────────────────────────────────────────
-eval $(opam env)
-cd ~/pccx-ws/pccx-FPGA-NPU-LLM-kv260/formal/sail
-make check                           # type-check; < 5 s
-
-# ── pccx-core + CLI ────────────────────────────────────────────
-cd ~/pccx-ws/pccx-lab
-cargo build -p pccx-reports --bin pccx_cli --release
-./target/release/pccx_cli \
-    samples/gemma3n_16tok_smoke.pccx \
-    --roofline --report-md          # header + roofline + bottleneck
-
-# ── pccx-lab (Tauri desktop app) ───────────────────────────────
-cd ui
-npm ci && npm run tauri dev
+git clone https://github.com/pccxai/pccx.git
+cd pccx
+make strict
+make lint
 ```
 
-The `samples/` directory ships two pre-captured traces — see
-[`samples/README.md`](https://github.com/pccxai/pccx-lab/blob/main/samples/README.md):
+`make strict` builds the English and Korean Sphinx sites with warnings
+as errors. `make lint` runs the lightweight prose and Sphinx lint pass.
+For longer-lived branches, run `make linkcheck` before release or when
+adding external URLs.
 
-- `gemma3n_16tok_smoke.pccx`   (101 KB, 2,568 events)  — CI smoke size.
-- `gemma3n_128tok_decode.pccx` (797 KB, 20,488 events) — steady-state decode.
+For trace and lab workflow reproduction, use the existing pccx-lab
+handbook instead of this page:
 
-## 5. Board path (optional)
+- {doc}`Lab/quickstart` for opening sample `.pccx` traces.
+- {doc}`Lab/verification-workflow` for the xsim-to-trace verification
+  path.
+- {doc}`Lab/cli` for headless trace inspection and golden-diff gates.
 
-```bash
-# Flash the bitstream and run a 16-token decode on the KV260.
-cd ~/pccx-ws/pccx-FPGA-NPU-LLM-kv260/scripts/board
-./bringup.sh kv260.local
-# Pulls the .pccx back to the host automatically; open in pccx-lab.
-```
+## 4. Read the deploy runbook
 
-## 6. Where to go next
+The public site is generated from this docs repository and deployed by
+GitHub Actions after changes land on `main`.
 
-- Read the [pccx-lab handbook](Lab/index) for the profiler API surface.
-- Read the [Formal model page](v002/Formal/index) for the Sail scaffold.
-- Read the [Evidence page](Evidence/index) for measured tok/s + latency
-  numbers (board runs in progress).
+Operationally, a docs PR should keep this order:
+
+1. Build locally with `make strict`.
+2. Run `make lint`; run `make linkcheck` when URLs changed.
+3. Merge only evidence wording that has a named source artefact or a
+   pending gate.
+4. Let the Pages workflow publish `https://pccxai.github.io/pccx/`.
+5. Check the deployed page for the exact path you changed.
+
+Deployment does not convert a target into evidence. The deploy check
+only proves the site built and published; the evidence page still owns
+measurement status.
+
+## 5. FAQ
+
+### Is v002.1 already released?
+
+No. v002.1 is the planned sparsity and speculative-decoding ramp on the
+same KV260 RTL line. The baseline v002.0 integration and evidence gates
+remain visible dependencies.
+
+### Does the 20 tok/s figure mean measured throughput?
+
+No. It is a v002.1 target. The docs may discuss it as a target, but it
+must not be phrased as achieved throughput until KV260 evidence lands in
+{doc}`Evidence/index`.
+
+### Which repository is the source of truth for RTL?
+
+The active v002 RTL lives in
+`pccxai/pccx-FPGA-NPU-LLM-kv260`. This docs repository cross-references
+that source and builds a public narrative around it. For ISA encodings,
+the RTL `isa_pkg.sv` package wins over prose.
+
+### Should a reader start with the lab app?
+
+Start with this page if you are reviewing claims. Start with
+{doc}`Lab/quickstart` if you want to open traces or inspect the pccx-lab
+UI.
+
+### Do English and Korean docs both need manual edits?
+
+No for new work. English is the canonical source; the Korean tree is
+produced by external translation tooling and may trail the English
+source.
+
+### What makes a quickstart or release note misleading?
+
+The common failure mode is mixing target, simulator, synthesis, and
+board evidence in one sentence. Keep each claim tied to its source:
+roadmap for targets, architecture/model pages for design intent,
+verification pages for testbench status, and {doc}`Evidence/index` for
+published measurement status.
 
 ## Cite this page
 
 ```bibtex
-@misc{pccx_quickstart_2026,
-  title        = {pccx Quickstart: one-command reproducer for the open NPU},
+@misc{pccx_reader_quickstart_2026,
+  title        = {pccx Quickstart: reader path for the v002.1 release line},
   author       = {Kim, Hyunwoo},
   year         = {2026},
   howpublished = {\url{https://pccxai.github.io/pccx/en/docs/quickstart.html}},
