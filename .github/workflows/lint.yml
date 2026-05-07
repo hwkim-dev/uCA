@@ -68,8 +68,12 @@ jobs:
 
       - name: Clone active ${{ env.ACTIVE_VERSION }} RTL
         run: |
-          git clone --depth 1 --branch "${RTL_REPO_REF}" \
+          # RTL_REPO_REF may be a branch, tag, or commit SHA. `--branch`
+          # only accepts branch/tag names, so do a shallow checkout that
+          # works for all three.
+          git clone --filter=blob:none --no-checkout \
               "${RTL_REPO_URL}" "codes/${ACTIVE_VERSION}"
+          git -C "codes/${ACTIVE_VERSION}" checkout "${RTL_REPO_REF}"
 
       - name: make strict (EN + KO, -W --keep-going)
         run: make strict
