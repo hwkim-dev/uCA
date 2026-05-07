@@ -101,6 +101,8 @@ Working tracks for the next release lines:
 
 The :doc:`roadmap` summarises how the three tracks relate, and the
 ``pccx`` family-tree figure on that page links them visually.
+The :doc:`glossary` defines project and v002 architecture terms used
+across the public docs.
 
 The v001 architecture is archived at
 :doc:`archive/experimental_v001/index`.
@@ -202,3 +204,4 @@ risks, keeping the ecosystem safe for open-source hardware development.
 
    v003/index
    vision-v001/index
+   glossary

@@ -110,6 +110,7 @@ Tooling & Lab
 
    docs/index
    docs/quickstart
+   docs/glossary
    docs/Evidence/index
    docs/roadmap
 
