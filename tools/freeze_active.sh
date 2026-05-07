@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+# PCCX(TM) — reusable AI accelerator project.
+# SPDX-FileCopyrightText: 2026 Hyun Woo Kim
+# SPDX-License-Identifier: Apache-2.0
+
 #
 # freeze_active.sh — snapshot the currently-active RTL at a tag into
 # pccx/codes/vNNN/ as the permanent archive for that architecture version.
