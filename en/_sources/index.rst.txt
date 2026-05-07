@@ -13,7 +13,7 @@ Ecosystem
    :gutter: 3 4 4 4
    :class-container: pccx-ecosystem-grid
 
-   .. grid-item-card:: :octicon:`cpu;1.5em;sd-mr-2` RTL Implementation
+   .. grid-item-card:: :octicon:`cpu;1.5em;sd-mr-2` KV260 integration
       :columns: 12 12 8 8
       :class-card: pccx-hero-card
       :link: https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260
@@ -22,9 +22,9 @@ Ecosystem
 
       **github.com/pccxai/pccx-FPGA-NPU-LLM-kv260**
 
-      The active **v002** SystemVerilog sources — ISA package, controller,
-      compute cores (GEMM / GEMV / CVO), memory hierarchy. Target device
-      is the Xilinx Kria **KV260** (Zynq UltraScale+ ZU5EV).
+      KV260 + LLM application integration for the **v002** line. Reusable
+      IP-core sources live in ``pccx-v002``; this repository owns board
+      flow, driver handoff, and application wiring.
 
       **Current focus:** Gemma-3N E4B @ W4A8KV4 remains an evidence-gated
       target. Token-rate, board-run, and timing-closure results are pending
@@ -54,12 +54,9 @@ Ecosystem
 
             **hkimw.github.io/hkimw** — blog, other projects, about.
 
-v003+ active RTL development will live in a separate repository — working
-name ``pccxai/pccx-FPGA-NPU-LLM-v003``, public URL TBD. The hosting
-model mirrors v002: this docs repo will cross-link the v003 RTL
-repository and CI-clone it into ``codes/v003/`` at build time, the same
-way it currently CI-clones ``pccx-FPGA-NPU-LLM-kv260`` into
-``codes/v002/``. The v003 RTL repository has not been created yet.
+v003 IP-core development belongs to the future ``pccx-v003`` package.
+Board and model repositories will consume that package through explicit
+compatibility contracts.
 
 Tooling & Lab
 -------------
@@ -111,6 +108,7 @@ Tooling & Lab
    docs/index
    docs/quickstart
    docs/Evidence/index
+   docs/repo-boundaries
    docs/roadmap
 
 .. toctree::
