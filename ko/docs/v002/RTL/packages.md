@@ -46,7 +46,7 @@ v002 RTL은 패키지와 헤더를 컴파일 우선순위 계층(`Constants/comp
 선언한다. 모든 하위 패키지는 이 값을 참조하므로, 아키텍처 변경 시 이 파일이 첫 번째
 수정 지점이 된다.
 
-```{literalinclude} ../../../../codes/v002/hw/rtl/Constants/compilePriority_Order/B_device_pkg/device_pkg.sv
+```{literalinclude} ../../../../codes/v002/common/rtl/packages/device_pkg.sv
 :language: systemverilog
 :caption: Constants/compilePriority_Order/B_device_pkg/device_pkg.sv
 :start-at: package device_pkg;
@@ -84,7 +84,7 @@ Vector Core 토폴로지를 서술하는 `vec_cfg_t` 구조체(packed struct)와
 `rst_n`)을 인터페이스 포트로 받는다. `slave` modport는 AW/W/AR 채널을 입력으로,
 B/R 채널을 출력으로 구분한다.
 
-```{literalinclude} ../../../../codes/v002/hw/rtl/NPU_Controller/npu_interfaces.svh
+```{literalinclude} ../../../../codes/v002/common/rtl/interfaces/npu_interfaces.svh
 :language: systemverilog
 :caption: NPU_Controller/npu_interfaces.svh
 :start-at: interface axis_if

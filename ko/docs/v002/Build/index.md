@@ -44,17 +44,16 @@ OOC 모드를 사용하는 이유는 `NPU_top` 이 SystemVerilog 인터페이스
 
 ## SV 인터페이스 래퍼
 
-`hw/vivado/npu_core_wrapper.sv` 는 `NPU_top` 의 SystemVerilog 인터페이스
-포트를 평문 AXI4-Lite / AXI4-Stream 신호 묶음으로 변환하는 얇은 래퍼다.
-레지스터와 CDC 는 포함하지 않으며 신호 배선만 수행한다.
+보드 측 SystemVerilog 래퍼 (`npu_core_wrapper.sv`) 는 `NPU_top` 의
+SystemVerilog 인터페이스 포트를 평문 AXI4-Lite / AXI4-Stream 신호
+묶음으로 변환하는 얇은 래퍼다. 레지스터와 CDC 는 포함하지 않으며
+신호 배선만 수행한다.
 
-```{literalinclude} ../../../../codes/v002/hw/vivado/npu_core_wrapper.sv
-:language: systemverilog
-:start-at: module npu_core_wrapper
-:end-before: // ---------------------------------------------------------------------------
-:caption: npu_core_wrapper — 포트 선언부
-:name: lst-npu-core-wrapper-ports
-```
+이 래퍼 파일은 KV260 보드 통합 저장소
+([`pccxai/pccx-FPGA-NPU-LLM-kv260`](https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260))
+에 남아있다. 보드 측 패키징 관심사를 담고 있으므로 v002 추출 이후에도
+재사용 IP-core 패키지(`pccx-v002`) 가 아닌 보드 통합 레이어에 유지된다.
+권위 있는 위치는 보드 통합 저장소의 `hw/vivado/npu_core_wrapper.sv` 다.
 
 래퍼가 노출하는 외부 인터페이스는 다음과 같다.
 
@@ -142,10 +141,10 @@ Vivado 프로젝트에 추가한다.
 컴파일 순서는 파일 내 선언 순서를 따른다. 패키지·인터페이스가 그것을
 임포트하는 모듈보다 앞에 위치해야 한다.
 
-```{literalinclude} ../../../../codes/v002/hw/vivado/filelist.f
+```{literalinclude} ../../../../codes/v002/LLM/scripts/filelist.f
 :language: text
-:start-at: B_device_pkg/device_pkg.sv
-:end-before: Library/Algorithms/BF16_math.sv
+:start-at: common/rtl/packages/device_pkg.sv
+:end-before: common/rtl/packages/BF16_math.sv
 :caption: filelist.f — 패키지 컴파일 순서 (앞부분)
 :name: lst-filelist-packages
 ```

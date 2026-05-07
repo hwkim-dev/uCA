@@ -46,19 +46,20 @@ isolation before a block-design wrapper is available.
 
 ## SV Interface Wrapper
 
-`hw/vivado/npu_core_wrapper.sv` converts `NPU_top`'s SystemVerilog
-interface ports into plain AXI4-Lite and AXI4-Stream signal bundles so
-the core can be packaged as a Vivado IP and placed alongside the Zynq PS
-in a block design. The wrapper contains no registers and no CDC logic;
-it performs one-to-one signal expansion only.
+The board-side SystemVerilog wrapper (`npu_core_wrapper.sv`) converts
+`NPU_top`'s SystemVerilog interface ports into plain AXI4-Lite and
+AXI4-Stream signal bundles so the core can be packaged as a Vivado IP
+and placed alongside the Zynq PS in a block design. The wrapper
+contains no registers and no CDC logic; it performs one-to-one signal
+expansion only.
 
-```{literalinclude} ../../../codes/v002/hw/vivado/npu_core_wrapper.sv
-:language: systemverilog
-:start-at: module npu_core_wrapper
-:end-before: // ---------------------------------------------------------------------------
-:caption: npu_core_wrapper — port declarations
-:name: lst-npu-core-wrapper-ports
-```
+The wrapper file is part of the KV260 board integration repository
+([`pccxai/pccx-FPGA-NPU-LLM-kv260`](https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260)),
+not the reusable IP-core package. After the v002 extraction it
+remains in the board integration layer rather than `pccx-v002`,
+because it encodes board-side packaging concerns. The current
+authoritative source is therefore the board integration repo's
+`hw/vivado/npu_core_wrapper.sv`.
 
 The external interface exposed by the wrapper is as follows.
 
@@ -148,10 +149,10 @@ the Vivado project.
 Compile order follows the declaration order in the file. Packages and
 interfaces must appear before the modules that import them.
 
-```{literalinclude} ../../../codes/v002/hw/vivado/filelist.f
+```{literalinclude} ../../../codes/v002/LLM/scripts/filelist.f
 :language: text
-:start-at: B_device_pkg/device_pkg.sv
-:end-before: Library/Algorithms/BF16_math.sv
+:start-at: common/rtl/packages/device_pkg.sv
+:end-before: common/rtl/packages/BF16_math.sv
 :caption: filelist.f — package compile order (leading section)
 :name: lst-filelist-packages
 ```

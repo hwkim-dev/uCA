@@ -76,7 +76,7 @@ consumers.
 
 ## Source
 
-```{literalinclude} ../../../codes/v002/hw/rtl/MEM_control/memory/Constant_Memory/shape_const_ram.sv
+```{literalinclude} ../../../codes/v002/LLM/rtl/core/memory/Constant_Memory/shape_const_ram.sv
 :language: systemverilog
 :start-at: module shape_const_ram
 :end-before: endmodule

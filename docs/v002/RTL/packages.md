@@ -50,7 +50,7 @@ counts `VecPipelineCnt = 4` and `MatPipelineCnt = 1`. All downstream packages
 reference these values, making this file the first edit point for any
 architecture-level change.
 
-```{literalinclude} ../../../codes/v002/hw/rtl/Constants/compilePriority_Order/B_device_pkg/device_pkg.sv
+```{literalinclude} ../../../codes/v002/common/rtl/packages/device_pkg.sv
 :language: systemverilog
 :caption: Constants/compilePriority_Order/B_device_pkg/device_pkg.sv
 :start-at: package device_pkg;
@@ -90,7 +90,7 @@ modport reverses direction.
 itself takes `clk` and `rst_n` as ports. The `slave` modport takes AW/W/AR
 channels as inputs and drives B/R channels.
 
-```{literalinclude} ../../../codes/v002/hw/rtl/NPU_Controller/npu_interfaces.svh
+```{literalinclude} ../../../codes/v002/common/rtl/interfaces/npu_interfaces.svh
 :language: systemverilog
 :caption: NPU_Controller/npu_interfaces.svh
 :start-at: interface axis_if
