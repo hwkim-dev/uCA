@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # PCCX Trademark Policy
 
 Status: pending trademark applications; not legal advice.
