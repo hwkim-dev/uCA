@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # PCCX IP policy (operational, draft)
 
 Status: draft operational policy; not legal advice; not a contract;

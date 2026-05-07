@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # Support
 
 This repository is the canonical specification and documentation

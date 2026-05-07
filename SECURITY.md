@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # Security policy
 
 For coordinated security disclosures across the PCCX organisation,

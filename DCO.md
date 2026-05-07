@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # Developer Certificate of Origin (draft)
 
 Status: draft operational policy; not legal advice; subject to

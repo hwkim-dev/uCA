@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # PCCX patent posture
 
 Status: not legal advice. This document does not modify the patent
