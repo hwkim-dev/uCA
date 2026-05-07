@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # Repository boundaries
 
 The model and the board consume the IP core. The IP core never references
