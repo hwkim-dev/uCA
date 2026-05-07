@@ -151,8 +151,8 @@ interfaces must appear before the modules that import them.
 
 ```{literalinclude} ../../../codes/v002/LLM/scripts/filelist.f
 :language: text
-:start-at: B_device_pkg/device_pkg.sv
-:end-before: Library/Algorithms/BF16_math.sv
+:start-at: common/rtl/packages/device_pkg.sv
+:end-before: common/rtl/packages/BF16_math.sv
 :caption: filelist.f — package compile order (leading section)
 :name: lst-filelist-packages
 ```
