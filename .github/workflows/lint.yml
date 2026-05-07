@@ -34,7 +34,11 @@ on:
 env:
   ACTIVE_VERSION: v002
   RTL_REPO_URL: https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260
-  RTL_REPO_REF: main
+  # Pinned to the last kv260 main SHA before the v002 IP-core
+  # extraction removed in-tree hw/rtl. Roll this forward together
+  # with a literalinclude path migration to the pccx-v002 layout
+  # (tracked separately).
+  RTL_REPO_REF: 18d4631f54721684ef6747bc37cf8538653a7a9e
   # Opt JavaScript actions into the Node.js 24 runtime ahead of the
   # 2026-06-02 forced cutover.
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
