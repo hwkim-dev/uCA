@@ -1,0 +1,19 @@
+arch: pccx-v003
+package_repo: pccx-v003
+domains:
+  - TBD
+isa_version: TBD
+register_abi_version: TBD
+driver_abi_version: TBD
+top_interface_version: TBD
+weight_format: TBD
+activation_format: TBD
+nonlinear_precision: TBD
+control_bus: TBD
+model_specific: TBD
+board_specific: TBD
+known_application_repos:
+  - TBD
+non_binding_notes:
+  target_first_application: gemma4-e4b
+  target_first_application_status: non-binding planning note
