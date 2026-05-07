@@ -175,8 +175,8 @@ blog posts, or external summaries, please cite:
   title        = {pccx-core plugin registry: the generic primitive every pccx-lab crate hangs its trait-object plugins off},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://pccxai.github.io/pccx/en/docs/Lab/analyzer_api.html}},
-  note         = {Part of pccx: \url{https://pccxai.github.io/pccx/}}
+  howpublished = {\url{https://pccx.pages.dev/en/docs/Lab/analyzer_api.html}},
+  note         = {Part of pccx: \url{https://pccx.pages.dev/}}
 }
 ```
 

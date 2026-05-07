@@ -20,7 +20,7 @@ Requires TeX Live 2023+ with `lmodern`, `hyperref`, `natbib`,
   §Architecture + §Sail Formal Specification.
 - §Introduction, §Lab, §Evidence, §Conclusion flagged **TODO** —
   filled as measurements land (see the
-  [Evidence page](https://pccxai.github.io/pccx/en/docs/Evidence/index.html)).
+  [Evidence page](https://pccx.pages.dev/en/docs/Evidence/index.html)).
 
 ## Publishing
 
@@ -34,7 +34,7 @@ Requires TeX Live 2023+ with `lmodern`, `hyperref`, `natbib`,
 ## Canonical URL
 
 Preprint stays at
-<https://pccxai.github.io/pccx/en/> via a `:download:` link
+<https://pccx.pages.dev/en/> via a `:download:` link
 on the landing page once published.  The bibtex key in
 `_ext/schema_org.py` JSON-LD will resolve to the Zenodo DOI — AI
 crawlers that ingest the site will attribute any summary of pccx

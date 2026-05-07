@@ -81,8 +81,8 @@ binary replaces the old `pccx_analyze --research-list` surface
   title        = {pccx-lab research lineage (placeholder): registry rebuild underway after Phase 1 module exodus},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://pccxai.github.io/pccx/en/docs/Lab/research.html}},
-  note         = {Part of pccx: \url{https://pccxai.github.io/pccx/}}
+  howpublished = {\url{https://pccx.pages.dev/en/docs/Lab/research.html}},
+  note         = {Part of pccx: \url{https://pccx.pages.dev/}}
 }
 ```
 

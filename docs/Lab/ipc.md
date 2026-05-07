@@ -253,8 +253,8 @@ This is a design decision captured in the IPC design notes and motivated in
                   and boundary rules},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://pccxai.github.io/pccx/en/docs/Lab/ipc.html}},
-  note         = {Part of pccx: \url{https://pccxai.github.io/pccx/}}
+  howpublished = {\url{https://pccx.pages.dev/en/docs/Lab/ipc.html}},
+  note         = {Part of pccx: \url{https://pccx.pages.dev/}}
 }
 ```
 

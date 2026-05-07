@@ -159,7 +159,7 @@ Press `?` or `F1` anywhere in the app to open the full shortcut modal.
   title        = {pccx-lab Quickstart: installing the profiler and loading the first trace},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://pccxai.github.io/pccx/en/docs/Lab/quickstart.html}},
-  note         = {Part of pccx: \url{https://pccxai.github.io/pccx/}}
+  howpublished = {\url{https://pccx.pages.dev/en/docs/Lab/quickstart.html}},
+  note         = {Part of pccx: \url{https://pccx.pages.dev/}}
 }
 ```

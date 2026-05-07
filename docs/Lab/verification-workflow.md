@@ -209,8 +209,8 @@ IPC command reference:
   title        = {pccx-lab Verification Workflow: RTL to .pccx to golden-diff gate},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://pccxai.github.io/pccx/en/docs/Lab/verification-workflow.html}},
-  note         = {Part of pccx: \url{https://pccxai.github.io/pccx/}}
+  howpublished = {\url{https://pccx.pages.dev/en/docs/Lab/verification-workflow.html}},
+  note         = {Part of pccx: \url{https://pccx.pages.dev/}}
 }
 ```
 

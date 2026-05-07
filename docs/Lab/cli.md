@@ -171,8 +171,8 @@ gate for now.
   title        = {pccx-lab command-line binaries after the Phase 1 workspace split: pccx\_cli, generator, from\_xsim\_log, pccx\_golden\_diff},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://pccxai.github.io/pccx/en/docs/Lab/cli.html}},
-  note         = {Part of pccx: \url{https://pccxai.github.io/pccx/}}
+  howpublished = {\url{https://pccx.pages.dev/en/docs/Lab/cli.html}},
+  note         = {Part of pccx: \url{https://pccx.pages.dev/}}
 }
 ```
 

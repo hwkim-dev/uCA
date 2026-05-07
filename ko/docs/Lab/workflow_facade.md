@@ -77,8 +77,8 @@ predictor, AST-hash cache 결과를 구분해 UI 가 각 제안 옆에 provenanc
   title        = {pccx-lab workflow facade and SystemVerilog editor boundary after Phase 1},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://pccxai.github.io/pccx/ko/docs/Lab/workflow_facade.html}},
-  note         = {Part of pccx: \url{https://pccxai.github.io/pccx/}}
+  howpublished = {\url{https://pccx.pages.dev/ko/docs/Lab/workflow_facade.html}},
+  note         = {Part of pccx: \url{https://pccx.pages.dev/}}
 }
 ```
 
