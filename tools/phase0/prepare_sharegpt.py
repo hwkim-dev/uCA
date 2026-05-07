@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# PCCX(TM) — reusable AI accelerator project.
+# SPDX-FileCopyrightText: 2026 Hyun Woo Kim
+# SPDX-License-Identifier: Apache-2.0
+
 """Prepare a mixed Korean + English ShareGPT slice for EAGLE-3 training.
 
 Output: parquet with columns `id`, `conversations` (list of {role, content}),

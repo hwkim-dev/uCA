@@ -1,3 +1,9 @@
+/*
+PCCX™ — reusable AI accelerator project.
+SPDX-FileCopyrightText: 2026 Hyun Woo Kim
+SPDX-License-Identifier: Apache-2.0
+*/
+
 /* Mermaid container polish — coexists with sphinxcontrib-mermaid's own styles.
  * sphinxcontrib-mermaid wraps diagrams in .mermaid-container and injects a
  * fullscreen button; we tune spacing and dark-mode surface. */

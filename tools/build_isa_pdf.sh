@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+# PCCX(TM) — reusable AI accelerator project.
+# SPDX-FileCopyrightText: 2026 Hyun Woo Kim
+# SPDX-License-Identifier: Apache-2.0
+
 # Build the pccx v002 ISA Guidebook (main.tex) and drop the final PDF
 # where the Furo site can serve it.
 #
