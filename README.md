@@ -125,6 +125,9 @@ The reusable IP-core line is board- and model-agnostic. Board and model
 repositories consume the IP-core package; IP-core RTL and compatibility
 contracts do not name a specific board or model.
 
+For the authoritative version of this table, the boundary rule, and the
+submodule pin policy, see [`docs/reference/repo-topology.md`](docs/reference/repo-topology.md).
+
 ### Local documentation layout
 
 ```
@@ -206,6 +209,17 @@ Highlights:
 - [DSP48E2 W4A8 Derivation](https://pccxai.github.io/pccx/en/docs/v002/Architecture/dsp48e2_w4a8.html) — dual-channel bit packing math
 - [Custom ISA Reference](https://pccxai.github.io/pccx/en/docs/v002/ISA/index.html) — 64-bit VLIW encoding, opcode table, dataflow
 - [RTL Source Reference](https://pccxai.github.io/pccx/en/docs/v002/RTL/index.html) — embedded SystemVerilog with live syntax highlighting
+
+### Documentation map
+
+In-repo developer-facing documentation:
+
+- [`docs/reference/`](docs/reference/README.md) — repository topology, v002 contract narrative, boundary rule, testing protocol, submodule pin policy.
+- [`docs/onboarding/`](docs/onboarding/README.md) — getting started, architecture overview reading order, contribution rules (draft).
+- [`docs/evidence/`](docs/evidence/evidence-pack-index.md) — evidence pack index and risk register.
+- [`docs/roadmap/`](docs/roadmap/milestones.md) — milestones reflecting actual state.
+- [`docs/commercial/`](docs/commercial/README.md) — open / commercial / capital track separation **(DRAFT, not legal advice)**.
+- [`docs/ip/`](docs/ip/README.md) — patent strategy, trademarks, trade secret policy, contributor licence agreement intent **(DRAFT, not legal advice)**.
 
 ---
 
