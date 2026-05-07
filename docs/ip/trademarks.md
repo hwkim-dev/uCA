@@ -14,6 +14,12 @@ The project claims common-law rights in the marks below through
 ongoing public use. Formal registration is TBD; the marks listed
 here are claims of use, not statements of registration.
 
+For the canonical entry point and the live filing docket, see
+[`TRADEMARKS.md`](../../TRADEMARKS.md) (root) and
+[`trademark-filing-log.md`](trademark-filing-log.md) (this directory).
+Use `PCCX™` on first prominent mention; do not use `PCCX®` until
+registration is granted in the relevant jurisdiction.
+
 ## Claimed marks
 
 | Mark | Use |

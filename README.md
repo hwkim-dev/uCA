@@ -264,7 +264,14 @@ python -m http.server --directory _build/html
 
 Licensed under the **[Apache License 2.0](LICENSE)**.
 
+## Trademark
 
+`PCCX™` is a mark used by the PCCX project. Korean trademark
+applications are pending for PCCX in Classes 09 and 42 (application
+numbers `40-2026-0091497` and `40-2026-0091498`). Registration has
+not been granted; do not use `PCCX®` until this policy is updated.
+See [`TRADEMARKS.md`](TRADEMARKS.md) for permitted use, restricted
+use, and the public-safe filing docket.
 
 <div align="center">
 
