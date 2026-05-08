@@ -9,7 +9,7 @@ placeholder 다.
 
 ## 작업 상태
 
-- 작업 저장소 이름: `pccx-vision-v001`, 공개 URL 미정
+- 저장소: [`pccxai/pccx-vision-v001`](https://github.com/pccxai/pccx-vision-v001)
 - 작업 staging 저장소: `pccx-vision-v001-staging` (private)
 - v002 와 substrate 공유 — 동일한 KV260 보드, 동일한 W4A8
   weight × activation 비율, 동일한 L2 URAM 구성

@@ -50,7 +50,7 @@ Tracking issue: [pccxai/pccx#28 — v0.2.0 umbrella][v020].
 ## Later — v003.x: separate RTL repository (LLM line continued)
 
 - v003+ active RTL development moves to a dedicated repository, working
-  name `pccx-LLM-v003`, public URL TBD; the v003 RTL repository has
+  name [`pccx-LLM-v003`](https://github.com/pccxai/pccx-LLM-v003) (temporary planning line; canonical home is [`pccx-v003`](https://github.com/pccxai/pccx-v003)); the v003 RTL repository has
   not yet stabilised any release branch
 - this docs repo will cross-link the v003 RTL repository and CI-clone
   it into `codes/v003/` at build time, the same way it currently
@@ -67,7 +67,7 @@ KV260 board and the W4A8 NPU substrate but covers a distinct workload
 family from the LLM line. Active RTL development will live in a
 dedicated repository.
 
-- working name `pccx-vision-v001`, public URL TBD
+- [`pccx-vision-v001`](https://github.com/pccxai/pccx-vision-v001)
 - shared substrate with the LLM line — same KV260 board, same W4A8
   weight × activation ratio, same L2 URAM organisation
 - distinct dataflow — dense-conv tile reuse instead of token-by-token
