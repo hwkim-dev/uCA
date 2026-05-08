@@ -13,9 +13,10 @@ is intended to live at:
 pccxai/pccx-v003/compatibility/v003-contract.yaml
 ```
 
-(The package repository `pccxai/pccx-v003` does not exist today. See the
-[repository boundary](repository-boundary.md) page for the consolidation
-direction.)
+The canonical package repository [`pccxai/pccx-v003`](https://github.com/pccxai/pccx-v003)
+exists in planning / evidence-gated state; no frozen v003 contract is
+released yet. See the [repository boundary](repository-boundary.md) page
+for the consolidation direction.
 
 ## Contract shape (mirrors v002)
 

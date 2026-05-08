@@ -519,9 +519,10 @@ attempted; a full closure pass with reports is the next gate.</p></li>
 <li><p><strong>W4A8 golden-vector gate population</strong> — only smoke vectors
 currently; full fixture set TBD per
 <code class="docutils literal notranslate"><span class="pre">pccx-FPGA-NPU-LLM-kv260/docs/W4A8_GOLDEN_VECTOR_GATE.md</span></code>.</p></li>
-<li><p><strong>v003 LLM line definition</strong> — <code class="docutils literal notranslate"><span class="pre">pccxai/pccx-LLM-v003</span></code>
-placeholder repo exists; the eventual <code class="docutils literal notranslate"><span class="pre">pccx-v003/LLM/</span></code> location
-is the planned home once the v003 contract is stable.</p></li>
+<li><p><strong>v003 IP-core planning</strong> — <code class="docutils literal notranslate"><span class="pre">pccxai/pccx-v003</span></code> is the canonical v003
+IP-core planning package (planning / evidence-gated); the earlier
+feeder <code class="docutils literal notranslate"><span class="pre">pccxai/pccx-LLM-v003</span></code> is superseded / retired and reusable
+v003 LLM material now belongs under <code class="docutils literal notranslate"><span class="pre">pccx-v003/LLM/</span></code>.</p></li>
 </ul>
 </section>
 <section id="next-gated-no-dates">
@@ -532,9 +533,9 @@ compatibility review with <code class="docutils literal notranslate"><span class
 default: absorb once the vision RTL is shown to share enough with
 the v002 LLM substrate. If the substrate split is too wide,
 vision stays standalone.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">pccx-v003</span></code> repo creation</strong> — gated on v003 contract being
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">pccx-v003</span></code> contract freeze</strong> — gated on the v003 contract being
 stable enough that an external consumer can pin against it. Until
-then <code class="docutils literal notranslate"><span class="pre">pccx-LLM-v003</span></code> remains a placeholder track.</p></li>
+then <code class="docutils literal notranslate"><span class="pre">pccx-v003</span></code> stays in planning / evidence-gated state.</p></li>
 <li><p><strong>Voice domain population</strong> — <code class="docutils literal notranslate"><span class="pre">pccx-v002/Voice/</span></code> is a placeholder
 directory today. Population is gated on a defined Voice contract.</p></li>
 </ul>

@@ -7,12 +7,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://pccx.pages.dev/docs/v003/compatibility-contract.html" />
 <meta property="og:site_name" content="pccx — Parallel Compute Core eXecutor" />
-<meta property="og:description" content="Draft / planning / evidence-gated. No frozen v003 contract exists yet. The v003 contract, when it lands, will mirror the v002 contract shape and is intended to live at:(The package repository pccxa..." />
+<meta property="og:description" content="Draft / planning / evidence-gated. No frozen v003 contract exists yet. The v003 contract, when it lands, will mirror the v002 contract shape and is intended to live at: The canonical package reposi..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
 <meta property="og:image" content="https://pccx.pages.dev/_images/social_previews/summary_docs_v003_compatibility-contract_97b6366b.png" />
-<meta property="og:image:alt" content="Draft / planning / evidence-gated. No frozen v003 contract exists yet. The v003 contract, when it lands, will mirror the v002 contract shape and is intended to live at:(The package repository pccxa..." />
-<meta name="description" content="Draft / planning / evidence-gated. No frozen v003 contract exists yet. The v003 contract, when it lands, will mirror the v002 contract shape and is intended to live at:(The package repository pccxa..." />
+<meta property="og:image:alt" content="Draft / planning / evidence-gated. No frozen v003 contract exists yet. The v003 contract, when it lands, will mirror the v002 contract shape and is intended to live at: The canonical package reposi..." />
+<meta name="description" content="Draft / planning / evidence-gated. No frozen v003 contract exists yet. The v003 contract, when it lands, will mirror the v002 contract shape and is intended to live at: The canonical package reposi..." />
 <meta name="twitter:card" content="summary_large_image" />
 
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccx.pages.dev/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"v003 compatibility contract (planning)","name":"v003 compatibility contract (planning)","url":"https://pccx.pages.dev/en/docs/v003/compatibility-contract.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccx.pages.dev/en/docs/v003/compatibility-contract.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccx.pages.dev/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccx.pages.dev/"},"datePublished":"2026-05-08","dateModified":"2026-05-08","description":"pccx documentation page: v003 compatibility contract (planning). Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccx.pages.dev/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
@@ -497,9 +497,10 @@ is intended to live at:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pccxai</span><span class="o">/</span><span class="n">pccx</span><span class="o">-</span><span class="n">v003</span><span class="o">/</span><span class="n">compatibility</span><span class="o">/</span><span class="n">v003</span><span class="o">-</span><span class="n">contract</span><span class="o">.</span><span class="n">yaml</span>
 </pre></div>
 </div>
-<p>(The package repository <code class="docutils literal notranslate"><span class="pre">pccxai/pccx-v003</span></code> does not exist today. See the
-<a class="reference internal" href="repository-boundary.html"><span class="std std-doc">repository boundary</span></a> page for the consolidation
-direction.)</p>
+<p>The canonical package repository <a class="reference external" href="https://github.com/pccxai/pccx-v003"><code class="docutils literal notranslate"><span class="pre">pccxai/pccx-v003</span></code></a>
+exists in planning / evidence-gated state; no frozen v003 contract is
+released yet. See the <a class="reference internal" href="repository-boundary.html"><span class="std std-doc">repository boundary</span></a> page
+for the consolidation direction.</p>
 <section id="contract-shape-mirrors-v002">
 <h2>Contract shape (mirrors v002)<a class="headerlink" href="#contract-shape-mirrors-v002" title="Link to this heading">¶</a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">arch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pccx-v003</span>

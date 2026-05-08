@@ -511,11 +511,16 @@ must pin to a specific v003 SHA when v003 is released.</p></li>
 <section id="current-state-planning-only">
 <h2>Current state (planning only)<a class="headerlink" href="#current-state-planning-only" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p>A standalone planning repo exists at
-<a class="reference external" href="https://github.com/pccxai/pccx-LLM-v003"><code class="docutils literal notranslate"><span class="pre">pccxai/pccx-LLM-v003</span></code></a> — it is
-a temporary line for v003 LLM planning and Gemma 4 E4B foundation.</p></li>
-<li><p>A consolidated <code class="docutils literal notranslate"><span class="pre">pccx-v003</span></code> repository <strong>does not exist yet</strong>. The
-consolidation decision is tracked under
+<li><p>The canonical v003 IP-core planning package is
+<a class="reference external" href="https://github.com/pccxai/pccx-v003"><code class="docutils literal notranslate"><span class="pre">pccxai/pccx-v003</span></code></a>. It mirrors
+the published <code class="docutils literal notranslate"><span class="pre">pccx-v002</span></code> layout (<code class="docutils literal notranslate"><span class="pre">LLM/</span></code>, <code class="docutils literal notranslate"><span class="pre">Vision/</span></code>, <code class="docutils literal notranslate"><span class="pre">Voice/</span></code>,
+<code class="docutils literal notranslate"><span class="pre">common/</span></code>, <code class="docutils literal notranslate"><span class="pre">compatibility/</span></code>, <code class="docutils literal notranslate"><span class="pre">docs/</span></code>, <code class="docutils literal notranslate"><span class="pre">tests/</span></code>, <code class="docutils literal notranslate"><span class="pre">scripts/</span></code>) and is the
+single predictable location for v003 architecture planning material.</p></li>
+<li><p>The earlier temporary feeder
+<a class="reference external" href="https://github.com/pccxai/pccx-LLM-v003"><code class="docutils literal notranslate"><span class="pre">pccxai/pccx-LLM-v003</span></code></a>
+is superseded / retired and is no longer an active public track.
+Any reusable v003 LLM material belongs under <code class="docutils literal notranslate"><span class="pre">pccx-v003/LLM/</span></code>.</p></li>
+<li><p>The consolidation decision is tracked under
 <a class="reference external" href="https://github.com/pccxai/pccx/issues/64">pccxai/pccx#64</a>.</p></li>
 <li><p>No v003 RTL, sim wrapper, formal harness, board integration, or
 contract has been published.</p></li>
@@ -525,7 +530,8 @@ contract has been published.</p></li>
 <h2>Source-of-truth links<a class="headerlink" href="#source-of-truth-links" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>v002 IP-core package (released): <a class="reference external" href="https://github.com/pccxai/pccx-v002"><code class="docutils literal notranslate"><span class="pre">pccxai/pccx-v002</span></code></a></p></li>
-<li><p>v003 LLM planning line: <a class="reference external" href="https://github.com/pccxai/pccx-LLM-v003"><code class="docutils literal notranslate"><span class="pre">pccxai/pccx-LLM-v003</span></code></a></p></li>
+<li><p>v003 IP-core planning package (canonical): <a class="reference external" href="https://github.com/pccxai/pccx-v003"><code class="docutils literal notranslate"><span class="pre">pccxai/pccx-v003</span></code></a></p></li>
+<li><p>v003 LLM feeder (historical / retired): <a class="reference external" href="https://github.com/pccxai/pccx-LLM-v003"><code class="docutils literal notranslate"><span class="pre">pccxai/pccx-LLM-v003</span></code></a></p></li>
 <li><p>Tracker: <a class="reference external" href="https://github.com/pccxai/pccx/issues/64"><code class="docutils literal notranslate"><span class="pre">pccxai/pccx#64</span></code></a></p></li>
 <li><p>Canonical docs: <a class="reference external" href="https://pccx.pages.dev/en/">https://pccx.pages.dev/en/</a></p></li>
 </ul>

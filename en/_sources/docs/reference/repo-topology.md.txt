@@ -16,15 +16,15 @@ references a specific model or board name in `rtl/` or
 | --- | --- |
 | `pccxai/pccx` | Canonical specification, public documentation site, project index. |
 | `pccxai/pccx-v002` | v002 IP-core package — board- and model-agnostic reusable RTL for LLM and shared subsystems. Vision and Voice domains exist as placeholder directories until those tracks absorb their respective repos. |
-| `pccxai/pccx-LLM-v003` | Placeholder line for the v003 LLM IP-core. Will fold into a future `pccx-v003/LLM/` once the v003 contract is stable. |
+| `pccxai/pccx-v003` | v003 IP-core planning package — same shape as `pccx-v002` (LLM, Vision, Voice, common). Planning / evidence-gated; no v003 RTL or contract is released yet. |
 | `pccxai/pccx-vision-v001` | Standalone vision line on the v002 KV260 substrate. Will fold into `pccx-v002/Vision/` after compatibility review. |
 | `pccxai/pccx-FPGA-NPU-LLM-kv260` | KV260 + LLM application integration. Consumes `pccx-v002` through `third_party/pccx-v002` submodule pinned at `pccx-v002/main`. |
 
-## Future repositories
+## Historical / retired repositories
 
 | Repository | Role |
 | --- | --- |
-| `pccxai/pccx-v003` | Future v003 IP-core package — same shape as `pccx-v002` (LLM, Vision, Voice, common). Created when the v003 contract is stable enough to support a separate package boundary. |
+| `pccxai/pccx-LLM-v003` | Historical temporary feeder for early v003 LLM planning. Superseded by `pccxai/pccx-v003`. No longer an active public track; new reusable v003 LLM material belongs under `pccx-v003/LLM/`. |
 
 ## Placement rule
 

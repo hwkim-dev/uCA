@@ -7,12 +7,12 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://pccx.pages.dev/docs/v003/repository-boundary.html" />
 <meta property="og:site_name" content="pccx — Parallel Compute Core eXecutor" />
-<meta property="og:description" content="Draft / planning / evidence-gated. No published v003 RTL. Today: pccxai/pccx-LLM-v003 — temporary v003 LLM planning line. Holds early architecture notes and Gemma 4 E4B foundation material. The rep..." />
+<meta property="og:description" content="Draft / planning / evidence-gated. No published v003 RTL. Today: pccxai/pccx-v003 — canonical v003 IP-core planning package. Mirrors the pccx-v002 shape ( LLM/, Vision/, Voice/, common/, compatibil..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="https://pccx.pages.dev/_images/social_previews/summary_docs_v003_repository-boundary_407ca91f.png" />
-<meta property="og:image:alt" content="Draft / planning / evidence-gated. No published v003 RTL. Today: pccxai/pccx-LLM-v003 — temporary v003 LLM planning line. Holds early architecture notes and Gemma 4 E4B foundation material. The rep..." />
-<meta name="description" content="Draft / planning / evidence-gated. No published v003 RTL. Today: pccxai/pccx-LLM-v003 — temporary v003 LLM planning line. Holds early architecture notes and Gemma 4 E4B foundation material. The rep..." />
+<meta property="og:image" content="https://pccx.pages.dev/_images/social_previews/summary_docs_v003_repository-boundary_0b76f1cd.png" />
+<meta property="og:image:alt" content="Draft / planning / evidence-gated. No published v003 RTL. Today: pccxai/pccx-v003 — canonical v003 IP-core planning package. Mirrors the pccx-v002 shape ( LLM/, Vision/, Voice/, common/, compatibil..." />
+<meta name="description" content="Draft / planning / evidence-gated. No published v003 RTL. Today: pccxai/pccx-v003 — canonical v003 IP-core planning package. Mirrors the pccx-v002 shape ( LLM/, Vision/, Voice/, common/, compatibil..." />
 <meta name="twitter:card" content="summary_large_image" />
 
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccx.pages.dev/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"v003 repository boundary (planning)","name":"v003 repository boundary (planning)","url":"https://pccx.pages.dev/en/docs/v003/repository-boundary.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccx.pages.dev/en/docs/v003/repository-boundary.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccx.pages.dev/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccx.pages.dev/"},"datePublished":"2026-05-08","dateModified":"2026-05-08","description":"pccx documentation page: v003 repository boundary (planning). Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccx.pages.dev/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
@@ -495,10 +495,13 @@ SPDX-License-Identifier: Apache-2.0
 <section id="today">
 <h2>Today<a class="headerlink" href="#today" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">pccxai/pccx-LLM-v003</span></code></strong> — temporary v003 LLM planning line. Holds
-early architecture notes and Gemma 4 E4B foundation material. The
-repository <strong>is not</strong> a stable v003 IP-core package.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">pccxai/pccx-v003</span></code></strong> — does <strong>not</strong> exist yet.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">pccxai/pccx-v003</span></code></strong> — canonical v003 IP-core planning package.
+Mirrors the <code class="docutils literal notranslate"><span class="pre">pccx-v002</span></code> shape (<code class="docutils literal notranslate"><span class="pre">LLM/</span></code>, <code class="docutils literal notranslate"><span class="pre">Vision/</span></code>, <code class="docutils literal notranslate"><span class="pre">Voice/</span></code>, <code class="docutils literal notranslate"><span class="pre">common/</span></code>,
+<code class="docutils literal notranslate"><span class="pre">compatibility/</span></code>, <code class="docutils literal notranslate"><span class="pre">docs/</span></code>, <code class="docutils literal notranslate"><span class="pre">tests/</span></code>, <code class="docutils literal notranslate"><span class="pre">scripts/</span></code>). Planning /
+evidence-gated; no v003 RTL or contract is released yet.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">pccxai/pccx-LLM-v003</span></code></strong> — historical temporary feeder for early
+v003 LLM planning. Superseded / retired; no longer an active public
+track. Reusable material belongs under <code class="docutils literal notranslate"><span class="pre">pccx-v003/LLM/</span></code>.</p></li>
 </ul>
 </section>
 <section id="default-direction-subject-to-issue-64">
@@ -507,7 +510,7 @@ repository <strong>is not</strong> a stable v003 IP-core package.</p></li>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Layer</p></th>
-<th class="head"><p>Future location</p></th>
+<th class="head"><p>Active location</p></th>
 </tr>
 </thead>
 <tbody>
@@ -535,8 +538,7 @@ repository <strong>is not</strong> a stable v003 IP-core package.</p></li>
 </section>
 <section id="boundary-rule-unchanged-from-v002">
 <h2>Boundary rule (unchanged from v002)<a class="headerlink" href="#boundary-rule-unchanged-from-v002" title="Link to this heading">¶</a></h2>
-<p>The v003 IP-core package, when it exists, follows the same boundary rule
-as v002:</p>
+<p>The v003 IP-core package follows the same boundary rule as v002:</p>
 <ul class="simple">
 <li><p>The model and the board consume the IP core. The IP core never references
 a specific model name or board name inside its <code class="docutils literal notranslate"><span class="pre">rtl/</span></code>, <code class="docutils literal notranslate"><span class="pre">compatibility/</span></code>,
@@ -551,14 +553,15 @@ branch.</p></li>
 <section id="migration-sequence-planned">
 <h2>Migration sequence (planned)<a class="headerlink" href="#migration-sequence-planned" title="Link to this heading">¶</a></h2>
 <ol class="arabic simple">
-<li><p>Inventory <code class="docutils literal notranslate"><span class="pre">pccx-LLM-v003</span></code> content and classify each file as
-IP-core / spec / model-specific.</p></li>
+<li><p>Inventory historical <code class="docutils literal notranslate"><span class="pre">pccx-LLM-v003</span></code> material (now retired) and
+classify each file as IP-core / spec / model-specific before any
+reintroduction under <code class="docutils literal notranslate"><span class="pre">pccx-v003/LLM/</span></code>.</p></li>
 <li><p>Define <code class="docutils literal notranslate"><span class="pre">compatibility/v003-contract.yaml</span></code> placeholders mirroring the
-v002 contract shape.</p></li>
-<li><p>Decide whether to create <code class="docutils literal notranslate"><span class="pre">pccxai/pccx-v003</span></code> immediately or hold the
-temporary <code class="docutils literal notranslate"><span class="pre">pccx-LLM-v003</span></code> until the contract is stable.</p></li>
-<li><p>When the package is created, move reusable RTL into the new layout
-and pin board/model repos to the new package SHA.</p></li>
+v002 contract shape inside <code class="docutils literal notranslate"><span class="pre">pccxai/pccx-v003</span></code>.</p></li>
+<li><p>Reintroduce reusable RTL into the <code class="docutils literal notranslate"><span class="pre">pccx-v003</span></code> layout through fresh,
+focused PRs after the v003 contract placeholders are updated.</p></li>
+<li><p>When the package’s contract stabilises, pin board/model repos to a
+v003 package SHA reachable from <code class="docutils literal notranslate"><span class="pre">pccx-v003/main</span></code>.</p></li>
 </ol>
 <p>No timing, runtime, FPS/mAP, bitstream, or production-readiness claim is
 made by this page.</p>

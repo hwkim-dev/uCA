@@ -32,9 +32,10 @@ to advance them.
 - **W4A8 golden-vector gate population** — only smoke vectors
   currently; full fixture set TBD per
   `pccx-FPGA-NPU-LLM-kv260/docs/W4A8_GOLDEN_VECTOR_GATE.md`.
-- **v003 LLM line definition** — `pccxai/pccx-LLM-v003`
-  placeholder repo exists; the eventual `pccx-v003/LLM/` location
-  is the planned home once the v003 contract is stable.
+- **v003 IP-core planning** — `pccxai/pccx-v003` is the canonical v003
+  IP-core planning package (planning / evidence-gated); the earlier
+  feeder `pccxai/pccx-LLM-v003` is superseded / retired and reusable
+  v003 LLM material now belongs under `pccx-v003/LLM/`.
 
 ## Next (gated, no dates)
 
@@ -43,9 +44,9 @@ to advance them.
   default: absorb once the vision RTL is shown to share enough with
   the v002 LLM substrate. If the substrate split is too wide,
   vision stays standalone.
-- **`pccx-v003` repo creation** — gated on v003 contract being
+- **`pccx-v003` contract freeze** — gated on the v003 contract being
   stable enough that an external consumer can pin against it. Until
-  then `pccx-LLM-v003` remains a placeholder track.
+  then `pccx-v003` stays in planning / evidence-gated state.
 - **Voice domain population** — `pccx-v002/Voice/` is a placeholder
   directory today. Population is gated on a defined Voice contract.
 

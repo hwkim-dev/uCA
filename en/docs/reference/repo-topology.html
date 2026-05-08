@@ -510,8 +510,8 @@ references a specific model or board name in <code class="docutils literal notra
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pccxai/pccx-v002</span></code></p></td>
 <td><p>v002 IP-core package — board- and model-agnostic reusable RTL for LLM and shared subsystems. Vision and Voice domains exist as placeholder directories until those tracks absorb their respective repos.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pccxai/pccx-LLM-v003</span></code></p></td>
-<td><p>Placeholder line for the v003 LLM IP-core. Will fold into a future <code class="docutils literal notranslate"><span class="pre">pccx-v003/LLM/</span></code> once the v003 contract is stable.</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pccxai/pccx-v003</span></code></p></td>
+<td><p>v003 IP-core planning package — same shape as <code class="docutils literal notranslate"><span class="pre">pccx-v002</span></code> (LLM, Vision, Voice, common). Planning / evidence-gated; no v003 RTL or contract is released yet.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pccxai/pccx-vision-v001</span></code></p></td>
 <td><p>Standalone vision line on the v002 KV260 substrate. Will fold into <code class="docutils literal notranslate"><span class="pre">pccx-v002/Vision/</span></code> after compatibility review.</p></td>
@@ -523,8 +523,8 @@ references a specific model or board name in <code class="docutils literal notra
 </table>
 </div>
 </section>
-<section id="future-repositories">
-<h2>Future repositories<a class="headerlink" href="#future-repositories" title="Link to this heading">¶</a></h2>
+<section id="historical-retired-repositories">
+<h2>Historical / retired repositories<a class="headerlink" href="#historical-retired-repositories" title="Link to this heading">¶</a></h2>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
@@ -533,8 +533,8 @@ references a specific model or board name in <code class="docutils literal notra
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pccxai/pccx-v003</span></code></p></td>
-<td><p>Future v003 IP-core package — same shape as <code class="docutils literal notranslate"><span class="pre">pccx-v002</span></code> (LLM, Vision, Voice, common). Created when the v003 contract is stable enough to support a separate package boundary.</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pccxai/pccx-LLM-v003</span></code></p></td>
+<td><p>Historical temporary feeder for early v003 LLM planning. Superseded by <code class="docutils literal notranslate"><span class="pre">pccxai/pccx-v003</span></code>. No longer an active public track; new reusable v003 LLM material belongs under <code class="docutils literal notranslate"><span class="pre">pccx-v003/LLM/</span></code>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -630,7 +630,7 @@ SHA reachable from that package’s <code class="docutils literal notranslate"><
             <ul>
 <li><a class="reference internal" href="#">Repository topology</a><ul>
 <li><a class="reference internal" href="#active-repositories">Active repositories</a></li>
-<li><a class="reference internal" href="#future-repositories">Future repositories</a></li>
+<li><a class="reference internal" href="#historical-retired-repositories">Historical / retired repositories</a></li>
 <li><a class="reference internal" href="#placement-rule">Placement rule</a></li>
 <li><a class="reference internal" href="#invariant">Invariant</a></li>
 </ul>

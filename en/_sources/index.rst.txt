@@ -56,9 +56,11 @@ Ecosystem
 
 The public ``pccx-v003`` repository now serves as the v003 IP-core
 planning package. It is an evidence-gated planning package, not a
-stable RTL release. The temporary ``pccx-LLM-v003`` line feeds the
-v003 LLM planning track, while board and model repositories consume
-v003 material only through explicit compatibility contracts.
+stable RTL release. The earlier ``pccx-LLM-v003`` feeder is superseded
+/ retired and is no longer an active public track; new reusable v003
+LLM material belongs under ``pccx-v003/LLM/``. Board and model
+repositories consume v003 material only through explicit compatibility
+contracts.
 
 Tooling & Lab
 -------------
