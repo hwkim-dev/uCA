@@ -7,14 +7,16 @@ v003 라인은 {doc}`v002 라인 <../v002/index>` 의 **LLM 트랙**을
 
 ## 작업 상태
 
-- 임시 계획 라인 저장소: [`pccx-LLM-v003`](https://github.com/pccxai/pccx-LLM-v003) (정본은 [`pccx-v003`](https://github.com/pccxai/pccx-v003))
-- 작업 staging 저장소: `pccx-LLM-v003-staging` (private)
-- 저장소는 evidence-tracked 상태로 생성됨; 안정된 릴리스 브랜치는
-  아직 없음
+- 정본 v003 IP-core 계획 패키지: [`pccx-v003`](https://github.com/pccxai/pccx-v003)
+  (planning / evidence-gated; 안정된 릴리스 브랜치는 아직 없음)
+- 이전 feeder [`pccx-LLM-v003`](https://github.com/pccxai/pccx-LLM-v003)
+  는 superseded / retired 상태이며 더 이상 활성 공개 트랙이 아니다.
+  재사용 가능한 v003 LLM 자료는 `pccx-v003/LLM/` 아래로 들어온다
 - v002 와 substrate 공유 — 동일한 KV260 보드, 동일한 W4A8
   weight × activation 비율, 동일한 L2 URAM 구성
-- 첫 모델 집중 — **Gemma 4 E4B** 를 파운데이션으로 두고, 릴리스
-  포인트마다 (v003.0, v003.1) 아키텍처 novelty 한 가지씩 적층
+- 첫 모델 집중 — **Gemma 4 E4B** 를 파운데이션으로 두는 계획
+  (planning), 릴리스 포인트마다 (v003.0, v003.1) 아키텍처 novelty
+  한 가지씩 적층
 - v002.x 의 단계 (sparsity, speculative, EAGLE, SSD, Tree,
   benchmark) 는 여기서 *반복하지 않음*; v003 는 다른 RTL
   베이스라인에서 시작한다

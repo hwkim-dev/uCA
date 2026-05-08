@@ -23,11 +23,16 @@ verified RTL and a stable contract exist.
 
 ## Current state (planning only)
 
-- A standalone planning repo exists at
-  [`pccxai/pccx-LLM-v003`](https://github.com/pccxai/pccx-LLM-v003) — it is
-  a temporary line for v003 LLM planning and Gemma 4 E4B foundation.
-- A consolidated `pccx-v003` repository **does not exist yet**. The
-  consolidation decision is tracked under
+- The canonical v003 IP-core planning package is
+  [`pccxai/pccx-v003`](https://github.com/pccxai/pccx-v003). It mirrors
+  the published `pccx-v002` layout (`LLM/`, `Vision/`, `Voice/`,
+  `common/`, `compatibility/`, `docs/`, `tests/`, `scripts/`) and is the
+  single predictable location for v003 architecture planning material.
+- The earlier temporary feeder
+  [`pccxai/pccx-LLM-v003`](https://github.com/pccxai/pccx-LLM-v003)
+  is superseded / retired and is no longer an active public track.
+  Any reusable v003 LLM material belongs under `pccx-v003/LLM/`.
+- The consolidation decision is tracked under
   [pccxai/pccx#64](https://github.com/pccxai/pccx/issues/64).
 - No v003 RTL, sim wrapper, formal harness, board integration, or
   contract has been published.
@@ -35,6 +40,7 @@ verified RTL and a stable contract exist.
 ## Source-of-truth links
 
 - v002 IP-core package (released): [`pccxai/pccx-v002`](https://github.com/pccxai/pccx-v002)
-- v003 LLM planning line: [`pccxai/pccx-LLM-v003`](https://github.com/pccxai/pccx-LLM-v003)
+- v003 IP-core planning package (canonical): [`pccxai/pccx-v003`](https://github.com/pccxai/pccx-v003)
+- v003 LLM feeder (historical / retired): [`pccxai/pccx-LLM-v003`](https://github.com/pccxai/pccx-LLM-v003)
 - Tracker: [`pccxai/pccx#64`](https://github.com/pccxai/pccx/issues/64)
 - Canonical docs: <https://pccx.pages.dev/en/>
