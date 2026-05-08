@@ -54,9 +54,11 @@ Ecosystem
 
             **hkimw.github.io/hkimw** — blog, other projects, about.
 
-v003 IP-core development belongs to the future ``pccx-v003`` package.
-Board and model repositories will consume that package through explicit
-compatibility contracts.
+The public ``pccx-v003`` repository now serves as the v003 IP-core
+planning package. It is an evidence-gated planning package, not a
+stable RTL release. The temporary ``pccx-LLM-v003`` line feeds the
+v003 LLM planning track, while board and model repositories consume
+v003 material only through explicit compatibility contracts.
 
 Tooling & Lab
 -------------
