@@ -7,7 +7,7 @@ v003 라인은 {doc}`v002 라인 <../v002/index>` 의 **LLM 트랙**을
 
 ## 작업 상태
 
-- 작업 저장소 이름: `pccx-LLM-v003`, 공개 URL 미정
+- 임시 계획 라인 저장소: [`pccx-LLM-v003`](https://github.com/pccxai/pccx-LLM-v003) (정본은 [`pccx-v003`](https://github.com/pccxai/pccx-v003))
 - 작업 staging 저장소: `pccx-LLM-v003-staging` (private)
 - 저장소는 evidence-tracked 상태로 생성됨; 안정된 릴리스 브랜치는
   아직 없음

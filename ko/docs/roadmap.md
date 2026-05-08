@@ -50,7 +50,7 @@ KV260 bring-up `[HW]` → 런타임 `[HW]` → 릴리스 증거 체크리스트
 ## Later — v003.x: 별도 RTL 저장소 (LLM 라인 후속)
 
 - v003+ 의 활성 RTL 개발은 별도 저장소로 분리, 작업 이름
-  `pccx-LLM-v003`, 공개 URL 미정; v003 RTL 저장소는 아직 안정된
+  [`pccx-LLM-v003`](https://github.com/pccxai/pccx-LLM-v003) (임시 계획 라인; 정본 위치는 [`pccx-v003`](https://github.com/pccxai/pccx-v003)); v003 RTL 저장소는 아직 안정된
   릴리스 브랜치를 가지지 않았다
 - 이 문서 저장소는 v003 RTL 저장소를 cross-link 하고 빌드 시
   `codes/v003/` 로 CI-clone 한다 — 현재
@@ -66,7 +66,7 @@ LLM 라인과는 별개로, **vision** 워크로드 전용 두 번째 제품 라
 운영한다. 동일한 KV260 보드와 W4A8 NPU 기반을 공유하면서도 워크
 로드 family 는 다르다. 활성 RTL 개발은 전용 저장소에서 진행된다.
 
-- 작업 이름 `pccx-vision-v001`, 공개 URL 미정
+- [`pccx-vision-v001`](https://github.com/pccxai/pccx-vision-v001)
 - LLM 라인과 substrate 공유 — 같은 KV260 보드, 같은 W4A8
   weight × activation 비율, 같은 L2 URAM 구성
 - 데이터플로우는 다름 — 토큰 단위 KV 스트리밍이 아니라 dense conv
