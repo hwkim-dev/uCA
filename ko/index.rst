@@ -65,10 +65,12 @@ pccx는 엣지 디바이스에서 Transformer 기반 LLM을 가속하기 위한
 
 공개 `pccxai/pccx-v003 <https://github.com/pccxai/pccx-v003>`_ 저장소는
 현재 v003 IP-core planning package 역할을 합니다. 이는 evidence-gated
-planning package이며, stable RTL release가 아닙니다. 임시
-`pccxai/pccx-LLM-v003 <https://github.com/pccxai/pccx-LLM-v003>`_ 라인은
-v003 LLM planning track을 공급하고, 보드/모델 저장소는 명시적인
-compatibility contract를 통해서만 v003 산출물을 소비합니다.
+planning package이며, stable RTL release가 아닙니다. 이전 feeder
+`pccxai/pccx-LLM-v003 <https://github.com/pccxai/pccx-LLM-v003>`_ 은
+superseded / retired 상태이며 더 이상 활성 공개 트랙이 아닙니다.
+재사용 가능한 v003 LLM 자료는 ``pccx-v003/LLM/`` 아래로 들어옵니다.
+보드/모델 저장소는 명시적인 compatibility contract 를 통해서만 v003
+산출물을 소비합니다.
 
 도구 & 랩
 ---------

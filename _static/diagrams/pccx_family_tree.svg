@@ -82,9 +82,9 @@ SPDX-License-Identifier: Apache-2.0
   <g class="node">
     <rect class="block-working" x="800" y="100" width="160" height="60"/>
     <text class="t-title" x="880" y="125">v003</text>
-    <text class="t-spec"  x="880" y="142">pccx-LLM-v003</text>
-    <text class="t-spec"  x="880" y="154">Gemma 4 E4B foundation</text>
-    <title>v003 — LLM line continued on a separate RTL repository. Working name pccx-LLM-v003. Gemma 4 E4B foundation; one architectural novelty per release point.</title>
+    <text class="t-spec"  x="880" y="142">pccx-v003</text>
+    <text class="t-spec"  x="880" y="154">Gemma 4 E4B (planning)</text>
+    <title>v003 — LLM line continued on a separate RTL repository. Canonical package: pccx-v003 (planning, evidence-gated). One architectural novelty per release point.</title>
   </g>
 
   <g class="node">

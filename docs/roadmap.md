@@ -49,13 +49,16 @@ Tracking issue: [pccxai/pccx#28 — v0.2.0 umbrella][v020].
 
 ## Later — v003.x: separate RTL repository (LLM line continued)
 
-- v003+ active RTL development moves to a dedicated repository, working
-  name [`pccx-LLM-v003`](https://github.com/pccxai/pccx-LLM-v003) (temporary planning line; canonical home is [`pccx-v003`](https://github.com/pccxai/pccx-v003)); the v003 RTL repository has
-  not yet stabilised any release branch
-- this docs repo will cross-link the v003 RTL repository and CI-clone
+- v003+ active RTL development lives in
+  [`pccx-v003`](https://github.com/pccxai/pccx-v003), the canonical
+  v003 IP-core planning package; no v003 release branch has stabilised
+  yet (the earlier feeder
+  [`pccx-LLM-v003`](https://github.com/pccxai/pccx-LLM-v003) is
+  superseded / retired)
+- this docs repo will cross-link the v003 IP-core package and CI-clone
   it into `codes/v003/` at build time, the same way it currently
   CI-clones `pccx-FPGA-NPU-LLM-kv260` into `codes/v002/`
-- v003.0 — Gemma 4 E4B foundation + first architectural novelty;
+- v003.0 — Gemma 4 E4B foundation + first architectural novelty (planning);
   throughput TBD
 - v003.1 — second novelty + KV / decoding co-design; throughput TBD
 - placeholder track index: {doc}`v003/index`

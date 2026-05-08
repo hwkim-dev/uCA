@@ -8,14 +8,17 @@ orphan: true
 
 ## Today
 
-- **`pccxai/pccx-LLM-v003`** — temporary v003 LLM planning line. Holds
-  early architecture notes and Gemma 4 E4B foundation material. The
-  repository **is not** a stable v003 IP-core package.
-- **`pccxai/pccx-v003`** — does **not** exist yet.
+- **`pccxai/pccx-v003`** — canonical v003 IP-core planning package.
+  Mirrors the `pccx-v002` shape (`LLM/`, `Vision/`, `Voice/`, `common/`,
+  `compatibility/`, `docs/`, `tests/`, `scripts/`). Planning /
+  evidence-gated; no v003 RTL or contract is released yet.
+- **`pccxai/pccx-LLM-v003`** — historical temporary feeder for early
+  v003 LLM planning. Superseded / retired; no longer an active public
+  track. Reusable material belongs under `pccx-v003/LLM/`.
 
 ## Default direction (subject to issue [#64](https://github.com/pccxai/pccx/issues/64))
 
-| Layer | Future location |
+| Layer | Active location |
 | --- | --- |
 | LLM RTL / sim / tb / formal | `pccxai/pccx-v003/LLM/...` (mirroring the `pccx-v002` layout) |
 | Vision RTL | `pccxai/pccx-v003/Vision/...` once a v003 vision substrate is decided |
@@ -26,8 +29,7 @@ orphan: true
 
 ## Boundary rule (unchanged from v002)
 
-The v003 IP-core package, when it exists, follows the same boundary rule
-as v002:
+The v003 IP-core package follows the same boundary rule as v002:
 
 - The model and the board consume the IP core. The IP core never references
   a specific model name or board name inside its `rtl/`, `compatibility/`,
@@ -40,14 +42,15 @@ as v002:
 
 ## Migration sequence (planned)
 
-1. Inventory `pccx-LLM-v003` content and classify each file as
-   IP-core / spec / model-specific.
+1. Inventory historical `pccx-LLM-v003` material (now retired) and
+   classify each file as IP-core / spec / model-specific before any
+   reintroduction under `pccx-v003/LLM/`.
 2. Define `compatibility/v003-contract.yaml` placeholders mirroring the
-   v002 contract shape.
-3. Decide whether to create `pccxai/pccx-v003` immediately or hold the
-   temporary `pccx-LLM-v003` until the contract is stable.
-4. When the package is created, move reusable RTL into the new layout
-   and pin board/model repos to the new package SHA.
+   v002 contract shape inside `pccxai/pccx-v003`.
+3. Reintroduce reusable RTL into the `pccx-v003` layout through fresh,
+   focused PRs after the v003 contract placeholders are updated.
+4. When the package's contract stabilises, pin board/model repos to a
+   v003 package SHA reachable from `pccx-v003/main`.
 
 No timing, runtime, FPS/mAP, bitstream, or production-readiness claim is
 made by this page.

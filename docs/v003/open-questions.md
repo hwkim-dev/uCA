@@ -37,11 +37,11 @@ orphan: true
 
 ## Repository structure
 
-- When does `pccxai/pccx-v003` get created? Triggered by contract
-  freeze, or by first reusable RTL landing?
-- When does `pccxai/pccx-LLM-v003` get folded into `pccx-v003/LLM/`?
-- Does `pccx-LLM-v003` keep its own README + LICENSE while temporary,
-  or pin a "TBD; absorb pending" placeholder?
+- When does the `pccxai/pccx-v003` contract freeze? Triggered by
+  contract stability, or by first reusable RTL landing?
+- What is the right intake protocol for re-introducing reusable
+  material under `pccx-v003/LLM/` (the historical `pccx-LLM-v003`
+  feeder is now superseded / retired)?
 
 ## Tracker
 

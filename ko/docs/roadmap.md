@@ -49,14 +49,17 @@ KV260 bring-up `[HW]` → 런타임 `[HW]` → 릴리스 증거 체크리스트
 
 ## Later — v003.x: 별도 RTL 저장소 (LLM 라인 후속)
 
-- v003+ 의 활성 RTL 개발은 별도 저장소로 분리, 작업 이름
-  [`pccx-LLM-v003`](https://github.com/pccxai/pccx-LLM-v003) (임시 계획 라인; 정본 위치는 [`pccx-v003`](https://github.com/pccxai/pccx-v003)); v003 RTL 저장소는 아직 안정된
-  릴리스 브랜치를 가지지 않았다
-- 이 문서 저장소는 v003 RTL 저장소를 cross-link 하고 빌드 시
+- v003+ 의 활성 RTL 개발은
+  [`pccx-v003`](https://github.com/pccxai/pccx-v003) — 정본 v003
+  IP-core 계획 패키지 — 에서 진행되며, 안정된 릴리스 브랜치는 아직
+  없다 (이전 feeder
+  [`pccx-LLM-v003`](https://github.com/pccxai/pccx-LLM-v003) 은
+  superseded / retired)
+- 이 문서 저장소는 v003 IP-core 패키지를 cross-link 하고 빌드 시
   `codes/v003/` 로 CI-clone 한다 — 현재
   `pccx-FPGA-NPU-LLM-kv260` 를 `codes/v002/` 로 CI-clone 하는 것과
   같은 방식
-- v003.0 — Gemma 4 E4B 파운데이션 + 첫 아키텍처 novelty; 처리량 TBD
+- v003.0 — Gemma 4 E4B 파운데이션 + 첫 아키텍처 novelty (planning); 처리량 TBD
 - v003.1 — 두 번째 novelty + KV / 디코딩 co-design; 처리량 TBD
 - 트랙 placeholder 인덱스: {doc}`v003/index`
 
