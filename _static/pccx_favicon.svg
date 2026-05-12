@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <defs>
+    <style><![CDATA[
+      .stroke { stroke: #0e1320; fill: none; stroke-linecap: square; stroke-linejoin: miter; }
+      .core { fill: #0b5fff; }
+      .ink { fill: #0e1320; }
+      .word { fill: #0e1320; font-family: "IBM Plex Mono", "DejaVu Sans Mono", monospace; font-weight: 600; }
+      .accent { fill: #0b5fff; }
+      .muted { fill: #6b7280; font-family: "IBM Plex Mono", "DejaVu Sans Mono", monospace; }
+      
+    ]]></style>
+  </defs>
+  
+  <g transform="translate(0,0) scale(1.0)">
+  <polyline class="stroke" stroke-width="8" points="10,28 10,10 54,10 54,28"/>
+  <polyline class="stroke" stroke-width="8" points="10,36 10,54 54,54 54,36"/>
+  <rect class="core" x="24" y="0" width="16" height="64"/>
+</g>
+</svg>
