@@ -68,7 +68,7 @@ traces out of IPC payloads.
 
 - [Analyzer API](analyzer_api.md) - the plugin-registry primitive used by
   per-crate plugin traits.
-- [CLI reference](cli.md) - the binaries currently shipping; the old
+- [CLI reference](cli.md) - the binaries currently available; the old
   `pccx_analyze` umbrella does not exist today.
 
 ## Cite This Page

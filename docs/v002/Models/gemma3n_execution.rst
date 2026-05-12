@@ -2,7 +2,7 @@
 Gemma 3N E4B on pccx v002 — Execution and Scheduling
 =================================================================
 
-This page explains *how* a single decode token of Gemma 3N E4B runs
+This page explains the single-token Gemma 3N E4B decode path
 end-to-end on pccx v002 — which tensor lives where, which instruction
 fires which core, and how the scheduler keeps all three compute engines
 busy.
@@ -214,7 +214,7 @@ Under the baseline configuration (W4A8 compute path, INT4 KV cache,
 
 .. note::
 
-   The 20 tok/s figure is the **v002.1** release-line target (sparsity
+   The v002.1 throughput target is a release-line target (sparsity
    + speculative decoding on top of the v002.0 baseline RTL). The v002.0
    release line is measured-only — no throughput figure is asserted
    until KV260 evidence is reported. See :doc:`../../roadmap`.
@@ -227,7 +227,7 @@ Under the baseline configuration (W4A8 compute path, INT4 KV cache,
      - Target
      - Source of bottleneck
    * - Decode throughput
-     - **20 tok/s** — v002.1 target
+     - v002.1 throughput target
      - GEMV bandwidth at 400 MHz × 4 lanes × 1024 MAC/clk.
    * - L2 activation bandwidth
      - **~1.6 GB/s**

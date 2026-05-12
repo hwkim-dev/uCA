@@ -3,7 +3,7 @@ Gemma 3N E4B — 개요
 ========================
 
 pccx v002 는 베어메탈 Kria KV260 에서 **Gemma 3N E4B** 를 돌리는 것을
-기준으로 설계되었습니다. 20 tok/s 디코딩 수치는 **v002.1** 릴리스
+기준으로 설계되었습니다. v002.1 디코딩 목표는 릴리스
 라인의 목표 (v002.0 베이스라인 RTL 위에 sparsity + speculative
 decoding 적층) 입니다 — v002.0 릴리스 라인은 측정만 (measured-only)
 입니다. 단계별 릴리스 구분은 :doc:`../../roadmap` 참고. 연산자 수준

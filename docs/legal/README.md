@@ -16,7 +16,7 @@ decisions.
 ## Trademark
 
 - [`../../TRADEMARKS.md`](../../TRADEMARKS.md) — canonical trademark
-  policy. Use `PCCX™`. Do **not** use `PCCX®` until and unless
+  policy. Use `PCCX™`; avoid registered-mark symbols until and unless
   registration is granted.
 - [`../ip/trademark-filing-log.md`](../ip/trademark-filing-log.md)
   — public-safe filing docket (KR Class 09 / 42).

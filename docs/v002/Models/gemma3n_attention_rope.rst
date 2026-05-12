@@ -129,7 +129,7 @@ cycle.
 The two simplifications together remove **one CVO_SCALE** and
 **one CVO_TANH** per attention block per layer. Over the 35 layers of
 Gemma 3N E4B, that is 70 CVO invocations saved per decode step. Against
-the v002.1 throughput target (~20 tok/s; see :doc:`../../roadmap`), the
+the v002.1 throughput target (see :doc:`../../roadmap`), the
 SFU budget saves roughly 2–3 % wall-clock time.
 
 .. seealso::

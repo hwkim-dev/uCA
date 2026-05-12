@@ -85,7 +85,7 @@ changes ship together so there is no half-state.
 - No `git push --force` or `--force-with-lease`.
 - No tags pushed.
 - No staging push.
-- No PCCX® claim, no registered-trademark claim, no private
+- No registered-mark claim, no private
   trademark filings exposed.
 - No hardware/runtime/timing/bitstream claim is made by this PR;
   it is documentation-only.

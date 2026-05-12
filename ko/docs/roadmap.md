@@ -43,7 +43,7 @@ KV260 bring-up `[HW]` → 런타임 `[HW]` → 릴리스 증거 체크리스트
 
 - 동일 RTL 저장소 (`pccx-FPGA-NPU-LLM-kv260`) 에서 v002.0 의 후속
 - G sparsity / H–H+ EAGLE-3 / I SSD / J Tree / K benchmark 단계
-- 20 tok/s 목표는 이 릴리스 라인 위에 위치
+- v002.1 처리량 목표는 이 릴리스 라인 위에 위치
 - EAGLE head 학습용 컴퓨트 예산: $70–100 (TRC TPU grant 가
   들어오면 $40)
 
