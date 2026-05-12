@@ -85,10 +85,12 @@ pccx balances efficiency with accuracy:
 Detailed technical specifications for the active **v002** line live
 under :doc:`v002/index`:
 
-1. :doc:`v002/ISA/index` — 64-bit custom instruction set.
-2. :doc:`v002/Architecture/index` — hardware architecture and
+1. :doc:`quickstart` — reader path for release-line claims, evidence,
+   local checks, deploy posture, and common v002.1 questions.
+2. :doc:`v002/ISA/index` — 64-bit custom instruction set.
+3. :doc:`v002/Architecture/index` — hardware architecture and
    floorplan.
-3. :doc:`v002/Drivers/index` — driver and SDK documentation.
+4. :doc:`v002/Drivers/index` — driver and SDK documentation.
 
 Working tracks for the next release lines:
 
@@ -100,6 +102,18 @@ Working tracks for the next release lines:
 
 The :doc:`roadmap` summarises how the three tracks relate, and the
 ``pccx`` family-tree figure on that page links them visually.
+
+New public docs added in the May 7 refresh:
+
+- :doc:`spec/v002.1-architecture-explainer` — evidence-gated v002.1
+  architecture explainer.
+- :doc:`spec/gemma-3n-e4b-path` — Gemma 3N E4B path overview for the
+  v002 line.
+- :doc:`design-decisions` — v002.1 design-decision log.
+- :doc:`contributors` — contributor acknowledgements.
+- :doc:`templates/release-notes-template` — release-notes template for
+  future cuts.
+- :doc:`news/README` — news-section placeholder.
 
 The v001 architecture is archived at
 :doc:`archive/experimental_v001/index`.
@@ -199,5 +213,12 @@ risks, keeping the ecosystem safe for open-source hardware development.
 .. toctree::
    :hidden:
 
+   quickstart
+   spec/v002.1-architecture-explainer
+   spec/gemma-3n-e4b-path
+   design-decisions
+   contributors
+   templates/release-notes-template
+   news/README
    v003/index
    vision-v001/index
