@@ -60,7 +60,7 @@ trademark docket issue in `pccxai/pccx` for the working list.
 
 - Use `PCCX™` on first prominent mention in any new public-facing
   document.
-- Do not use `PCCX®`, `registered trademark`, or `등록상표` until
+- Use only the `™` form; do not use registered-mark symbols or wording until
   registration is granted in the relevant jurisdiction and this
   policy is explicitly updated.
 - Treat `PCCX Compatible` and `PCCX Certified` as future

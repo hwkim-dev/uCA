@@ -103,9 +103,9 @@ No. v002.1 is the planned sparsity and speculative-decoding ramp on the
 same KV260 RTL line. The baseline v002.0 integration and evidence gates
 remain visible dependencies.
 
-### Does the 20 tok/s figure mean measured throughput?
+### Does the v002.1 throughput target mean measured throughput?
 
-No. It is a v002.1 target. The docs may discuss it as a target, but it
+No. It is a v002.1 release-line target. The docs may discuss it as a target, but it
 must not be phrased as achieved throughput until KV260 evidence lands in
 {doc}`Evidence/index`.
 

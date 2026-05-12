@@ -15,9 +15,9 @@ PCCX™ public docs and PRs must not claim any of the following
 without measured, reproducible evidence (each phrase is the
 *exact* claim form that requires evidence):
 
-- on-board KV260 inference operability
+- board inference operability
 - end-to-end Gemma 3N E4B runtime on KV260
-- numeric tokens-per-second targets (e.g. 20 tok/s)
+- numeric throughput claims or targets without measurement
 - timing-closure completion
 - bitstream-success outcomes
 - production-readiness

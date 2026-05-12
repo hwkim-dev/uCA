@@ -43,7 +43,7 @@ Tracking issue: [pccxai/pccx#28 — v0.2.0 umbrella][v020].
 
 - same RTL repository (`pccx-FPGA-NPU-LLM-kv260`), continued from v002.0
 - G sparsity / H–H+ EAGLE-3 / I SSD / J Tree / K benchmark phases
-- 20 tok/s target lives on this release line
+- v002.1 throughput target lives on this release line
 - compute budget for EAGLE head training: $70–100 ($40 if a TRC TPU
   grant lands)
 

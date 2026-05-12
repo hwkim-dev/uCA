@@ -37,8 +37,8 @@ runtime, or driver exists today.
 
 - No measured tokens-per-second on KV260 or any other board for Gemma 4
   E4B.
-- No bitstream, no timing-closed implementation.
-- No production-ready runtime.
+- No bitstream evidence and no implementation timing sign-off claim.
+- No production runtime claim.
 - No ABI stability.
 - No driver implementation.
 - No accuracy / quality benchmarks.

@@ -67,7 +67,7 @@ throughput figure is asserted until KV260 evidence is reported.
      - Target
      - Rationale
    * - Decoding throughput
-     - **20 tok/s (Gemma 3N E4B)** — v002.1 target
+     - Gemma 3N E4B decoding — v002.1 throughput target
      - Bandwidth-matched between L2 cache and the GEMV cores
    * - Core clock frequency
      - **400 MHz**

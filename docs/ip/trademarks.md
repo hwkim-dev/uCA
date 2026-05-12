@@ -17,7 +17,7 @@ here are claims of use, not statements of registration.
 For the canonical entry point and the live filing docket, see
 [`TRADEMARKS.md`](../../TRADEMARKS.md) (root) and
 [`trademark-filing-log.md`](trademark-filing-log.md) (this directory).
-Use `PCCX™` on first prominent mention; do not use `PCCX®` until
+Use `PCCX™` on first prominent mention; do not use registered-mark symbols until
 registration is granted in the relevant jurisdiction.
 
 ## Claimed marks
