@@ -1,7 +1,7 @@
 % =================================================================
 %  pccx v002 Instruction Set Architecture — Software Developer's Manual
 %
-%  Authoring entry point for the offline, signoff-ready PDF mirror of
+%  Authoring entry point for the offline preprint PDF mirror of
 %  the v002 ISA.  Styled after classical CPU software developer's
 %  manuals (per-instruction reference blocks, bit-level layouts,
 %  Operation pseudocode, Flags / Exceptions) and classical GPU
@@ -442,7 +442,7 @@ driver surface.
 The pccx web portal at \url{https://pccx.pages.dev/}
 contains a living, cross-referenced copy of the encoding tables
 together with interactive Mermaid, WaveDrom, and Graphviz diagrams.
-This PDF is the \textit{offline, signoff-ready} mirror; both sources
+This PDF is the \textit{offline preprint} mirror; both sources
 are rebuilt from the authoritative RTL definitions in the external
 repository
 \href{https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260}{\texttt{pccxai/pccx-FPGA-NPU-LLM-kv260}}
@@ -1227,7 +1227,7 @@ GEMM array.
 \caption{Per-core GEMV reduction tree (one of four cores shown).
 Stage 1 absorbs 32 partial products into 16 sums using DSP48E2 $A+B$
 adders; stages 2--5 use 6-LUT adders.  Each stage carries a pipeline
-register so the tree closes timing at 400\,MHz.}
+register to support the 400\,MHz timing target.}
 \label{fig:gemv-tree}
 \end{figure}
 

@@ -24,7 +24,7 @@ three principles:
 .. admonition:: Download the offline guidebook (PDF)
    :class: tip
 
-   A signoff-ready typeset version of this ISA reference — same tables,
+   A typeset v002 preprint version of this ISA reference — same tables,
    same numbers, offline-readable — is downloadable as a PDF:
 
    :download:`pccx v002 ISA Guidebook (PDF) <../../../_static/downloads/pccx-isa-v002.pdf>`

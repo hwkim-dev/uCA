@@ -20,8 +20,8 @@ pccx v002의 ISA는 **고정 길이 64-bit VLIW 스타일**\ 이며, 5개의 오
 .. admonition:: 오프라인 가이드북 (PDF) 다운로드
    :class: tip
 
-   동일한 표·동일한 값으로 조판된 오프라인 가이드북이 PDF로 제공된다.
-   HTML 포털과 달리 인쇄·아카이브·사인오프용 용도로 적합하다.
+   동일한 표·동일한 값으로 조판된 v002 preprint 오프라인 가이드북이
+   PDF로 제공된다. HTML 포털과 달리 인쇄·아카이브 용도로 적합하다.
 
    :download:`pccx v002 ISA 가이드북 (PDF) <../../../../_static/downloads/pccx-isa-v002.pdf>`
 
