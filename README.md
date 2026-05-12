@@ -36,6 +36,17 @@ issues are welcome.
 
 ---
 
+## v002.1 evidence-gated pointers
+
+| Item | Link | Guard |
+| --- | --- | --- |
+| Architecture explainer | [`docs/spec/v002.1-architecture-explainer.md` (PR #48)](https://github.com/pccxai/pccx/blob/docs/v002.1-architecture-explainer/docs/spec/v002.1-architecture-explainer.md) | Draft explainer; no board-run, closed-timing, deployable-bitstream, or measured-throughput claim. |
+| Evidence inventory | [`pccx-FPGA-NPU-LLM-kv260` evidence inventory (PR #95)](https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260/blob/docs/v002.1-evidence-inventory/docs/evidence/v002.1-evidence-inventory.md) | Inventory of landed and pending evidence; release claims remain gated by measured artifacts. |
+| Bitstream runbook | [`pccx-FPGA-NPU-LLM-kv260` bitstream runbook (PR #82)](https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260/blob/build/v002-kv260-bitstream-runbook/docs/runbooks/v002.1-bitstream-build.md) | Pre-flight runbook; Vivado and KV260 board execution are not claimed by this link. |
+| Project board | [PCCX Roadmap project board](https://github.com/orgs/pccxai/projects/1) | Planning tracker; status must be read with the evidence gates above. |
+
+---
+
 ## What is pccx?
 
 pccx is a hardware-software co-design framework that accelerates **autoregressive decoding** of Transformer-based LLMs on resource-constrained edge devices. The primary target is the **Xilinx Kria KV260** SOM.
