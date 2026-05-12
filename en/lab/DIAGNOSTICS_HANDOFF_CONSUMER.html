@@ -254,7 +254,7 @@
 <h1>Launcher Diagnostics Handoff Consumer<a class="headerlink" href="#launcher-diagnostics-handoff-consumer" title="Link to this heading">¶</a></h1>
 <p>This note describes the first pccx-lab-side boundary for launcher
 diagnostics handoff JSON. It is a read-only schema reader and validator.
-It does not execute pccx-llm-launcher, load plugins, call providers,
+It does not execute pccx-launcher, load plugins, call providers,
 probe hardware, start GUI workflows, or write files.</p>
 <p>The implementation lives in:</p>
 <ul class="simple">
@@ -303,7 +303,7 @@ copied into the output.</p>
 <section id="fixture-scope">
 <h2>Fixture Scope<a class="headerlink" href="#fixture-scope" title="Link to this heading">¶</a></h2>
 <p>The checked fixture mirrors the launcher-side placeholder handoff from
-pccx-llm-launcher. It is sanitized and local:</p>
+pccx-launcher. It is sanitized and local:</p>
 <ul class="simple">
 <li><p>no raw full logs</p></li>
 <li><p>no prompts</p></li>

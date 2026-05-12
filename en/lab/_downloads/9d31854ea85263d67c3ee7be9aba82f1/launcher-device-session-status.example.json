@@ -193,8 +193,8 @@
   ],
   "fixtureVersion": "device-session-status.gemma3n-e4b-kv260.2026-05-03",
   "issueRefs": [
-    "pccxai/pccx-llm-launcher#10",
-    "pccxai/pccx-llm-launcher#2",
+    "pccxai/pccx-launcher#10",
+    "pccxai/pccx-launcher#2",
     "pccxai/pccx-lab#50"
   ],
   "lastUpdatedSource": "pccx_launcher_issues_2_10_boundary_2026-05-03",

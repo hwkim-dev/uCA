@@ -254,7 +254,7 @@
 <h1>Launcher Device/Session Status Consumer<a class="headerlink" href="#launcher-device-session-status-consumer" title="Link to this heading">¶</a></h1>
 <p>This note describes the pccx-lab-side reader for launcher
 device/session status JSON. It is a read-only schema reader and
-validator. It does not execute pccx-llm-launcher, open serial ports,
+validator. It does not execute pccx-launcher, open serial ports,
 scan networks, attempt authentication, probe hardware, load models,
 start GUI workflows, stream logs, or write files.</p>
 <p>The implementation lives in:</p>
@@ -303,7 +303,7 @@ copied into the output.</p>
 <section id="fixture-scope">
 <h2>Fixture Scope<a class="headerlink" href="#fixture-scope" title="Link to this heading">¶</a></h2>
 <p>The checked fixture mirrors the launcher-side placeholder status from
-pccx-llm-launcher. It is sanitized and local:</p>
+pccx-launcher. It is sanitized and local:</p>
 <ul class="simple">
 <li><p>no raw logs</p></li>
 <li><p>no prompts</p></li>

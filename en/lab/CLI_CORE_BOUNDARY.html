@@ -1011,7 +1011,7 @@ or control releases/tags.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">systemverilog-ide</span></code> should consume pccx-lab outputs as data through
 CLI/core boundaries. Fragile GUI automation is outside this contract.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pccx-llm-launcher</span></code> handoffs, descriptors, and result summaries should
+<li><p><code class="docutils literal notranslate"><span class="pre">pccx-launcher</span></code> handoffs, descriptors, and result summaries should
 stay contract/data oriented until checked evidence exists.</p></li>
 <li><p>FPGA-side evidence should be validated later as evidence, log, or
 manifest data only when available. This boundary does not access
@@ -2069,7 +2069,7 @@ provider calls, MCP calls, or GUI-only checks.</p>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">diagnostics-handoff</span> <span class="pre">validate</span></code> reads a local launcher diagnostics
 handoff JSON file and emits a deterministic validation summary. It is a
-future-consumer boundary for pccx-llm-launcher data, not an execution
+future-consumer boundary for pccx-launcher data, not an execution
 bridge.</p>
 <p>The validator checks:</p>
 <ul class="simple">
@@ -2083,12 +2083,12 @@ MCP, LSP, or marketplace flow flags</p></li>
 <li><p>absence of private path, secret, model weight path, and unsupported
 claim markers</p></li>
 </ul>
-<p>The command does not execute pccx-llm-launcher, load plugins, probe
+<p>The command does not execute pccx-launcher, load plugins, probe
 hardware, call providers, upload telemetry, write files, or start GUI
 logic. It also avoids echoing the supplied file path in the JSON summary.</p>
 <p>The checked example is
 <a class="reference download internal" download="" href="_downloads/6628df684f607e3c1db20d73c01223ca/launcher-diagnostics-handoff.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">docs/examples/launcher-diagnostics-handoff.example.json</span></code></span></a>.
-Fixture sync with pccx-llm-launcher is manual while this boundary remains
+Fixture sync with pccx-launcher is manual while this boundary remains
 pre-compatibility.</p>
 </section>
 <section id="device-session-status-command">
@@ -2133,7 +2133,7 @@ no-runtime safety flags</p></li>
 </div>
 <p>The checked example is
 <a class="reference download internal" download="" href="_downloads/9d31854ea85263d67c3ee7be9aba82f1/launcher-device-session-status.example.json"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">docs/examples/launcher-device-session-status.example.json</span></code></span></a>.</p>
-<p>This boundary does not execute pccx-llm-launcher, invoke pccx-lab
+<p>This boundary does not execute pccx-launcher, invoke pccx-lab
 workflows, open serial ports, scan networks, attempt authentication,
 probe KV260 hardware, load model assets, start runtime code, stream
 logs, upload telemetry, or write artifacts. Future GUI, launcher, or

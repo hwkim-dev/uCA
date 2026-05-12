@@ -2,7 +2,7 @@
 
 This note describes the pccx-lab-side reader for launcher
 device/session status JSON. It is a read-only schema reader and
-validator. It does not execute pccx-llm-launcher, open serial ports,
+validator. It does not execute pccx-launcher, open serial ports,
 scan networks, attempt authentication, probe hardware, load models,
 start GUI workflows, stream logs, or write files.
 
@@ -54,7 +54,7 @@ The command exits:
 ## Fixture Scope
 
 The checked fixture mirrors the launcher-side placeholder status from
-pccx-llm-launcher. It is sanitized and local:
+pccx-launcher. It is sanitized and local:
 
 - no raw logs
 - no prompts

@@ -2,7 +2,7 @@
 
 This note describes the first pccx-lab-side boundary for launcher
 diagnostics handoff JSON. It is a read-only schema reader and validator.
-It does not execute pccx-llm-launcher, load plugins, call providers,
+It does not execute pccx-launcher, load plugins, call providers,
 probe hardware, start GUI workflows, or write files.
 
 The implementation lives in:
@@ -54,7 +54,7 @@ The command exits:
 ## Fixture Scope
 
 The checked fixture mirrors the launcher-side placeholder handoff from
-pccx-llm-launcher. It is sanitized and local:
+pccx-launcher. It is sanitized and local:
 
 - no raw full logs
 - no prompts

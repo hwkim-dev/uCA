@@ -26,7 +26,7 @@ ISA 참조 URL 만 pccx v002 기준으로 갱신.
 .. admonition:: local LLM launcher — 상태 표면 boundary
    :class: note
 
-   드라이버 bring-up 은 ``pccx-llm-launcher`` 측 boundary 에서
+   드라이버 bring-up 은 ``pccx-launcher`` 측 boundary 에서
    미러된다. launcher 의 chat 표면은 입력 / 출력을 문서화된 boundary
    집합 — chat status summary, evidence manifest, gap matrix, review
    packet, redaction policy, clipboard policy, 접근성, empty-state —

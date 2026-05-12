@@ -30,7 +30,7 @@
         "pccx.launcherIdeStatus.v0"
       ],
       "severity": "warning",
-      "source": "pccx-llm-launcher",
+      "source": "pccx-launcher",
       "suggestedNextAction": "Keep the handoff read-only until target configuration evidence exists.",
       "summary": "The handoff records a placeholder target state only.",
       "title": "Launcher target is not configured"
@@ -44,7 +44,7 @@
         "pccx.modelDescriptor.v0"
       ],
       "severity": "info",
-      "source": "pccx-llm-launcher",
+      "source": "pccx-launcher",
       "suggestedNextAction": "Collect descriptor and asset evidence before runtime claims.",
       "summary": "Gemma 3N E4B is represented as descriptor_ref_only with no bundled assets.",
       "title": "Model descriptor is referenced by id"
@@ -59,7 +59,7 @@
         "pccx.modelRuntimeCompatibility.v0"
       ],
       "severity": "blocked",
-      "source": "pccx-llm-launcher",
+      "source": "pccx-launcher",
       "suggestedNextAction": "Require pccx-lab/core evidence before enabling runtime integration.",
       "summary": "The runtime descriptor is planned, unavailable, and not configured.",
       "title": "KV260 runtime remains placeholder"
@@ -73,7 +73,7 @@
         "pccx.modelRuntimeCompatibility.v0"
       ],
       "severity": "blocked",
-      "source": "pccx-llm-launcher",
+      "source": "pccx-launcher",
       "suggestedNextAction": "Treat all hardware and performance claims as not measured.",
       "summary": "Compatibility stays provisional until checked evidence exists.",
       "title": "Hardware and measurement evidence are missing"
@@ -87,7 +87,7 @@
         "pccx.diagnosticsHandoff.v0"
       ],
       "severity": "info",
-      "source": "pccx-llm-launcher",
+      "source": "pccx-launcher",
       "suggestedNextAction": "Keep future consumer behavior explicit and opt-in.",
       "summary": "The fixture carries no telemetry, upload, write-back, raw logs, prompts, or private paths.",
       "title": "Read-only privacy boundary is active"
@@ -113,9 +113,9 @@
   "handoffId": "launcher_diagnostics_handoff_gemma3n_e4b_kv260_placeholder",
   "handoffKind": "read_only_handoff",
   "issueRefs": [
-    "pccxai/pccx-llm-launcher#5",
-    "pccxai/pccx-llm-launcher#3",
-    "pccxai/pccx-llm-launcher#12"
+    "pccxai/pccx-launcher#5",
+    "pccxai/pccx-launcher#3",
+    "pccxai/pccx-launcher#12"
   ],
   "launcherStatusRef": {
     "coupling": "data_reference_only",
@@ -154,7 +154,7 @@
   },
   "producer": {
     "execution": "data_only",
-    "id": "pccx-llm-launcher",
+    "id": "pccx-launcher",
     "role": "launcher_generated_summary"
   },
   "runtimeDescriptorRef": {

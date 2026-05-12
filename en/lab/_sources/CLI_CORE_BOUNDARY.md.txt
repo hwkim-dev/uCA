@@ -206,7 +206,7 @@ or control releases/tags.
 
 - `systemverilog-ide` should consume pccx-lab outputs as data through
   CLI/core boundaries. Fragile GUI automation is outside this contract.
-- `pccx-llm-launcher` handoffs, descriptors, and result summaries should
+- `pccx-launcher` handoffs, descriptors, and result summaries should
   stay contract/data oriented until checked evidence exists.
 - FPGA-side evidence should be validated later as evidence, log, or
   manifest data only when available. This boundary does not access
@@ -1193,7 +1193,7 @@ pccx-lab diagnostics-handoff validate --file <path> [--format json]
 
 `diagnostics-handoff validate` reads a local launcher diagnostics
 handoff JSON file and emits a deterministic validation summary. It is a
-future-consumer boundary for pccx-llm-launcher data, not an execution
+future-consumer boundary for pccx-launcher data, not an execution
 bridge.
 
 The validator checks:
@@ -1208,13 +1208,13 @@ The validator checks:
 - absence of private path, secret, model weight path, and unsupported
   claim markers
 
-The command does not execute pccx-llm-launcher, load plugins, probe
+The command does not execute pccx-launcher, load plugins, probe
 hardware, call providers, upload telemetry, write files, or start GUI
 logic. It also avoids echoing the supplied file path in the JSON summary.
 
 The checked example is
 [`docs/examples/launcher-diagnostics-handoff.example.json`](examples/launcher-diagnostics-handoff.example.json).
-Fixture sync with pccx-llm-launcher is manual while this boundary remains
+Fixture sync with pccx-launcher is manual while this boundary remains
 pre-compatibility.
 
 ## device-session-status command
@@ -1249,7 +1249,7 @@ It exits:
 The checked example is
 [`docs/examples/launcher-device-session-status.example.json`](examples/launcher-device-session-status.example.json).
 
-This boundary does not execute pccx-llm-launcher, invoke pccx-lab
+This boundary does not execute pccx-launcher, invoke pccx-lab
 workflows, open serial ports, scan networks, attempt authentication,
 probe KV260 hardware, load model assets, start runtime code, stream
 logs, upload telemetry, or write artifacts. Future GUI, launcher, or
