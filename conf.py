@@ -34,7 +34,7 @@ language = "en"
 
 # -- Favicon ---------------------------------------------------------------
 
-html_favicon = "_static/pccx_favicon.ico"
+html_favicon = "_static/pccx_wordmark_favicon.ico"
 
 
 # -- Exclusions -------------------------------------------------------------
