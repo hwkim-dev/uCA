@@ -15,7 +15,7 @@ mechanism is overloaded.
 | Layer | What it protects | Where | Status |
 | --- | --- | --- | --- |
 | Trademark | The `PCCX™` mark and its product designators (`PCCX OpenCore`, `PCCX ProCore`, `PCCX ASICKit`, `PCCX Compatible`) | KIPRIS (KR) | Pending applications: KR Class 09 (`40-2026-0091497`) and Class 42 (`40-2026-0091498`) |
-| Copyright | Source code, RTL, documentation | Repository LICENSE + per-file SPDX headers | Apache-2.0 unless otherwise stated; rolled out per [`source-header-inventory.md`](source-header-inventory.md) |
+| Copyright | Source code committed to this repository, versioned IP-core source, documentation | Repository `LICENSE` / `LICENSE-CODE`, versioned source-repo licences, and per-file SPDX headers | Code committed here is Apache-2.0 unless otherwise stated; reusable v002 IP-core source lives in `pccx-v002`; documentation and brand assets are protected company assets of Altifigence. |
 | Patent (categories) | Architectural / quantization / scheduling / compiler / verification *categories* of candidate inventions | Public docs describe categories only | See [`patent-strategy.md`](patent-strategy.md) and [`patent-candidate-intake.md`](patent-candidate-intake.md). Specific candidates live in a private docket. |
 | Trade secret | ProCore RTL bundles, enterprise compiler backend, PPA / timing-closure scripts, customer-specific optimisations | Outside this repository, under separate confidentiality controls | See [`trade-secret-policy.md`](trade-secret-policy.md). |
 | Contract | CLA, sponsorship terms, commercial-track contracts, investor agreements | Separate executed instruments under applicable law | All draft and pending qualified legal review. |

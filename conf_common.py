@@ -33,7 +33,10 @@ sys.path.insert(0, _CONF_COMMON_DIR)
 
 project = "pccx"
 author = "Hyun Woo Kim"
-copyright = f"{date.today().year} {author}"
+copyright = (
+    f"{date.today().year} Altifigence. PCCX™ documentation and brand assets "
+    "are protected company assets; code is Apache-2.0."
+)
 release = "v002"
 version = "v002"
 
