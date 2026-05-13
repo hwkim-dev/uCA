@@ -16,7 +16,7 @@ split, and the research-lineage placeholder that will refresh once the
 citation registry lands in its new home.
 
 For the user-facing desktop app itself, see the separate
-`pccx-lab site <https://pccx.pages.dev/en/lab/>`_.
+`pccx-lab site <https://labs.pccx.ai/>`_.
 
 .. grid:: 1 1 2 2
    :gutter: 3 4 4 4

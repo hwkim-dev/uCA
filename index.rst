@@ -70,7 +70,7 @@ Tooling & Lab
    :class-container: pccx-toolchain-grid
 
    .. grid-item-card:: :octicon:`beaker;1.2em;sd-mr-1` pccx-lab
-      :link: https://pccx.pages.dev/en/lab/
+      :link: https://labs.pccx.ai/
       :link-type: url
       :link-alt: Open the pccx-lab verification lab
       :class-card: pccx-lab-card
@@ -83,15 +83,25 @@ Tooling & Lab
 
       Source: github.com/pccxai/pccx-lab
 
-   .. grid-item-card:: :octicon:`project-roadmap;1.2em;sd-mr-1` Design rationale
-      :link: https://pccx.pages.dev/en/lab/design/rationale.html
+   .. grid-item-card:: :octicon:`rocket;1.2em;sd-mr-1` PCCX Launcher
+      :link: https://launcher.pccx.ai/
       :link-type: url
-      :link-alt: Read the pccx-lab design rationale
+      :link-alt: Open the PCCX Launcher documentation
 
-      Why pccx-lab is one repo, not five. Phase 1 split the monolith
-      into a 10-crate Cargo workspace (``core``, ``reports``,
-      ``verification``, ``authoring``, ``evolve``, ``remote``, ``lsp``,
-      ``uvm_bridge``, ``workflow_facade``, ``ui/src-tauri``).
+      Launcher contracts, runtime-readiness status, device/session summaries,
+      and diagnostics handoff records.
+
+      :bdg-warning:`Private source`
+
+   .. grid-item-card:: :octicon:`terminal;1.2em;sd-mr-1` SystemVerilog IDE
+      :link: https://ide.pccx.ai/
+      :link-type: url
+      :link-alt: Open the SystemVerilog IDE documentation
+
+      Editor diagnostics, validation context, declaration navigation, and
+      proposal-only workflow surfaces.
+
+      :bdg-warning:`Private source`
 
    .. grid-item-card:: :octicon:`verified;1.2em;sd-mr-1` Formal model — Sail
       :link: docs/v002/Formal/index
@@ -149,4 +159,6 @@ Tooling & Lab
    :maxdepth: 1
    :caption: Tools
 
-   pccx-lab — Verification Lab <https://pccx.pages.dev/en/lab/>
+   pccx-lab — Verification Lab <https://labs.pccx.ai/>
+   PCCX Launcher <https://launcher.pccx.ai/>
+   SystemVerilog IDE <https://ide.pccx.ai/>

@@ -266,13 +266,12 @@ _ICON_BEAKER = (
 def build_footer_icons(lang_prefix: str = "en") -> list:
     """Assemble the labeled footer icon row for pccx.
 
-    Order (left → right): RTL → Lab → Docs → Blog.
+    Order (left → right): RTL → Lab → Launcher → IDE → Docs → Blog.
 
-    ``lang_prefix`` (``'en'`` / ``'ko'``) only alters the pccx-lab link so a
-    KO-page click lands on the KO sub-site; the other destinations are
-    language-agnostic external repos / pages.
+    ``lang_prefix`` is retained for compatibility with the language-specific
+    conf wrappers. The Lab, Launcher, and IDE surfaces now live on their own
+    external documentation hosts.
     """
-    lab_url = f"https://pccx.pages.dev/{lang_prefix}/lab/"
     return [
         {
             "name":  "RTL implementation — github.com/pccxai/pccx-FPGA-NPU-LLM-kv260",
@@ -285,11 +284,29 @@ def build_footer_icons(lang_prefix: str = "en") -> list:
         },
         {
             "name":  "pccx-lab — simulator & verification lab",
-            "url":   lab_url,
+            "url":   "https://labs.pccx.ai/",
             "class": "pccx-footer-icon",
             "html": (
                 _ICON_BEAKER
                 + '<span class="pccx-footer-icon__label">Lab</span>'
+            ),
+        },
+        {
+            "name":  "PCCX Launcher — launcher contracts and readiness",
+            "url":   "https://launcher.pccx.ai/",
+            "class": "pccx-footer-icon",
+            "html": (
+                _ICON_CHIP
+                + '<span class="pccx-footer-icon__label">Launcher</span>'
+            ),
+        },
+        {
+            "name":  "SystemVerilog IDE — diagnostics and validation",
+            "url":   "https://ide.pccx.ai/",
+            "class": "pccx-footer-icon",
+            "html": (
+                _ICON_PERSON
+                + '<span class="pccx-footer-icon__label">IDE</span>'
             ),
         },
         {

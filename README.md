@@ -202,7 +202,7 @@ the speculative-decoding stack is integrated.
 Performance simulator, CLI-first verification lab, and trace profiler for the pccx NPU. Pre-RTL bottleneck detection, UVM co-simulation, and testbench/trace workflow support share one workflow.
 
 - Repository: https://github.com/pccxai/pccx-lab
-- Documentation: https://pccx.pages.dev/en/lab/ (Korean: https://pccx.pages.dev/ko/lab/)
+- Documentation: https://labs.pccx.ai/
 - Status: Work in Progress
 
 ---
