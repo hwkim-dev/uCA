@@ -137,9 +137,10 @@ The v001 architecture is archived at
 4. License
 ----------
 
-Licensed under the **Apache License 2.0**. This provides freedom of use
-and modification while protecting the architecture from patent-related
-risks, keeping the ecosystem safe for open-source hardware development.
+This repository uses a mixed rights model. Source code is licensed under
+the **Apache License 2.0**. PCCX™ documentation, site copy, diagrams,
+logos, trademarks, and brand assets are protected company assets of
+Altifigence.
 
 --------------
 

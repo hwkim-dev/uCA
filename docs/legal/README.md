@@ -23,11 +23,15 @@ decisions.
 - [`../ip/madrid-priority-docket.md`](../ip/madrid-priority-docket.md)
   — internal foreign-filing window.
 
-## Copyright
+## Copyright and licensing
 
-- [`../../LICENSE`](../../LICENSE) — Apache-2.0 licence text.
+- [`../../LICENSE`](../../LICENSE) — repository-level mixed rights
+  notice: code is Apache-2.0; documentation and brand assets are
+  protected company assets of Altifigence.
+- [`../../LICENSE-CODE`](../../LICENSE-CODE) — Apache-2.0 licence text
+  for source code.
 - [`../../NOTICE`](../../NOTICE) — public-safe trademark + copyright
-  notice that ships with the licence.
+  notice that ships with the mixed rights notice.
 - [`../ip/copyright-header-policy.md`](../ip/copyright-header-policy.md)
   — per-file `SPDX` header policy.
 - [`../ip/source-header-inventory.md`](../ip/source-header-inventory.md)

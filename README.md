@@ -4,7 +4,7 @@
 
 **A scalable NPU architecture for Transformer LLM inference on edge FPGAs**
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-Mixed%3A_code_Apache--2.0%2C_docs_protected-blue.svg)](LICENSE)
 [![Target](https://img.shields.io/badge/Target-Xilinx_Kria_KV260-red)](https://www.xilinx.com/products/som/kria/kv260-vision-starter-kit.html)
 [![Architecture](https://img.shields.io/badge/Architecture-v002_Active-purple)](#architecture)
 [![Precision](https://img.shields.io/badge/Precision-W4A8_→_BF16%2FFP32-green)](#precision)
@@ -271,9 +271,16 @@ python -m http.server --directory _build/html
 
 ---
 
-## License
+## License and rights
 
-Licensed under the **[Apache License 2.0](LICENSE)**.
+This repository uses a mixed rights model:
+
+- Source code is licensed under the **Apache License 2.0**; see
+  [`LICENSE-CODE`](LICENSE-CODE).
+- PCCX™ documentation, site copy, diagrams, logos, trademarks, and brand
+  assets are protected company assets of Altifigence; see [`LICENSE`](LICENSE).
+- Reusable v002 IP-core source lives in the separate
+  [`pccx-v002`](https://github.com/pccxai/pccx-v002) repository.
 
 ## Trademark
 
