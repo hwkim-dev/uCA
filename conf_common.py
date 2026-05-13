@@ -363,8 +363,8 @@ html_theme_options = {
 templates_path = ["_templates"]
 html_static_path = ["_static"]     # KO conf overrides to ["../_static"]
 
-# ``_extra`` lives next to _static but is copied to the site root untouched
-# so llms.txt / robots.txt are served as /pccx/llms.txt, /pccx/robots.txt.
+# ``_extra`` lives next to _static and is copied to each language output root.
+# Deploy/build glue also copies robots.txt to the published site root.
 # (KO conf overrides the path prefix to ``../_extra``.)
 html_extra_path = ["_extra"]
 
@@ -454,7 +454,7 @@ intersphinx_timeout = 10
 # SEO / social
 # =============================================================================
 
-html_baseurl = "https://pccx.pages.dev/"
+html_baseurl = "https://docs.pccx.ai/"
 sitemap_url_scheme = "{link}"
 # sitemap_filename is overridden per-language in concrete conf.py.
 
