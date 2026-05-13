@@ -25,5 +25,6 @@ Where each artefact lives.
 | Trademark filing customer numbers / receipts / contact details | n/a | yes |
 | Detailed patent claims for not-yet-public candidates | n/a | yes |
 
-Public artefacts are licensed under the existing open licence;
-private artefacts are not.
+Public code artefacts are licensed under the Apache-2.0 code licence.
+Public documentation and brand assets remain protected company assets
+of Altifigence. Private artefacts are not licensed by this repository.
