@@ -71,6 +71,9 @@ jobs:
         run: |
           mkdir -p _build/html
           touch _build/html/.nojekyll
+          if [ -f _extra/robots.txt ]; then
+            cp _extra/robots.txt _build/html/robots.txt
+          fi
           cat > _build/html/index.html << 'EOF'
           <!DOCTYPE html>
           <html lang="en">
@@ -101,6 +104,17 @@ jobs:
           cp _build/html/en/_static/pccx_wordmark_favicon.ico _build/html/favicon.ico
           cp _build/html/en/_static/pccx_wordmark_favicon.png _build/html/pccx_wordmark_favicon.png
           cp _build/html/en/_static/pccx_wordmark_favicon.svg _build/html/pccx_wordmark_favicon.svg
+          {
+            printf '%s\n' '<?xml version="1.0" encoding="UTF-8"?>'
+            printf '%s\n' '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+            if [ -f _build/html/en/sitemap-en.xml ]; then
+              printf '%s\n' '  <sitemap><loc>https://docs.pccx.ai/en/sitemap-en.xml</loc></sitemap>'
+            fi
+            if [ -f _build/html/ko/sitemap-ko.xml ]; then
+              printf '%s\n' '  <sitemap><loc>https://docs.pccx.ai/ko/sitemap-ko.xml</loc></sitemap>'
+            fi
+            printf '%s\n' '</sitemapindex>'
+          } > _build/html/sitemap.xml
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
