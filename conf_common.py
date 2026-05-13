@@ -18,8 +18,10 @@ parser, diagram, gallery, and metadata behavior.
 from __future__ import annotations
 
 import os
+import shutil
 import sys
 from datetime import date
+from pathlib import Path
 
 # Make local extensions under ``_ext/`` importable regardless of which conf.py
 # (EN root or KO) triggered the build.
@@ -379,6 +381,47 @@ html_js_files = [
     "language-switcher.js",
     "auto-translate-dismiss.js",
 ]
+
+
+def _write_cloudflare_root_discovery_files(app, exception) -> None:
+    """Publish root robots/sitemap files for split EN/KO static builds."""
+    if exception is not None or getattr(app.builder, "format", None) != "html":
+        return
+
+    outdir = Path(app.outdir).resolve()
+    if outdir.name not in {"en", "ko"}:
+        return
+    build_root = outdir.parent
+
+    robots_src = Path(_CONF_COMMON_DIR) / "_extra" / "robots.txt"
+    if robots_src.exists():
+        shutil.copyfile(robots_src, build_root / "robots.txt")
+
+    sitemap_entries = [
+        ("en", "sitemap-en.xml"),
+        ("ko", "sitemap-ko.xml"),
+    ]
+    lines = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ]
+    for lang, filename in sitemap_entries:
+        if (build_root / lang / filename).exists():
+            lines.append(
+                f"  <sitemap><loc>https://docs.pccx.ai/{lang}/{filename}</loc></sitemap>"
+            )
+    lines.append("</sitemapindex>")
+
+    if len(lines) > 2:
+        (build_root / "sitemap.xml").write_text(
+            "\n".join(lines) + "\n",
+            encoding="utf-8",
+        )
+
+
+def setup(app) -> dict[str, bool]:
+    app.connect("build-finished", _write_cloudflare_root_discovery_files)
+    return {"parallel_read_safe": True, "parallel_write_safe": True}
 
 html_show_sphinx = False
 html_show_sourcelink = False
