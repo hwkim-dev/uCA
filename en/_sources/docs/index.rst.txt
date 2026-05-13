@@ -203,14 +203,14 @@ risks, keeping the ecosystem safe for open-source hardware development.
             **github.com/pccxai/pccx** — the Sphinx project powering this site.
 
          .. grid-item-card:: :octicon:`telescope;1em;sd-mr-1` pccx-lab (verify / profile)
-            :link: https://pccx.pages.dev/en/lab/
+            :link: https://labs.pccx.ai/
             :link-type: url
             :link-alt: Open the pccx-lab verification + profiling hub
 
             **pccx-lab** — Tauri 2 IDE. ``.pccx`` trace loader,
             ``run_verification`` runner, Roofline / Bottleneck cards,
             Vivado synth report view. See the
-            `verification workflow guide <https://pccx.pages.dev/en/lab/verification-workflow.html>`_.
+            `dedicated lab documentation site <https://labs.pccx.ai/>`_.
 
          .. grid-item-card:: :octicon:`person;1em;sd-mr-1` Author portfolio
             :link: https://hkimw.github.io/hkimw/
