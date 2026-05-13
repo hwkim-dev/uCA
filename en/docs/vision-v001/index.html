@@ -15,10 +15,10 @@
 <meta name="description" content="The vision-v001 line is a parallel product line on the same KV260 substrate, scoped to vision workloads (CNN-class classification, object detection). It shares the W4A8 NPU substrate with the LLM l..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccx.pages.dev/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"pccx vision-v001 — CNN inference track on KV260","name":"pccx vision-v001 — CNN inference track on KV260","url":"https://pccx.pages.dev/en/docs/vision-v001/index.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccx.pages.dev/en/docs/vision-v001/index.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccx.pages.dev/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccx.pages.dev/"},"datePublished":"2026-05-12","dateModified":"2026-05-12","description":"pccx documentation page: pccx vision-v001 — CNN inference track on KV260. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccx.pages.dev/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Quickstart" href="../quickstart.html"><link rel="prev" title="pccx v003 — LLM IP-core line" href="../v003/index.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","alternateName":"pccx","url":"https://pccx.pages.dev/","inLanguage":["en","en","ko"],"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"description":"pccx is an open-source scalable NPU architecture for edge LLM inference.  W4A8KV4 quantisation on the Xilinx Kria KV260; v002 reference implementation in SystemVerilog.","keywords":["NPU","FPGA","LLM inference","edge AI","W4A8","KV cache","systolic array","Kria KV260","ZU5EV","Transformer accelerator","speculative decoding","FlashAttention","QServe","Gemma 3N","Matryoshka","Sail ISA","Sail language","formal ISA specification","ISA semantics","RISC-V Sail","Arm Sail","CHERI","Morello","Isabelle/HOL","Coq"]},{"@context":"https://schema.org","@type":"TechArticle","headline":"pccx vision-v001 — CNN inference track on KV260","name":"pccx vision-v001 — CNN inference track on KV260","url":"https://pccx.pages.dev/en/docs/vision-v001/index.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://pccx.pages.dev/en/docs/vision-v001/index.html"},"isPartOf":{"@type":"WebSite","name":"pccx — Parallel Compute Core eXecutor","url":"https://pccx.pages.dev/"},"author":{"@type":"Person","name":"Hyunwoo Kim","url":"https://hkimw.github.io/hkimw/"},"publisher":{"@type":"Organization","name":"pccx project","url":"https://pccx.pages.dev/"},"datePublished":"2026-05-13","dateModified":"2026-05-13","description":"pccx documentation page: pccx vision-v001 — CNN inference track on KV260. Open-source NPU architecture + pccx-lab profiler implementing research from QServe, FlashAttention, OpenPangu speculative decoding, and Matryoshka subnet swap.","inLanguage":"en","license":"https://www.apache.org/licenses/LICENSE-2.0","citation":{"@type":"CreativeWork","name":"pccx: Parallel Compute Core eXecutor","url":"https://pccx.pages.dev/","author":"Hyunwoo Kim","datePublished":"2026"}}]</script><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Evidence" href="../Evidence/index.html"><link rel="prev" title="pccx v003 — LLM IP-core line" href="../v003/index.html">
         <link rel="canonical" href="https://pccx.pages.dev/docs/vision-v001/index.html">
 
-    <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
+    <link rel="shortcut icon" href="../../_static/pccx_wordmark_favicon.ico"><!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
         <title>pccx vision-v001 — CNN inference track on KV260 - pccx</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
@@ -304,6 +304,7 @@ SPDX-License-Identifier: Apache-2.0
   <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul class="current">
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">pccx: Parallel Compute Core eXecutor</a><input aria-label="Toggle navigation of pccx: Parallel Compute Core eXecutor" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../v003/index.html">pccx v003 — LLM IP-core line</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">pccx vision-v001 — CNN inference track on KV260</a></li>
 </ul>
@@ -499,7 +500,6 @@ upstream RTL repository stabilises.</p>
 <h2>Working state<a class="headerlink" href="#working-state" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>repository: <a class="reference external" href="https://github.com/pccxai/pccx-vision-v001"><code class="docutils literal notranslate"><span class="pre">pccxai/pccx-vision-v001</span></code></a></p></li>
-<li><p>working staging repository: <code class="docutils literal notranslate"><span class="pre">pccx-vision-v001-staging</span></code> (private)</p></li>
 <li><p>shared substrate with v002 — same KV260 board, same W4A8 weight ×
 activation ratio, same L2 URAM organisation</p></li>
 <li><p>distinct dataflow — dense-conv tile reuse instead of token-by-token
@@ -642,12 +642,12 @@ the first model is profiled.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../quickstart.html">
+          <a class="next-page" href="../Evidence/index.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Quickstart</div>
+                <div class="title">Evidence</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -671,7 +671,7 @@ the first model is profiled.</p>
             Made with 
             <a href="https://github.com/pradyunsg/furo">Furo</a>
             <div class="last-updated">
-              Last updated on 2026-05-12</div>
+              Last updated on 2026-05-13</div>
           </div>
           <div class="right-details">
             <div class="icons">

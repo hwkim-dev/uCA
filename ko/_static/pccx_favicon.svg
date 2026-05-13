@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-label="PCCX">
+  <rect width="1024" height="1024" fill="#ffffff"/>
+  <text
+    x="512"
+    y="512"
+    fill="#000000"
+    font-family="Noto Sans CJK KR, DejaVu Sans, Arial, sans-serif"
+    font-size="240"
+    font-weight="900"
+    letter-spacing="0"
+    text-anchor="middle"
+    dominant-baseline="central">PCCX</text>
+</svg>
