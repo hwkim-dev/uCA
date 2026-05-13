@@ -166,7 +166,7 @@ Sibling repositories:
 - **`pccx-v002`** — reusable v002 IP-core package.
 - **`pccx-v003`** — future reusable v003 IP-core package.
 - **[pccxai/pccx-FPGA-NPU-LLM-kv260](https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260)** — KV260 + LLM application integration that consumes `pccx-v002`.
-- **[pccxai/pccx-lab](https://github.com/pccxai/pccx-lab)** — performance simulator, CLI-first verification lab, and trace profiler (mounted under `/en/lab/` and `/ko/lab/` on the docs site).
+- **[pccxai/pccx-lab](https://github.com/pccxai/pccx-lab)** — performance simulator, CLI-first verification lab, and trace profiler. The public Lab documentation lives on `https://labs.pccx.ai/`.
 
 ---
 
@@ -202,7 +202,7 @@ the speculative-decoding stack is integrated.
 Performance simulator, CLI-first verification lab, and trace profiler for the pccx NPU. Pre-RTL bottleneck detection, UVM co-simulation, and testbench/trace workflow support share one workflow.
 
 - Repository: https://github.com/pccxai/pccx-lab
-- Documentation: https://pccx.pages.dev/en/lab/ (Korean: https://pccx.pages.dev/ko/lab/)
+- Documentation: https://labs.pccx.ai/
 - Status: Work in Progress
 
 ---

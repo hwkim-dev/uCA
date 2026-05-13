@@ -1,3 +1,5 @@
+:orphan:
+
 pccx-lab 핸드북
 ===============
 
@@ -14,7 +16,7 @@ workflow facade + ``pccx-lsp`` LSP 파사드, 워크스페이스 분할 이후
 홈에 착륙할 때 갱신될 연구 계보 플레이스홀더 — 를 문서화한다.
 
 사용자 지향 데스크톱 앱 자체는 별도
-`pccx-lab 사이트 <https://pccx.pages.dev/ko/lab/>`_ 참고.
+`pccx-lab 사이트 <https://labs.pccx.ai/>`_ 참고.
 
 .. grid:: 1 1 2 2
    :gutter: 3 4 4 4
