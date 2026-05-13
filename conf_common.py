@@ -114,8 +114,11 @@ exclude_patterns = [
     "pccx_[Gg][Ee][Mm][Ii][Nn][Ii]_*.md",  # external review artifacts (gitignored)
     "todo.md",                            # local task list at repo root
     "CONTRIBUTING.md",                    # repo-level, not part of docs site
+    "CODE_OF_CONDUCT.md",                 # repo-level, not part of docs site
     "CHANGELOG.md",                       # repo-level release log, not docs
     "RELEASING.md",                       # repo-level release flow, not docs
+    ".github",
+    ".github/**",
     "tools/**/*.md",       # phase0 audit / vivado plan etc.
     # external RTL repo artifacts — pccx-FPGA cloned at build time
     "codes/v002/README.md",
