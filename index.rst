@@ -139,12 +139,6 @@ Tooling & Lab
 
 .. toctree::
    :maxdepth: 1
-   :caption: pccx-lab Handbook
-
-   docs/Lab/index
-
-.. toctree::
-   :maxdepth: 1
    :caption: Archive
 
    docs/archive/index
