@@ -20,6 +20,7 @@ path.
    :caption: Overview
 
    overview
+   gemma3n-e4b-integration
 
 .. toctree::
    :maxdepth: 2
