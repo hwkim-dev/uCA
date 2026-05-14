@@ -42,6 +42,8 @@ Tracking issue: [pccxai/pccx#28 — v0.2.0 umbrella][v020].
 ## Next — v002.1: sparsity + speculative decoding stack
 
 - same RTL repository (`pccx-FPGA-NPU-LLM-kv260`), continued from v002.0
+- v002.1 v12d bitstream + sw/runtime Gemma port (experimental,
+  golden-vector gated); see {doc}`v002/gemma3n-e4b-integration`
 - G sparsity / H–H+ EAGLE-3 / I SSD / J Tree / K benchmark phases
 - 20 tok/s target lives on this release line
 - compute budget for EAGLE head training: $70–100 ($40 if a TRC TPU
