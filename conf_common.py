@@ -271,12 +271,18 @@ _ICON_BEAKER = (
 def build_footer_icons(lang_prefix: str = "en") -> list:
     """Assemble the labeled footer icon row for pccx.
 
-    Order (left → right): RTL → Lab → Launcher → IDE → Docs → Blog.
+    Order (left → right): RTL → Lab → Launcher → IDE → Docs → Blog → legal.
 
     ``lang_prefix`` is retained for compatibility with the language-specific
     conf wrappers. The Lab, Launcher, and IDE surfaces now live on their own
     external documentation hosts.
     """
+    legal_links = {
+        "center": "https://docs.google.com/document/d/1EPTAwtxu8z_SScdV2ht7OY76nhavBab-ZzMKEZ9lqG4/view",
+        "privacy": "https://docs.google.com/document/d/e/2PACX-1vREutdqQF-kY0fsDgpExLBRl0P4uraGxaGy9skjcJNdpWlyw5RFULdQuBcurOnSx75JRjL1rO1k14m_/pub",
+        "terms": "https://docs.google.com/document/d/e/2PACX-1vSqrQ1sd9xH4i3wp6Iy0z1fhJN49SF0Vu6nTXASBZwtrB2PBD_L8mKo32AYZj3nnQjaDEQEI_HRd9DO/pub",
+        "cookies": "https://docs.google.com/document/d/e/2PACX-1vTgkg5KcCB_m28lcPERlEC1O3oSRJCW8RvMEqPL_0o-i7JT0EwxgBilOx5oiMujrcpqlcu8ZZkccq1k/pub",
+    }
     return [
         {
             "name":  "RTL implementation — github.com/pccxai/pccx-FPGA-NPU-LLM-kv260",
@@ -331,6 +337,30 @@ def build_footer_icons(lang_prefix: str = "en") -> list:
                 _ICON_PERSON
                 + '<span class="pccx-footer-icon__label">Blog</span>'
             ),
+        },
+        {
+            "name":  "Public legal center — Altifigence public legal records",
+            "url":   legal_links["center"],
+            "class": "pccx-footer-icon",
+            "html": '<span class="pccx-footer-icon__label">Legal</span>',
+        },
+        {
+            "name":  "Privacy notice — Altifigence public legal records",
+            "url":   legal_links["privacy"],
+            "class": "pccx-footer-icon",
+            "html": '<span class="pccx-footer-icon__label">Privacy</span>',
+        },
+        {
+            "name":  "Terms — Altifigence public legal records",
+            "url":   legal_links["terms"],
+            "class": "pccx-footer-icon",
+            "html": '<span class="pccx-footer-icon__label">Terms</span>',
+        },
+        {
+            "name":  "Cookies — Altifigence public legal records",
+            "url":   legal_links["cookies"],
+            "class": "pccx-footer-icon",
+            "html": '<span class="pccx-footer-icon__label">Cookies</span>',
         },
     ]
 
