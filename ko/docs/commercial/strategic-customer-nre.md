@@ -2,9 +2,25 @@
 orphan: true
 ---
 
-# (자동 번역 대기)
+> 초안 운영 문서입니다. 법률·세무·회계·증권·IP 자문 검토 후 사용.
+> Sponsorship은 투자와 다르며, 기여 자체로 자본권이 부여되지 않는다.
 
-이 페이지는 영문판이 정본입니다. 자동 번역 도구가 채울 자리이며,
-신규 본문을 한국어로 직접 작성하지 마세요.
+# Strategic-customer NRE (초안)
 
-영문 원본: `docs/commercial/strategic-customer-nre.md` — <https://github.com/pccxai/pccx/blob/main/docs/commercial/strategic-customer-nre.md>
+전략 고객의 Non-recurring engineering(NRE)은 **별도 서면 계약**으로만 성립한다.
+이 페이지는 의도와 범위를 기록한 것입니다.
+
+전략 고객 NRE가 제공하는 항목:
+
+- 평가용 산출물
+- 계약 기반 고객 맞춤 포팅
+- 통합 지원
+- 특정 deliverable 라이선스의 선택적 부여
+
+제공되지 않는 항목:
+
+- 지분, 로열티, 매출분배, 이익분배, 고용, 투자 수익
+- 서면 라이선스 없는 생산권
+- 서면 라이선스 없는 `tape-out` 권한
+
+가격·조건은 추후 확정(TBD).

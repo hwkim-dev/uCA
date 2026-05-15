@@ -48,18 +48,18 @@ XPM block FIFO를 통해 256-bit으로 묶은 뒤 지수 캐싱과 가수 정렬
 ## `bf16_to_INT8_pipeline_power_of_two_scale`
 
 `hw/rtl/PREPROCESS/bf16_to_INT8_pipeline_power_of_two_scale.sv` 는
-Option A (power-of-two scale) INT8 양자화기에 대응하는 **자리표시자
+Option A (power-of-two scale) INT8 양자화기에 대응하는 **placeholder
 모듈**이다. 포트 선언은 256-bit 입력 / 256-bit 출력(32 × INT8)이나,
 현재 본문은 `preprocess_bf16_fixed_pipeline`의 사본 구조를 포함하며
-미완성 `always_ff` 블록(`buffer_low[]` 빈 인덱스)이 존재해 합성되지 않는다.
+구현 미완료 `always_ff` 블록(`buffer_low[]` 빈 인덱스)이 존재해 합성되지 않는다.
 TODO.md §A-1 의 scale 정책 결정 이후 구현될 예정이라 RTL 레포에는
 아직 untracked 상태로만 존재한다.
 
 ## `bf16_to_INT8_pipeline_true_symmetric_INT8`
 
-Option B(true symmetric INT8) 양자화기에 대응하는 **자리표시자 모듈**이다.
+Option B(true symmetric INT8) 양자화기에 대응하는 **placeholder 모듈**이다.
 포트 구조는 `bf16_to_INT8_pipeline_power_of_two_scale`과 동일하며,
-본문 역시 동일한 미완성 상태다. `max_abs` 기반 실수 스케일 경로는
+본문 역시 동일한 구현 미완료 상태다. `max_abs` 기반 실수 스케일 경로는
 driver-computed scale + Constant Cache 방식으로 설계될 예정이며,
 구체적인 구현 요건은 TODO.md §A-1에 정리되어 있다.
 

@@ -2,9 +2,21 @@
 orphan: true
 ---
 
-# (자동 번역 대기)
+> 초안 운영 방침입니다. 법률·세무·회계·증권·IP 자문 검토 후 사용.
+> 증권 판매 제안과 투자 권유가 아니며 Sponsorship은 투자 수익이 아니다.
+> 기여가 지분, 로열티, 수익 분배, 고용, 스폰서 정산, 투자 수익을
+> 자동으로 만들지 않는다.
 
-이 페이지는 영문판이 정본입니다. 자동 번역 도구가 채울 자리이며,
-신규 본문을 한국어로 직접 작성하지 마세요.
+# 투자 개요 (초안)
 
-영문 원본: `docs/commercial/investor-overview-draft.md` — <https://github.com/pccxai/pccx/blob/main/docs/commercial/investor-overview-draft.md>
+이 문서는 PCCX™ 상용 법인과 투자 관계를 검토하는 당사자를 위한 공개-safe
+개요이다. **증권 판매 제안, 투자 조언, 투자 유인 문서가 아니다.**
+
+모든 투자 관계는 다음을 따른다.
+
+- 적용되는 회사법·증권법 하에서 별도의 서면 계약 필요
+- contributor/sponsor/strategic customer 관계와 독립적
+- 투자로 인한 상용 트랙 산출물 열람 권한 자동 부여 없음
+
+PCCX의 핵심 법인, 거버넌스, 자본 구조는 이 저장소 외부에서 운영되며,
+본 문서는 그 체계의 공개 설명만 제공한다.

@@ -2,9 +2,22 @@
 orphan: true
 ---
 
-# (자동 번역 대기)
+> 초안 운영 문서입니다. 법률 검토 후에만 구속력.
 
-이 페이지는 영문판이 정본입니다. 자동 번역 도구가 채울 자리이며,
-신규 본문을 한국어로 직접 작성하지 마세요.
+# 데이터 룸 인덱스 (템플릿)
 
-영문 원본: `docs/investor/data-room-index.md` — <https://github.com/pccxai/pccx/blob/main/docs/investor/data-room-index.md>
+PCCX™ 데이터 룸에 들어갈 항목의 공개-safe한 목차이다.
+**실제 데이터 룸은 공개 저장소가 아니다.**
+
+항목:
+
+- 법인 구조
+- IP 계층 개요
+- 상표 출원 (KIPRIS 공개 필드)
+- 특허 현황(카테고리 중심)
+- trade secret 목록(건수만 노출, 본문 노출 없음)
+- 엔지니어링 evidence 요약(재현 명령 포함)
+- 자본 조달 구조(스폰서/전략 고객/투자자)
+- risk register 요약
+
+각 행은 counsel 검토를 거친 private artefact에 연결된다.

@@ -111,10 +111,10 @@ pub struct RefProfileRow {
 
 ### 매치 / 미스매치 판정
 
-diff 는 결정론적이고 순수 Rust — `serde_json` 만 사용하며 I/O 가 없어
+diff 는 결정론적이고 순수 Rust — `serde_json` 만 사용하며 I/O가 없어
 CI 에서 환경과 무관하게 동일 숫자를 보고한다.
 tolerance 는 레퍼런스 행에 존재한다. 레퍼런스 생성자(PyTorch
-파이프라인 — 미착륙)가 pccx-lab 플래그 없이 엄격도를 제어한다.
+파이프라인(구현되지 않음)이 pccx-lab 플래그 없이 엄격도를 제어한다.
 
 - 스텝의 실측 MAC / DMA 이벤트 카운트가 레퍼런스 값의 tolerance 범위 안에 있으면 **PASS**.
 - 어느 필드가 하나라도 벗어나면 **MISMATCH** — 해당 스텝이 diff 리포트에 포함됨.
@@ -197,8 +197,8 @@ IPC 커맨드 레퍼런스:
   title        = {pccx-lab Verification Workflow: RTL to .pccx to golden-diff gate},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://pccx.pages.dev/ko/docs/Lab/verification-workflow.html}},
-  note         = {Part of pccx: \url{https://pccx.pages.dev/}}
+  howpublished = {\url{https://pccx.ai/ko/docs/Lab/verification-workflow.html}},
+  note         = {Part of pccx: \url{https://pccx.ai/}}
 }
 ```
 

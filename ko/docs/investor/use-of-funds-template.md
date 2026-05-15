@@ -2,9 +2,18 @@
 orphan: true
 ---
 
-# (자동 번역 대기)
+> 초안 운영 문서입니다. 투자 조언이 아니며 후원은 투자와 별개다.
 
-이 페이지는 영문판이 정본입니다. 자동 번역 도구가 채울 자리이며,
-신규 본문을 한국어로 직접 작성하지 마세요.
+# 유용 자금 배분 (템플릿)
 
-영문 원본: `docs/investor/use-of-funds-template.md` — <https://github.com/pccxai/pccx/blob/main/docs/investor/use-of-funds-template.md>
+공개-safe 기획 템플릿이다. **투자 조언 또는 유인 문서가 아니다.**
+
+범주:
+
+- 엔지니어링 역량 확대(TBD)
+- 검증/시뮬레이션/랩 역량(TBD)
+- 특허/상표 외국출원 수수료(TBD, 마드리드 창구)
+- ASIC `tape-out` 예비금(향후)
+- 운영비(법무·회계·관리)
+
+모든 금액은 전문 법무 검토 완료 전까지 TBD.

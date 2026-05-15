@@ -16,7 +16,7 @@ Public API
 * ``uCA_v1_api.h`` — 공개 함수 프로토타입 (``pccx_init``,
   ``pccx_gemv``, ``pccx_gemm``, ``pccx_cvo``, ``pccx_memcpy``,
   ``pccx_memset``, ``pccx_sync``).
-* ``uCA_v1_api.c`` — 구현. 오피코드별 ``build_*_instr`` 헬퍼가
+* ``uCA_v1_api.c`` — 구현. opcode별 ``build_*_instr`` 헬퍼가
   인자를 64 비트 VLIW 로 패킹해 HAL 에 전달.
 
 .. dropdown:: ``uCA_v1_api.h``

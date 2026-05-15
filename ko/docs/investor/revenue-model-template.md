@@ -2,9 +2,18 @@
 orphan: true
 ---
 
-# (자동 번역 대기)
+> 초안 운영 문서입니다. 투자 조언이나 영업 유인이 아니다.
 
-이 페이지는 영문판이 정본입니다. 자동 번역 도구가 채울 자리이며,
-신규 본문을 한국어로 직접 작성하지 마세요.
+# 수익모델 (템플릿)
 
-영문 원본: `docs/investor/revenue-model-template.md` — <https://github.com/pccxai/pccx/blob/main/docs/investor/revenue-model-template.md>
+공개-safe 기획 템플릿이다. **투자 자문이나 투자 권유 문서가 아니다.**
+
+채널:
+
+- ProCore 상용 라이선스
+- Enterprise SDK / compiler backend
+- ASICKit 산출물
+- 고객 NRE/포팅/통합 지원
+- Certification
+
+가격은 항목별 TBD.

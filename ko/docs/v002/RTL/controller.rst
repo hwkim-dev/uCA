@@ -19,7 +19,7 @@ NPU 컨트롤러 모듈
 2. 명령어 디코더
 =================
 
-``ctrl_npu_decoder.sv``\는 64비트 VLIW 명령어를 파싱한다: 4비트 오피코드를
+``ctrl_npu_decoder.sv``\는 64비트 VLIW 명령어를 파싱한다: 4비트 opcode를
 분리하고 60비트 바디를 적절한 타입 구조체
 (``GEMV_op_x64_t``, ``memcpy_op_x64_t`` 등)로 라우팅한다.
 

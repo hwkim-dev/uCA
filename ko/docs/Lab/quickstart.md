@@ -155,7 +155,7 @@ Timeline 주요 단축키: `Ctrl+Scroll` 로 사이클 축 줌, 드래그로 팬
   title        = {pccx-lab Quickstart: installing the profiler and loading the first trace},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://pccx.pages.dev/ko/docs/Lab/quickstart.html}},
-  note         = {Part of pccx: \url{https://pccx.pages.dev/}}
+  howpublished = {\url{https://pccx.ai/ko/docs/Lab/quickstart.html}},
+  note         = {Part of pccx: \url{https://pccx.ai/}}
 }
 ```

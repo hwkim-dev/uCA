@@ -2,9 +2,19 @@
 orphan: true
 ---
 
-# (자동 번역 대기)
+> 초안 운영 방침입니다. 투자 안내·증권 제안이 아니라 공개-safe 정책 문서.
+> 법률 검토 후 운영.
 
-이 페이지는 영문판이 정본입니다. 자동 번역 도구가 채울 자리이며,
-신규 본문을 한국어로 직접 작성하지 마세요.
+# 릴리스 evidence 게이트(정책)
 
-영문 원본: `docs/evidence/release-evidence-gate.md` — <https://github.com/pccxai/pccx/blob/main/docs/evidence/release-evidence-gate.md>
+릴리스는 evidence-gated이다. 하드웨어·runtime·타이밍·bitstream 관련 증거를
+언급하는 공개 릴리스는 다음을 반드시 포함한다.
+
+- 정확한 재현 명령
+- 측정값 또는 `TBD`
+- CI/sim/formal run URL
+- source manifest / SHA pin
+- 알려진 한계
+
+이 항목이 빠지면 해당 릴리스는 그 증거 주장을 내지 않는다. 단락별 릴리스
+일정은 목표치이며 production 주장으로 해석하지 않는다.

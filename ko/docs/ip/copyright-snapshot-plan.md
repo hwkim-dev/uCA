@@ -2,9 +2,18 @@
 orphan: true
 ---
 
-# (자동 번역 대기)
+> 초안 운영 문서입니다. 법률 자문이 아니며 계약서가 아니다.
+> 투자/세무/증권/특허/상표 검토 후 공개 범위를 확정한다.
 
-이 페이지는 영문판이 정본입니다. 자동 번역 도구가 채울 자리이며,
-신규 본문을 한국어로 직접 작성하지 마세요.
+# Copyright snapshot plan (초안)
 
-영문 원본: `docs/ip/copyright-snapshot-plan.md` — <https://github.com/pccxai/pccx/blob/main/docs/ip/copyright-snapshot-plan.md>
+파일 단위 SPDX 외에, 특정 태그(예: 공개 릴리스)에 대한 별도 스냅샷을
+특정 등록기관에서 등록할 수 있다.
+
+기본 입장: SPDX 헤더로 대부분의 케이스를 처리한다.
+다음에서 snapshot 등록이 검토된다.
+
+- 관할권이 등록을 전제조건으로 요구할 때.
+- 상업 고객이 특정 시점의 증거성 스냅샷을 요구할 때.
+
+개별 출원/번호/접수 결과는 private docket로 관리한다.

@@ -88,7 +88,7 @@ diff 와 테스트 결과를 `round_NNN/implemented_T*.md` 에 기록한다.
   - 핵심 산출물
 * - 001
   - C-
-  - T-1 WaveformViewer 실제 VCD/.pccx 수집, T-2 커버리지 병합, T-3 flame-graph bottleneck; 하드코딩 데이터 5개 갭 → 실제 IPC 티켓 3개 모두 착륙
+  - T-1 WaveformViewer 실제 VCD/.pccx 수집, T-2 커버리지 병합, T-3 flame-graph bottleneck; 하드코딩 데이터 5개 갭 → 실제 IPC 티켓 3개 모두 반영
 * - 002
   - C
   - T-1/T-2 core+UI 등록 및 이름 수정, T-3 docs 접근성; 구현 에이전트 API 한도 도달 → 메인 스레드 완결
@@ -139,8 +139,8 @@ diff 와 테스트 결과를 `round_NNN/implemented_T*.md` 에 기록한다.
 - 연속 2라운드에서 구현 커밋이 없으면 루프는 자동 정지한다 — 무한 재시도하지 않는다.
 - 동일 Top-1 이슈가 3라운드 연속 반복되면 루프를 정지하고 에스컬레이션한다.
 
-매 10번째 라운드(10, 20, 30, 40)에 직전 10라운드 등급 추세와 착륙 티켓을
-요약하는 하트비트가 전송된다.
+매 10번째 라운드(10, 20, 30, 40)에 직전 10라운드 등급 추세와 이행 티켓을
+요약한 하트비트가 전송된다.
 
 ## 인용
 
@@ -149,7 +149,7 @@ diff 와 테스트 결과를 `round_NNN/implemented_T*.md` 에 기록한다.
   title        = {pccx-lab cyclic self-evolution loop: 4-role iterative design refinement},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://pccx.pages.dev/ko/docs/Lab/self-evolution.html}},
-  note         = {Part of pccx: \url{https://pccx.pages.dev/}}
+  howpublished = {\url{https://pccx.ai/ko/docs/Lab/self-evolution.html}},
+  note         = {Part of pccx: \url{https://pccx.ai/}}
 }
 ```

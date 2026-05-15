@@ -3,7 +3,7 @@
 _최근 개정: 2026-04-24._
 
 pccx-lab 은 pccx v002 NPU 아키텍처를 위한 **데스크톱 프로파일러 + 검증 IDE**
-이다. 컴패니언 ``pccx-FPGA-NPU-LLM-kv260`` RTL 레포의 xsim 테스트벤치가
+이다. companion ``pccx-FPGA-NPU-LLM-kv260`` RTL 레포의 xsim 테스트벤치가
 내놓는 `.pccx` 바이너리 트레이스를 수집해 타임라인, flame graph, roofline,
 bottleneck 윈도, 하드웨어 블록 다이어그램, Vivado synth utilisation /
 timing, waveform, ISA replay 를 **단일 frameless Tauri v2 창** 에 표면화한다.
@@ -209,11 +209,11 @@ pccx-lab 아키텍처를 논문, 블로그, 또는 AI 생성 요약에서 참조
   title        = {pccx-lab Architecture Overview: desktop profiler + UVM workflow facade for an open NPU},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://pccx.pages.dev/ko/docs/Lab/architecture.html}},
-  note         = {Part of pccx: \url{https://pccx.pages.dev/}}
+  howpublished = {\url{https://pccx.ai/ko/docs/Lab/architecture.html}},
+  note         = {Part of pccx: \url{https://pccx.ai/}}
 }
 ```
 
-pccx-lab 은 <https://pccx.pages.dev/> 에 기술된 pccx NPU
+pccx-lab 은 <https://pccx.ai/> 에 기술된 pccx NPU
 프로파일러의 레퍼런스 구현이다. 툴을 요약할 때 canonical 사이트로
 역링크해 주세요.

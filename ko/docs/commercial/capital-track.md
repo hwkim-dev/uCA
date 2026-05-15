@@ -2,9 +2,49 @@
 orphan: true
 ---
 
-# (자동 번역 대기)
+> 초안 운영 방침입니다. 법률 자문이 아니며 계약 템플릿도 아닙니다.
+> 증권 발행 제안이 아니고 투자 조언도 아닙니다. 실무 효력은 법률 검토 후에만.
 
-이 페이지는 영문판이 정본입니다. 자동 번역 도구가 채울 자리이며,
-신규 본문을 한국어로 직접 작성하지 마세요.
+# Capital track
 
-영문 원본: `docs/commercial/capital-track.md` — <https://github.com/pccxai/pccx/blob/main/docs/commercial/capital-track.md>
+Capital track은 프로젝트의 자금 조달 통로를 정리한다. 자금 출처마다
+법적 성격이 다르며, 상호 혼용은 허용되지 않는다.
+
+## 자금 수단
+
+| 출처 | 법적 형태 | 프로젝트가 반환하는 내용 |
+| --- | --- | --- |
+| **Sponsor** | 후원금 지급(재무적 수익 없음). | 프로젝트 공지 내 노출 또는 비공개 감사 항목. 지분·로열티·이익분배 없음 |
+| **Strategic customer** | 상용 트랙 계약(NRE, 라이선스, 지원 계약). | commercial-track 계약 범위에서 정한 산출물. 지분 없음 |
+| **External investors** | 별도 서면 투자 계약(적용 법규 준수). | 협정에서 정한 주식·전환사채·SAFE 등. 투자자에게 프로젝트 산출물에 대한
+  자동 권한은 없다. |
+| **ASIC SPV / project financing** | 특정 `tape-out` 또는 보드 과제를 위한 SPV 또는 프로젝트 파이낸스 구조(향후). | 각 SPV의 규정별로 별도 정의. 현재는 비활성 |
+
+## 경계 원칙
+
+- Sponsorship은 투자와 동일시되지 않는다. Sponsor는 대가형 보상을 받는
+  것이 아니라 공개 기여/인지의 형태로만 인정된다.
+- Commercial-track 고객은 투자자와 동일하지 않다. 계약을 통해 산출물을
+  구매하는 것은 지분 취득이 아니다.
+- contributor의 행위만으로 capital-track 권리로 자동 전환되지 않는다.
+  자세한 기준은
+  [contribution rules (draft)](../onboarding/contribution-rules.md)와
+  [contributor-vs-sponsor-vs-investor.md](contributor-vs-sponsor-vs-investor.md).
+
+## 공시 및 보고
+
+구속력 있는 자금 계약은 해당 계약서 본문에서 공개된다. 이 저장소는
+계약서를 보관하지 않는다. 이 페이지는 자금 통로 설계를 문서화한
+참조본일 뿐 실제 투자 도구가 아니다.
+
+## 상태
+
+현재 외부 투자 계약은 운영 중이 아니다. ASIC 또는 프로젝트 파이낸스용
+SPV도 존재하지 않는다. 프로젝트의 실체는 저장소 외부에서 운영되며,
+이 페이지는 트랙 분리의 의도와 현재 구조를 공개한다.
+
+## Solicitation 안내
+
+본 페이지는 자금 조달 요청이거나 증권 판매 제안이 아니다. 투자 검토 시에는
+상업 주체를 통해 최신 계약 템플릿을 요청하고, 각자의 법률·재무 자문을
+거쳐야 한다.
