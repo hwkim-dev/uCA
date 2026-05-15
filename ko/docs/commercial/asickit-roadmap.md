@@ -2,9 +2,25 @@
 orphan: true
 ---
 
-# (자동 번역 대기)
+> 초안 운영 방침 문서입니다. 법률 자문이 아니며 증권 오퍼도 아닙니다.
+> 법률·회계·세무·지식재산(IP) 자문 검토 후에만 사용 가능합니다.
+> 투자성 제안이 아니며 후원은 투자 수익을 보장하지 않습니다.
+> 기여가 자동으로 지분, 로열티, 매출 배분, 수익 분배, 고용 관계, 스폰서
+> 대가, 투자 수익으로 이어지지 않습니다.
 
-이 페이지는 영문판이 정본입니다. 자동 번역 도구가 채울 자리이며,
-신규 본문을 한국어로 직접 작성하지 마세요.
+# PCCX ASICKit 로드맵 (초안)
 
-영문 원본: `docs/commercial/asickit-roadmap.md` — <https://github.com/pccxai/pccx/blob/main/docs/commercial/asickit-roadmap.md>
+ASICKit은 `tape-out` 준비 산출물을 필요로 하는 고객을 대상으로 하는
+향후 상용 패키지이다. 본 문서만으로는 `tape-out` 권한이 부여되지 않는다.
+
+로드맵 항목:
+
+- 파운드리 대상 RTL 뷰.
+- 타이밍/전력면적예측(PPA) 스크립트.
+- 검증 자료군.
+- `tape-out` 라이선스 조항(별도 서면 계약 필요).
+
+PCCX™은 현재 ASICKit을 배포하지 않는다. 배치권한은 실제 ASIC 레이아웃이
+존재할 때만 적용된다. 자세한 기준은
+`docs/ip/founder-ip-assignment-checklist-public.md`와 `pccx/IP_POLICY.md`
+를 따른다.

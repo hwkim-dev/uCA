@@ -253,8 +253,8 @@ IPC 설계 노트에 기록된 설계 결정이며,
                   and boundary rules},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://pccx.pages.dev/ko/docs/Lab/ipc.html}},
-  note         = {Part of pccx: \url{https://pccx.pages.dev/}}
+  howpublished = {\url{https://pccx.ai/ko/docs/Lab/ipc.html}},
+  note         = {Part of pccx: \url{https://pccx.ai/}}
 }
 ```
 

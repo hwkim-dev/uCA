@@ -2,9 +2,48 @@
 orphan: true
 ---
 
-# (자동 번역 대기)
+> 초안 운영 방침입니다. 법률 자문이 아니며 계약 템플릿도 아닙니다.
+> 증권 제안이 아니고 투자 조언도 아닙니다.
 
-이 페이지는 영문판이 정본입니다. 자동 번역 도구가 채울 자리이며,
-신규 본문을 한국어로 직접 작성하지 마세요.
+# Open track
 
-영문 원본: `docs/commercial/open-track.md` — <https://github.com/pccxai/pccx/blob/main/docs/commercial/open-track.md>
+Open track은 PCCX의 공개 버전이다. 공개 표준, 오픈 코어 RTL, 공개 문서가
+그 축을 이룬다. 누구나 프로젝트의 기존 오픈 라이선스 범위 내에서
+상업적 용도를 포함해 사용 가능하다.
+
+## 범위
+
+- PCCX architecture spec, ISA reference, 공개 문서(`pccx`)
+- 오픈 코어 IP 패키지(`pccx-v00N`)
+- 기준 애플리케이션 통합 저장소(예: KV260용 `pccx-FPGA-NPU-LLM-kv260`)
+- 위 항목의 공개 태그 릴리스
+
+## 라이선스 설계 취지
+
+프로젝트 오픈 라이선스는 Open Source Initiative(OSI) 정의를 준수한다.
+활용 제한 금지, 특정 집단·직종 차별 금지, 상업적 사용 제한 부재가 핵심이다.
+실제 조문은 각 저장소의 라이선스 본문이 최종 근거이며, 본 페이지는 설명서에
+불과하다.
+
+## “open”의 포함 항목
+
+- 라이선스 조항 하에서 읽기, 공부, 실행, 수정, 재배포, 상용 통합이 가능
+- attribution 및 license notice를 지킨다면 공개·사설 저장소 어디서든 파생물을 작성 가능
+- 사전 협의 없이 평가, benchmark, 결과 공개가 가능
+
+## “open”에 포함되지 않는 항목 (해당 트랙 내에서)
+
+- 특정 목적 적합성 보장 없음. 라이선스의 보증 부인 조항 적용.
+- 장기 지원, 버그 수정 속도 보장, backport 보장이 없다. Open-track 이슈는 best-effort.
+- 상용 트랙 산출물(ProCore, Enterprise SDK, ASICKit, 인증) 접근은 불가. 해당 항목은
+  [commercial-track.md](commercial-track.md)에서 다룬다.
+
+## 상용 트랙과의 공존
+
+상용 고객도 별도 허가 없이 Open track을 사용할 수 있다. 오픈 라이선스가 동일하게
+적용된다. 상용 트랙은 Open track을 막는 것이 아니라 지원 범위를 추가한다.
+
+## 상태
+
+각 저장소의 오픈 라이선스 본문이 최종 규범이다. 본 페이지는 트랙의 설계 목적을
+기록할 뿐 라이선스 조항을 대체하지 않는다.

@@ -2,9 +2,20 @@
 orphan: true
 ---
 
-# (자동 번역 대기)
+> 초안 운영 문서입니다. 법률·회계·세무·증권·IP 자문 전 확인 필요.
+> 스폰서십은 투자 수익이 아니며 기여가 지분·로열티·수익분배·고용·투자 수익으로
+> 자동 전환되지 않는다.
 
-이 페이지는 영문판이 정본입니다. 자동 번역 도구가 채울 자리이며,
-신규 본문을 한국어로 직접 작성하지 마세요.
+# PCCX ProCore 평가 키트 (초안)
 
-영문 원본: `docs/commercial/procore-evaluation-kit.md` — <https://github.com/pccxai/pccx/blob/main/docs/commercial/procore-evaluation-kit.md>
+PCCX™ ProCore를 평가하는 하드웨어 통합 업체용 제안 패키지 초안이다.
+**현재 배포되지 않는다.** 본 문서만으로 평가 계약, NRE, `tape-out` 권한이
+생기지 않는다.
+
+패키지 제공 시 가정:
+
+- 평가 라이선스는 기간이 정해진 비생산성, 비양도용으로 제한.
+- 산출물은 강화된 RTL 뷰, harness, 통합 노트로 구성.
+- 제한 사항: 생산권 없음, `tape-out` 권한 없음, 재배포 금지.
+
+가격·조건은 법률 검토가 완료된 뒤 확정한다.

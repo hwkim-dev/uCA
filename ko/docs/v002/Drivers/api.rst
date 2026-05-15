@@ -34,8 +34,8 @@ v002 드라이버의 공개 C API 를 정리합니다. 구현은
    // NPU 를 안전 상태로 두고 HAL 해제.
    void uca_deinit(void);
 
-API 는 **컨텍스트 포인터를 쓰지 않는다** — 한 프로세스가 NPU 하나와
-만 통신하므로 HAL 이 file-scope 싱글턴으로 상태를 보관한다.
+API는 **컨텍스트 포인터를 쓰지 않습니다** — 한 프로세스가 NPU 한 대와만
+통신하므로 HAL이 파일 스코프(file-scope) 싱글턴으로 상태를 보관합니다.
 
 2. 연산 프리미티브
 ===================
@@ -96,7 +96,7 @@ API 는 **컨텍스트 포인터를 쓰지 않는다** — 한 프로세스가 N
 
 .. code-block:: c
 
-   // 루트 인코딩 DMA. from/to 가 묶인 enum 으로 표현 (§4.4).
+   // 경로(route) 인코딩 DMA. from/to 가 묶인 enum 으로 표현 (§4.4).
    // 대표 용례: GEMM/GEMV 이전에 호스트 DDR4 → L2 로 가중치 타일 로드.
    void uca_memcpy(uint8_t  route,       // UCA_ROUTE_*
                    uint32_t dest_addr,   // 17-bit 목적지

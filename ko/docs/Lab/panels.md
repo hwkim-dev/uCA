@@ -236,7 +236,7 @@ Radix UI Dialog를 사용하는 단순 트리거 컴포넌트. `generate_report`
 ISA 인스트럭션 시퀀스를 세 가지 동기화된 뷰(ISA 어셈블리, API TOML,
 SystemVerilog UVM 시퀀스)로 동시에 표시하는 크로스-레벨 저작 도구.
 ISA 또는 API 레벨에서 편집하면 SV 패널이 자동 갱신된다(역방향은
-현재 미구현). `generate_uvm_sequence_cmd`로 전략별(`l2_prefetch`,
+현재 구현되지 않음). `generate_uvm_sequence_cmd`로 전략별(`l2_prefetch`,
 `barrier_reduction`) SV UVM 시퀀스 스텁을 생성한다.
 
 - 피드 커맨드: `generate_uvm_sequence_cmd`, `list_uvm_strategies`
@@ -335,8 +335,8 @@ FPS를 노출한다. `get_license_info`는 App 레벨에서 호출되고
                   hardware view, verification, and editing components},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://pccx.pages.dev/ko/docs/Lab/panels.html}},
-  note         = {Part of pccx: \url{https://pccx.pages.dev/}}
+  howpublished = {\url{https://pccx.ai/ko/docs/Lab/panels.html}},
+  note         = {Part of pccx: \url{https://pccx.ai/}}
 }
 ```
 

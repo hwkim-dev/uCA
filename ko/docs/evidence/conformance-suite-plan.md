@@ -2,9 +2,21 @@
 orphan: true
 ---
 
-# (자동 번역 대기)
+> 초안 운영 정책입니다. 법률·회계·세무·증권·IP 검토 후 사용.
+> 스폰서십은 투자 수익이 아니며 본 문서는 증권 제안이 아니다.
 
-이 페이지는 영문판이 정본입니다. 자동 번역 도구가 채울 자리이며,
-신규 본문을 한국어로 직접 작성하지 마세요.
+# PCCX Conformance suite 계획 (초안)
 
-영문 원본: `docs/evidence/conformance-suite-plan.md` — <https://github.com/pccxai/pccx/blob/main/docs/evidence/conformance-suite-plan.md>
+PCCX™ Conformance suite는 추후 `PCCX Compatible` 배지 근거군을 구성한다.
+**현재 `PCCX Compatible` 배지는 부여되지 않는다**. 용어 사용은 승인된 시점 이후로
+제한한다.
+
+계획 범위:
+
+- ISA conformance
+- register / memory map conformance
+- driver ABI conformance
+- sim wrapper sanity
+
+실행은 출판된 conformance process와 승인 워크플로우가 확정된 뒤에만 진행한다.
+Tracker: pccxai/pccx#61.

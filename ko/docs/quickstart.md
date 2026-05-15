@@ -10,8 +10,8 @@ myst:
 # 퀵스타트
 
 `git clone` 에서 "pccx 트레이스를 보고 있다" 까지의 최단 경로.
-이 페이지는 **재현기** 이다: `docker compose up` 한 번으로 샘플
-캡처가 로딩된 프로파일러가 실행 상태로 떠야 한다.
+이 페이지는 **재현기**입니다. `docker compose up` 한 번으로 샘플
+캡처가 로딩된 프로파일러가 실행 상태로 올라와야 합니다.
 
 ## 0. 얻게 되는 산출물
 
@@ -47,7 +47,7 @@ flowchart LR
 - *(선택)* Xilinx Vivado 2024.1 — RTL 합성 경로
 - *(선택)* Xilinx Kria KV260 보드 — 실측 토큰 생성
 
-앞의 4 개만으로 **소프트웨어** 절반 재현 가능. 보드 접근은 선택.
+앞의 4개로만 **소프트웨어** 절반을 재현할 수 있습니다. 보드 접근은 선택입니다.
 
 ## 2. 세 레포 클론
 
@@ -121,7 +121,7 @@ cd ~/pccx-ws/pccx-FPGA-NPU-LLM-kv260/scripts/board
   title        = {pccx Quickstart: one-command reproducer for the open NPU},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://pccx.pages.dev/ko/docs/quickstart.html}},
-  note         = {Part of pccx: \url{https://pccx.pages.dev/}}
+  howpublished = {\url{https://pccx.ai/ko/docs/quickstart.html}},
+  note         = {Part of pccx: \url{https://pccx.ai/}}
 }
 ```

@@ -2,9 +2,22 @@
 orphan: true
 ---
 
-# (자동 번역 대기)
+> 초안 운영 정책입니다. 법률·회계·세무·증권·IP 자문 검토 후 사용.
+> 수치 성능은 반복 측정 근거와 재현 가능한 명령어가 있을 때만 공개.
 
-이 페이지는 영문판이 정본입니다. 자동 번역 도구가 채울 자리이며,
-신규 본문을 한국어로 직접 작성하지 마세요.
+# 벤치마크 리포트 템플릿
 
-영문 원본: `docs/evidence/benchmark-report-template.md` — <https://github.com/pccxai/pccx/blob/main/docs/evidence/benchmark-report-template.md>
+공개 가능한 벤치마크 템플릿입니다. **측정 값과 재현 명령이 없으면 수치를
+공개하지 않는다.**
+
+필수 항목:
+
+- 하드웨어(보드, 클럭, 전압, 메모리)
+- 소프트웨어(driver, runtime, model 이름·버전, weight format)
+- 워크로드(입력 크기, batch, context 길이)
+- 측정값 및 단위, p50/p95
+- 재현 명령
+- 변동성·반복 횟수
+- 알려진 편향 또는 simulator-only 플래그
+
+필수 항목 누락 시 보고서는 완결본이 아니다.

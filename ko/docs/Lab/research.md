@@ -8,7 +8,7 @@ _페이지 과도기 상태. pccx-lab HEAD 기준 2026-04-24 재정비._
 이전 리비전은 두 인용 테이블 (분석기 + UVM 전략) 을
 `pccx_core::research::CITATIONS` — `core/src/research.rs` 에 있던
 컴파일 타임 레지스트리 — 에서 자동 생성했다. Phase 1 의 모듈 이주가
-그 파일을 제거했다. 인용 정보는 아직 다른 크레이트에 재착륙하지
+그 파일을 제거했다. 인용 정보는 아직 다른 크레이트에 포팅하지
 않았으므로, 오늘 이 페이지가 재생성할 수 있는 권위 있는 온디스크
 소스는 존재하지 않는다.
 
@@ -38,7 +38,7 @@ free 함수 (`pccx_core::roofline::analyze`,
   `authoring` 인접 행이 추적하던 ISA / API 스펙 계보의 상류.
 - `pccx-lsp` — `CompletionSource` enum 이 모든 completion 을
   `Lsp` / `AiFast` / `AiDeep` / `Cache` 로 태그한다. AI-fast / AI-deep
-  백엔드가 착륙하면 각자의 provenance 계보가 필요해진다.
+  백엔드가 적용되면 각자의 provenance 계보를 함께 정리해야 한다.
 
 pccx-lab 레포의 설계 문서 네 개
 (`docs/design/phase2_intellisense.md`, `phase3_remote_backend.md`,
@@ -51,8 +51,8 @@ pccx-lab 내부 `knowledge/sail_language/` 코퍼스는 Cambridge Sail ISA
 사양 언어를 추적한다 — Phase 4 finale (M4.8–M4.10 "Sail finale") 와
 Phase 5 PRM gate 가 둘 다 RTL formal refinement 에 Sail 을 사용하기
 때문에 설계 문서가 이를 자주 인용한다. pccx-FPGA 레포도
-`formal/sail/` 하위에 Sail 모델을 출하한다 ([Formal 섹션](../v002/Formal/index.rst)
-참고).
+   `formal/sail/` 하위에 Sail 모델을 출하한다 ([Formal 섹션](../v002/Formal/index.rst))
+   참고).
 
 ## 이 페이지 재생성 시점
 
@@ -61,7 +61,7 @@ Phase 5 PRM gate 가 둘 다 RTL formal refinement 에 Sail 을 사용하기
 1. 한 크레이트 (아마 `pccx-reports` 또는 신설 `pccx-analytics`) 가
    안정 `CITATIONS` 레지스트리를 재공개하고,
 2. 큐레이션 분석기 / UVM 전략 세트가 테이블을 키잉할 안정
-   `used_by` id 와 함께 재착륙.
+   `used_by` id 와 함께 포팅.
 
 그 시점에 두 테이블이 여기 다시 나타나며, 과거
 `pccx_analyze --research-list` 표면을 대체하는 바이너리 (현재
@@ -80,8 +80,8 @@ Phase 5 PRM gate 가 둘 다 RTL formal refinement 에 Sail 을 사용하기
   title        = {pccx-lab research lineage (placeholder): registry rebuild underway after Phase 1 module exodus},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://pccx.pages.dev/ko/docs/Lab/research.html}},
-  note         = {Part of pccx: \url{https://pccx.pages.dev/}}
+  howpublished = {\url{https://pccx.ai/ko/docs/Lab/research.html}},
+  note         = {Part of pccx: \url{https://pccx.ai/}}
 }
 ```
 

@@ -175,8 +175,8 @@ pub fn fnv1a_64(data: &[u8]) -> u64 {
   title        = {.pccx Binary Format Specification: container format for NPU profiling traces},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://pccx.pages.dev/ko/docs/Lab/pccx-format.html}},
-  note         = {Part of pccx: \url{https://pccx.pages.dev/}}
+  howpublished = {\url{https://pccx.ai/ko/docs/Lab/pccx-format.html}},
+  note         = {Part of pccx: \url{https://pccx.ai/}}
 }
 ```
 

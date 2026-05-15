@@ -2,9 +2,44 @@
 orphan: true
 ---
 
-# (자동 번역 대기)
+> 초안 운영 문서입니다. 법률 자문이 아니며 계약서가 아니다.
+> 적용 전에는 법무 검토 필요.
 
-이 페이지는 영문판이 정본입니다. 자동 번역 도구가 채울 자리이며,
-신규 본문을 한국어로 직접 작성하지 마세요.
+# Copyright 등록 후보군
 
-영문 원본: `docs/ip/copyright-registration-candidates.md` — <https://github.com/pccxai/pccx/blob/main/docs/ip/copyright-registration-candidates.md>
+Apache-2.0 라이선스와 파일 단위 SPDX 헤더는 대부분의 공개 artefact에서 기본
+커버를 이행한다. 개별 등록은 다음 경우에 추가 검토된다.
+
+## 기본 입장
+
+오픈 코어에 대해 별도 저작권 등록은 필수는 아니다. 다만 다음에서 별도 등록
+이점을 얻는다.
+
+1. 관할권별 구제수단이 등록 여부에 따라 달라져 증거력을 보완할 때.
+2. 특정 버전을 상업 맥락으로 증빙해야 할 때 스냅샷 보강이 필요한 경우.
+
+## 후보 항목
+
+| Artefact | 등록 사유 | 결정 |
+| --- | --- | --- |
+| 공개 릴리스 시점의 `pccx` 문서 집합 | 기준 버전의 규격 정합성 스냅샷 확보 | TBD; 상표 docket와 공개 릴리스 일정 조율 |
+| `pccx-v002` 공개 태그 시점의 IP 패키지 | 재사용 RTL 패키지의 스냅샷 | TBD; tagged `v002` 릴리스 조건 |
+| Reference SDK / simulator releases | 공개 툴체인 스냅샷 | TBD |
+| ASIC layout(생성 시점) | layout-design권은 저작권보다 별도 증적 성격 | TBD; 현재 미적용(RTL 단계) |
+
+## 이 페이지가 하지 않는 것
+
+- 실제 출원/등록 행위 수행
+- 등록 일정 약속
+- 기반 라이선스 변경
+
+## 결정 기록
+
+후보가 확정되면 다음을 저장한다.
+
+- 대상 artefact(저장소/태그/SHA)
+- 관할권
+- 결과(filed / granted / withdrawn)
+- 공개 reference 번호
+
+사적 자료(접수자, 영수증, 내부 이메일)는 별도 private 기록에 보관한다.

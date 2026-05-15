@@ -99,7 +99,7 @@ IO
 
 * ``mem_IO.svh`` — AXI / ACP 핀 단위 타입과 매개변수.
 * ``mem_u_operation_queue.sv`` — 컨트롤러와 메모리 디스패처 사이의
-  마이크로 옵 큐.
+  μop 큐.
 
 .. dropdown:: ``mem_IO.svh``
    :icon: code

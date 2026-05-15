@@ -2,9 +2,19 @@
 orphan: true
 ---
 
-# (자동 번역 대기)
+> 초안 운영 문서입니다. 법률·세무·회계·증권·IP 검토 전에는 구속력 없음.
+> 스폰서십은 투자 관계가 아니다.
 
-이 페이지는 영문판이 정본입니다. 자동 번역 도구가 채울 자리이며,
-신규 본문을 한국어로 직접 작성하지 마세요.
+# 고객 파이프라인 (템플릿)
 
-영문 원본: `docs/investor/customer-pipeline-template.md` — <https://github.com/pccxai/pccx/blob/main/docs/investor/customer-pipeline-template.md>
+공개-safe한 기획 템플릿이다. **고객별 상세 정보는 private data room에 보관**한다.
+
+단계:
+
+- Awareness
+- NDA 하 평가
+- NRE 기반 파일럿
+- Production licence
+- Renewal / certification
+
+공개 자료에 고객명이 노출되지 않는다.

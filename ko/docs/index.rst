@@ -12,10 +12,10 @@ pccx: 병렬 컴퓨트 코어 익스큐터
 1. 아키텍처 개요
 ----------------
 
-pccx는 리소스 제약이 있는 엣지 환경에서 Transformer 기반 LLM 의
+pccx는 리소스 제약이 있는 엣지 환경에서 Transformer 기반 LLM의
 autoregressive 디코딩을 가속하기 위한 하드웨어-소프트웨어 공동 설계
 프레임워크다. 합성 시점에 타겟 디바이스의 DSP·BRAM·URAM 예산에 맞춰
-코어 아키텍처가 결정되며, 1 차 타겟은 Xilinx Kria KV260 SoM
+코어 아키텍처가 결정되며, 1차 타겟은 Xilinx Kria KV260 SoM
 (Zynq UltraScale+ ZU5EV) 이다.
 
 1.1 에코시스템 구조
@@ -79,7 +79,7 @@ autoregressive 디코딩을 가속하기 위한 하드웨어-소프트웨어 공
 
 1. :doc:`v002/ISA/index` — 64비트 커스텀 명령어 집합(ISA) 명세.
 2. :doc:`v002/Architecture/index` — 하드웨어 아키텍처 및 물리적 플로어플랜 설계.
-3. :doc:`v002/Drivers/index` — pccx 드라이버 및 SDK 가이드런스.
+3. :doc:`v002/Drivers/index` — pccx 드라이버 및 SDK 가이드라인.
 
 v001 레퍼런스 아키텍처는 :doc:`archive/experimental_v001/index` 에 보존되어 있다.
 

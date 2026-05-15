@@ -41,7 +41,7 @@ flowchart LR
 
 현재 `preprocess_bf16_fixed_pipeline.sv`가 출력하는 27-bit fixed-point
 값은 하위 8비트를 truncate하여 GEMM systolic array에 임시로 공급하는
-자리표시자 경로다. v002 W4A8 datapath가 요구하는 올바른 형식은
+placeholder 경로다. v002 W4A8 datapath가 요구하는 올바른 형식은
 **signed INT8 activation**이다(DSP48E2 Port B signed 8-bit 입력).
 TODO.md §A-1은 양자화기 교체를 위한 두 가지 후보를 정의한다.
 
@@ -77,7 +77,7 @@ Constant Cache에 `MEMSET`으로 적재하는 구조가 자연스럽다.
 `TODO.md` §A-1에서 추적된다. 현재 RTL의
 `bf16_to_INT8_pipeline_power_of_two_scale.sv`와
 `bf16_to_INT8_pipeline_true_symmetric_INT8.sv`는 각 옵션에 대응하는
-자리표시자 파일이며 본문은 미구현 상태다.
+placeholder 파일이며 본문은 구현되지 않음 상태다.
 
 ## fmap 캐시
 

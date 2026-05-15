@@ -19,12 +19,12 @@ RTL 소스: ``hw/rtl/NPU_Controller/NPU_Control_Unit/ISA_PACKAGE/``
     [63:60]   [59:0]
     OPCODE    BODY (60 bits, layout depends on opcode)
 
-최상위 디코더(``ctrl_npu_decoder.sv``)가 4 비트 오피코드를 떼어내고
+최상위 디코더(``ctrl_npu_decoder.sv``)가 4 비트 opcode를 떼어내고
 남은 60 비트 본문을 해당 실행 엔진으로 라우팅합니다.
 
 --------------
 
-2. 오피코드 테이블
+2. opcode 테이블
 -------------------
 
 .. list-table::
@@ -245,10 +245,10 @@ RMSNorm, 활성화 함수에 필수.
 
 --------------
 
-6. 마이크로 옵 (uop) 구조체
+6. μop (uop) 구조체
 -----------------------------
 
-디코드 후 Global Scheduler 가 명령어 본문을 엔진별 마이크로 옵으로
+디코드 후 Global Scheduler 가 명령어 본문을 엔진별 μop으로
 분할하여 디스패치합니다.
 
 6.1 GEMV / GEMM Control uop

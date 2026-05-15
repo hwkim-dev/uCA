@@ -3,7 +3,7 @@
 ==========================
 
 각 명령어는 ``opcode[3:0]`` 이후 60-bit 본체(body)로 구성된다.
-본 문서에서는 오피코드별 body 레이아웃과 각 필드의 의미를 기술한다.
+본 문서에서는 opcode별 body 레이아웃과 각 필드의 의미를 기술한다.
 
 1. GEMV / GEMM (opcode = 0x0 / 0x1)
 ====================================
@@ -263,7 +263,7 @@ Complex Vector Operation — SFU에 전달되는 명령어이다.
    :header-rows: 1
    :widths: 15 85
 
-   * - 오피코드
+   * - opcode
      - 핵심 활용 시나리오
    * - **GEMM**
      - Prefill. Q/K/V projection, FFN up/down projection.

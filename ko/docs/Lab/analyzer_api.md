@@ -12,7 +12,7 @@ lsp, workflow_facade, …) 가 자기 자신의 trait-object 플러그인을 걸
 
 이 페이지는 프리미티브 자체와 소비 크레이트가 자신의 플러그인 트레이트를
 거기 어떻게 거는지를 문서화한다. Phase 1 이전의 16 개 큐레이션 분석기
-카탈로그는 아직 재착륙되지 않았다 — 돌아올 때는 분석 크레이트 중 하나
+카탈로그는 아직 포팅되지 않았다 — 돌아올 때는 분석 크레이트 중 하나
 (reports 또는 신설 `pccx-analytics`) 안에 자리 잡고 이 프리미티브로
 등록될 것이다. 그때까지 pccx-core 는 날(raw) free 함수
 (`roofline::analyze`, `bottleneck::detect`, …) 와 얇은
@@ -134,10 +134,10 @@ pub enum PluginError {
 enum 은 정신상 `#[non_exhaustive]` 이며 — Phase 1/2 창 동안 SemVer
 major 범프 없이 신규 variant 가 추가된다.
 
-Dylib 로딩 기계 (libloading + C-ABI `register()` 심볼 + unload 시
-안전한 drop) 는 **아직 미구현** 이다. 아웃오브트리 플러그인이 실제로
-출하될 때 Phase 2/4 중에 착륙한다. 그때까지 모든 레지스트리는
-in-process `Vec<Box<dyn T>>` 이다.
+`libloading` + C-ABI `register()` 심볼 + unload 시 안전한 drop를 사용하는
+Dylib 로더는 **아직 구현되지 않음**이다. 아웃오브트리 플러그인은
+출하 단계인 Phase 2/4에서 본격 반영된다. 그때까지 모든 레지스트리는
+in-process `Vec<Box<dyn T>>`를 사용한다.
 
 ## Phase 1 시점 크로스 크레이트 플러그인 트레이트
 
@@ -152,7 +152,7 @@ in-process `Vec<Box<dyn T>>` 이다.
 
 이 테이블의 모든 트레이트는 크레이트 자체 `plugin-api` 피처 뒤에
 스캐폴딩 되어 있다. 구체 구현은 Phase 2–5 워크스트림 진행에 따라
-점진적으로 착륙한다. 트레이트별 착륙 타임라인은 각 크레이트의
+점진적으로 반영된다. 트레이트별 도입 일정은 각 크레이트의
 `CHANGELOG.md` 참고.
 
 ## 관련 문서
@@ -174,8 +174,8 @@ pccx-core 플러그인 레지스트리 프리미티브를 논문, 블로그, AI 
   title        = {pccx-core plugin registry: the generic primitive every pccx-lab crate hangs its trait-object plugins off},
   author       = {Kim, Hyunwoo},
   year         = {2026},
-  howpublished = {\url{https://pccx.pages.dev/ko/docs/Lab/analyzer_api.html}},
-  note         = {Part of pccx: \url{https://pccx.pages.dev/}}
+  howpublished = {\url{https://pccx.ai/ko/docs/Lab/analyzer_api.html}},
+  note         = {Part of pccx: \url{https://pccx.ai/}}
 }
 ```
 
