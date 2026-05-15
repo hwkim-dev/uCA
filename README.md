@@ -4,7 +4,7 @@
 
 **A scalable NPU architecture for Transformer LLM inference on edge FPGAs**
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-Mixed%3A_code_Apache--2.0%2C_docs_protected-blue.svg)](LICENSE)
 [![Target](https://img.shields.io/badge/Target-Xilinx_Kria_KV260-red)](https://www.xilinx.com/products/som/kria/kv260-vision-starter-kit.html)
 [![Architecture](https://img.shields.io/badge/Architecture-v002_Active-purple)](#architecture)
 [![Precision](https://img.shields.io/badge/Precision-W4A8_→_BF16%2FFP32-green)](#precision)
@@ -33,6 +33,17 @@ issues are welcome.
 | How to cite | [CITATION.cff](CITATION.cff) |
 | Discussions | <https://github.com/pccxai/pccx/discussions> |
 | Good first issues | <https://github.com/pccxai/pccx/labels/good%20first%20issue> |
+
+---
+
+## v002.1 evidence-gated pointers
+
+| Item | Link | Guard |
+| --- | --- | --- |
+| Architecture explainer | [`docs/spec/v002.1-architecture-explainer.md` (PR #48)](https://github.com/pccxai/pccx/blob/docs/v002.1-architecture-explainer/docs/spec/v002.1-architecture-explainer.md) | Draft explainer; no board-run, closed-timing, deployable-bitstream, or measured-throughput claim. |
+| Evidence inventory | [`pccx-FPGA-NPU-LLM-kv260` evidence inventory (PR #95)](https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260/blob/docs/v002.1-evidence-inventory/docs/evidence/v002.1-evidence-inventory.md) | Inventory of landed and pending evidence; release claims remain gated by measured artifacts. |
+| Bitstream runbook | [`pccx-FPGA-NPU-LLM-kv260` bitstream runbook (PR #82)](https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260/blob/build/v002-kv260-bitstream-runbook/docs/runbooks/v002.1-bitstream-build.md) | Pre-flight runbook; Vivado and KV260 board execution are not claimed by this link. |
+| Project board | [PCCX Roadmap project board](https://github.com/orgs/pccxai/projects/1) | Planning tracker; status must be read with the evidence gates above. |
 
 ---
 
@@ -155,7 +166,7 @@ Sibling repositories:
 - **`pccx-v002`** — reusable v002 IP-core package.
 - **`pccx-v003`** — future reusable v003 IP-core package.
 - **[pccxai/pccx-FPGA-NPU-LLM-kv260](https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260)** — KV260 + LLM application integration that consumes `pccx-v002`.
-- **[pccxai/pccx-lab](https://github.com/pccxai/pccx-lab)** — performance simulator, CLI-first verification lab, and trace profiler (mounted under `/en/lab/` and `/ko/lab/` on the docs site).
+- **[pccxai/pccx-lab](https://github.com/pccxai/pccx-lab)** — performance simulator, CLI-first verification lab, and trace profiler. The public Lab documentation lives on `https://labs.pccx.ai/`.
 
 ---
 
@@ -191,7 +202,7 @@ the speculative-decoding stack is integrated.
 Performance simulator, CLI-first verification lab, and trace profiler for the pccx NPU. Pre-RTL bottleneck detection, UVM co-simulation, and testbench/trace workflow support share one workflow.
 
 - Repository: https://github.com/pccxai/pccx-lab
-- Documentation: https://pccx.pages.dev/en/lab/ (Korean: https://pccx.pages.dev/ko/lab/)
+- Documentation: https://labs.pccx.ai/
 - Status: Work in Progress
 
 ---
@@ -260,9 +271,16 @@ python -m http.server --directory _build/html
 
 ---
 
-## License
+## License and rights
 
-Licensed under the **[Apache License 2.0](LICENSE)**.
+This repository uses a mixed rights model:
+
+- Source code is licensed under the **Apache License 2.0**; see
+  [`LICENSE-CODE`](LICENSE-CODE).
+- PCCX™ documentation, site copy, diagrams, logos, trademarks, and brand
+  assets are protected company assets of Altifigence; see [`LICENSE`](LICENSE).
+- Reusable v002 IP-core source lives in the separate
+  [`pccx-v002`](https://github.com/pccxai/pccx-v002) repository.
 
 ## Trademark
 

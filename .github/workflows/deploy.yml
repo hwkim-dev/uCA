@@ -67,41 +67,13 @@ jobs:
         run: |
           sphinx-build -W --keep-going -b html ko _build/html/ko
 
-      # -------- pccx-lab sibling-project integration --------------------------
-      # pccx-lab lives in its own repo and does not deploy to its own gh-pages.
-      # We clone it here and mount its docs under /lab/ on the pccx site.
-      # Every step below is guarded by hashFiles() + continue-on-error so an
-      # empty / missing / broken pccx-lab never blocks a pccx deploy.
-      # See pccx-agent-integration-task.md for the integration design.
-      - name: Checkout pccx-lab (optional sibling)
-        uses: actions/checkout@v4
-        with:
-          repository: pccxai/pccx-lab
-          path: external/pccx-lab
-        continue-on-error: true
-
-      - name: Install pccx-lab docs deps (if any)
-        if: hashFiles('external/pccx-lab/docs/requirements.txt') != ''
-        continue-on-error: true
-        run: pip install -r external/pccx-lab/docs/requirements.txt
-
-      - name: Build pccx-lab English docs → /en/lab/
-        if: hashFiles('external/pccx-lab/docs/conf.py') != ''
-        continue-on-error: true
-        run: |
-          sphinx-build -b html external/pccx-lab/docs _build/html/en/lab
-
-      - name: Build pccx-lab Korean docs → /ko/lab/
-        if: hashFiles('external/pccx-lab/docs/ko/conf.py') != ''
-        continue-on-error: true
-        run: |
-          sphinx-build -b html external/pccx-lab/docs/ko _build/html/ko/lab
-      # ------------------------------------------------------------------------
-
       - name: Create root redirect page and disable Jekyll
         run: |
           mkdir -p _build/html
           touch _build/html/.nojekyll
+          if [ -f _extra/robots.txt ]; then
+            cp _extra/robots.txt _build/html/robots.txt
+          fi
           cat > _build/html/index.html << 'EOF'
           <!DOCTYPE html>
           <html lang="en">
@@ -110,6 +82,8 @@ jobs:
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <meta http-equiv="refresh" content="0; url=en/index.html">
             <link rel="canonical" href="en/index.html">
+            <link rel="icon" href="favicon.ico" sizes="any">
+            <link rel="icon" type="image/svg+xml" href="pccx_wordmark_favicon.svg">
             <title>pccx Documentation</title>
             <style>
               html,body{margin:0;padding:0;background:#1a1a1a;color:#eee;
@@ -127,6 +101,20 @@ jobs:
           </body>
           </html>
           EOF
+          cp _build/html/en/_static/pccx_wordmark_favicon.ico _build/html/favicon.ico
+          cp _build/html/en/_static/pccx_wordmark_favicon.png _build/html/pccx_wordmark_favicon.png
+          cp _build/html/en/_static/pccx_wordmark_favicon.svg _build/html/pccx_wordmark_favicon.svg
+          {
+            printf '%s\n' '<?xml version="1.0" encoding="UTF-8"?>'
+            printf '%s\n' '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+            if [ -f _build/html/en/sitemap-en.xml ]; then
+              printf '%s\n' '  <sitemap><loc>https://docs.pccx.ai/en/sitemap-en.xml</loc></sitemap>'
+            fi
+            if [ -f _build/html/ko/sitemap-ko.xml ]; then
+              printf '%s\n' '  <sitemap><loc>https://docs.pccx.ai/ko/sitemap-ko.xml</loc></sitemap>'
+            fi
+            printf '%s\n' '</sitemapindex>'
+          } > _build/html/sitemap.xml
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4

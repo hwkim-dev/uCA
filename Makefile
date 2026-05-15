@@ -18,6 +18,9 @@ KO_SRC         := ko
 BUILD_ROOT     := _build/html
 EN_OUT         := $(BUILD_ROOT)/en
 KO_OUT         := $(BUILD_ROOT)/ko
+ROOT_ROBOTS    := _extra/robots.txt
+ROOT_SITEMAP   := $(BUILD_ROOT)/sitemap.xml
+PUBLIC_BASE_URL := https://docs.pccx.ai
 
 # Dev server ports.
 DEV_PORT_EN    := 8000
@@ -30,7 +33,7 @@ AUTOBLD_FLAGS  := --re-ignore '_build' --re-ignore 'auto_plots' --open-browser
 
 # -- Phony ------------------------------------------------------------------
 
-.PHONY: help en ko all strict dev-en dev-ko linkcheck lint clean distclean \
+.PHONY: help en ko all site-root-files strict dev-en dev-ko linkcheck lint clean distclean \
         check-codes install install-dev
 
 help:
@@ -73,7 +76,24 @@ en: check-codes
 ko: check-codes
 	$(SPHINXBUILD) -b html $(SPHINXOPTS) $(KO_SRC) $(KO_OUT)
 
-all: en ko
+all: en ko site-root-files
+
+site-root-files:
+	mkdir -p $(BUILD_ROOT)
+	@if [ -f "$(ROOT_ROBOTS)" ]; then \
+	    cp "$(ROOT_ROBOTS)" "$(BUILD_ROOT)/robots.txt"; \
+	fi
+	@{ \
+	    printf '%s\n' '<?xml version="1.0" encoding="UTF-8"?>'; \
+	    printf '%s\n' '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'; \
+	    if [ -f "$(EN_OUT)/sitemap-en.xml" ]; then \
+	        printf '%s\n' '  <sitemap><loc>$(PUBLIC_BASE_URL)/en/sitemap-en.xml</loc></sitemap>'; \
+	    fi; \
+	    if [ -f "$(KO_OUT)/sitemap-ko.xml" ]; then \
+	        printf '%s\n' '  <sitemap><loc>$(PUBLIC_BASE_URL)/ko/sitemap-ko.xml</loc></sitemap>'; \
+	    fi; \
+	    printf '%s\n' '</sitemapindex>'; \
+	} > "$(ROOT_SITEMAP)"
 
 strict: SPHINXOPTS += $(STRICT)
 strict: all

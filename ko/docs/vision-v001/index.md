@@ -10,7 +10,6 @@ placeholder 다.
 ## 작업 상태
 
 - 저장소: [`pccxai/pccx-vision-v001`](https://github.com/pccxai/pccx-vision-v001)
-- 작업 staging 저장소: `pccx-vision-v001-staging` (private)
 - v002 와 substrate 공유 — 동일한 KV260 보드, 동일한 W4A8
   weight × activation 비율, 동일한 L2 URAM 구성
 - 데이터플로우는 다름 — 토큰 단위 KV 스트리밍이 아니라 dense

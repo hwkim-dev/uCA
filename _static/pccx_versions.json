@@ -1,0 +1,42 @@
+[
+  {
+    "label": "Current",
+    "slug": "current",
+    "url": "/",
+    "urls": {
+      "en": "/en/",
+      "ko": "/ko/"
+    },
+    "status": "current"
+  },
+  {
+    "label": "v003",
+    "slug": "v003",
+    "url": "/en/docs/v003/",
+    "urls": {
+      "en": "/en/docs/v003/",
+      "ko": "/ko/docs/v003/"
+    },
+    "status": "available"
+  },
+  {
+    "label": "v002",
+    "slug": "v002",
+    "url": "/en/docs/v002/",
+    "urls": {
+      "en": "/en/docs/v002/",
+      "ko": "/ko/docs/v002/"
+    },
+    "status": "available"
+  },
+  {
+    "label": "v001",
+    "slug": "v001",
+    "url": "/en/docs/archive/experimental_v001/",
+    "urls": {
+      "en": "/en/docs/archive/experimental_v001/",
+      "ko": "/ko/docs/archive/experimental_v001/"
+    },
+    "status": "archived"
+  }
+]

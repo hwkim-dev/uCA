@@ -18,8 +18,10 @@ parser, diagram, gallery, and metadata behavior.
 from __future__ import annotations
 
 import os
+import shutil
 import sys
 from datetime import date
+from pathlib import Path
 
 # Make local extensions under ``_ext/`` importable regardless of which conf.py
 # (EN root or KO) triggered the build.
@@ -33,7 +35,10 @@ sys.path.insert(0, _CONF_COMMON_DIR)
 
 project = "pccx"
 author = "Hyun Woo Kim"
-copyright = f"{date.today().year} {author}"
+copyright = (
+    f"{date.today().year} Altifigence. PCCX™ documentation and brand assets "
+    "are protected company assets; code is Apache-2.0."
+)
 release = "v002"
 version = "v002"
 
@@ -114,8 +119,11 @@ exclude_patterns = [
     "pccx_[Gg][Ee][Mm][Ii][Nn][Ii]_*.md",  # external review artifacts (gitignored)
     "todo.md",                            # local task list at repo root
     "CONTRIBUTING.md",                    # repo-level, not part of docs site
+    "CODE_OF_CONDUCT.md",                 # repo-level, not part of docs site
     "CHANGELOG.md",                       # repo-level release log, not docs
     "RELEASING.md",                       # repo-level release flow, not docs
+    ".github",
+    ".github/**",
     "tools/**/*.md",       # phase0 audit / vivado plan etc.
     # external RTL repo artifacts — pccx-FPGA cloned at build time
     "codes/v002/README.md",
@@ -263,13 +271,18 @@ _ICON_BEAKER = (
 def build_footer_icons(lang_prefix: str = "en") -> list:
     """Assemble the labeled footer icon row for pccx.
 
-    Order (left → right): RTL → Lab → Docs → Blog.
+    Order (left → right): RTL → Lab → Launcher → IDE → Docs → Blog → legal.
 
-    ``lang_prefix`` (``'en'`` / ``'ko'``) only alters the pccx-lab link so a
-    KO-page click lands on the KO sub-site; the other destinations are
-    language-agnostic external repos / pages.
+    ``lang_prefix`` is retained for compatibility with the language-specific
+    conf wrappers. The Lab, Launcher, and IDE surfaces now live on their own
+    external documentation hosts.
     """
-    lab_url = f"https://pccx.pages.dev/{lang_prefix}/lab/"
+    legal_links = {
+        "center": "https://docs.google.com/document/d/e/2PACX-1vQMPYkdXXGSs6B7FUPqP2df7ncRALntT7KKj1LQqYt60IhXhfC90ow0O9TCTgLzD_N_vs8Q7OQRAMwf/pub",
+        "privacy": "https://docs.google.com/document/d/e/2PACX-1vREutdqQF-kY0fsDgpExLBRl0P4uraGxaGy9skjcJNdpWlyw5RFULdQuBcurOnSx75JRjL1rO1k14m_/pub",
+        "terms": "https://docs.google.com/document/d/e/2PACX-1vSqrQ1sd9xH4i3wp6Iy0z1fhJN49SF0Vu6nTXASBZwtrB2PBD_L8mKo32AYZj3nnQjaDEQEI_HRd9DO/pub",
+        "cookies": "https://docs.google.com/document/d/e/2PACX-1vTgkg5KcCB_m28lcPERlEC1O3oSRJCW8RvMEqPL_0o-i7JT0EwxgBilOx5oiMujrcpqlcu8ZZkccq1k/pub",
+    }
     return [
         {
             "name":  "RTL implementation — github.com/pccxai/pccx-FPGA-NPU-LLM-kv260",
@@ -282,11 +295,29 @@ def build_footer_icons(lang_prefix: str = "en") -> list:
         },
         {
             "name":  "pccx-lab — simulator & verification lab",
-            "url":   lab_url,
+            "url":   "https://labs.pccx.ai/",
             "class": "pccx-footer-icon",
             "html": (
                 _ICON_BEAKER
                 + '<span class="pccx-footer-icon__label">Lab</span>'
+            ),
+        },
+        {
+            "name":  "PCCX Launcher — launcher contracts and readiness",
+            "url":   "https://launcher.pccx.ai/",
+            "class": "pccx-footer-icon",
+            "html": (
+                _ICON_CHIP
+                + '<span class="pccx-footer-icon__label">Launcher</span>'
+            ),
+        },
+        {
+            "name":  "SystemVerilog IDE — diagnostics and validation",
+            "url":   "https://ide.pccx.ai/",
+            "class": "pccx-footer-icon",
+            "html": (
+                _ICON_PERSON
+                + '<span class="pccx-footer-icon__label">IDE</span>'
             ),
         },
         {
@@ -306,6 +337,30 @@ def build_footer_icons(lang_prefix: str = "en") -> list:
                 _ICON_PERSON
                 + '<span class="pccx-footer-icon__label">Blog</span>'
             ),
+        },
+        {
+            "name":  "Public legal center — Altifigence public legal records",
+            "url":   legal_links["center"],
+            "class": "pccx-footer-icon",
+            "html": '<span class="pccx-footer-icon__label">Legal</span>',
+        },
+        {
+            "name":  "Privacy notice — Altifigence public legal records",
+            "url":   legal_links["privacy"],
+            "class": "pccx-footer-icon",
+            "html": '<span class="pccx-footer-icon__label">Privacy</span>',
+        },
+        {
+            "name":  "Terms — Altifigence public legal records",
+            "url":   legal_links["terms"],
+            "class": "pccx-footer-icon",
+            "html": '<span class="pccx-footer-icon__label">Terms</span>',
+        },
+        {
+            "name":  "Cookies — Altifigence public legal records",
+            "url":   legal_links["cookies"],
+            "class": "pccx-footer-icon",
+            "html": '<span class="pccx-footer-icon__label">Cookies</span>',
         },
     ]
 
@@ -340,8 +395,8 @@ html_theme_options = {
 templates_path = ["_templates"]
 html_static_path = ["_static"]     # KO conf overrides to ["../_static"]
 
-# ``_extra`` lives next to _static but is copied to the site root untouched
-# so llms.txt / robots.txt are served as /pccx/llms.txt, /pccx/robots.txt.
+# ``_extra`` lives next to _static and is copied to each language output root.
+# Deploy/build glue also copies robots.txt to the published site root.
 # (KO conf overrides the path prefix to ``../_extra``.)
 html_extra_path = ["_extra"]
 
@@ -354,8 +409,50 @@ html_css_files = [
 html_js_files = [
     "image-lightbox.js",
     "language-switcher.js",
+    "pccx-version-switcher.js",
     "auto-translate-dismiss.js",
 ]
+
+
+def _write_cloudflare_root_discovery_files(app, exception) -> None:
+    """Publish root robots/sitemap files for split EN/KO static builds."""
+    if exception is not None or getattr(app.builder, "format", None) != "html":
+        return
+
+    outdir = Path(app.outdir).resolve()
+    if outdir.name not in {"en", "ko"}:
+        return
+    build_root = outdir.parent
+
+    robots_src = Path(_CONF_COMMON_DIR) / "_extra" / "robots.txt"
+    if robots_src.exists():
+        shutil.copyfile(robots_src, build_root / "robots.txt")
+
+    sitemap_entries = [
+        ("en", "sitemap-en.xml"),
+        ("ko", "sitemap-ko.xml"),
+    ]
+    lines = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ]
+    for lang, filename in sitemap_entries:
+        if (build_root / lang / filename).exists():
+            lines.append(
+                f"  <sitemap><loc>https://docs.pccx.ai/{lang}/{filename}</loc></sitemap>"
+            )
+    lines.append("</sitemapindex>")
+
+    if len(lines) > 2:
+        (build_root / "sitemap.xml").write_text(
+            "\n".join(lines) + "\n",
+            encoding="utf-8",
+        )
+
+
+def setup(app) -> dict[str, bool]:
+    app.connect("build-finished", _write_cloudflare_root_discovery_files)
+    return {"parallel_read_safe": True, "parallel_write_safe": True}
 
 html_show_sphinx = False
 html_show_sourcelink = False
@@ -431,7 +528,7 @@ intersphinx_timeout = 10
 # SEO / social
 # =============================================================================
 
-html_baseurl = "https://pccx.pages.dev/"
+html_baseurl = "https://docs.pccx.ai/"
 sitemap_url_scheme = "{link}"
 # sitemap_filename is overridden per-language in concrete conf.py.
 

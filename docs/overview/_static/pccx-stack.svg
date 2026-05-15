@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img"
+     aria-labelledby="title-pccx-stack desc-pccx-stack">
+  <title id="title-pccx-stack">PCCX stack placeholder</title>
+  <desc id="desc-pccx-stack">A text-only placeholder for the future PCCX
+    stack overview image.</desc>
+
+  <defs>
+    <style><![CDATA[
+      text {
+        fill: #000000;
+        font-family: "IBM Plex Sans", "Noto Sans", Arial, sans-serif;
+        text-anchor: middle;
+      }
+
+      .title {
+        font-size: 34px;
+        font-weight: 600;
+      }
+
+      .body {
+        font-size: 20px;
+        font-weight: 400;
+      }
+    ]]></style>
+  </defs>
+
+  <rect x="0" y="0" width="960" height="540" fill="#ffffff"/>
+
+  <text class="title" x="480" y="246">PCCX stack overview</text>
+  <text class="body" x="480" y="296">SVG placeholder: final architecture image pending</text>
+</svg>

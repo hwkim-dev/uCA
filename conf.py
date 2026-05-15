@@ -32,6 +32,11 @@ from conf_common import (                          # noqa: F401  (explicit re-mu
 language = "en"
 
 
+# -- Favicon ---------------------------------------------------------------
+
+html_favicon = "_static/pccx_wordmark_favicon.ico"
+
+
 # -- Exclusions -------------------------------------------------------------
 
 # The English build's srcdir is the repo root. Exclude the Korean source tree

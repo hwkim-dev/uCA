@@ -10,7 +10,6 @@ upstream RTL repository stabilises.
 ## Working state
 
 - repository: [`pccxai/pccx-vision-v001`](https://github.com/pccxai/pccx-vision-v001)
-- working staging repository: `pccx-vision-v001-staging` (private)
 - shared substrate with v002 — same KV260 board, same W4A8 weight ×
   activation ratio, same L2 URAM organisation
 - distinct dataflow — dense-conv tile reuse instead of token-by-token

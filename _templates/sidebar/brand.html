@@ -39,9 +39,8 @@ SPDX-License-Identifier: Apache-2.0
 </div>
 
 {# pccx: compact project-link pill row. Stays present on every page so readers
- # never lose track of where the actual RTL (v002 active) and the author's
- # other projects live. Icons use currentColor so dark/light modes inherit
- # naturally. #}
+ # can jump between the split PCCX documentation surfaces. Icons use
+ # currentColor so dark/light modes inherit naturally. #}
 <nav class="pccx-repolinks" aria-label="Project repositories">
   <a class="pccx-repolinks__btn"
      href="https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260"
@@ -56,11 +55,8 @@ SPDX-License-Identifier: Apache-2.0
     </svg>
     <span class="pccx-repolinks__label">RTL</span>
   </a>
-  {# pccx-lab pill — language-aware URL so KO visitors stay in /ko/lab/.
-   # The sibling pccx-lab docs may 404 until its first build lands; that's
-   # acceptable (Work in Progress). #}
   <a class="pccx-repolinks__btn"
-     href="/pccx/{{ language | default('en') }}/lab/"
+     href="https://labs.pccx.ai/"
      title="pccx-lab — verification lab and trace profiler"
      rel="noopener">
     <svg aria-hidden="true" viewBox="0 0 24 24" width="1em" height="1em"
@@ -71,6 +67,30 @@ SPDX-License-Identifier: Apache-2.0
       <path d="M6.8 14h10.4"/>
     </svg>
     <span class="pccx-repolinks__label">Lab</span>
+  </a>
+  <a class="pccx-repolinks__btn"
+     href="https://launcher.pccx.ai/"
+     title="PCCX Launcher — contracts and readiness"
+     rel="noopener">
+    <svg aria-hidden="true" viewBox="0 0 24 24" width="1em" height="1em"
+         fill="none" stroke="currentColor" stroke-width="1.6"
+         stroke-linecap="round" stroke-linejoin="round">
+      <rect x="6" y="6" width="12" height="12" rx="1.2"/>
+      <path d="M9 12h6M12 9v6"/>
+    </svg>
+    <span class="pccx-repolinks__label">Launcher</span>
+  </a>
+  <a class="pccx-repolinks__btn"
+     href="https://ide.pccx.ai/"
+     title="SystemVerilog IDE — diagnostics and validation"
+     rel="noopener">
+    <svg aria-hidden="true" viewBox="0 0 24 24" width="1em" height="1em"
+         fill="none" stroke="currentColor" stroke-width="1.6"
+         stroke-linecap="round" stroke-linejoin="round">
+      <rect x="4" y="5" width="16" height="12" rx="1.6"/>
+      <path d="M8 20h8M12 17v3M8 10l2 2-2 2M12 14h4"/>
+    </svg>
+    <span class="pccx-repolinks__label">IDE</span>
   </a>
   <a class="pccx-repolinks__btn"
      href="https://github.com/pccxai/pccx"

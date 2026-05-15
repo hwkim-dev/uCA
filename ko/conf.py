@@ -40,6 +40,7 @@ language = "ko"
 html_static_path = ["../_static"]
 html_extra_path = ["../_extra"]
 templates_path = ["../_templates"]
+html_favicon = "../_static/pccx_wordmark_favicon.ico"
 
 
 # -- Exclusions --------------------------------------------------------------

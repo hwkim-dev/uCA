@@ -247,6 +247,56 @@ article .pccx-lab-card .sd-card-title svg {
   vertical-align: -0.15em;
 }
 
+.pccx-version-switcher-item {
+  margin: 0.35rem 0 0.75rem;
+  list-style: none;
+}
+
+.pccx-version-switcher {
+  padding: 0.55rem 0.65rem;
+  border: 1px solid var(--color-background-border);
+  border-radius: 6px;
+  background: var(--color-background-secondary);
+}
+
+.pccx-version-switcher__label {
+  margin-bottom: 0.35rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-foreground-muted);
+  text-transform: uppercase;
+}
+
+.pccx-version-switcher__list {
+  display: grid;
+  gap: 0.12rem;
+}
+
+.pccx-version-switcher__entry {
+  display: block;
+  padding: 0.24rem 0;
+  font-size: 0.82rem;
+  line-height: 1.25;
+  color: var(--color-foreground-secondary);
+  text-decoration: none !important;
+}
+
+.pccx-version-switcher__entry:hover,
+.pccx-version-switcher__entry:focus-visible {
+  color: var(--color-brand-primary);
+}
+
+.pccx-version-switcher__entry.is-active {
+  font-weight: 700;
+  color: var(--color-foreground-primary);
+}
+
+.pccx-version-switcher__entry.is-disabled {
+  color: var(--color-foreground-muted);
+  cursor: default;
+}
+
 /* -- rtl_source admonition (injected by _ext/rtl_source.py) ---------------- */
 article .admonition.pccx-rtl-source {
   border-inline-start-width: 3px;
