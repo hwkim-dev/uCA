@@ -102,6 +102,8 @@ Working tracks for the next release lines:
 
 The :doc:`roadmap` summarises how the three tracks relate, and the
 ``pccx`` family-tree figure on that page links them visually.
+The :doc:`glossary` defines project and v002 architecture terms used
+across the public docs.
 
 Evidence-gated v002.1 pointers:
 
@@ -231,3 +233,4 @@ Altifigence.
    quickstart
    v003/index
    vision-v001/index
+   glossary
