@@ -101,7 +101,9 @@ Working tracks for the next release lines:
   candidates ResNet18 / YOLOv8n / MobileNetV3).
 
 The :doc:`roadmap` summarises how the three tracks relate, and the
-``pccx`` family-tree figure on that page links them visually.
+``pccx`` family-tree figure on that page links them visually. Public
+architecture defaults that need a stable reference are recorded in
+:doc:`design-decisions`.
 
 Evidence-gated v002.1 pointers:
 
@@ -231,3 +233,4 @@ Altifigence.
    quickstart
    v003/index
    vision-v001/index
+   design-decisions
