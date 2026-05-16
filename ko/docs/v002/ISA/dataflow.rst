@@ -3,7 +3,7 @@
 ========================
 
 이 페이지는 지시어가 디스패치된 뒤 하드웨어 내부에서 데이터가 실제로
-흐르는 경로를 보여준다. 아래의 그림은 :doc:`../Architecture/top_level`의
+흐르는 경로를 보여준다. 아래의 그림은 :doc:`../Architecture/top_level`\  의
 블록 다이어그램을 지시어 관점에서 다시 정리한 것이다.
 
 1. GEMM
@@ -15,7 +15,7 @@
    :alt: GEMM 지시어 데이터 흐름
 
 그림 5: GEMM 지시어가 디스패치될 때의 데이터 흐름.
-   ``dest_addr``와 ``src_addr`` 는 L2 캐시 주소 공간에 존재하며,
+   ``dest_addr``\ 와 ``src_addr`` 는 L2 캐시 주소 공간에 존재하며,
    shape/size 포인터가 Constant Cache를 가리킨다.
 
 경로 요약
@@ -100,7 +100,7 @@ Global Scheduler가 수행한다.
 - 한 지시어는 한 번에 최대 3개의 16-bit 값(``a``, ``b``, ``c``)을 쓸 수 있다.
 - 일반적으로 레이어 시작 시 (M, N, K) 튜플 초기화, 또는 가중치/활성값
   스케일 팩터 주입에 사용한다.
-- ``dest_cache``는 대상 캐시 bank를 선택한다(``fmap_shape`` vs.
+- ``dest_cache``\ 는 대상 캐시 bank를 선택한다(``fmap_shape`` vs.
   ``weight_shape``).
 
 5. CVO (SFU)
