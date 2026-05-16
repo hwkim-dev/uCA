@@ -49,6 +49,33 @@ Tracking issue: [pccxai/pccx#28 — v0.2.0 umbrella][v020].
 - compute budget for EAGLE head training: $70–100 ($40 if a TRC TPU
   grant lands)
 
+### v002.1 ramp snapshot — 2026-05-06
+
+v002.1 is in progress and remains evidence-gated: public roadmap wording
+tracks reviewable PR evidence, not hardware signoff. The current ramp is
+split across four active RTL / SW lanes:
+
+- `pccx-FPGA-NPU-LLM-kv260`: specification cleanup, bitstream preparation
+  support, xsim coverage, GEMM / GEMV datapath checks, status wiring, and
+  synthesis-baseline capture are represented by
+  [#80](https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260/pull/80)–
+  [#89](https://github.com/pccxai/pccx-FPGA-NPU-LLM-kv260/pull/89).
+- `pccx-llm-launcher`: the KV260 pre-flight scaffold, serial / mock
+  backends, UI integration, and weight-prep manifest work are represented
+  by [#70](https://github.com/pccxai/pccx-llm-launcher/pull/70)–
+  [#74](https://github.com/pccxai/pccx-llm-launcher/pull/74).
+- `pccx-lab`: trace readback, smoke fixtures, serial framing, and analyzer
+  summaries are represented by
+  [#160](https://github.com/pccxai/pccx-lab/pull/160)–
+  [#164](https://github.com/pccxai/pccx-lab/pull/164).
+- `systemverilog-ide`: status-surface, UI integration, and live pre-flight
+  binding work are represented by
+  [#124](https://github.com/pccxai/systemverilog-ide/pull/124)–
+  [#126](https://github.com/pccxai/systemverilog-ide/pull/126).
+
+The public homepage import is tracked separately in
+[`pccxai/pccxai#4`](https://github.com/pccxai/pccxai/pull/4).
+
 ## Later — v003.x: separate RTL repository (LLM line continued)
 
 - v003+ active RTL development lives in
