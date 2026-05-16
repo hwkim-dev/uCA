@@ -120,6 +120,7 @@ Tooling & Lab
    :caption: Introduction
 
    docs/index
+   docs/orientation
    docs/quickstart
    docs/Evidence/index
    docs/repo-boundaries
