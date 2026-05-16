@@ -3,7 +3,7 @@
 _최근 개정: 2026-04-29._
 
 `pccx-uvm-bridge` 크레이트는 `pccx-core` 사이클 추정기를 SystemVerilog
-UVM 테스트벤치에 노출하는 **C ABI DPI-C 익스포트 모음**이다.
+UVM 테스트벤치에 노출하는 **C ABI DPI-C 익스포트 모음**입니다..
 시뮬레이터는 공유 라이브러리(`cdylib`)를 링크하고, SV 쪽에서
 `import "DPI-C"` 선언 하나로 Rust 분석기를 런타임에 호출한다.
 

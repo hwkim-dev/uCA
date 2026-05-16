@@ -17,7 +17,7 @@ pccx v001은 **구현 직전 단계**\ 까지 도달하였으나 최종적으로
      subgraph v001 ["v001 결함"]
        F1[코어 역할 분담 모호]
        F2[불필요한 버스 다수]
-       F3[L2 / Global Cache 역할 중복]
+       F3[L2 / Global Cache 역할이 중복됨]
        F4[HP 포트 배치 비효율]
        F5[시스톨릭 어레이 미최적화]
      end
@@ -39,7 +39,7 @@ pccx v001은 **구현 직전 단계**\ 까지 도달하였으나 최종적으로
      style v001 fill:#f5edd5,stroke:#dbe1ea,stroke-width:2px,color:#000
      style v002 fill:#dae7f4,stroke:#dbe1ea,stroke-width:2px,color:#000
 
-- **3 코어 체제 확립**: GEMV, GEMM, SFU로 코어를 명확히 분리하고, 각 코어의 접근 패턴에 맞게 L2 캐시와 버퍼를 연결하여 역할 중복을 제거.
+- **3 코어 체제 확립**: GEMV, GEMM, SFU로 코어를 명확히 분리하고, 각 코어의 접근 패턴에 맞게 L2 캐시와 버퍼를 연결하여 역할이 중복됨을 제거.
 - **버스 단순화**: 모든 데이터를 WEIGHT BUS와 ACTIVATION BUS 두 축으로 통일하고 물리적으로 직교 배치하여 라우팅 충돌 방지.
 - **L2 중앙 집중화**: Global Cache 역할을 L2에 흡수하고 플로어플랜 중앙에 배치하여 상·하 슬라이스가 대칭적으로 접근.
 - **HP 포트 분산**: HP2와 HP3 두 포트를 독립 슬라이스에 할당하여 가중치 공급 병목 해소.

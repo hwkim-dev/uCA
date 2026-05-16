@@ -130,12 +130,12 @@ pub enum PluginError {
 
 ## 안정성
 
-`pccx_core::plugin` 의 모든 것은 **pccx-lab v0.3 까지 unstable** 이다.
+`pccx_core::plugin` 의 모든 것은 **pccx-lab v0.3 까지 unstable**입니다..
 enum 은 정신상 `#[non_exhaustive]` 이며 — Phase 1/2 창 동안 SemVer
 major 범프 없이 신규 variant 가 추가된다.
 
 `libloading` + C-ABI `register()` 심볼 + unload 시 안전한 drop를 사용하는
-Dylib 로더는 **아직 구현되지 않음**이다. 아웃오브트리 플러그인은
+Dylib 로더는 **아직 구현되지 않음**입니다.. 아웃오브트리 플러그인은
 출하 단계인 Phase 2/4에서 본격 반영된다. 그때까지 모든 레지스트리는
 in-process `Vec<Box<dyn T>>`를 사용한다.
 

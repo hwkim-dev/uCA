@@ -106,13 +106,13 @@ v003 산출물을 사용합니다.
       :link-type: doc
       :link-alt: pccx Sail ISA 모델 읽기
 
-      **pccx 는** `Sail <https://sail-lang.org/>`_ **로 형식적으로
+      **pccx는** `Sail <https://sail-lang.org/>`_ **로 형식적으로
       정의된다** — **RISC-V**, **Arm**, **CHERI**, **Morello** 의
       공식 사양을 기술하는 것과 동일한 ISA 시맨틱 언어. 64-bit /
       4-bit-opcode v002 ISA 는 RTL 레포의 ``formal/sail/`` 하위에
       거주하며, SystemVerilog 의 각 ``typedef`` 는 Sail 측에 1:1
-      대응이 있어 폭 오류가 실리콘 전에 Sail 타입 체커에서 먼저
-      잡힌다.
+      대응이 있어 비트 폭 오류(width error)가 실리콘 검증 전에 Sail 타입 체커에서 먼저
+      발견됩니다.
 
 .. toctree::
    :maxdepth: 2

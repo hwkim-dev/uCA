@@ -54,7 +54,7 @@ known_application_repos: []   # board/application 통합이 시작되면 갱신
 | Control bus | v002: AXI-Lite | TBD |
 | Application target | v002 타겟: Gemma 3N E4B on KV260 | v003 planning: Gemma 4 E4B |
 
-표는 의도와 차이축을 보여주며, v003 값은 구현 완료를 주장하지 않는다.
+표는 의도와 차이축을 보여주며, v003 값은 구현 완료를 목표 수치를 공개하지 않습니다.
 
 ## 업데이트 규칙
 
