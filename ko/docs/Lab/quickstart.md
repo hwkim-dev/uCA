@@ -18,7 +18,7 @@ myst:
 
 ## 설치
 
-pccx-lab 은 Rust 워크스페이스(`crates/`) + React/Vite 프론트엔드(`ui/`) 로
+pccx-lab은 Rust 워크스페이스(`crates/`) + React/Vite 프론트엔드(`ui/`) 로
 구성된 Tauri v2 데스크톱 앱이다. Rust 워크스페이스는 9개 크레이트로 구성된다:
 `core`, `reports`, `verification`, `authoring`, `evolve`, `lsp`, `remote`,
 `uvm_bridge`, `workflow_facade`. 모든 크레이트는 `pccx-core` 를 의존 그래프의

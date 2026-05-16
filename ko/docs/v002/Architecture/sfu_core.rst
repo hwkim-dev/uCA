@@ -3,7 +3,7 @@ SFU 코어 (Complex Vector Operations)
 ======================================
 
 SFU(Special Function Unit)는 Transformer의 비선형 연산 — **Softmax**,
-**GELU**, **RMSNorm**, **RoPE** — 을 담당하는 전용 유닛이다.
+**GELU**, **RMSNorm**, **RoPE** —을 담당하는 전용 유닛이다.
 ISA 상에서는 **CVO (Complex Vector Operation)** 명령어 계열로 노출된다.
 
 1. 구성

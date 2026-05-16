@@ -8,7 +8,7 @@ orphan: true
 # PCCX 제품 패키지 (초안)
 
 PCCX™는 오픈 코어와 병행해 세 개의 상용 패키지를 제공할 계획이다. 현재
-어느 패키지도 하드웨어/performance/timing/bitstream 근거를 주장하지 않는다.
+어느 패키지도 하드웨어/performance/timing/bitstream 근거를 목표 수치를 공개하지 않습니다.
 가격과 가용성은 법무 검토 후 확정한다.
 
 | 패키지 | 대상 | 범위(의도) |

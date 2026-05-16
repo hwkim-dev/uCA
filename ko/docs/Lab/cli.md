@@ -4,7 +4,7 @@ _페이지 과도기 상태. pccx-lab HEAD 기준 2026-04-24 재정비._
 
 이 페이지의 Phase 1 이전 리비전이 기술한 단일 `pccx_analyze` 통합
 바이너리는 워크스페이스 분할이 코드를 `crates/` 로 이동시킬 때
-**포팅되지 않았다**. 오늘 pccx-lab 은 더 작은 Rust 바이너리 네
+**포팅되지 않았다**. 오늘 pccx-lab은 더 작은 Rust 바이너리 네
 개를 출하하며, 각 표면을 소유한 크레이트 별로 분산되어 있다.
 각각이 과거 `pccx_analyze` 가 다중화하던 조각 하나를 커버한다. 나머지
 (research-list 내보내기, analyzer id explain, `--compare` 회귀 게이트,

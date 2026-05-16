@@ -17,7 +17,7 @@ v002 드라이버의 공개 C API 를 정리합니다. 구현은
 
 .. note::
 
-   API 네임스페이스는 ``uca_*`` 이며 ``pccx_*`` 가 아니다. pccx 는
+   API 네임스페이스는 ``uca_*`` 이며 ``pccx_*`` 가 아니다. pccx는
    아키텍처 / 문서 프로젝트 이름이고, uCA (micro Compute
    Architecture) 가 RTL·소프트웨어 계약의 네이밍이다.
 

@@ -102,7 +102,7 @@ pccx v002의 모든 명령어는 **64 bit 고정 길이**\ 이며, 다음과 같
 ========================
 
 MEMCPY의 ``from_device`` + ``to_device`` 조합은 Control Unit 내부에서 8-bit
-route enum(``data_route_e``)으로 확장된다.
+route enum(``data_route_e``)으로 확장됩니다.
 
 .. list-table::
    :header-rows: 1

@@ -42,7 +42,7 @@ flowchart LR
 현재 `preprocess_bf16_fixed_pipeline.sv`가 출력하는 27-bit fixed-point
 값은 하위 8비트를 truncate하여 GEMM systolic array에 임시로 공급하는
 placeholder 경로다. v002 W4A8 datapath가 요구하는 올바른 형식은
-**signed INT8 activation**이다(DSP48E2 Port B signed 8-bit 입력).
+**signed INT8 activation**입니다.(DSP48E2 Port B signed 8-bit 입력).
 TODO.md §A-1은 양자화기 교체를 위한 두 가지 후보를 정의한다.
 
 **Option A — power-of-two scale (블록 부동소수점 기반)**
